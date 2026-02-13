@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Plano de Expressão Cabalístico</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#111827">
+
+<style>
+body{font-family:Arial;padding:30px;background:#f4f4f4}
+input,button{padding:10px;margin:5px}
+.card{background:#fff;padding:20px;margin-top:20px;border-radius:10px}
+table{border-collapse:collapse;width:100%;margin-top:15px}
+th,td{border:1px solid #ccc;padding:6px;text-align:center}
+.vermelho{color:#c0392b}
+.azul{color:#2980b9}
+.verde{color:#27ae60}
+.amarelo{color:#f1c40f}
+
+.bloco-momento{
+  margin-top:60px;
+  padding:30px;
+  background:#111827;
+  color:white;
+  border-radius:10px;
+}
+.bar-bg{background:#2a2a2a;height:18px;border-radius:10px;margin:8px 0;}
+.bar{height:100%;width:0%;border-radius:10px;transition:1s;}
+.fisico{background:#ff4d4d;}
+.mental{background:#4da6ff;}
+.emocional{background:#33cc66;}
+.intuitivo{background:#ffd633;}
+.resumoMomento{margin-top:25px;padding:20px;background:#1f2937;border-radius:8px;}
+
+/* MOBILE */
+@media (max-width:768px){
+  body{padding:15px;}
+  h1{font-size:28px;}
+  input,button,select{width:100%;box-sizing:border-box;margin:8px 0;}
+  .bloco-momento{padding:20px;margin-top:30px;}
+}
+</style>
+
+</head>
+<body>
+
+
+
+<h1>Plano de Expressão Cabalístico</h1>
+
+<input id="nome" placeholder="Nome completo">
+<input type="date" id="dataNascimento">
+<button onclick="gerarTudo()">GERAR MAPA</button>
+<button onclick="exportarRelatorio()">GERAR RELATÓRIO PDF</button>
+
+<div id="natural" class="card"></div>
+<div id="momento" style="display:none"></div>
+<section class="bloco-momento" id="blocoNatural">
+<h2>PLANO NATURAL</h2>
+
+<div>
+Físico<div class="bar-bg"><div id="barFisicoNat" class="bar fisico"></div></div><p id="txtFisicoNat"></p>
+Mental<div class="bar-bg"><div id="barMentalNat" class="bar mental"></div></div><p id="txtMentalNat"></p>
+Emocional<div class="bar-bg"><div id="barEmocionalNat" class="bar emocional"></div></div><p id="txtEmocionalNat"></p>
+Intuitivo<div class="bar-bg"><div id="barIntuitivoNat" class="bar intuitivo"></div></div><p id="txtIntuitivoNat"></p>
+</div>
+
+<div id="resumoNatural" class="resumoMomento"></div>
+</section>
+<section class="bloco-momento">
+<h2>STATUS DO MOMENTO</h2>
+
+<select id="anoSelect"></select>
+<button onclick="gerarStatusMomento()">Gerar Status</button>
+
+<div>
+Físico<div class="bar-bg"><div id="barFisico" class="bar fisico"></div></div><p id="txtFisico"></p>
+Mental<div class="bar-bg"><div id="barMental" class="bar mental"></div></div><p id="txtMental"></p>
+Emocional<div class="bar-bg"><div id="barEmocional" class="bar emocional"></div></div><p id="txtEmocional"></p>
+Intuitivo<div class="bar-bg"><div id="barIntuitivo" class="bar intuitivo"></div></div><p id="txtIntuitivo"></p>
+</div>
+
+<div id="resumoMomento" class="resumoMomento"></div>
+</section>
+<script src="textos.js"></script>
+<script>
+//================ TABELA CABALÍSTICA
+const tabela={
+A:1,J:1,I:1,Q:1,Y:1,
+B:2,K:2,R:2,
+C:3,G:3,L:3,S:3,
+D:4,M:4,T:4,
+E:5,H:5,N:5,
+U:6,V:6,W:6,X:6,Ç:6,
+O:7,Z:7,
+F:8,P:8
+};
+
+//================ ACENTOS
+function calcularValorComAcentos(letra){
+ const base=letra.normalize("NFD")[0];
+ const valorBase=tabela[base];
+ if(!valorBase) return 0;
+ let soma=0,mult=1;
+ for(let c of letra.normalize("NFD")){
+  if(c==="\u0301") soma+=2;
+  else if(c==="\u0302") soma+=7;
+  else if(c==="\u0303") soma+=3;
+  else if(c==="\u0327") soma+=6;
+  else if(c==="\u0300") mult*=2;
+  else if(c==="\u0308") mult*=2;
+ }
+ return (valorBase+soma)*mult;
+}
+
+function gerarTextoPlano(tipo, dados){
+
+  let textoFinal = "";
+
+  const ordemPlanos = ["fisico","mental","emocional","intuitivo"];
+
+  ordemPlanos.forEach((plano, i)=>{
+
+    const nivel = dados[plano].nivel;
+    const numero = dados[plano].numero;
+
+    // pega texto do banco textosPlanos (que está no textos.js)
+    const textoPlanoNumero = textosPlanos[plano][nivel][numero];
+
+    if(i>0){
+      textoFinal += "\n\n";
+    }
+
+    textoFinal += textoPlanoNumero || 
+      `[Texto ainda não criado: ${plano} ${nivel} nº ${numero}]`;
+
+  });
+
+  return textoFinal;
+}function reduzirNumero(n){
+ while(n > 9){
+  n = n.toString().split("").reduce((a,b)=>a + Number(b),0);
+ }
+ return n;
+}
+//================ PLANOS
+const planos={
+ fisico:["E","W","D","M"],
+ mental:["A","H","J","N","P","G","L"],
+ emocional:["I","O","R","Z","B","S","T","X"],
+ intuitivo:["K","F","Q","U","Y","C","V"]
+};
+
+function descobrirPlano(letra){
+ letra=letra.normalize("NFD")[0].toUpperCase();
+ for(let p in planos) if(planos[p].includes(letra)) return p;
+ return null;
+}
+
+//================ BANCO ANUAL
+let bancoMomentos=[];
+
+//================ PLANO NATURAL
+function planoNatural(nome){
+
+ let soma={fisico:0,mental:0,emocional:0,intuitivo:0};
+
+ for(let l of nome.toUpperCase()){
+  let plano=descobrirPlano(l);
+  if(!plano) continue;
+  soma[plano]+=calcularValorComAcentos(l);
+ }
+
+ const maior=Math.max(soma.fisico,soma.mental,soma.emocional,soma.intuitivo);
+
+// 🔢 NÚMEROS REDUZIDOS (1 a 9)
+const reducoes = {
+ fisico: reduzirNumero(soma.fisico),
+ mental: reduzirNumero(soma.mental),
+ emocional: reduzirNumero(soma.emocional),
+ intuitivo: reduzirNumero(soma.intuitivo)
+};
+// 🔵 gera classificação de intensidade
+function classificar(valor, maior){
+ if(valor >= maior*0.75) return "forte";
+ if(valor >= maior*0.5) return "medio";
+ return "fraco";
+}
+
+const intensidades = {
+ fisico: classificar(soma.fisico, maior),
+ mental: classificar(soma.mental, maior),
+ emocional: classificar(soma.emocional, maior),
+ intuitivo: classificar(soma.intuitivo, maior)
+};
+
+// monta objeto no formato correto para o gerador de texto
+const dadosTexto = {
+  fisico: { nivel:intensidades.fisico, numero:reducoes.fisico },
+  mental: { nivel:intensidades.mental, numero:reducoes.mental },
+  emocional: { nivel:intensidades.emocional, numero:reducoes.emocional },
+  intuitivo: { nivel:intensidades.intuitivo, numero:reducoes.intuitivo }
+};
+
+// gera texto final correto
+const textoPlanoNatural = gerarTextoPlano("natural", dadosTexto);
+
+// mostra na tela
+document.getElementById("resumoNatural").innerText = textoPlanoNatural;
+
+
+atualizarBarraNatural("FisicoNat",soma.fisico,maior,reducoes.fisico);
+atualizarBarraNatural("MentalNat",soma.mental,maior,reducoes.mental);
+atualizarBarraNatural("EmocionalNat",soma.emocional,maior,reducoes.emocional);
+atualizarBarraNatural("IntuitivoNat",soma.intuitivo,maior,reducoes.intuitivo);
+
+}
+
+
+
+
+
+function planoMomento(nomeCompleto,data){
+
+ bancoMomentos=[];
+
+ const nomes = nomeCompleto
+   .toUpperCase()
+   .split(" ")
+   .filter(n=>n.length>1);
+
+ const anoNasc=new Date(data).getFullYear();
+
+ // 🔴 CRIA TIMELINE EXPANDIDA DE CADA NOME
+ const timelines = nomes.map(nome=>{
+    let linhaTempo=[];
+    for(let letra of nome){
+        let anos = calcularValorComAcentos(letra); // valor cabalístico
+        for(let i=0;i<anos;i++){
+            linhaTempo.push(letra);
+        }
+    }
+    return linhaTempo;
+ });
+
+ let html="<h2>Plano do Momento</h2><table><tr><th>Ano</th><th>Idade</th>";
+ nomes.forEach((n,i)=>html+=`<th>${i+1}º Nome</th>`);
+ html+="<th>Físico</th><th>Mental</th><th>Emocional</th><th>Intuitivo</th></tr>";
+
+ for(let idade=0;idade<=100;idade++){
+
+  let ano=anoNasc+idade;
+  let soma={fisico:0,mental:0,emocional:0,intuitivo:0};
+
+  html+=`<tr><td>${ano}</td><td>${idade}</td>`;
+
+  timelines.forEach(linhaTempo=>{
+      const letra = linhaTempo[ idade % linhaTempo.length ]; // 🔴 agora correto
+      const plano = descobrirPlano(letra);
+      const valor = calcularValorComAcentos(letra);
+      soma[plano]+=valor;
+      html+=`<td>${letra}</td>`;
+  });
+
+  bancoMomentos.push({ano,...soma});
+
+  html+=`<td>${soma.fisico}</td>
+         <td>${soma.mental}</td>
+         <td>${soma.emocional}</td>
+         <td>${soma.intuitivo}</td></tr>`;
+ }
+
+ html+="</table>";
+ document.getElementById("momento").innerHTML=html;
+ preencherSeletorAnos();
+}
+function preencherSeletorAnos(){
+ const select=document.getElementById("anoSelect");
+ select.innerHTML="";
+
+ bancoMomentos.forEach(a=>{
+   select.innerHTML+=`<option value="${a.ano}">${a.ano}</option>`;
+ });
+
+ // ⭐ ESSENCIAL — selecionar automaticamente o primeiro ano
+ if(bancoMomentos.length > 0){
+   select.value = bancoMomentos[0].ano;
+ }
+}
+function gerarStatusMomento(){
+
+ const ano=document.getElementById("anoSelect").value;
+
+ if(!ano){
+   alert("Selecione um ano.");
+   return;
+ }
+
+ const d=bancoMomentos.find(a=>a.ano==ano);
+
+ if(!d){
+   alert("Erro ao localizar dados do ano.");
+   return;
+ }
+
+ const maior=Math.max(d.fisico,d.mental,d.emocional,d.intuitivo);
+
+ atualizarBarra("Fisico",d.fisico,maior);
+ atualizarBarra("Mental",d.mental,maior);
+ atualizarBarra("Emocional",d.emocional,maior);
+ atualizarBarra("Intuitivo",d.intuitivo,maior);
+
+ document.getElementById("resumoMomento").innerText=
+ "Texto interpretativo virá aqui.";
+}
+
+function atualizarBarra(tipo,valor,maior){
+
+ let largura = 0;
+
+ if(maior > 0 && valor > 0){
+    largura = (valor/maior)*100;
+
+    // largura mínima visível mobile
+    if(largura < 12) largura = 12;
+ }
+
+ // 🔴 isso zera corretamente quando valor = 0
+ document.getElementById("bar"+tipo).style.width = largura + "%";
+ document.getElementById("txt"+tipo).innerText = valor;
+}
+function atualizarBarraNatural(tipo,valor,maior,reducao){
+
+ let largura = 0;
+
+ if(maior > 0 && valor > 0){
+    largura = (valor/maior)*100;
+    if(largura < 12) largura = 12;
+ }
+
+ document.getElementById("bar"+tipo).style.width = largura + "%";
+ document.getElementById("txt"+tipo).innerText =
+  valor + " → Número " + reducao;
+}
+function gerarTudo(){
+ const nome=document.getElementById("nome").value;
+ const data=document.getElementById("dataNascimento").value;
+ planoNatural(nome);
+ planoMomento(nome,data);
+}
+//================ EXPORTAR PARA RELATÓRIO PREMIUM
+function exportarRelatorio(){
+
+ const nome = document.getElementById("nome").value;
+ const data = document.getElementById("dataNascimento").value;
+ const anoSelecionado = document.getElementById("anoSelect").value;
+
+ if(!nome || !data || bancoMomentos.length === 0){
+   alert("Gere o mapa antes de exportar o relatório.");
+   return;
+ }
+
+ // pega dados do plano natural direto das barras
+ const natural = {
+   fisico: document.getElementById("txtFisicoNat").innerText,
+   mental: document.getElementById("txtMentalNat").innerText,
+   emocional: document.getElementById("txtEmocionalNat").innerText,
+   intuitivo: document.getElementById("txtIntuitivoNat").innerText
+ };
+
+ // pega dados do ano escolhido
+ const dadosAno = bancoMomentos.find(a => a.ano == anoSelecionado);
+
+ const momento = {
+   ano: anoSelecionado,
+   fisico: dadosAno.fisico,
+   mental: dadosAno.mental,
+   emocional: dadosAno.emocional,
+   intuitivo: dadosAno.intuitivo
+ };
+
+ const pacoteRelatorio = {
+   nome,
+   data,
+   natural,
+   momento
+ };
+
+ // salva no navegador
+ localStorage.setItem("relatorioMapa", JSON.stringify(pacoteRelatorio));
+
+ // abre página premium
+ window.open("https://www.instintosuperior.com/planos-de-express%C3%A3o", "_blank");
+}
+</script>
+
+
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js");
+}
+
+</script>
+</body>
+</html>
