@@ -122,25 +122,55 @@ function gerarTextoPlano(tipo, dados){
 
   const ordemPlanos = ["fisico","mental","emocional","intuitivo"];
 
+  // 🔹 INTRODUÇÃO
+  if(introducoes && introducoes[tipo]){
+    textoFinal += introducoes[tipo].trim() + "\n\n";
+  }
+
   ordemPlanos.forEach((plano, i)=>{
 
-    const nivel = dados[plano].nivel;
-    const numero = dados[plano].numero;
+    const nivel = dados[plano].nivel;   // fraco medio forte
+    const numero = dados[plano].numero; // 1 a 9
 
-    // pega texto do banco textosPlanos (que está no textos.js)
-    const textoPlanoNumero = textosPlanos[plano][nivel][numero];
+    // 🔹 TEXTO BASE DO PLANO (intensidade)
+    let textoBase = planosBase?.[plano]?.[nivel] || "";
 
-    if(i>0){
-      textoFinal += "\n\n";
+    // 🔹 TEXTO DO NÚMERO
+    let textoNumero = numerosPlanos?.[plano]?.[numero] || "";
+
+    // 🔹 CONECTOR ENTRE PLANOS
+    if(i > 0){
+      const conector = conectores[Math.floor(Math.random()*conectores.length)];
+      textoFinal += "\n\n" + conector + "\n\n";
     }
 
-    textoFinal += textoPlanoNumero || 
-      `[Texto ainda não criado: ${plano} ${nivel} nº ${numero}]`;
+    // 🔹 MONTA PARÁGRAFO DO PLANO
+    let blocoPlano = "";
+
+    if(textoBase) blocoPlano += textoBase.trim();
+    if(textoNumero){
+      if(blocoPlano.length > 0) blocoPlano += " ";
+      blocoPlano += textoNumero.trim();
+    }
+
+    // fallback se ainda não tiver textos criados
+    if(!blocoPlano){
+      blocoPlano = `[Texto ainda não criado: ${plano} ${nivel} nº ${numero}]`;
+    }
+
+    textoFinal += blocoPlano;
 
   });
 
+  // 🔹 CONCLUSÃO
+  if(conclusoes && conclusoes[tipo]){
+    textoFinal += "\n\n" + conclusoes[tipo].trim();
+  }
+
   return textoFinal;
-}function reduzirNumero(n){
+}
+
+function reduzirNumero(n){
  while(n > 9){
   n = n.toString().split("").reduce((a,b)=>a + Number(b),0);
  }
@@ -290,60 +320,91 @@ function preencherSeletorAnos(){
    select.value = bancoMomentos[0].ano;
  }
 }
+//================ STATUS DO MOMENTO (NOVO MOTOR)
+
 function gerarStatusMomento(){
 
  const ano=document.getElementById("anoSelect").value;
-
  if(!ano){
    alert("Selecione um ano.");
    return;
  }
 
- const d=bancoMomentos.find(a=>a.ano==ano);
-
- if(!d){
+ const dados=bancoMomentos.find(a=>a.ano==ano);
+ if(!dados){
    alert("Erro ao localizar dados do ano.");
    return;
  }
 
- const maior=Math.max(d.fisico,d.mental,d.emocional,d.intuitivo);
+ const maior=Math.max(dados.fisico,dados.mental,dados.emocional,dados.intuitivo);
 
- atualizarBarra("Fisico",d.fisico,maior);
- atualizarBarra("Mental",d.mental,maior);
- atualizarBarra("Emocional",d.emocional,maior);
- atualizarBarra("Intuitivo",d.intuitivo,maior);
+ // atualiza barras
+ atualizarBarra("Fisico",dados.fisico,maior);
+ atualizarBarra("Mental",dados.mental,maior);
+ atualizarBarra("Emocional",dados.emocional,maior);
+ atualizarBarra("Intuitivo",dados.intuitivo,maior);
 
- document.getElementById("resumoMomento").innerText=
- "Texto interpretativo virá aqui.";
+ // 🔢 reduz números
+ const reducoes={
+   fisico: reduzirNumero(dados.fisico),
+   mental: reduzirNumero(dados.mental),
+   emocional: reduzirNumero(dados.emocional),
+   intuitivo: reduzirNumero(dados.intuitivo)
+ };
+
+ // 🔵 classifica intensidade
+ function classificar(valor,maior){
+   if(valor>=maior*0.75) return "forte";
+   if(valor>=maior*0.5) return "medio";
+   return "fraco";
+ }
+
+ const intensidades={
+   fisico: classificar(dados.fisico,maior),
+   mental: classificar(dados.mental,maior),
+   emocional: classificar(dados.emocional,maior),
+   intuitivo: classificar(dados.intuitivo,maior)
+ };
+
+ // 🧠 prepara objeto igual ao plano natural
+ const dadosTexto={
+   fisico:{nivel:intensidades.fisico,numero:reducoes.fisico},
+   mental:{nivel:intensidades.mental,numero:reducoes.mental},
+   emocional:{nivel:intensidades.emocional,numero:reducoes.emocional},
+   intuitivo:{nivel:intensidades.intuitivo,numero:reducoes.intuitivo}
+ };
+
+ // gera texto automático
+ const textoMomento=gerarTextoPlano("momento",dadosTexto);
+ document.getElementById("resumoMomento").innerText=textoMomento;
 }
+
+
+//================ BARRAS (MANTIDAS)
 
 function atualizarBarra(tipo,valor,maior){
+ let largura=0;
 
- let largura = 0;
-
- if(maior > 0 && valor > 0){
-    largura = (valor/maior)*100;
-
-    // largura mínima visível mobile
-    if(largura < 12) largura = 12;
+ if(maior>0 && valor>0){
+   largura=(valor/maior)*100;
+   if(largura<12) largura=12;
  }
 
- // 🔴 isso zera corretamente quando valor = 0
- document.getElementById("bar"+tipo).style.width = largura + "%";
- document.getElementById("txt"+tipo).innerText = valor;
+ document.getElementById("bar"+tipo).style.width=largura+"%";
+ document.getElementById("txt"+tipo).innerText=valor;
 }
+
 function atualizarBarraNatural(tipo,valor,maior,reducao){
+ let largura=0;
 
- let largura = 0;
-
- if(maior > 0 && valor > 0){
-    largura = (valor/maior)*100;
-    if(largura < 12) largura = 12;
+ if(maior>0 && valor>0){
+   largura=(valor/maior)*100;
+   if(largura<12) largura=12;
  }
 
- document.getElementById("bar"+tipo).style.width = largura + "%";
- document.getElementById("txt"+tipo).innerText =
-  valor + " → Número " + reducao;
+ document.getElementById("bar"+tipo).style.width=largura+"%";
+ document.getElementById("txt"+tipo).innerText=
+  valor+" → Número "+reducao;
 }
 function gerarTudo(){
  const nome=document.getElementById("nome").value;
