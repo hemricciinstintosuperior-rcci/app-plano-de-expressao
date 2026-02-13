@@ -1,41 +1,11 @@
-// BANCO PRINCIPAL DE TEXTOS DO GERADOR
-// estrutura obrigatória para o motor funcionar
+// BANCO OFICIAL DE TEXTOS DO MOTOR
 
 const textosPlanos = {
-  fisico: {
-    fraco:{
-      1:"Físico fraco 1",
-      2:"Físico fraco 2",
-      3:"Físico fraco 3",
-      4:"Físico fraco 4",
-      5:"Físico fraco 5",
-      6:"Físico fraco 6",
-      7:"Físico fraco 7",
-      8:"Físico fraco 8",
-      9:"Físico fraco 9"
-    },
-    medio:{
-      1:"Físico médio 1",
-      2:"Físico médio 2",
-      3:"Físico médio 3",
-      4:"Físico médio 4",
-      5:"Físico médio 5",
-      6:"Físico médio 6",
-      7:"Físico médio 7",
-      8:"Físico médio 8",
-      9:"Físico médio 9"
-    },
-    forte:{
-      1:"Físico forte 1",
-      2:"Físico forte 2",
-      3:"Físico forte 3",
-      4:"Físico forte 4",
-      5:"Físico forte 5",
-      6:"Físico forte 6",
-      7:"Físico forte 7",
-      8:"Físico forte 8",
-      9:"Físico forte 9"
-    }
+
+  fisico:{
+    fraco:{1:"Físico fraco 1",2:"Físico fraco 2",3:"Físico fraco 3",4:"Físico fraco 4",5:"Físico fraco 5",6:"Físico fraco 6",7:"Físico fraco 7",8:"Físico fraco 8",9:"Físico fraco 9"},
+    medio:{1:"Físico médio 1",2:"Físico médio 2",3:"Físico médio 3",4:"Físico médio 4",5:"Físico médio 5",6:"Físico médio 6",7:"Físico médio 7",8:"Físico médio 8",9:"Físico médio 9"},
+    forte:{1:"Físico forte 1",2:"Físico forte 2",3:"Físico forte 3",4:"Físico forte 4",5:"Físico forte 5",6:"Físico forte 6",7:"Físico forte 7",8:"Físico forte 8",9:"Físico forte 9"}
   },
 
   mental:{
@@ -55,4 +25,5 @@ const textosPlanos = {
     medio:{1:"Intuitivo médio",2:"Intuitivo médio",3:"Intuitivo médio",4:"Intuitivo médio",5:"Intuitivo médio",6:"Intuitivo médio",7:"Intuitivo médio",8:"Intuitivo médio",9:"Intuitivo médio"},
     forte:{1:"Intuitivo forte",2:"Intuitivo forte",3:"Intuitivo forte",4:"Intuitivo forte",5:"Intuitivo forte",6:"Intuitivo forte",7:"Intuitivo forte",8:"Intuitivo forte",9:"Intuitivo forte"}
   }
+
 };
