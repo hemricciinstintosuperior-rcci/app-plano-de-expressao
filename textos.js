@@ -29,3 +29,32 @@ const textosPlanos = {
   }
 
 };
+
+// =============================================
+// GERADOR DO BANCO FINAL textosPlanos
+// =============================================
+
+const textosPlanos = {
+  fisico:{fraco:{},medio:{},forte:{}},
+  mental:{fraco:{},medio:{},forte:{}},
+  emocional:{fraco:{},medio:{},forte:{}},
+  intuitivo:{fraco:{},medio:{},forte:{}}
+};
+
+const niveis = ["fraco","medio","forte"];
+const planosLista = ["fisico","mental","emocional","intuitivo"];
+
+planosLista.forEach(plano=>{
+  niveis.forEach(nivel=>{
+    for(let n=1;n<=9;n++){
+      textosPlanos[plano][nivel][n] =
+        introducoes.natural +
+        "\n\n" +
+        (planosBase[plano][nivel] || "") +
+        "\n\n" +
+        (numerosPlanos[plano][n] || "") +
+        "\n\n" +
+        conclusoes.natural;
+    }
+  });
+});
