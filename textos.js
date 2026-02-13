@@ -78,3 +78,26 @@ const textosPlanos = {};
     }
   });
 });
+// =============================================
+// ADAPTADOR → MONTA O OBJETO FINAL USADO PELO MOTOR
+// =============================================
+
+const textosPlanos = {
+  fisico: { fraco:{}, medio:{}, forte:{} },
+  mental: { fraco:{}, medio:{}, forte:{} },
+  emocional: { fraco:{}, medio:{}, forte:{} },
+  intuitivo: { fraco:{}, medio:{}, forte:{} }
+};
+
+["fisico","mental","emocional","intuitivo"].forEach(plano=>{
+  ["fraco","medio","forte"].forEach(nivel=>{
+    for(let n=1;n<=9;n++){
+
+      const base = planosBase[plano]?.[nivel] || "";
+      const numero = numerosPlanos[plano]?.[n] || "";
+
+      textosPlanos[plano][nivel][n] =
+        base + "\n\n" + numero;
+    }
+  });
+});
