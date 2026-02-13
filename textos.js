@@ -58,3 +58,23 @@ planosLista.forEach(plano=>{
     }
   });
 });
+// =============================================
+// ADAPTADOR (liga banco novo ao gerador antigo)
+// =============================================
+
+const textosPlanos = {};
+
+["fisico","mental","emocional","intuitivo"].forEach(plano => {
+  textosPlanos[plano] = {};
+
+  ["fraco","medio","forte"].forEach(nivel => {
+    textosPlanos[plano][nivel] = {};
+
+    for(let n=1;n<=9;n++){
+      textosPlanos[plano][nivel][n] =
+        (planosBase[plano]?.[nivel] || "") +
+        " " +
+        (numerosPlanos[plano]?.[n] || "");
+    }
+  });
+});
