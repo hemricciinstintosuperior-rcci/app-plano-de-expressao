@@ -258,16 +258,14 @@ Utilize estas informações como ferramenta de autoconhecimento e evolução.
 
 </script>
 
-
+<!-- LIB PDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
 
 <script>
 function gerarPDF(){
 
   const elemento = document.getElementById("paginaRelatorio");
 
-  // espera fontes e layout carregarem (ESSENCIAL)
   setTimeout(() => {
 
     const opt = {
@@ -291,9 +289,12 @@ function gerarPDF(){
       .set(opt)
       .save();
 
-  }, 800); // espera renderizar a página
+  }, 800);
 
 }
 </script>
+
 </body>
 </html>
+
+
