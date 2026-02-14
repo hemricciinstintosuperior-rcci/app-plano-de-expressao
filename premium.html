@@ -293,9 +293,6 @@ Utilize estas informações como ferramenta de autoconhecimento e evolução.
 }
 
 </script>
-
-<script>
-
 <!-- FOLHA A4 INVISÍVEL PARA GERAR PDF -->
 <div id="pdfFolha" style="
 position:fixed;
@@ -306,18 +303,16 @@ background:white;
 padding:25px 30px;
 box-sizing:border-box;
 "></div>
-  
+<script>
 window.onload = function(){
 
   setTimeout(()=>{
 
-    const relatorio = document.getElementById("paginaRelatorio");
     const folha = document.getElementById("pdfFolha");
 
-    if(!relatorio) return;
-
-    // copia relatório para folha A4 invisível
-    folha.innerHTML = relatorio.outerHTML;
+    // ⭐ COPIA O SITE INTEIRO (igual ao outro gerador)
+    const conteudoCompleto = document.documentElement.outerHTML;
+    folha.innerHTML = conteudoCompleto;
 
     const opt = {
       margin:0,
@@ -329,7 +324,7 @@ window.onload = function(){
 
     html2pdf().set(opt).from(folha).save();
 
-  },2000); // espera renderizar tudo
+  },2000);
 
 }
 </script>
