@@ -238,24 +238,25 @@ Este relatório representa um mapa simbólico das suas tendências naturais.
 Utilize estas informações como ferramenta de autoconhecimento e evolução.
 </p>
 
-<div style="text-align:center;margin-top:40px">
-  <button onclick="gerarPDF()" style="
-    padding:20px 35px;
-    font-size:20px;
-    background:#22c55e;
-    color:white;
-    border:none;
-    border-radius:10px;
-    cursor:pointer;
-  ">
-    BAIXAR RELATÓRIO EM PDF
-  </button>
-</div>
+<script>
+window.onload = function(){
 
-</div>
-`;
+  const elemento = document.getElementById("paginaRelatorio");
+
+  const opt = {
+    margin:0,
+    filename:"Relatorio_Plano_Expressao.pdf",
+    image:{ type:"jpeg", quality:1 },
+    html2canvas:{ scale:2, useCORS:true },
+    jsPDF:{ unit:"mm", format:"a4", orientation:"portrait" }
+  };
+
+  // espera renderizar tudo antes de gerar
+  setTimeout(()=>{
+    html2pdf().set(opt).from(elemento).save();
+  },1200);
+
 }
-
 </script>
 
 <!-- LIB PDF -->
