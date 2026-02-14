@@ -269,6 +269,24 @@ function gerarPDF(){
   html2pdf().from(elemento).save("Relatorio_Premium.pdf");
 }
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
+<script>
+function gerarPDF(){
+
+  const elemento = document.getElementById("paginaRelatorio");
+
+  const opcoes = {
+    margin: 0,
+    filename: "Relatorio_Premium.pdf",
+    image: { type: "jpeg", quality: 0.98 },
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
+  };
+
+  html2pdf().set(opcoes).from(elemento).save();
+
+}
+</script>
 </body>
 </html>
