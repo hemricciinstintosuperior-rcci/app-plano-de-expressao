@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Relatório Premium</title>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
 body{
   font-family:Arial;
@@ -162,7 +162,49 @@ function liberarAcesso(){
 }
 </script>
 
+<script>
+function gerarPDF(){
 
+  // marca token como usado (bloqueia reuso)
+  localStorage.setItem("token_usado_"+token, "sim");
+
+  const elemento = document.createElement("div");
+
+  elemento.innerHTML = `
+  <div style="font-family:Arial;padding:40px">
+    <h1>RELATÓRIO PREMIUM</h1>
+    <hr>
+
+    <h2>Nome:</h2>
+    <p>${relatorio.nome}</p>
+
+    <h2>Data de nascimento:</h2>
+    <p>${relatorio.data}</p>
+
+    <h2>Perfil geral:</h2>
+    <p>${relatorio.perfil}</p>
+
+    <hr>
+    <h2>Físico</h2>
+    <p>${relatorio.fisicoTexto}</p>
+
+    <h2>Mental</h2>
+    <p>${relatorio.mentalTexto}</p>
+
+    <h2>Emocional</h2>
+    <p>${relatorio.emocionalTexto}</p>
+
+    <h2>Intuitivo</h2>
+    <p>${relatorio.intuitivoTexto}</p>
+
+    <br><br>
+    <h3>© Instituto RCCI</h3>
+  </div>
+  `;
+
+  html2pdf().from(elemento).save("Relatorio_Premium.pdf");
+}
+</script>
 
 </body>
 </html>
