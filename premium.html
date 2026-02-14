@@ -293,60 +293,8 @@ Utilize estas informações como ferramenta de autoconhecimento e evolução.
 }
 
 </script>
+
 <script>
-/*
-PDF AUTOMÁTICO DEFINITIVO
-Dispara quando o relatório já foi renderizado na tela
-e quando a biblioteca html2pdf está pronta.
-*/
-
-function baixarPDF(){
-
-  const elemento = document.getElementById("paginaRelatorio");
-  if(!elemento) return;
-
-  const opt = {
-    margin:0,
-    filename:"Relatorio_Plano_Expressao.pdf",
-    image:{ type:"jpeg", quality:1 },
-    html2canvas:{
-      scale:2,
-      useCORS:true,
-      scrollY:0
-    },
-    jsPDF:{
-      unit:"mm",
-      format:"a4",
-      orientation:"portrait"
-    }
-  };
-
-  html2pdf().set(opt).from(elemento).save();
-}
-
-
-// espera TUDO existir
-window.addEventListener("load", ()=>{
-
-  const esperarRelatorio = setInterval(()=>{
-
-    const pagina = document.getElementById("paginaRelatorio");
-
-    if(pagina && window.html2pdf){
-
-      clearInterval(esperarRelatorio);
-
-      // tempo extra pra renderizar fontes/layout
-      setTimeout(()=>{
-        baixarPDF();
-      },1500);
-
-    }
-
-  },300);
-
-});
-</script>
 
 <!-- FOLHA A4 INVISÍVEL PARA GERAR PDF -->
 <div id="pdfFolha" style="
@@ -358,7 +306,7 @@ background:white;
 padding:25px 30px;
 box-sizing:border-box;
 "></div>
-  <script>
+  
 window.onload = function(){
 
   setTimeout(()=>{
