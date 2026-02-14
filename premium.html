@@ -85,6 +85,9 @@ if(!dadosSalvos){
   "<p class='erro'>Nenhum mapa encontrado.<br>Volte e gere o mapa primeiro.</p>";
   throw new Error("Sem dados do mapa");
 }
+const relatorio = JSON.parse(dadosSalvos);
+console.log("Relatório carregado:", relatorio);
+  
 window.relatorio = JSON.parse(dadosSalvos);
 console.log("Relatório carregado:", relatorio);
 
