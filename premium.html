@@ -119,6 +119,62 @@ planos.forEach((plano, index)=>{
 });
 
 console.log("Níveis energéticos:", nivelPlano);
+ // ===============================
+// 📘 TEXTOS DO PLANO FÍSICO (PREMIUM)
+// ===============================
+
+const textosPremiumFisico = {
+
+dominante: `
+O plano físico aparece como a energia dominante da sua estrutura.
+Isso indica uma forte ligação com o mundo material, ação prática,
+produtividade e capacidade de transformar ideias em realidade.
+
+Existe tendência natural a agir, construir, realizar e buscar resultados
+concretos. A vida tende a ser vivida através da experiência direta,
+do movimento e da realização no mundo real.
+`,
+
+forte: `
+O plano físico possui grande presença na sua estrutura.
+Isso indica facilidade para lidar com o mundo material,
+rotina, produtividade e concretização de objetivos.
+
+Existe boa capacidade de transformar planos em ações e
+manter constância quando existe motivação clara.
+`,
+
+medio: `
+O plano físico apresenta equilíbrio dentro da sua estrutura.
+Existe capacidade de agir e realizar, porém isso depende
+do nível de motivação, disciplina e organização.
+
+A energia física não é escassa, mas precisa de direção
+e propósito para se manifestar com constância.
+`,
+
+fraco: `
+O plano físico surge como uma área que exige desenvolvimento.
+Pode existir dificuldade em manter constância, disciplina
+ou transformar ideias em ação contínua.
+
+A relação com rotina, energia corporal e produtividade
+precisa ser construída ao longo da vida.
+`,
+
+muito_fraco: `
+O plano físico aparece como a área mais sensível da sua estrutura.
+Pode existir tendência a viver mais no campo mental, emocional
+ou intuitivo do que na ação prática.
+
+Criar hábitos, rotina e disciplina torna-se essencial
+para transformar potencial em realização concreta.
+`
+};
+
+// inserir texto físico no relatório
+document.getElementById("textoFisico").innerText =
+  textosPremiumFisico[nivelPlano.fisico];  
   
  // ===============================
 // 🧾 PREENCHER RELATÓRIO PDF
