@@ -595,17 +595,16 @@ const pacoteRelatorio = {
   data: data,
   natural: natural,
   momento: momento,
-const pacoteRelatorio = {
-  nome: nome,
-  data: data,
-  natural: natural,
-  momento: momento,
 
-  // dados reais dos planos naturais
-  planos: resultadoPlanosNatural,
+  // valores dos planos naturais (das barras)
+  fisico: natural.fisico,
+  mental: natural.mental,
+  emocional: natural.emocional,
+  intuitivo: natural.intuitivo,
 
-  // texto completo do plano natural
-  textoCompleto: textoPlanoNaturalFinal
+  // textos completos já gerados na tela
+  textoNatural: document.getElementById("resumoNatural").innerText,
+  textoMomento: document.getElementById("resumoMomento").innerText
 };
 
 
