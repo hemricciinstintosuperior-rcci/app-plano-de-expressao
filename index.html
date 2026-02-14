@@ -504,9 +504,20 @@ function gerarStatusMomento(){
  // mostra na tela
  document.getElementById("resumoMomento").innerText = textoMomento;
 
+
+const textoBaseMomento = gerarTextoPlano("momento", dadosTextoMomento);
+
+// ⭐ pega o ano escolhido
+const anoSelecionado = document.getElementById("anoSelect").value;
+
+// ⭐ cria texto final com ano
+const textoMomentoFinal =
+"No ano de " + anoSelecionado + ", o seu Plano de Expressão do Momento revela:\n\n"
++ textoBaseMomento;
+
+// mostra na tela
+document.getElementById("resumoMomento").innerText = textoMomentoFinal;
 }
-
-
 //================ BARRAS (MANTIDAS)
 
 function atualizarBarra(tipo,valor,maior){
