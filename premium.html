@@ -148,15 +148,31 @@ function bloquear(msg){
 }
 
 function liberarAcesso(){
-  // marca token como usado
-  localStorage.setItem("token_usado_"+token, "usado");
 
   document.getElementById("conteudo").innerHTML = `
-    <h1 class="ok">Acesso liberado ✔</h1>
-    <p>Seu relatório personalizado está pronto.</p>
+    <h1 class="ok">Relatório Premium</h1>
+    <p>Confira seu relatório abaixo.</p>
 
-    <button onclick="gerarPDF()">
-      GERAR RELATÓRIO EM PDF
+    <div id="paginaRelatorio" style="text-align:left;margin-top:30px">
+
+      <h2>Nome</h2>
+      <p>${relatorio.nome || "Cliente"}</p>
+
+      <h2>Data de nascimento</h2>
+      <p>${relatorio.data || "-"}</p>
+
+      <hr>
+
+      <h2>Gráfico dos Planos</h2>
+      <p>Físico: ${relatorio.fisico || "-"}</p>
+      <p>Mental: ${relatorio.mental || "-"}</p>
+      <p>Emocional: ${relatorio.emocional || "-"}</p>
+      <p>Intuitivo: ${relatorio.intuitivo || "-"}</p>
+
+    </div>
+
+    <button onclick="gerarPDF()" style="margin-top:40px">
+      BAIXAR PDF
     </button>
   `;
 }
