@@ -262,19 +262,36 @@ Utilize estas informações como ferramenta de autoconhecimento e evolução.
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <script>
+<script>
 function gerarPDF(){
 
   const elemento = document.getElementById("paginaRelatorio");
 
-  const opcoes = {
-    margin: 0,
-    filename: "Relatorio_Premium.pdf",
-    image: { type: "jpeg", quality: 0.98 },
-    html2canvas: { scale: 2 },
-    jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
-  };
+  // espera fontes e layout carregarem (ESSENCIAL)
+  setTimeout(() => {
 
-  html2pdf().set(opcoes).from(elemento).save();
+    const opt = {
+      margin: 0,
+      filename: "Relatorio_Premium.pdf",
+      image: { type: "jpeg", quality: 1 },
+      html2canvas: { 
+        scale: 3,
+        useCORS: true,
+        scrollY: 0
+      },
+      jsPDF: { 
+        unit: "mm",
+        format: "a4",
+        orientation: "portrait"
+      }
+    };
+
+    html2pdf()
+      .from(elemento)
+      .set(opt)
+      .save();
+
+  }, 800); // espera renderizar a página
 
 }
 </script>
