@@ -52,9 +52,25 @@ Carregando acesso...
 </div>
 
 <script>
-/* =====================================
-   🔐 SISTEMA DE PROTEÇÃO PREMIUM
-===================================== */
+// ===============================
+// 📦 1) CARREGAR DADOS DO MAPA PRIMEIRO
+// ===============================
+const dadosSalvos = localStorage.getItem("relatorioMapa");
+
+if(!dadosSalvos){
+  document.getElementById("conteudo").innerHTML =
+  "<p class='erro'>Nenhum mapa encontrado.<br>Volte e gere o mapa primeiro.</p>";
+  throw new Error("Sem dados do mapa");
+}
+
+const relatorio = JSON.parse(dadosSalvos);
+console.log("Dados carregados:", relatorio);
+</script>
+
+<script>
+// =====================================
+// 🔐 2) SISTEMA DE PROTEÇÃO PREMIUM
+// =====================================
 
 // pega token da URL
 const params = new URLSearchParams(window.location.search);
@@ -92,6 +108,9 @@ function bloquear(msg){
 }
 
 function liberarAcesso(){
+  // marca token como usado
+  localStorage.setItem("token_usado_"+token, "usado");
+
   document.getElementById("conteudo").innerHTML = `
     <h1 class="ok">Acesso liberado ✔</h1>
     <p>Seu relatório personalizado está pronto.</p>
@@ -101,22 +120,6 @@ function liberarAcesso(){
     </button>
   `;
 }
-</script>
-<script>
-// ===============================
-// 📦 PUXAR DADOS DO MAPA GERADO
-// ===============================
-const dadosSalvos = localStorage.getItem("relatorioMapa");
-
-if(!dadosSalvos){
-  document.getElementById("conteudo").innerHTML =
-  "<p class='erro'>Nenhum mapa encontrado.<br>Gere o mapa primeiro.</p>";
-  throw new Error("Sem dados do mapa");
-}
-
-const relatorio = JSON.parse(dadosSalvos);
-
-console.log("Dados carregados:", relatorio);
 </script>
 
 
