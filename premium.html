@@ -150,30 +150,78 @@ function bloquear(msg){
 function liberarAcesso(){
 
   document.getElementById("conteudo").innerHTML = `
-    <h1 class="ok">Relatório Premium</h1>
-    <p>Confira seu relatório abaixo.</p>
+  <div id="paginaRelatorio" style="text-align:left;margin-top:30px">
 
-    <div id="paginaRelatorio" style="text-align:left;margin-top:30px">
+  <!-- CAPA -->
+  <h1 style="text-align:center;font-size:40px;margin-top:80px">
+    RELATÓRIO PREMIUM
+  </h1>
 
-      <h2>Nome</h2>
-      <p>${relatorio.nome || "Cliente"}</p>
+  <h2 style="text-align:center;margin-bottom:120px">
+    Plano de Expressão Cabalístico
+  </h2>
 
-      <h2>Data de nascimento</h2>
-      <p>${relatorio.data || "-"}</p>
+  <hr>
 
-      <hr>
+  <!-- DADOS -->
+  <h2>Dados do Cliente</h2>
+  <p><b>Nome:</b> ${relatorio.nome || "Cliente"}</p>
+  <p><b>Data de nascimento:</b> ${relatorio.data || "-"}</p>
 
-      <h2>Gráfico dos Planos</h2>
-      <p>Físico: ${relatorio.fisico || "-"}</p>
-      <p>Mental: ${relatorio.mental || "-"}</p>
-      <p>Emocional: ${relatorio.emocional || "-"}</p>
-      <p>Intuitivo: ${relatorio.intuitivo || "-"}</p>
+  <hr>
 
-    </div>
+  <!-- INTRODUÇÃO -->
+  <h2>O Plano de Expressão</h2>
+  <p>
+  O Plano de Expressão revela como a sua energia se manifesta nos quatro níveis da existência:
+  físico, mental, emocional e intuitivo. Cada plano representa uma forma de perceber a vida,
+  tomar decisões e interagir com o mundo.
+  </p>
 
-    <button onclick="gerarPDF()" style="margin-top:40px">
-      BAIXAR PDF
-    </button>
+  <p>
+  Este relatório apresenta a distribuição da sua energia nesses quatro planos e a interpretação
+  detalhada de cada um deles.
+  </p>
+
+  <hr>
+
+  <!-- GRÁFICO (dados) -->
+  <h2>Distribuição dos Planos</h2>
+  <p><b>Físico:</b> ${relatorio.fisico || "-"}</p>
+  <p><b>Mental:</b> ${relatorio.mental || "-"}</p>
+  <p><b>Emocional:</b> ${relatorio.emocional || "-"}</p>
+  <p><b>Intuitivo:</b> ${relatorio.intuitivo || "-"}</p>
+
+  <hr>
+
+  <!-- PLANOS -->
+  <h2>Plano Físico</h2>
+  <p id="textoFisico">Texto físico será inserido aqui.</p>
+
+  <hr>
+
+  <h2>Plano Mental</h2>
+  <p id="textoMental">Texto mental será inserido aqui.</p>
+
+  <hr>
+
+  <h2>Plano Emocional</h2>
+  <p id="textoEmocional">Texto emocional será inserido aqui.</p>
+
+  <hr>
+
+  <h2>Plano Intuitivo</h2>
+  <p id="textoIntuitivo">Texto intuitivo será inserido aqui.</p>
+
+  <hr>
+
+  <h2>Encerramento</h2>
+  <p>
+  Este relatório representa um mapa simbólico das suas tendências naturais.
+  Utilize estas informações como ferramenta de autoconhecimento e evolução.
+  </p>
+
+</div>
   `;
 }
 </script>
