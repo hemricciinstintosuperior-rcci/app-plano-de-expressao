@@ -237,11 +237,15 @@ ${relatorio.textoMomento}
 Este relatório representa um mapa simbólico das suas tendências naturais.
 Utilize estas informações como ferramenta de autoconhecimento e evolução.
 </p>
+</div>
+`;
+}
 
 <script>
-window.onload = function(){
-
+// gera PDF automaticamente quando o relatório aparecer
+function gerarPDFautomatico(){
   const elemento = document.getElementById("paginaRelatorio");
+  if(!elemento) return;
 
   const opt = {
     margin:0,
@@ -251,48 +255,20 @@ window.onload = function(){
     jsPDF:{ unit:"mm", format:"a4", orientation:"portrait" }
   };
 
-  // espera renderizar tudo antes de gerar
   setTimeout(()=>{
     html2pdf().set(opt).from(elemento).save();
-  },1200);
-
+  },1500);
 }
-</script>
 
-<!-- LIB PDF -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+// observa quando o relatório entra na tela
+const observer = new MutationObserver(()=>{
+  if(document.getElementById("paginaRelatorio")){
+    gerarPDFautomatico();
+    observer.disconnect();
+  }
+});
 
-<script>
-function gerarPDF(){
-
-  const elemento = document.getElementById("paginaRelatorio");
-
-  setTimeout(() => {
-
-    const opt = {
-      margin: 0,
-      filename: "Relatorio_Premium.pdf",
-      image: { type: "jpeg", quality: 1 },
-      html2canvas: { 
-        scale: 3,
-        useCORS: true,
-        scrollY: 0
-      },
-      jsPDF: { 
-        unit: "mm",
-        format: "a4",
-        orientation: "portrait"
-      }
-    };
-
-    html2pdf()
-      .from(elemento)
-      .set(opt)
-      .save();
-
-  }, 800);
-
-}
+observer.observe(document.body,{childList:true,subtree:true});
 </script>
 
 </body>
