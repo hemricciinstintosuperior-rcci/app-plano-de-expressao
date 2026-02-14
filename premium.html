@@ -64,7 +64,28 @@ p{ font-size:16px; line-height:1.6; }
 #conteudo{
   background:#0f172a;
 } 
-  
+ /* ===== FOLHA A4 ===== */
+
+.folha{
+  width: 210mm;
+  min-height: 297mm;
+  background: white;
+  padding: 25mm;
+  margin: 20px auto;
+  box-shadow: 0 0 15px rgba(0,0,0,0.15);
+}
+.page-break{
+  page-break-after: always;
+}
+@media print{
+  body{
+    background:white;
+  }
+  .folha{
+    box-shadow:none;
+    margin:0;
+  }
+} 
 </style>
 </head>
 
@@ -182,7 +203,8 @@ function bloquear(msg){
 function liberarAcesso(){
 
   document.getElementById("conteudo").innerHTML = `
-  <div id="paginaRelatorio" style="text-align:left;margin-top:30px">
+  <div id="paginaRelatorio">
+  <div class="folha">
 
   <!-- CAPA -->
   <h1 style="text-align:center;font-size:40px;margin-top:80px">
@@ -193,7 +215,7 @@ function liberarAcesso(){
     Plano de Expressão Cabalístico
 </h2>
 
-<div style="page-break-after:always"></div>
+<div class="page-break"></div>
 
 <hr>
   <!-- DADOS -->
@@ -265,6 +287,7 @@ ${relatorio.textoMomento}
 Este relatório representa um mapa simbólico das suas tendências naturais.
 Utilize estas informações como ferramenta de autoconhecimento e evolução.
 </p>
+</div>
 </div>
 `;
 }
