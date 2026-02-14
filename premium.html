@@ -270,29 +270,58 @@ Utilize estas informações como ferramenta de autoconhecimento e evolução.
 }
 
 </script>
-  <script>
-window.addEventListener("load", () => {
+<script>
+/*
+PDF AUTOMÁTICO DEFINITIVO
+Dispara quando o relatório já foi renderizado na tela
+e quando a biblioteca html2pdf está pronta.
+*/
 
-  const observer = new MutationObserver(()=>{
+function baixarPDF(){
+
+  const elemento = document.getElementById("paginaRelatorio");
+  if(!elemento) return;
+
+  const opt = {
+    margin:0,
+    filename:"Relatorio_Plano_Expressao.pdf",
+    image:{ type:"jpeg", quality:1 },
+    html2canvas:{
+      scale:2,
+      useCORS:true,
+      scrollY:0
+    },
+    jsPDF:{
+      unit:"mm",
+      format:"a4",
+      orientation:"portrait"
+    }
+  };
+
+  html2pdf().set(opt).from(elemento).save();
+}
+
+
+// espera TUDO existir
+window.addEventListener("load", ()=>{
+
+  const esperarRelatorio = setInterval(()=>{
+
     const pagina = document.getElementById("paginaRelatorio");
-    if(!pagina) return;
 
-    const opt = {
-      margin:0,
-      filename:"Relatorio_Plano_Expressao.pdf",
-      image:{ type:"jpeg", quality:1 },
-      html2canvas:{ scale:3, useCORS:true, scroll:1 },
-      jsPDF:{ unit:"mm", format:"a4", orientation:"portrait" }
-    };
+    if(pagina && window.html2pdf){
 
-    setTimeout(()=>{
-      html2pdf().set(opt).from(pagina).save();
-    },1500);
+      clearInterval(esperarRelatorio);
 
-    observer.disconnect();
-  });
+      // tempo extra pra renderizar fontes/layout
+      setTimeout(()=>{
+        baixarPDF();
+      },1500);
 
-  observer.observe(document.body,{childList:true,subtree:true});
+    }
+
+  },300);
+
 });
 </script>
 
