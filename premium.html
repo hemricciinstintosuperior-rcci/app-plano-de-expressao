@@ -50,7 +50,29 @@ button{
 <div class="card" id="conteudo">
 Carregando acesso...
 </div>
+<!-- AREA DO RELATÓRIO (fica escondida até gerar PDF) -->
+<div id="relatorioPDF" style="display:none; background:white; color:black; padding:40px">
 
+  <h1>RELATÓRIO PREMIUM</h1>
+  <h2>Plano de Expressão Cabalístico</h2>
+
+  <hr>
+
+  <h2>DADOS DO CLIENTE</h2>
+  <p id="pdfNome"></p>
+  <p id="pdfData"></p>
+
+  <hr>
+
+  <h2>OS 4 PLANOS DA EXISTÊNCIA</h2>
+  <p>
+  Este relatório revela como sua energia se distribui entre os quatro planos
+  fundamentais da existência humana: físico, mental, emocional e intuitivo.
+  </p>
+
+  <div id="pdfResultados"></div>
+
+</div>
 <script>
 // ===============================
 // 📦 1) CARREGAR DADOS DO MAPA PRIMEIRO
@@ -65,6 +87,24 @@ if(!dadosSalvos){
 
 const relatorio = JSON.parse(dadosSalvos);
 console.log("Dados carregados:", relatorio);
+ // ===============================
+// 🧾 PREENCHER RELATÓRIO PDF
+// ===============================
+
+// dados básicos
+document.getElementById("pdfNome").innerHTML =
+  "<b>Nome:</b> " + relatorio.nome;
+
+document.getElementById("pdfData").innerHTML =
+  "<b>Data de nascimento:</b> " + relatorio.data;
+
+// resultados dos planos
+document.getElementById("pdfResultados").innerHTML = `
+  <p><b>Plano Físico:</b> ${relatorio.fisico}</p>
+  <p><b>Plano Mental:</b> ${relatorio.mental}</p>
+  <p><b>Plano Emocional:</b> ${relatorio.emocional}</p>
+  <p><b>Plano Intuitivo:</b> ${relatorio.intuitivo}</p>
+`; 
 </script>
 
 <script>
