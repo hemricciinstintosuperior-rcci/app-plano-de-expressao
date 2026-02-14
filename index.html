@@ -132,31 +132,18 @@ function gerarTextoPlano(tipo, dados){
     const nivel = dados[plano].nivel;   // fraco medio forte
     const numero = dados[plano].numero; // 1 a 9
 
-    // 🔹 TEXTO BASE DO PLANO (intensidade)
-    let textoBase = planosBase?.[plano]?.[nivel] || "";
-
-    // 🔹 TEXTO DO NÚMERO
-    let textoNumero = numerosPlanos?.[plano]?.[numero] || "";
-
+   
     // 🔹 CONECTOR ENTRE PLANOS
     if(i > 0){
       const conector = conectores[Math.floor(Math.random()*conectores.length)];
       textoFinal += "\n\n" + conector + "\n\n";
     }
 
-    // 🔹 MONTA PARÁGRAFO DO PLANO
-    let blocoPlano = "";
+  
 
-    if(textoBase) blocoPlano += textoBase.trim();
-    if(textoNumero){
-      if(blocoPlano.length > 0) blocoPlano += " ";
-      blocoPlano += textoNumero.trim();
-    }
-
-    // fallback se ainda não tiver textos criados
-    if(!blocoPlano){
-      blocoPlano = `[Texto ainda não criado: ${plano} ${nivel} nº ${numero}]`;
-    }
+// 🔹 NOVO MOTOR (BANCO textosPlanos)
+let blocoPlano = textosPlanos?.[plano]?.[nivel]?.[numero] || 
+`[Texto ainda não criado: ${plano} ${nivel} nº ${numero}]`;
 
     textoFinal += blocoPlano;
 
@@ -324,19 +311,19 @@ function preencherSeletorAnos(){
 
 function gerarStatusMomento(){
 
- const ano=document.getElementById("anoSelect").value;
+ const ano = document.getElementById("anoSelect").value;
  if(!ano){
    alert("Selecione um ano.");
    return;
  }
 
- const dados=bancoMomentos.find(a=>a.ano==ano);
+ const dados = bancoMomentos.find(a => a.ano == ano);
  if(!dados){
    alert("Erro ao localizar dados do ano.");
    return;
  }
 
- const maior=Math.max(dados.fisico,dados.mental,dados.emocional,dados.intuitivo);
+ const maior = Math.max(dados.fisico,dados.mental,dados.emocional,dados.intuitivo);
 
  // atualiza barras
  atualizarBarra("Fisico",dados.fisico,maior);
@@ -344,8 +331,8 @@ function gerarStatusMomento(){
  atualizarBarra("Emocional",dados.emocional,maior);
  atualizarBarra("Intuitivo",dados.intuitivo,maior);
 
- // 🔢 reduz números
- const reducoes={
+ // 🔢 números reduzidos
+ const reducoesMomento = {
    fisico: reduzirNumero(dados.fisico),
    mental: reduzirNumero(dados.mental),
    emocional: reduzirNumero(dados.emocional),
@@ -353,30 +340,33 @@ function gerarStatusMomento(){
  };
 
  // 🔵 classifica intensidade
- function classificar(valor,maior){
-   if(valor>=maior*0.75) return "forte";
-   if(valor>=maior*0.5) return "medio";
+ function classificar(valor, maior){
+   if(valor >= maior*0.75) return "forte";
+   if(valor >= maior*0.5) return "medio";
    return "fraco";
  }
 
- const intensidades={
-   fisico: classificar(dados.fisico,maior),
-   mental: classificar(dados.mental,maior),
-   emocional: classificar(dados.emocional,maior),
-   intuitivo: classificar(dados.intuitivo,maior)
+ const intensidadesMomento = {
+   fisico: classificar(dados.fisico, maior),
+   mental: classificar(dados.mental, maior),
+   emocional: classificar(dados.emocional, maior),
+   intuitivo: classificar(dados.intuitivo, maior)
  };
 
- // 🧠 prepara objeto igual ao plano natural
- const dadosTexto={
-   fisico:{nivel:intensidades.fisico,numero:reducoes.fisico},
-   mental:{nivel:intensidades.mental,numero:reducoes.mental},
-   emocional:{nivel:intensidades.emocional,numero:reducoes.emocional},
-   intuitivo:{nivel:intensidades.intuitivo,numero:reducoes.intuitivo}
+ // 🧠 objeto pro motor de texto
+ const dadosTextoMomento = {
+   fisico:{ nivel:intensidadesMomento.fisico, numero:reducoesMomento.fisico },
+   mental:{ nivel:intensidadesMomento.mental, numero:reducoesMomento.mental },
+   emocional:{ nivel:intensidadesMomento.emocional, numero:reducoesMomento.emocional },
+   intuitivo:{ nivel:intensidadesMomento.intuitivo, numero:reducoesMomento.intuitivo }
  };
 
- // gera texto automático
- const textoMomento=gerarTextoPlano("momento",dadosTexto);
- document.getElementById("resumoMomento").innerText=textoMomento;
+ // ✨ gera texto final
+ const textoMomento = gerarTextoPlano("momento", dadosTextoMomento);
+
+ // mostra na tela
+ document.getElementById("resumoMomento").innerText = textoMomento;
+
 }
 
 
@@ -394,6 +384,8 @@ function atualizarBarra(tipo,valor,maior){
  document.getElementById("txt"+tipo).innerText=valor;
 }
 
+
+
 function atualizarBarraNatural(tipo,valor,maior,reducao){
  let largura=0;
 
@@ -406,12 +398,30 @@ function atualizarBarraNatural(tipo,valor,maior,reducao){
  document.getElementById("txt"+tipo).innerText=
   valor+" → Número "+reducao;
 }
+// =======================
+// BOTÃO PRINCIPAL
+// =======================
 function gerarTudo(){
- const nome=document.getElementById("nome").value;
- const data=document.getElementById("dataNascimento").value;
- planoNatural(nome);
- planoMomento(nome,data);
+
+  const nome = document.getElementById("nome").value;
+  const data = document.getElementById("dataNascimento").value;
+
+  if(!nome || !data){
+    alert("Digite nome e data.");
+    return;
+  }
+
+  // gera plano natural
+  planoNatural(nome);
+
+  // gera timeline do momento
+  planoMomento(nome, data);
+
+  // já calcula automaticamente o primeiro status
+  gerarStatusMomento();
+
 }
+
 //================ EXPORTAR PARA RELATÓRIO PREMIUM
 function exportarRelatorio(){
 
