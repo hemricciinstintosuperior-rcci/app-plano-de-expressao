@@ -348,7 +348,43 @@ window.addEventListener("load", ()=>{
 });
 </script>
 
+<!-- FOLHA A4 INVISÍVEL PARA GERAR PDF -->
+<div id="pdfFolha" style="
+position:fixed;
+left:-99999px;
+top:0;
+width:794px;
+background:white;
+padding:25px 30px;
+box-sizing:border-box;
+"></div>
+  <script>
+window.onload = function(){
 
+  setTimeout(()=>{
+
+    const relatorio = document.getElementById("paginaRelatorio");
+    const folha = document.getElementById("pdfFolha");
+
+    if(!relatorio) return;
+
+    // copia relatório para folha A4 invisível
+    folha.innerHTML = relatorio.outerHTML;
+
+    const opt = {
+      margin:0,
+      filename:"Relatorio_Plano_Expressao.pdf",
+      image:{ type:"jpeg", quality:1 },
+      html2canvas:{ scale:2, useCORS:true },
+      jsPDF:{ unit:"px", format:"a4", orientation:"portrait" }
+    };
+
+    html2pdf().set(opt).from(folha).save();
+
+  },2000); // espera renderizar tudo
+
+}
+</script>
 </body>
 </html>
 
