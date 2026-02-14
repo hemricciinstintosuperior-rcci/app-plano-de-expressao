@@ -242,9 +242,19 @@ Utilize estas informações como ferramenta de autoconhecimento e evolução.
 }
 
 
-// gera PDF automaticamente quando o relatório aparecer
+
 <script>
-// gera PDF automaticamente quando o relatório aparecer
+// espera a lib html2pdf existir
+function esperarHtml2pdf(callback){
+  const intervalo = setInterval(()=>{
+    if(window.html2pdf){
+      clearInterval(intervalo);
+      callback();
+    }
+  },200);
+}
+
+// gera o PDF
 function gerarPDFautomatico(){
   const elemento = document.getElementById("paginaRelatorio");
   if(!elemento) return;
@@ -260,16 +270,18 @@ function gerarPDFautomatico(){
   html2pdf().set(opt).from(elemento).save();
 }
 
-// espera a página carregar completamente
+// espera a página + relatório + biblioteca
 window.addEventListener("load", () => {
 
   const observer = new MutationObserver(()=>{
     const pagina = document.getElementById("paginaRelatorio");
 
     if(pagina){
-      setTimeout(() => {
-        gerarPDFautomatico();
-      }, 1200);
+      esperarHtml2pdf(()=>{
+        setTimeout(()=>{
+          gerarPDFautomatico();
+        },1200);
+      });
 
       observer.disconnect();
     }
@@ -279,8 +291,6 @@ window.addEventListener("load", () => {
 
 });
 </script>
-
 </body>
 </html>
-
 
