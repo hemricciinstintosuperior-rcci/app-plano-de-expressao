@@ -311,7 +311,9 @@ function descobrirPlano(letra){
 
 //================ BANCO ANUAL
 let bancoMomentos=[];
-
+// ===== DADOS GLOBAIS PARA O RELATÓRIO PREMIUM =====
+let resultadoPlanosNatural = null;
+let textoPlanoNaturalFinal = "";
 //================ PLANO NATURAL
 function planoNatural(nome){
 
@@ -356,6 +358,9 @@ const dadosTexto = {
 
 // gera texto final correto
 const textoPlanoNatural = gerarTextoPlano("natural", dadosTexto);
+// salva para o relatório premium
+resultadoPlanosNatural = dadosTexto;
+textoPlanoNaturalFinal = textoPlanoNatural;  
 
 // mostra na tela
 document.getElementById("resumoNatural").innerText = textoPlanoNatural;
@@ -590,25 +595,20 @@ const pacoteRelatorio = {
   data: data,
   natural: natural,
   momento: momento,
+const pacoteRelatorio = {
+  nome: nome,
+  data: data,
+  natural: natural,
+  momento: momento,
 
-  // RESULTADOS NUMÉRICOS DOS PLANOS
-  fisico: resultadoFisico,
-  mental: resultadoMental,
-  emocional: resultadoEmocional,
-  intuitivo: resultadoIntuitivo,
+  // dados reais dos planos naturais
+  planos: resultadoPlanosNatural,
 
-  // CLASSIFICAÇÃO (forte/médio/fraco)
-  fisicoNivel: nivelFisico,
-  mentalNivel: nivelMental,
-  emocionalNivel: nivelEmocional,
-  intuitivoNivel: nivelIntuitivo,
-
-  // TEXTOS GERADOS
-  fisicoTexto: textoFisicoFinal,
-  mentalTexto: textoMentalFinal,
-  emocionalTexto: textoEmocionalFinal,
-  intuitivoTexto: textoIntuitivoFinal
+  // texto completo do plano natural
+  textoCompleto: textoPlanoNaturalFinal
 };
+
+
  // salva no navegador
  localStorage.setItem("relatorioMapa", JSON.stringify(pacoteRelatorio));
 
