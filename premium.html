@@ -158,18 +158,87 @@ function bloquear(msg){
 
 function liberarAcesso(){
 
-  // mostra o relatório já existente no HTML
-  const area = document.getElementById("relatorioPDF");
-  area.style.display = "block";
+  document.getElementById("conteudo").innerHTML = `
+  <div id="paginaRelatorio" style="text-align:left;margin-top:30px">
 
-  // esconde a tela de carregamento
-  document.getElementById("conteudo").style.display = "none";
+  <!-- CAPA -->
+  <h1 style="text-align:center;font-size:40px;margin-top:80px">
+    RELATÓRIO PREMIUM
+  </h1>
 
-  // espera renderizar e gera PDF
-  setTimeout(()=>{
-      html2pdf().from(area).save("Relatorio_Plano_Expressao.pdf");
-  },1500);
+  <h2 style="text-align:center;margin-bottom:120px">
+    Plano de Expressão Cabalístico
+</h2>
 
+<div style="page-break-after:always"></div>
+
+<hr>
+  <!-- DADOS -->
+  <h2>Dados do Cliente</h2>
+  <p><b>Nome:</b> ${relatorio.nome || "Cliente"}</p>
+  <p><b>Data de nascimento:</b> ${relatorio.data || "-"}</p>
+
+  <hr>
+
+  <!-- INTRODUÇÃO -->
+  <h2>O Plano de Expressão</h2>
+<p>
+O Plano de Expressão Cabalístico é uma análise profunda baseada na estrutura vibracional do seu nome e da sua data de nascimento.
+Este estudo revela como suas energias se organizam nos quatro planos fundamentais da experiência humana:
+o plano físico, mental, emocional e intuitivo.
+</p>
+
+<p>
+Cada um desses planos representa uma dimensão da forma como você pensa, sente, age e percebe a realidade.
+Quando estão equilibrados, a pessoa vive com clareza, propósito e direção.
+Quando estão em desequilíbrio, surgem bloqueios, conflitos internos e sensação de falta de sentido.
+</p>
+
+<p>
+Este relatório foi desenvolvido para revelar sua estrutura energética individual,
+mostrando seus pontos fortes, desafios naturais e caminhos de evolução pessoal.
+</p>
+
+<p>
+Ao longo das próximas páginas, você encontrará a análise detalhada de cada plano,
+seguida de interpretações personalizadas baseadas nos seus resultados.
+</p>
+
+  <hr>
+
+  <!-- GRÁFICO (dados) -->
+  <h2>Distribuição dos Planos</h2>
+  <p><b>Físico:</b> ${relatorio.fisico || "-"}</p>
+  <p><b>Mental:</b> ${relatorio.mental || "-"}</p>
+  <p><b>Emocional:</b> ${relatorio.emocional || "-"}</p>
+  <p><b>Intuitivo:</b> ${relatorio.intuitivo || "-"}</p>
+
+  <hr>
+
+  <!-- PLANOS -->
+ <!-- PLANOS -->
+<hr>
+
+<h2>Plano de Expressão Natural</h2>
+<p style="white-space:pre-line">
+${relatorio.textoNatural}
+</p>
+
+<hr>
+
+<h2>Status do Momento</h2>
+<p style="white-space:pre-line">
+${relatorio.textoMomento}
+</p>
+  <hr>
+
+<h2>Encerramento</h2>
+<p>
+Este relatório representa um mapa simbólico das suas tendências naturais.
+Utilize estas informações como ferramenta de autoconhecimento e evolução.
+</p>
+</div>
+`;
 }
 
 </script>
