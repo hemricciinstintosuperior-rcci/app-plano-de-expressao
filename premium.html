@@ -42,6 +42,29 @@ button{
   color:#22c55e;
   font-size:22px;
 }
+#paginaRelatorio{
+  width:210mm;
+  min-height:297mm;
+  padding:20mm;
+  margin:auto;
+  background:white;
+  color:black;
+  font-family:Arial;
+  box-sizing:border-box;
+}
+
+h1{ font-size:32px; }
+h2{ font-size:24px; margin-top:20px; }
+p{ font-size:16px; line-height:1.6; }
+
+ body{
+  background:#0f172a;
+}
+
+#conteudo{
+  background:#0f172a;
+} 
+  
 </style>
 </head>
 
@@ -253,7 +276,7 @@ window.addEventListener("load", () => {
       margin:0,
       filename:"Relatorio_Plano_Expressao.pdf",
       image:{ type:"jpeg", quality:1 },
-      html2canvas:{ scale:2, useCORS:true },
+      html2canvas:{ scale:3, useCORS:true, scrolly:0 },
       jsPDF:{ unit:"mm", format:"a4", orientation:"portrait" }
     };
 
