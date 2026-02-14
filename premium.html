@@ -85,244 +85,7 @@ if(!dadosSalvos){
   throw new Error("Sem dados do mapa");
 }
 
-const relatorio = JSON.parse(dadosSalvos);
-console.log("Dados carregados:", relatorio);
-// ===============================
-// 🧠 MOTOR DE CLASSIFICAÇÃO DOS PLANOS
-// ===============================
 
-const planos = [
-  {nome:"fisico", valor: Number(relatorio.fisico)},
-  {nome:"mental", valor: Number(relatorio.mental)},
-  {nome:"emocional", valor: Number(relatorio.emocional)},
-  {nome:"intuitivo", valor: Number(relatorio.intuitivo)}
-];
-
-// ordenar do maior para o menor
-planos.sort((a,b)=> b.valor - a.valor);
-
-// função que detecta empates (diferença até 2 pontos)
-function nivelEnergetico(posicao){
-  const diffTopo = Math.abs(planos[0].valor - planos[posicao].valor);
-  if(posicao === 0) return "dominante";
-  if(diffTopo <= 2) return "forte";
-  if(posicao === 1) return "medio";
-  if(posicao === 2) return "fraco";
-  return "muito_fraco";
-}
-
-// criar objeto final com classificação
-const nivelPlano = {};
-
-planos.forEach((plano, index)=>{
-  nivelPlano[plano.nome] = nivelEnergetico(index);
-});
-
-console.log("Níveis energéticos:", nivelPlano);
- // ===============================
-// 📘 TEXTOS DO PLANO FÍSICO (PREMIUM)
-// ===============================
-
-const textosPremiumFisico = {
-
-dominante: `
-O plano físico aparece como a energia dominante da sua estrutura.
-Isso indica uma forte ligação com o mundo material, ação prática,
-produtividade e capacidade de transformar ideias em realidade.
-
-Existe tendência natural a agir, construir, realizar e buscar resultados
-concretos. A vida tende a ser vivida através da experiência direta,
-do movimento e da realização no mundo real.
-`,
-
-forte: `
-O plano físico possui grande presença na sua estrutura.
-Isso indica facilidade para lidar com o mundo material,
-rotina, produtividade e concretização de objetivos.
-
-Existe boa capacidade de transformar planos em ações e
-manter constância quando existe motivação clara.
-`,
-
-medio: `
-O plano físico apresenta equilíbrio dentro da sua estrutura.
-Existe capacidade de agir e realizar, porém isso depende
-do nível de motivação, disciplina e organização.
-
-A energia física não é escassa, mas precisa de direção
-e propósito para se manifestar com constância.
-`,
-
-fraco: `
-O plano físico surge como uma área que exige desenvolvimento.
-Pode existir dificuldade em manter constância, disciplina
-ou transformar ideias em ação contínua.
-
-A relação com rotina, energia corporal e produtividade
-precisa ser construída ao longo da vida.
-`,
-
-muito_fraco: `
-O plano físico aparece como a área mais sensível da sua estrutura.
-Pode existir tendência a viver mais no campo mental, emocional
-ou intuitivo do que na ação prática.
-
-Criar hábitos, rotina e disciplina torna-se essencial
-para transformar potencial em realização concreta.
-`
-};
-
-// inserir texto físico no relatório
-document.getElementById("textoFisico").innerText =
-  textosPremiumFisico[nivelPlano.fisico];  
-
-  // ===============================
-// 🧠 TEXTOS DO PLANO MENTAL (PREMIUM)
-// ===============================
-
-const textosPremiumMental = {
-
-dominante: `
-O plano mental surge como a força dominante da sua estrutura.
-Sua vida é guiada principalmente pelo pensamento, análise,
-planejamento e busca de compreensão.
-
-Existe forte necessidade de entender o mundo, organizar ideias
-e encontrar lógica nas experiências da vida.
-`,
-
-forte: `
-O plano mental possui grande presença na sua estrutura.
-Existe facilidade para raciocinar, aprender, planejar
-e compreender situações com clareza.
-
-A mente atua como ferramenta importante nas decisões.
-`,
-
-medio: `
-O plano mental apresenta equilíbrio dentro da sua estrutura.
-Você utiliza o pensamento e a razão de forma funcional,
-mas sem viver excessivamente no mundo mental.
-
-Existe equilíbrio entre pensar e agir.
-`,
-
-fraco: `
-O plano mental surge como área de desenvolvimento.
-Pode existir dificuldade em planejamento, organização
-ou clareza de pensamentos em algumas fases da vida.
-
-Desenvolver foco e disciplina mental torna-se importante.
-`,
-
-muito_fraco: `
-O plano mental aparece como o ponto mais sensível da estrutura.
-Pode existir tendência a agir ou sentir antes de refletir.
-
-Trabalhar organização mental e clareza de pensamento
-torna-se essencial para o crescimento pessoal.
-`
-};
-document.getElementById("textoMental").innerText =
-  textosPremiumMental[nivelPlano.mental];
-
-// ===============================
-// ❤️ TEXTOS DO PLANO EMOCIONAL (PREMIUM)
-// ===============================
-
-const textosPremiumEmocional = {
-
-dominante: `
-O plano emocional surge como a força dominante da sua estrutura.
-A vida é vivida com intensidade, sensibilidade e profundidade afetiva.
-
-Sentimentos, vínculos e experiências emocionais possuem grande
-influência nas suas decisões e na forma como você percebe o mundo.
-`,
-
-forte: `
-O plano emocional possui grande presença na sua estrutura.
-Existe facilidade para sentir, conectar-se e compreender
-o universo emocional das pessoas.
-
-As emoções atuam como guia importante nas escolhas.
-`,
-
-medio: `
-O plano emocional apresenta equilíbrio dentro da sua estrutura.
-Você sente e expressa emoções de forma saudável,
-sem excessos ou bloqueios significativos.
-
-Existe equilíbrio entre razão e sentimento.
-`,
-
-fraco: `
-O plano emocional surge como área de desenvolvimento.
-Pode existir dificuldade em expressar sentimentos
-ou compreender emoções mais profundas.
-
-Aprender a reconhecer e validar emoções torna-se importante.
-`,
-
-muito_fraco: `
-O plano emocional aparece como o ponto mais sensível da estrutura.
-Pode existir tendência a reprimir sentimentos
-ou evitar envolvimento emocional profundo.
-
-Desenvolver sensibilidade e conexão afetiva torna-se essencial.
-`
-};
-
- document.getElementById("textoEmocional").innerText =
-  textosPremiumEmocional[nivelPlano.emocional];
-  // ===============================
-// 🔮 TEXTOS DO PLANO INTUITIVO (PREMIUM)
-// ===============================
-
-const textosPremiumIntuitivo = {
-
-dominante: `
-O plano intuitivo surge como a força dominante da sua estrutura.
-Existe forte percepção do invisível, sensibilidade energética
-e capacidade natural de antecipar situações.
-
-Você tende a confiar em pressentimentos e percepções internas.
-`,
-
-forte: `
-O plano intuitivo possui grande presença na sua estrutura.
-Existe facilidade para perceber padrões, sinais e
-compreender situações além da lógica racional.
-
-A intuição atua como importante guia nas decisões.
-`,
-
-medio: `
-O plano intuitivo apresenta equilíbrio dentro da sua estrutura.
-Existe abertura para percepções sutis sem perder
-o senso prático e racional.
-
-Intuição e razão convivem de forma harmônica.
-`,
-
-fraco: `
-O plano intuitivo surge como área de desenvolvimento.
-Pode existir dificuldade em confiar na própria intuição
-ou perceber sinais sutis da vida.
-
-Desenvolver escuta interior torna-se importante.
-`,
-
-muito_fraco: `
-O plano intuitivo aparece como o ponto mais sensível da estrutura.
-Pode existir tendência a ignorar percepções internas
-e confiar apenas no que é concreto e lógico.
-
-Aprender a ouvir a intuição torna-se essencial.
-`
-};
-document.getElementById("textoIntuitivo").innerText =
-  textosPremiumIntuitivo[nivelPlano.intuitivo];
   
 
   
@@ -449,23 +212,19 @@ seguida de interpretações personalizadas baseadas nos seus resultados.
 
   <!-- PLANOS -->
  <!-- PLANOS -->
-<h2>Plano Físico</h2>
-<p>${relatorio.fisicoTexto}</p>
+<hr>
+
+<h2>Plano de Expressão Natural</h2>
+<p style="white-space:pre-line">
+${relatorio.textoNatural}
+</p>
 
 <hr>
 
-<h2>Plano Mental</h2>
-<p>${relatorio.mentalTexto}</p>
-
-<hr>
-
-<h2>Plano Emocional</h2>
-<p>${relatorio.emocionalTexto}</p>
-
-<hr>
-
-<h2>Plano Intuitivo</h2>
-<p>${relatorio.intuitivoTexto}</p>
+<h2>Status do Momento</h2>
+<p style="white-space:pre-line">
+${relatorio.textoMomento}
+</p>
   <hr>
 
   <h2>Encerramento</h2>
