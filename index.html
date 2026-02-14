@@ -118,29 +118,178 @@ function calcularValorComAcentos(letra){
 
 function gerarTextoPlano(tipo, dados){
 
-  let textoFinal = "";
+  let textoFinal = gerarIntroducao(tipo, dados) + "\n\n";
 
   const ordemPlanos = ["fisico","mental","emocional","intuitivo"];
 
+  // 🔹 INTRODUÇÃO
+  if(introducoes && introducoes[tipo]){
+    textoFinal += introducoes[tipo].trim() + "\n\n";
+  }
+
   ordemPlanos.forEach((plano, i)=>{
 
-    const nivel = dados[plano].nivel;
-    const numero = dados[plano].numero;
+    const nivel = dados[plano].nivel;   // fraco medio forte
+    const numero = dados[plano].numero; // 1 a 9
 
-    // pega texto do banco textosPlanos (que está no textos.js)
-    const textoPlanoNumero = textosPlanos[plano][nivel][numero];
-
-    if(i>0){
-      textoFinal += "\n\n";
+   
+    // 🔹 CONECTOR ENTRE PLANOS
+    if(i > 0){
+      const conector = conectores[Math.floor(Math.random()*conectores.length)];
+      textoFinal += "\n\n" + conector + "\n\n";
     }
 
-    textoFinal += textoPlanoNumero || 
-      `[Texto ainda não criado: ${plano} ${nivel} nº ${numero}]`;
+  
+
+// 🔹 NOVO MOTOR (BANCO textosPlanos)
+let blocoPlano = textosPlanos?.[plano]?.[nivel]?.[numero] || 
+`[Texto ainda não criado: ${plano} ${nivel} nº ${numero}]`;
+
+    textoFinal += blocoPlano;
 
   });
 
-  return textoFinal;
-}function reduzirNumero(n){
+  // 🔹 CONCLUSÃO
+  if(conclusoes && conclusoes[tipo]){
+    textoFinal += "\n\n" + conclusoes[tipo].trim();
+  }
+
+ textoFinal += "\n\n" + gerarConclusao(tipo, dados);
+return textoFinal;
+}
+
+
+
+// ===============================
+// ANALISADOR GERAL DO MAPA
+// ===============================
+
+function analisarMapa(dados){
+
+  const planos = ["fisico","mental","emocional","intuitivo"];
+
+  let fortes = [];
+  let medios = [];
+  let fracos = [];
+
+  planos.forEach(p=>{
+    if(dados[p].nivel === "forte") fortes.push(p);
+    else if(dados[p].nivel === "medio") medios.push(p);
+    else fracos.push(p);
+  });
+
+  // plano dominante (se existir)
+  let dominante = fortes.length === 1 ? fortes[0] : null;
+
+  // dupla dominante
+  let duplaDominante = fortes.length === 2 ? fortes : null;
+
+  // equilíbrio geral
+  let equilibrado = fortes.length === 0 && fracos.length === 0;
+
+  // mapa muito interno (mental + emocional + intuitivo fortes)
+  let interno = fortes.filter(p=>p!=="fisico").length >= 2;
+
+  // mapa muito prático (fisico forte + outro forte)
+  let pratico = fortes.includes("fisico") && fortes.length >= 2;
+
+  return {
+    fortes,
+    medios,
+    fracos,
+    dominante,
+    duplaDominante,
+    equilibrado,
+    interno,
+    pratico
+  };
+}
+
+// ===============================
+// INTRODUÇÃO AUTOMÁTICA DO MAPA
+// ===============================
+
+function gerarIntroducao(tipo, dadosTexto){
+
+  const analise = analisarMapa(dadosTexto);
+
+  let texto = "";
+
+  // ================= PARÁGRAFO 1 — VISÃO GERAL
+  texto += tipo === "natural"
+    ? "O seu Plano de Expressão Natural revela como sua energia se manifesta de forma permanente ao longo da vida. "
+    : "O seu Plano de Expressão do Momento revela as energias predominantes deste período da sua vida. ";
+
+  if(analise.dominante){
+    texto += `Observa-se uma forte predominância do plano ${analise.dominante}, indicando que esta é a principal forma através da qual você tende a agir, reagir e se posicionar diante da realidade. `;
+  }
+  else if(analise.duplaDominante){
+    texto += `Existe uma dupla predominância entre os planos ${analise.duplaDominante[0]} e ${analise.duplaDominante[1]}, mostrando uma combinação marcante dessas duas formas de expressão na sua vida. `;
+  }
+  else if(analise.equilibrado){
+    texto += "Os quatro planos apresentam distribuição equilibrada, indicando uma personalidade versátil e adaptável. ";
+  }
+
+  if(analise.fracos.length){
+    texto += `Os planos menos ativos são ${analise.fracos.join(", ")}, apontando áreas que podem exigir maior esforço, consciência e desenvolvimento ao longo do tempo.`;
+  }
+
+  // ================= PARÁGRAFO 2 — DINÂMICA ENERGÉTICA
+  texto += "\n\n";
+
+  if(analise.interno){
+    texto += "A predominância de planos internos indica uma natureza mais voltada ao mundo subjetivo, reflexivo e sensível. ";
+  }
+
+  if(analise.pratico){
+    texto += "A presença forte do plano físico indica grande ligação com a realidade prática, ação concreta e materialização. ";
+  }
+
+  if(analise.fortes.length === 1){
+    texto += "Essa configuração sugere uma personalidade bem direcionada, com tendência a agir sempre a partir de um eixo dominante.";
+  }
+  else if(analise.fortes.length >= 2){
+    texto += "Essa configuração revela uma personalidade multifacetada, com diferentes forças atuando simultaneamente.";
+  }
+  else{
+    texto += "Essa configuração sugere uma personalidade em busca de fortalecimento e desenvolvimento das suas energias principais.";
+  }
+
+  return texto;
+}
+
+function gerarConclusao(tipo, dados){
+
+  const planos = ["fisico","mental","emocional","intuitivo"];
+
+  // descobrir plano dominante e fraco
+  let dominante = planos[0];
+  let fraco = planos[0];
+
+  planos.forEach(p=>{
+    if(dados[p].nivel == "forte") dominante = p;
+    if(dados[p].nivel == "fraco") fraco = p;
+  });
+
+  const nomes = {
+    fisico:"plano físico",
+    mental:"plano mental",
+    emocional:"plano emocional",
+    intuitivo:"plano intuitivo"
+  };
+
+  return `
+Em síntese, este período revela a predominância do ${nomes[dominante]},
+enquanto o ${nomes[fraco]} aparece como área que exige maior atenção,
+equilíbrio e desenvolvimento consciente.
+
+A integração harmoniosa desses quatro planos representa o caminho
+para maior estabilidade, evolução pessoal e realização prática ao
+longo da vida.
+  `;
+}
+
+function reduzirNumero(n){
  while(n > 9){
   n = n.toString().split("").reduce((a,b)=>a + Number(b),0);
  }
@@ -290,67 +439,121 @@ function preencherSeletorAnos(){
    select.value = bancoMomentos[0].ano;
  }
 }
+//================ STATUS DO MOMENTO (NOVO MOTOR)
+
 function gerarStatusMomento(){
 
- const ano=document.getElementById("anoSelect").value;
-
+ const ano = document.getElementById("anoSelect").value;
  if(!ano){
    alert("Selecione um ano.");
    return;
  }
 
- const d=bancoMomentos.find(a=>a.ano==ano);
-
- if(!d){
+ const dados = bancoMomentos.find(a => a.ano == ano);
+ if(!dados){
    alert("Erro ao localizar dados do ano.");
    return;
  }
 
- const maior=Math.max(d.fisico,d.mental,d.emocional,d.intuitivo);
+ const maior = Math.max(dados.fisico,dados.mental,dados.emocional,dados.intuitivo);
 
- atualizarBarra("Fisico",d.fisico,maior);
- atualizarBarra("Mental",d.mental,maior);
- atualizarBarra("Emocional",d.emocional,maior);
- atualizarBarra("Intuitivo",d.intuitivo,maior);
+ // atualiza barras
+ atualizarBarra("Fisico",dados.fisico,maior);
+ atualizarBarra("Mental",dados.mental,maior);
+ atualizarBarra("Emocional",dados.emocional,maior);
+ atualizarBarra("Intuitivo",dados.intuitivo,maior);
 
- document.getElementById("resumoMomento").innerText=
- "Texto interpretativo virá aqui.";
+ // 🔢 números reduzidos
+ const reducoesMomento = {
+   fisico: reduzirNumero(dados.fisico),
+   mental: reduzirNumero(dados.mental),
+   emocional: reduzirNumero(dados.emocional),
+   intuitivo: reduzirNumero(dados.intuitivo)
+ };
+
+ // 🔵 classifica intensidade
+ function classificar(valor, maior){
+   if(valor >= maior*0.75) return "forte";
+   if(valor >= maior*0.5) return "medio";
+   return "fraco";
+ }
+
+ const intensidadesMomento = {
+   fisico: classificar(dados.fisico, maior),
+   mental: classificar(dados.mental, maior),
+   emocional: classificar(dados.emocional, maior),
+   intuitivo: classificar(dados.intuitivo, maior)
+ };
+
+ // 🧠 objeto pro motor de texto
+ const dadosTextoMomento = {
+   fisico:{ nivel:intensidadesMomento.fisico, numero:reducoesMomento.fisico },
+   mental:{ nivel:intensidadesMomento.mental, numero:reducoesMomento.mental },
+   emocional:{ nivel:intensidadesMomento.emocional, numero:reducoesMomento.emocional },
+   intuitivo:{ nivel:intensidadesMomento.intuitivo, numero:reducoesMomento.intuitivo }
+ };
+
+ // ✨ gera texto final
+ const textoMomento = gerarTextoPlano("momento", dadosTextoMomento);
+
+ // mostra na tela
+ document.getElementById("resumoMomento").innerText = textoMomento;
+
 }
+
+
+//================ BARRAS (MANTIDAS)
 
 function atualizarBarra(tipo,valor,maior){
+ let largura=0;
 
- let largura = 0;
-
- if(maior > 0 && valor > 0){
-    largura = (valor/maior)*100;
-
-    // largura mínima visível mobile
-    if(largura < 12) largura = 12;
+ if(maior>0 && valor>0){
+   largura=(valor/maior)*100;
+   if(largura<12) largura=12;
  }
 
- // 🔴 isso zera corretamente quando valor = 0
- document.getElementById("bar"+tipo).style.width = largura + "%";
- document.getElementById("txt"+tipo).innerText = valor;
+ document.getElementById("bar"+tipo).style.width=largura+"%";
+ document.getElementById("txt"+tipo).innerText=valor;
 }
+
+
+
 function atualizarBarraNatural(tipo,valor,maior,reducao){
+ let largura=0;
 
- let largura = 0;
-
- if(maior > 0 && valor > 0){
-    largura = (valor/maior)*100;
-    if(largura < 12) largura = 12;
+ if(maior>0 && valor>0){
+   largura=(valor/maior)*100;
+   if(largura<12) largura=12;
  }
 
- document.getElementById("bar"+tipo).style.width = largura + "%";
- document.getElementById("txt"+tipo).innerText =
-  valor + " → Número " + reducao;
+ document.getElementById("bar"+tipo).style.width=largura+"%";
+ document.getElementById("txt"+tipo).innerText=
+  valor+" → Número "+reducao;
 }
+// =======================
+// BOTÃO PRINCIPAL
+// =======================
 function gerarTudo(){
- const nome=document.getElementById("nome").value;
- const data=document.getElementById("dataNascimento").value;
- planoNatural(nome);
- planoMomento(nome,data);
+
+  const nome = document.getElementById("nome").value;
+  const data = document.getElementById("dataNascimento").value;
+
+  if(!nome || !data){
+    alert("Digite nome e data.");
+    return;
+  }
+
+  // gera plano natural
+  planoNatural(nome);
+
+  // gera timeline do momento
+  planoMomento(nome, data);
+
+  // já calcula automaticamente o primeiro status
+  gerarStatusMomento();
+
 }
+
 //================ EXPORTAR PARA RELATÓRIO PREMIUM
 function exportarRelatorio(){
 
