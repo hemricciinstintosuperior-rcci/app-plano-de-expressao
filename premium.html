@@ -78,13 +78,15 @@ Carregando acesso...
 // 📦 1) CARREGAR DADOS DO MAPA PRIMEIRO
 // ===============================
 const dadosSalvos = localStorage.getItem("relatorioMapa");
+  
 
 if(!dadosSalvos){
   document.getElementById("conteudo").innerHTML =
   "<p class='erro'>Nenhum mapa encontrado.<br>Volte e gere o mapa primeiro.</p>";
   throw new Error("Sem dados do mapa");
 }
-
+window.relatorio = JSON.parse(dadosSalvos);
+console.log("Relatório carregado:", relatorio);
 
   
 
