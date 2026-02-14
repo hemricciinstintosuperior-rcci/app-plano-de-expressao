@@ -585,13 +585,30 @@ function exportarRelatorio(){
    intuitivo: dadosAno.intuitivo
  };
 
- const pacoteRelatorio = {
-   nome,
-   data,
-   natural,
-   momento
- };
+const pacoteRelatorio = {
+  nome: nome,
+  data: data,
+  natural: natural,
+  momento: momento,
 
+  // RESULTADOS NUMÉRICOS DOS PLANOS
+  fisico: resultadoFisico,
+  mental: resultadoMental,
+  emocional: resultadoEmocional,
+  intuitivo: resultadoIntuitivo,
+
+  // CLASSIFICAÇÃO (forte/médio/fraco)
+  fisicoNivel: nivelFisico,
+  mentalNivel: nivelMental,
+  emocionalNivel: nivelEmocional,
+  intuitivoNivel: nivelIntuitivo,
+
+  // TEXTOS GERADOS
+  fisicoTexto: textoFisicoFinal,
+  mentalTexto: textoMentalFinal,
+  emocionalTexto: textoEmocionalFinal,
+  intuitivoTexto: textoIntuitivoFinal
+};
  // salva no navegador
  localStorage.setItem("relatorioMapa", JSON.stringify(pacoteRelatorio));
 
