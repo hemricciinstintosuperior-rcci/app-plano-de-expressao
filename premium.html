@@ -87,6 +87,39 @@ if(!dadosSalvos){
 
 const relatorio = JSON.parse(dadosSalvos);
 console.log("Dados carregados:", relatorio);
+// ===============================
+// 🧠 MOTOR DE CLASSIFICAÇÃO DOS PLANOS
+// ===============================
+
+const planos = [
+  {nome:"fisico", valor: Number(relatorio.fisico)},
+  {nome:"mental", valor: Number(relatorio.mental)},
+  {nome:"emocional", valor: Number(relatorio.emocional)},
+  {nome:"intuitivo", valor: Number(relatorio.intuitivo)}
+];
+
+// ordenar do maior para o menor
+planos.sort((a,b)=> b.valor - a.valor);
+
+// função que detecta empates (diferença até 2 pontos)
+function nivelEnergetico(posicao){
+  const diffTopo = Math.abs(planos[0].valor - planos[posicao].valor);
+  if(posicao === 0) return "dominante";
+  if(diffTopo <= 2) return "forte";
+  if(posicao === 1) return "medio";
+  if(posicao === 2) return "fraco";
+  return "muito_fraco";
+}
+
+// criar objeto final com classificação
+const nivelPlano = {};
+
+planos.forEach((plano, index)=>{
+  nivelPlano[plano.nome] = nivelEnergetico(index);
+});
+
+console.log("Níveis energéticos:", nivelPlano);
+  
  // ===============================
 // 🧾 PREENCHER RELATÓRIO PDF
 // ===============================
@@ -207,24 +240,56 @@ seguida de interpretações personalizadas baseadas nos seus resultados.
   <hr>
 
   <!-- PLANOS -->
-  <h2>Plano Físico</h2>
-  <p id="textoFisico">Texto físico será inserido aqui.</p>
+ <!-- PLANOS -->
+<h2>Plano Físico</h2>
+<p>
+O plano físico representa a forma como você age no mundo material,
+sua disposição para trabalhar, produzir, construir e transformar ideias em realidade.
+Ele mostra sua relação com disciplina, constância, esforço e realização prática.
+</p>
 
-  <hr>
+<p>
+Quando equilibrado, indica capacidade de execução, perseverança e força para concretizar objetivos.
+Quando em desequilíbrio, pode gerar procrastinação, cansaço excessivo ou dificuldade em finalizar projetos.
+</p>
 
-  <h2>Plano Mental</h2>
-  <p id="textoMental">Texto mental será inserido aqui.</p>
+<hr>
 
-  <hr>
+<h2>Plano Mental</h2>
+<p>
+O plano mental representa a mente racional, lógica e analítica.
+Revela sua forma de pensar, planejar, aprender e organizar a vida.
+</p>
 
-  <h2>Plano Emocional</h2>
-  <p id="textoEmocional">Texto emocional será inserido aqui.</p>
+<p>
+Quando forte, mostra clareza mental, estratégia e facilidade de compreensão.
+Quando fraco, pode gerar confusão, indecisão ou excesso de pensamentos.
+</p>
 
-  <hr>
+<hr>
 
-  <h2>Plano Intuitivo</h2>
-  <p id="textoIntuitivo">Texto intuitivo será inserido aqui.</p>
+<h2>Plano Emocional</h2>
+<p>
+O plano emocional revela a intensidade dos sentimentos,
+a forma como você se conecta com pessoas e experiências.
+</p>
 
+<p>
+Quando equilibrado, traz empatia, sensibilidade e vínculos saudáveis.
+Quando em desequilíbrio, pode gerar ansiedade, insegurança ou instabilidade emocional.
+</p>
+
+<hr>
+
+<h2>Plano Intuitivo</h2>
+<p>
+O plano intuitivo representa a espiritualidade, a percepção interna e a conexão com o propósito.
+</p>
+
+<p>
+Quando forte, indica intuição aguçada, visão ampla e senso de missão.
+Quando fraco, pode gerar sensação de vazio ou falta de direção.
+</p>
   <hr>
 
   <h2>Encerramento</h2>
@@ -238,49 +303,7 @@ seguida de interpretações personalizadas baseadas nos seus resultados.
 }
 </script>
 
-<script>
-function gerarPDF(){
 
-  // marca token como usado (bloqueia reuso)
-  localStorage.setItem("token_usado_"+token, "sim");
-
-  const elemento = document.createElement("div");
-
-  elemento.innerHTML = `
-  <div style="font-family:Arial;padding:40px">
-    <h1>RELATÓRIO PREMIUM</h1>
-    <hr>
-
-    <h2>Nome:</h2>
-    <p>${relatorio.nome}</p>
-
-    <h2>Data de nascimento:</h2>
-    <p>${relatorio.data}</p>
-
-    <h2>Perfil geral:</h2>
-    <p>${relatorio.perfil}</p>
-
-    <hr>
-    <h2>Físico</h2>
-    <p>${relatorio.fisicoTexto}</p>
-
-    <h2>Mental</h2>
-    <p>${relatorio.mentalTexto}</p>
-
-    <h2>Emocional</h2>
-    <p>${relatorio.emocionalTexto}</p>
-
-    <h2>Intuitivo</h2>
-    <p>${relatorio.intuitivoTexto}</p>
-
-    <br><br>
-    <h3>© Instituto RCCI</h3>
-  </div>
-  `;
-
-  html2pdf().from(elemento).save("Relatorio_Premium.pdf");
-}
-</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <script>
