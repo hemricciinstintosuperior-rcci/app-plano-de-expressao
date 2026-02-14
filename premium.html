@@ -241,6 +241,8 @@ Utilize estas informações como ferramenta de autoconhecimento e evolução.
 `;
 }
 
+
+// gera PDF automaticamente quando o relatório aparecer
 <script>
 // gera PDF automaticamente quando o relatório aparecer
 function gerarPDFautomatico(){
@@ -255,13 +257,8 @@ function gerarPDFautomatico(){
     jsPDF:{ unit:"mm", format:"a4", orientation:"portrait" }
   };
 
-  setTimeout(()=>{
-    html2pdf().set(opt).from(elemento).save();
-  },1500);
+  html2pdf().set(opt).from(elemento).save();
 }
-
-
-
 
 // espera a página carregar completamente
 window.addEventListener("load", () => {
