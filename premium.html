@@ -306,25 +306,26 @@ box-sizing:border-box;
 <script>
 window.onload = function(){
 
-  setTimeout(()=>{
+  setTimeout(() => {
 
-    const folha = document.getElementById("pdfFolha");
+    // abre janela invisível
+    const janela = window.open('', '_blank');
 
-    // ⭐ COPIA O SITE INTEIRO (igual ao outro gerador)
-    const conteudoCompleto = document.documentElement.outerHTML;
-    folha.innerHTML = conteudoCompleto;
+    // copia página pronta
+    const conteudo = document.documentElement.outerHTML;
 
-    const opt = {
-      margin:0,
-      filename:"Relatorio_Plano_Expressao.pdf",
-      image:{ type:"jpeg", quality:1 },
-      html2canvas:{ scale:2, useCORS:true },
-      jsPDF:{ unit:"px", format:"a4", orientation:"portrait" }
+    janela.document.open();
+    janela.document.write(conteudo);
+    janela.document.close();
+
+    // espera renderizar tudo
+    janela.onload = () => {
+      janela.focus();
+      janela.print();   // ⭐ AQUI NASCE O PDF BONITO
+      janela.close();
     };
 
-    html2pdf().set(opt).from(folha).save();
-
-  },2000);
+  }, 2500); // espera relatório terminar de montar
 
 }
 </script>
