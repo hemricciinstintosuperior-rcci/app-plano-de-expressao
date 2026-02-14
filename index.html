@@ -118,7 +118,7 @@ function calcularValorComAcentos(letra){
 
 function gerarTextoPlano(tipo, dados){
 
-  let textoFinal = "";
+  let textoFinal = gerarIntroducao(tipo, dados) + "\n\n";
 
   const ordemPlanos = ["fisico","mental","emocional","intuitivo"];
 
@@ -154,7 +154,139 @@ let blocoPlano = textosPlanos?.[plano]?.[nivel]?.[numero] ||
     textoFinal += "\n\n" + conclusoes[tipo].trim();
   }
 
-  return textoFinal;
+ textoFinal += "\n\n" + gerarConclusao(tipo, dados);
+return textoFinal;
+}
+
+
+
+// ===============================
+// ANALISADOR GERAL DO MAPA
+// ===============================
+
+function analisarMapa(dados){
+
+  const planos = ["fisico","mental","emocional","intuitivo"];
+
+  let fortes = [];
+  let medios = [];
+  let fracos = [];
+
+  planos.forEach(p=>{
+    if(dados[p].nivel === "forte") fortes.push(p);
+    else if(dados[p].nivel === "medio") medios.push(p);
+    else fracos.push(p);
+  });
+
+  // plano dominante (se existir)
+  let dominante = fortes.length === 1 ? fortes[0] : null;
+
+  // dupla dominante
+  let duplaDominante = fortes.length === 2 ? fortes : null;
+
+  // equilíbrio geral
+  let equilibrado = fortes.length === 0 && fracos.length === 0;
+
+  // mapa muito interno (mental + emocional + intuitivo fortes)
+  let interno = fortes.filter(p=>p!=="fisico").length >= 2;
+
+  // mapa muito prático (fisico forte + outro forte)
+  let pratico = fortes.includes("fisico") && fortes.length >= 2;
+
+  return {
+    fortes,
+    medios,
+    fracos,
+    dominante,
+    duplaDominante,
+    equilibrado,
+    interno,
+    pratico
+  };
+}
+
+// ===============================
+// INTRODUÇÃO AUTOMÁTICA DO MAPA
+// ===============================
+
+function gerarIntroducao(tipo, dadosTexto){
+
+  const analise = analisarMapa(dadosTexto);
+
+  let texto = "";
+
+  // ================= PARÁGRAFO 1 — VISÃO GERAL
+  texto += tipo === "natural"
+    ? "O seu Plano de Expressão Natural revela como sua energia se manifesta de forma permanente ao longo da vida. "
+    : "O seu Plano de Expressão do Momento revela as energias predominantes deste período da sua vida. ";
+
+  if(analise.dominante){
+    texto += `Observa-se uma forte predominância do plano ${analise.dominante}, indicando que esta é a principal forma através da qual você tende a agir, reagir e se posicionar diante da realidade. `;
+  }
+  else if(analise.duplaDominante){
+    texto += `Existe uma dupla predominância entre os planos ${analise.duplaDominante[0]} e ${analise.duplaDominante[1]}, mostrando uma combinação marcante dessas duas formas de expressão na sua vida. `;
+  }
+  else if(analise.equilibrado){
+    texto += "Os quatro planos apresentam distribuição equilibrada, indicando uma personalidade versátil e adaptável. ";
+  }
+
+  if(analise.fracos.length){
+    texto += `Os planos menos ativos são ${analise.fracos.join(", ")}, apontando áreas que podem exigir maior esforço, consciência e desenvolvimento ao longo do tempo.`;
+  }
+
+  // ================= PARÁGRAFO 2 — DINÂMICA ENERGÉTICA
+  texto += "\n\n";
+
+  if(analise.interno){
+    texto += "A predominância de planos internos indica uma natureza mais voltada ao mundo subjetivo, reflexivo e sensível. ";
+  }
+
+  if(analise.pratico){
+    texto += "A presença forte do plano físico indica grande ligação com a realidade prática, ação concreta e materialização. ";
+  }
+
+  if(analise.fortes.length === 1){
+    texto += "Essa configuração sugere uma personalidade bem direcionada, com tendência a agir sempre a partir de um eixo dominante.";
+  }
+  else if(analise.fortes.length >= 2){
+    texto += "Essa configuração revela uma personalidade multifacetada, com diferentes forças atuando simultaneamente.";
+  }
+  else{
+    texto += "Essa configuração sugere uma personalidade em busca de fortalecimento e desenvolvimento das suas energias principais.";
+  }
+
+  return texto;
+}
+
+function gerarConclusao(tipo, dados){
+
+  const planos = ["fisico","mental","emocional","intuitivo"];
+
+  // descobrir plano dominante e fraco
+  let dominante = planos[0];
+  let fraco = planos[0];
+
+  planos.forEach(p=>{
+    if(dados[p].nivel == "forte") dominante = p;
+    if(dados[p].nivel == "fraco") fraco = p;
+  });
+
+  const nomes = {
+    fisico:"plano físico",
+    mental:"plano mental",
+    emocional:"plano emocional",
+    intuitivo:"plano intuitivo"
+  };
+
+  return `
+Em síntese, este período revela a predominância do ${nomes[dominante]},
+enquanto o ${nomes[fraco]} aparece como área que exige maior atenção,
+equilíbrio e desenvolvimento consciente.
+
+A integração harmoniosa desses quatro planos representa o caminho
+para maior estabilidade, evolução pessoal e realização prática ao
+longo da vida.
+  `;
 }
 
 function reduzirNumero(n){
