@@ -260,15 +260,25 @@ function gerarPDFautomatico(){
   },1500);
 }
 
-// observa quando o relatório entra na tela
-const observer = new MutationObserver(()=>{
-  if(document.getElementById("paginaRelatorio")){
-    gerarPDFautomatico();
-    observer.disconnect();
-  }
-});
+<script>
+// espera a página carregar completamente
+window.addEventListener("load", () => {
 
-observer.observe(document.body,{childList:true,subtree:true});
+  const observer = new MutationObserver(()=>{
+    const pagina = document.getElementById("paginaRelatorio");
+
+    if(pagina){
+      setTimeout(() => {
+        gerarPDFautomatico();
+      }, 1200);
+
+      observer.disconnect();
+    }
+  });
+
+  observer.observe(document.body,{childList:true,subtree:true});
+
+});
 </script>
 
 </body>
