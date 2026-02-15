@@ -434,7 +434,8 @@ function planoMomento(nomeCompleto,data){
    // ⭐ PEGA UMA LETRA DE CADA BLOCO (vertical)
    timelines.forEach(timeline=>{
 
-     const letra = timeline[idade] || timeline[timeline.length-1];
+    const posicao = idade % timeline.length;
+const letra = timeline[posicao];
 
      const plano = descobrirPlano(letra);
      const valor = calcularValorComAcentos(letra);
