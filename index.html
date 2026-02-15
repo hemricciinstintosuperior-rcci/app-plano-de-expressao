@@ -378,44 +378,32 @@ atualizarBarraNatural("IntuitivoNat",soma.intuitivo,maior,reducoes.intuitivo);
 
 function planoMomento(nomeCompleto,data){
 
- bancoMomentos=[];
+ bancoMomentos = [];
 
- const nomes = nomeCompleto.toUpperCase().trim().split(/\s+/);
+ const nomes = nomeCompleto
+   .toUpperCase()
+   .trim()
+   .split(/\s+/);
+
  const anoNasc = new Date(data).getFullYear();
 
- // ==============================
- // 1) CRIA UMA TIMELINE PARA CADA NOME
- // ==============================
- let timelines = [];
-
- nomes.forEach(nome=>{
-   let timeline = [];
-   for(let letra of nome){
-     let anos = calcularValorComAcentos(letra);
-     for(let i=0;i<anos;i++){
-       timeline.push(letra);
-     }
-   }
-   timelines.push(timeline);
- });
-
- // segurança
- if(timelines.length === 0){
-   alert("Nome inválido.");
-   return;
- }
-
- // ==============================
- // 2) PERCORRE A VIDA (0 a 100 anos)
- // ==============================
+ // percorre a vida inteira
  for(let idade=0; idade<=100; idade++){
 
    const ano = anoNasc + idade;
-   let soma = {fisico:0, mental:0, emocional:0, intuitivo:0};
 
-   // 🔴 PEGA UMA LETRA DE CADA NOME
-   timelines.forEach(timeline=>{
-     const letra = timeline[idade] || timeline[timeline.length-1];
+   let soma = {
+     fisico:0,
+     mental:0,
+     emocional:0,
+     intuitivo:0
+   };
+
+   // 🔴 pega UMA LETRA DE CADA NOME (modo planilha)
+   nomes.forEach(nome=>{
+
+     const letra = nome[ idade % nome.length ];
+
      const plano = descobrirPlano(letra);
      const valor = calcularValorComAcentos(letra);
 
@@ -423,6 +411,7 @@ function planoMomento(nomeCompleto,data){
      if(plano === "mental") soma.mental += valor;
      if(plano === "emocional") soma.emocional += valor;
      if(plano === "intuitivo") soma.intuitivo += valor;
+
    });
 
    bancoMomentos.push({ano,...soma});
@@ -430,7 +419,6 @@ function planoMomento(nomeCompleto,data){
 
  preencherSeletorAnos();
 }
-
 
 function preencherSeletorAnos(){
  const select=document.getElementById("anoSelect");
