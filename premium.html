@@ -281,11 +281,7 @@ h2{
 <div class="card" id="conteudo">Carregando acesso...</div>
 
 <script>
-  if(modoPrint){
-  // impede o sistema de gerar novas janelas
-  // deixa apenas o HTML renderizado
-  window.onload = () => window.print();
-}
+  
 // ===============================
 // CARREGAR DADOS DO MAPA
 // ===============================
@@ -453,11 +449,7 @@ Instinto Superior • Relatório Confidencial
 </div>
 `;
 
-setTimeout(() => {
-    window.print();
-}, 2000);
-// 🚀 GERAR PDF VIA IMPRESSÃO PROFISSIONAL (100% compatível Wix)
-setTimeout(() => {
+
 
  // só abre nova janela se NÃO for modo impressão
 if(!modoPrint){
