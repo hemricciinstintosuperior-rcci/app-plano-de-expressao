@@ -378,39 +378,71 @@ atualizarBarraNatural("IntuitivoNat",soma.intuitivo,maior,reducoes.intuitivo);
 
 function planoMomento(nomeCompleto,data){
 
- bancoMomentos = [];
-
- const nomes = nomeCompleto
-   .toUpperCase()
-   .trim()
-   .split(/\s+/);
+ bancoMomentos=[];
 
  const anoNasc = new Date(data).getFullYear();
 
- // percorre a vida inteira
+ // 🔴 1) SEPARAR NOMES CORRETAMENTE (colar partículas ao sobrenome)
+ const partes = nomeCompleto.toUpperCase().trim().split(/\s+/);
+ let blocos=[];
+ let buffer="";
+
+ partes.forEach(p=>{
+   if(["DA","DE","DO","DAS","DOS"].includes(p)){
+      buffer += p;
+   }else{
+      blocos.push(buffer + p);
+      buffer="";
+   }
+ });
+
+ // 🔴 2) CRIAR TIMELINE DE CADA BLOCO
+ let timelines=[];
+
+ blocos.forEach(nome=>{
+   let timeline=[];
+
+   for(let letra of nome){
+     const anos = calcularValorComAcentos(letra);
+
+     for(let i=0;i<anos;i++){
+       timeline.push(letra);
+     }
+   }
+
+   timelines.push(timeline);
+ });
+
+ // segurança
+ if(timelines.length===0){
+   alert("Nome inválido");
+   return;
+ }
+
+ // 🔴 3) PERCORRER VIDA (0–100 anos)
  for(let idade=0; idade<=100; idade++){
 
    const ano = anoNasc + idade;
 
-   let soma = {
+   let soma={
      fisico:0,
      mental:0,
      emocional:0,
      intuitivo:0
    };
 
-   // 🔴 pega UMA LETRA DE CADA NOME (modo planilha)
-   nomes.forEach(nome=>{
+   // ⭐ PEGA UMA LETRA DE CADA BLOCO (vertical)
+   timelines.forEach(timeline=>{
 
-     const letra = nome[ idade % nome.length ];
+     const letra = timeline[idade] || timeline[timeline.length-1];
 
      const plano = descobrirPlano(letra);
      const valor = calcularValorComAcentos(letra);
 
-     if(plano === "fisico") soma.fisico += valor;
-     if(plano === "mental") soma.mental += valor;
-     if(plano === "emocional") soma.emocional += valor;
-     if(plano === "intuitivo") soma.intuitivo += valor;
+     if(plano==="fisico") soma.fisico += valor;
+     if(plano==="mental") soma.mental += valor;
+     if(plano==="emocional") soma.emocional += valor;
+     if(plano==="intuitivo") soma.intuitivo += valor;
 
    });
 
