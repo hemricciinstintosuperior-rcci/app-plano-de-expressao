@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Relatório Premium</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
 <style>
 body{
   font-family:Arial;
@@ -293,39 +293,33 @@ Utilize estas informações como ferramenta de autoconhecimento e evolução.
 }
 
 </script>
-<!-- FOLHA A4 INVISÍVEL PARA GERAR PDF -->
-<div id="pdfFolha" style="
-position:fixed;
-left:-99999px;
-top:0;
-width:794px;
-background:white;
-padding:25px 30px;
-box-sizing:border-box;
-"></div>
+
 <script>
+
+// 🚀 GERAR PDF PROFISSIONAL (MESMO SISTEMA DO OUTRO PREMIUM)
 window.onload = function(){
 
   setTimeout(() => {
 
-    // abre janela invisível
+    // cria janela invisível
     const janela = window.open('', '_blank');
 
-    // copia página pronta
+    // copia TODA página pronta
     const conteudo = document.documentElement.outerHTML;
 
+    // escreve conteúdo na nova janela
     janela.document.open();
     janela.document.write(conteudo);
     janela.document.close();
 
-    // espera renderizar tudo
+    // espera renderizar e manda imprimir
     janela.onload = () => {
       janela.focus();
-      janela.print();   // ⭐ AQUI NASCE O PDF BONITO
+      janela.print();   // ⭐ AQUI NASCE O PDF PERFEITO
       janela.close();
     };
 
-  }, 2500); // espera relatório terminar de montar
+  }, 3000); // espera relatório montar totalmente
 
 }
 </script>
