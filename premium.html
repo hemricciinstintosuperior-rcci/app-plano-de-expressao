@@ -462,16 +462,19 @@ setTimeout(() => {
   const conteudo = document.documentElement.outerHTML;
 
   // escreve na nova janela
-  janela.document.open();
-  janela.document.write(conteudo);
-  janela.document.close();
+ janela.document.open();
+janela.document.write(conteudo);
+janela.document.close();
 
-  // espera renderizar e manda imprimir
-  janela.onload = () => {
-    janela.focus();
-    janela.print();
-    janela.close();
-  };
+janela.onload = () => {
+  // remove scripts da nova janela (impede recalcular gráfico)
+  const scripts = janela.document.querySelectorAll("script");
+  scripts.forEach(s => s.remove());
+
+  janela.focus();
+  janela.print();
+  janela.close();
+};
 
 }, 2500);
 window.onload = function(){
