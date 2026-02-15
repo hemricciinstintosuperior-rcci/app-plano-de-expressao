@@ -69,8 +69,8 @@ body{
   }
 
   body{
-    display:flex;
-    justify-content:center;
+    background:white !important;
+    margin:0 !important;
   }
 
   .card{
@@ -91,6 +91,13 @@ body{
     box-sizing:border-box;
     page-break-after:always;
   }
+     /* área A4 */
+  #pdfFolha{
+    width:210mm;
+    margin:auto;
+    padding:12mm 10mm;
+    box-sizing:border-box;
+  } 
   h1,h2,h3{
     page-break-after:avoid;
   }
@@ -112,7 +119,7 @@ body.relatorio-modo{
   padding:0 !important;
   text-align:left !important;
 }
-  
+
 /* ==============================
    CAPA PROFISSIONAL
    ============================== */
