@@ -281,6 +281,11 @@ h2{
 <div class="card" id="conteudo">Carregando acesso...</div>
 
 <script>
+  if(modoPrint){
+  // impede o sistema de gerar novas janelas
+  // deixa apenas o HTML renderizado
+  window.onload = () => window.print();
+}
 // ===============================
 // CARREGAR DADOS DO MAPA
 // ===============================
@@ -455,8 +460,20 @@ setTimeout(() => {
 // 🚀 GERAR PDF VIA IMPRESSÃO PROFISSIONAL (100% compatível Wix)
 setTimeout(() => {
 
-  // cria janela invisível
-  const janela = window.open('?print=true', '_blank');
+ // só abre nova janela se NÃO for modo impressão
+if(!modoPrint){
+  setTimeout(() => {
+
+    const janela = window.open(window.location.href + "&print=true", "_blank");
+
+    const conteudo = document.documentElement.outerHTML;
+
+    janela.document.open();
+    janela.document.write(conteudo);
+    janela.document.close();
+
+  }, 2500);
+}
 
   // copia TODO o HTML pronto da tela
   const conteudo = document.documentElement.outerHTML;
