@@ -299,16 +299,22 @@ const relatorio = JSON.parse(dadosSalvos);
 // CALCULAR PORCENTAGEM REAL (PROPORÇÃO DO TOTAL)
 // ===============================
 
-const total =
-  relatorio.fisico +
-  relatorio.mental +
-  relatorio.emocional +
-  relatorio.intuitivo;
+// ===============================
+// ESCALA NUMEROLÓGICA DO GRÁFICO
+// (baseado no MAIOR número do mapa)
+// ===============================
 
-const pctFisico    = Math.round((relatorio.fisico    / total) * 100);
-const pctMental    = Math.round((relatorio.mental    / total) * 100);
-const pctEmocional = Math.round((relatorio.emocional / total) * 100);
-const pctIntuitivo = Math.round((relatorio.intuitivo / total) * 100);
+const maiorNumero = Math.max(
+  relatorio.fisico,
+  relatorio.mental,
+  relatorio.emocional,
+  relatorio.intuitivo
+);
+
+const pctFisico    = Math.round((relatorio.fisico    / maiorNumero) * 100);
+const pctMental    = Math.round((relatorio.mental    / maiorNumero) * 100);
+const pctEmocional = Math.round((relatorio.emocional / maiorNumero) * 100);
+const pctIntuitivo = Math.round((relatorio.intuitivo / maiorNumero) * 100);
 
 
 
