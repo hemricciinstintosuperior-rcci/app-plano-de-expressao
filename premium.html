@@ -447,7 +447,8 @@ Instinto Superior • Relatório Confidencial
 </div>
 </div>
 `;
-
+// 🛑 impede execução duplicada na janela de impressão
+if (window.location.href.includes("print=true")) return;
 setTimeout(() => {
     window.print();
 }, 2000);
@@ -455,7 +456,7 @@ setTimeout(() => {
 setTimeout(() => {
 
   // cria janela invisível
-  const janela = window.open('', '_blank');
+  const janela = window.open('?print=true', '_blank');
 
   // copia TODO o HTML pronto da tela
   const conteudo = document.documentElement.outerHTML;
