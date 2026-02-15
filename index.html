@@ -380,89 +380,56 @@ function planoMomento(nomeCompleto,data){
 
  bancoMomentos=[];
 
- // =====================================================
- // 1) SEPARA NOMES (JUNTA partículas: da/de/do/dos/das)
- // =====================================================
- const partes = nomeCompleto.toUpperCase().split(" ").filter(p=>p.trim()!="");
-
- let nomes=[];
- for(let i=0;i<partes.length;i++){
-   if(["DA","DE","DO","DOS","DAS"].includes(partes[i]) && partes[i+1]){
-      nomes.push(partes[i]+" "+partes[i+1]);
-      i++;
-   }else{
-      nomes.push(partes[i]);
-   }
- }
-
+ const nomes = nomeCompleto.toUpperCase().trim().split(/\s+/);
  const anoNasc = new Date(data).getFullYear();
 
- // =====================================================
- // 2) CRIA TIMELINE INDIVIDUAL DE CADA NOME
- // =====================================================
- const timelines = nomes.map(nome=>{
-    let linhaTempo=[];
-    for(let letra of nome.replace(" ","")){
-        let anos = calcularValorComAcentos(letra);
-        for(let i=0;i<anos;i++){
-            linhaTempo.push(letra);
-        }
-    }
-    return linhaTempo;
+ // ==============================
+ // 1) CRIA UMA TIMELINE PARA CADA NOME
+ // ==============================
+ let timelines = [];
+
+ nomes.forEach(nome=>{
+   let timeline = [];
+   for(let letra of nome){
+     let anos = calcularValorComAcentos(letra);
+     for(let i=0;i<anos;i++){
+       timeline.push(letra);
+     }
+   }
+   timelines.push(timeline);
  });
 
  // segurança
- if(timelines.length===0){
-   alert("Nome inválido");
+ if(timelines.length === 0){
+   alert("Nome inválido.");
    return;
  }
 
- // =====================================================
- // 3) MONTA TABELA VISUAL
- // =====================================================
- let html="<h2>Plano do Momento</h2><table>";
- html+="<tr><th>Ano</th><th>Idade</th>";
- nomes.forEach((n,i)=> html+=`<th>${i+1}º Nome</th>`);
- html+="<th>Físico</th><th>Mental</th><th>Emocional</th><th>Intuitivo</th></tr>";
-
- // =====================================================
- // 4) PERCORRE A VIDA (IGUAL PLANILHA)
- // =====================================================
+ // ==============================
+ // 2) PERCORRE A VIDA (0 a 100 anos)
+ // ==============================
  for(let idade=0; idade<=100; idade++){
 
    const ano = anoNasc + idade;
-   let soma={fisico:0,mental:0,emocional:0,intuitivo:0};
+   let soma = {fisico:0, mental:0, emocional:0, intuitivo:0};
 
-   html+=`<tr><td>${ano}</td><td>${idade}</td>`;
+   // 🔴 PEGA UMA LETRA DE CADA NOME
+   timelines.forEach(timeline=>{
+     const letra = timeline[idade] || timeline[timeline.length-1];
+     const plano = descobrirPlano(letra);
+     const valor = calcularValorComAcentos(letra);
 
-   // 🔥 pega UMA letra de CADA nome
-timelines.forEach(linhaTempo=>{
-   const letra = linhaTempo[idade] || linhaTempo[linhaTempo.length-1];
-   const plano = descobrirPlano(letra);
-   const valor = calcularValorComAcentos(letra);
-
-   // 🔴 AQUI É A SOMA CORRETA POR PLANO (REGRA DA PLANILHA)
-   if(plano === "fisico") soma.fisico += valor;
-   if(plano === "mental") soma.mental += valor;
-   if(plano === "emocional") soma.emocional += valor;
-   if(plano === "intuitivo") soma.intuitivo += valor;
-
-   html+=`<td>${letra}</td>`;
-});
+     if(plano === "fisico") soma.fisico += valor;
+     if(plano === "mental") soma.mental += valor;
+     if(plano === "emocional") soma.emocional += valor;
+     if(plano === "intuitivo") soma.intuitivo += valor;
+   });
 
    bancoMomentos.push({ano,...soma});
-
-   html+=`<td>${soma.fisico}</td>
-          <td>${soma.mental}</td>
-          <td>${soma.emocional}</td>
-          <td>${soma.intuitivo}</td></tr>`;
  }
 
- html+="</table>";
- document.getElementById("momento").innerHTML=html;
  preencherSeletorAnos();
 }
-
 
 
 function preencherSeletorAnos(){
