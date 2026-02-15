@@ -6,6 +6,9 @@
 <title>Relatório Premium</title>
 
 <style>
+
+/* ================= TELA NORMAL ================= */
+
 body{
   font-family:Arial;
   background:#0f172a;
@@ -22,93 +25,46 @@ body{
   margin:auto;
 }
 
-button{
-  padding:15px 25px;
-  font-size:18px;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  background:#22c55e;
-  color:white;
-  margin-top:20px;
-}
+.erro{ color:#ef4444; font-size:22px; }
+.ok{ color:#22c55e; font-size:22px; }
 
-.erro{
-  color:#ef4444;
-  font-size:22px;
-}
-
-.ok{
-  color:#22c55e;
-  font-size:22px;
-}
-#paginaRelatorio{
-  width:210mm;
-  min-height:297mm;
-  padding:20mm;
-  margin:auto;
-  background:white;
-  color:black;
-  font-family:Arial;
-  box-sizing:border-box;
-}
-
-h1{ font-size:32px; }
-h2{ font-size:24px; margin-top:20px; }
-p{ font-size:16px; line-height:1.6; }
-
- body{
-  background:#0f172a;
-}
-
-#conteudo{
-  background:#0f172a;
-} 
- /* ===== FOLHA A4 ===== */
+/* ================= FOLHA DO RELATÓRIO ================= */
 
 .folha{
-  width: 210mm;
-  min-height: 297mm;
-  background: white;
-  padding: 25mm;
-  margin: 20px auto;
-  box-shadow: 0 0 15px rgba(0,0,0,0.15);
+  width:210mm;
+  min-height:297mm;
+  background:white;
+  color:black;
+  padding:25mm;
+  margin:20px auto;
+  box-shadow:0 0 15px rgba(0,0,0,0.15);
+  text-align:left;
 }
-.page-break{
-  page-break-after: always;
-}
-/* ==============================
-   MODO IMPRESSÃO PROFISSIONAL
-   ============================== */
+
+h1{ font-size:34px; }
+h2{ font-size:24px; margin-top:25px; }
+p{ font-size:16px; line-height:1.7; }
+
+.page-break{ page-break-after:always; }
+
+/* ================= IMPRESSÃO PROFISSIONAL ================= */
+
 @media print {
 
   body{
     background:white !important;
     padding:0 !important;
-    text-align:left !important;
   }
 
-  #conteudo{
-    display:none !important; /* esconde tela preta */
-  }
-
-  #paginaRelatorio{
-    margin:0 !important;
-    padding:0 !important;
-    width:auto !important;
-  }
+  #conteudo{ display:none !important; }
 
   .folha{
-    width:210mm !important;
-    min-height:297mm !important;
-    margin:0 auto !important;
+    margin:0 !important;
     box-shadow:none !important;
     page-break-after:always;
   }
 
-  h1, h2, h3{
-    page-break-after:avoid;
-  }
+  h1,h2,h3{ page-break-after:avoid; }
 
   p{
     orphans:3;
@@ -120,6 +76,7 @@ p{ font-size:16px; line-height:1.6; }
     margin:18mm 15mm;
   }
 }
+
 </style>
 </head>
 
@@ -128,265 +85,99 @@ p{ font-size:16px; line-height:1.6; }
 <div class="card" id="conteudo">
 Carregando acesso...
 </div>
-<!-- AREA DO RELATÓRIO (fica escondida até gerar PDF) -->
-<div id="relatorioPDF" style="display:none; background:white; color:black; padding:40px">
 
-  <h1>RELATÓRIO PREMIUM</h1>
-  <h2>Plano de Expressão Cabalístico</h2>
-
-  <hr>
-
-  <h2>DADOS DO CLIENTE</h2>
-  <p id="pdfNome"></p>
-  <p id="pdfData"></p>
-
-  <hr>
-
-  <h2>OS 4 PLANOS DA EXISTÊNCIA</h2>
-  <p>
-  Este relatório revela como sua energia se distribui entre os quatro planos
-  fundamentais da existência humana: físico, mental, emocional e intuitivo.
-  </p>
-
-  <div id="pdfResultados"></div>
-
-</div>
 <script>
-// ===============================
-// 📦 1) CARREGAR DADOS DO MAPA PRIMEIRO
-// ===============================
+
+/* ================= CARREGAR DADOS ================= */
+
 const dadosSalvos = localStorage.getItem("relatorioMapa");
-  
 
 if(!dadosSalvos){
   document.getElementById("conteudo").innerHTML =
   "<p class='erro'>Nenhum mapa encontrado.<br>Volte e gere o mapa primeiro.</p>";
-  throw new Error("Sem dados do mapa");
+  throw new Error("Sem dados");
 }
+
 const relatorio = JSON.parse(dadosSalvos);
-console.log("Relatório carregado:", relatorio);
-  
-window.relatorio = JSON.parse(dadosSalvos);
-console.log("Relatório carregado:", relatorio);
 
-  
+/* ================= PROTEÇÃO TOKEN ================= */
 
-  
-  
-  
- // ===============================
-// 🧾 PREENCHER RELATÓRIO PDF
-// ===============================
-
-// dados básicos
-document.getElementById("pdfNome").innerHTML =
-  "<b>Nome:</b> " + relatorio.nome;
-
-document.getElementById("pdfData").innerHTML =
-  "<b>Data de nascimento:</b> " + relatorio.data;
-
-// resultados dos planos
-document.getElementById("pdfResultados").innerHTML = `
-  <p><b>Plano Físico:</b> ${relatorio.fisico}</p>
-  <p><b>Plano Mental:</b> ${relatorio.mental}</p>
-  <p><b>Plano Emocional:</b> ${relatorio.emocional}</p>
-  <p><b>Plano Intuitivo:</b> ${relatorio.intuitivo}</p>
-`; 
-</script>
-
-<script>
-// =====================================
-// 🔐 2) SISTEMA DE PROTEÇÃO PREMIUM
-// =====================================
-
-// pega token da URL
 const params = new URLSearchParams(window.location.search);
 const token = params.get("token");
 
-// lista de tokens válidos (depois você altera manualmente)
-const tokensValidos = [
-  "ABC123",
-  "MAPA777",
-  "CLIENTE001"
-];
+const tokensValidos = ["ABC123","MAPA777","CLIENTE001"];
 
-// verifica se token existe
-if(!token){
-  bloquear("Acesso inválido.");
-}
-
-// verifica se token é válido
-if(!tokensValidos.includes(token)){
-  bloquear("Token inválido.");
-}
-
-// verifica se já foi usado
-if(localStorage.getItem("token_usado_"+token)){
-  bloquear("Este link já foi utilizado.");
-}
-
-// se chegou aqui → acesso liberado
-liberarAcesso();
-
-function bloquear(msg){
+if(!token || !tokensValidos.includes(token)){
   document.getElementById("conteudo").innerHTML =
-  "<p class='erro'>"+msg+"</p>";
-  throw new Error("Acesso bloqueado");
+  "<p class='erro'>Acesso inválido.</p>";
+  throw new Error("Token inválido");
 }
 
-function liberarAcesso(){
+/* ================= GERAR RELATÓRIO ================= */
 
-  document.getElementById("conteudo").innerHTML = `
-  <div id="paginaRelatorio">
-  <div class="folha">
+document.getElementById("conteudo").innerHTML =
+"<p class='ok'>Relatório liberado. Preparando PDF...</p>";
 
-  <!-- CAPA -->
-  <h1 style="text-align:center;font-size:40px;margin-top:80px">
-    RELATÓRIO PREMIUM
-  </h1>
+document.body.insertAdjacentHTML("beforeend",`
 
-  <h2 style="text-align:center;margin-bottom:120px">
-    Plano de Expressão Cabalístico
-</h2>
+<div id="paginaRelatorio">
+
+<div class="folha">
+
+<h1 style="text-align:center;margin-top:80px">RELATÓRIO PREMIUM</h1>
+<h2 style="text-align:center;margin-bottom:120px">Plano de Expressão Cabalístico</h2>
 
 <div class="page-break"></div>
 
+<h2>Dados do Cliente</h2>
+<p><b>Nome:</b> ${relatorio.nome}</p>
+<p><b>Data de nascimento:</b> ${relatorio.data}</p>
+
 <hr>
-  <!-- DADOS -->
-  <h2>Dados do Cliente</h2>
-  <p><b>Nome:</b> ${relatorio.nome || "Cliente"}</p>
-  <p><b>Data de nascimento:</b> ${relatorio.data || "-"}</p>
 
-  <hr>
-
-  <!-- INTRODUÇÃO -->
-  <h2>O Plano de Expressão</h2>
+<h2>O Plano de Expressão</h2>
 <p>
-O Plano de Expressão Cabalístico é uma análise profunda baseada na estrutura vibracional do seu nome e da sua data de nascimento.
-Este estudo revela como suas energias se organizam nos quatro planos fundamentais da experiência humana:
-o plano físico, mental, emocional e intuitivo.
+O Plano de Expressão Cabalístico revela como suas energias se organizam
+nos quatro planos fundamentais: físico, mental, emocional e intuitivo.
 </p>
 
-<p>
-Cada um desses planos representa uma dimensão da forma como você pensa, sente, age e percebe a realidade.
-Quando estão equilibrados, a pessoa vive com clareza, propósito e direção.
-Quando estão em desequilíbrio, surgem bloqueios, conflitos internos e sensação de falta de sentido.
-</p>
+<hr>
 
-<p>
-Este relatório foi desenvolvido para revelar sua estrutura energética individual,
-mostrando seus pontos fortes, desafios naturais e caminhos de evolução pessoal.
-</p>
+<h2>Distribuição dos Planos</h2>
+<p><b>Físico:</b> ${relatorio.fisico}</p>
+<p><b>Mental:</b> ${relatorio.mental}</p>
+<p><b>Emocional:</b> ${relatorio.emocional}</p>
+<p><b>Intuitivo:</b> ${relatorio.intuitivo}</p>
 
-<p>
-Ao longo das próximas páginas, você encontrará a análise detalhada de cada plano,
-seguida de interpretações personalizadas baseadas nos seus resultados.
-</p>
-
-  <hr>
-
-  <!-- GRÁFICO (dados) -->
-  <h2>Distribuição dos Planos</h2>
-  <p><b>Físico:</b> ${relatorio.fisico || "-"}</p>
-  <p><b>Mental:</b> ${relatorio.mental || "-"}</p>
-  <p><b>Emocional:</b> ${relatorio.emocional || "-"}</p>
-  <p><b>Intuitivo:</b> ${relatorio.intuitivo || "-"}</p>
-
-  <hr>
-
-  <!-- PLANOS -->
- <!-- PLANOS -->
 <hr>
 
 <h2>Plano de Expressão Natural</h2>
-<p style="white-space:pre-line">
-${relatorio.textoNatural}
-</p>
+<p style="white-space:pre-line">${relatorio.textoNatural}</p>
 
 <hr>
 
 <h2>Status do Momento</h2>
+<p><b>Vigência:</b> Ano ${relatorio.anoMomento}</p>
+<p style="white-space:pre-line">${relatorio.textoMomento}</p>
 
-<p style="font-size:18px; margin-bottom:25px;">
-<b>Vigência:</b> Ano ${relatorio.anoMomento}
-</p>
-
-<p style="white-space:pre-line">
-${relatorio.textoMomento}
-</p>
-  <hr>
+<hr>
 
 <h2>Encerramento</h2>
 <p>
 Este relatório representa um mapa simbólico das suas tendências naturais.
-Utilize estas informações como ferramenta de autoconhecimento e evolução.
+Utilize como ferramenta de autoconhecimento e evolução.
 </p>
+
 </div>
 </div>
-`;
-}
+`);
 
-</script>
+/* ================= GERAR PDF AUTOMÁTICO ================= */
 
-<script>
 window.onload = function(){
-
-  setTimeout(() => {
-
-    const relatorio = document.getElementById("paginaRelatorio");
-    if(!relatorio) return;
-
-    // pega SOMENTE o relatório pronto
-    const htmlRelatorio = relatorio.innerHTML;
-
-    // cria página limpa só para impressão
-    const janela = window.open('', '_blank');
-
-    janela.document.write(`
-      <html>
-      <head>
-        <title>Relatório Premium</title>
-        <style>
-          body{
-            font-family: Arial;
-            margin:0;
-            background:white;
-          }
-          .folha{
-            width:210mm;
-            min-height:297mm;
-            margin:0 auto;
-            padding:25mm;
-            box-sizing:border-box;
-          }
-          h1{font-size:40px;text-align:center;margin-top:80px}
-          h2{margin-top:25px}
-          p{line-height:1.6}
-          hr{margin:25px 0}
-        </style>
-      </head>
-
-      <body>
-        <div class="folha">
-          ${htmlRelatorio}
-        </div>
-      </body>
-      </html>
-    `);
-
-    janela.document.close();
-
-    // espera renderizar e imprime
-    setTimeout(()=>{
-      janela.focus();
-      janela.print();
-      janela.close();
-    }, 800);
-
-  }, 2500);
-
+  setTimeout(()=>{ window.print(); },2500);
 }
+
 </script>
 </body>
 </html>
-
