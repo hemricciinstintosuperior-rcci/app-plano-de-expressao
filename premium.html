@@ -450,10 +450,12 @@ Instinto Superior • Relatório Confidencial
 `;
 
 
-
+setTimeout(() => {
+    window.print();
+}, 2000);
+// 🚀 GERAR PDF VIA IMPRESSÃO PROFISSIONAL (100% compatível Wix)
+setTimeout(() => {
  // só abre nova janela se NÃO for modo impressão
-if(!modoPrint){
-  setTimeout(() => {
 
     const janela = window.open(window.location.href + "&print=true", "_blank");
 
@@ -501,7 +503,7 @@ window.onload = function(){
       margin:0,
       filename:"Relatorio_Plano_Expressao.pdf",
       image:{ type:"jpeg", quality:1 },
-      html2canvas:{ scale:2, useCORS:true },
+      html2canvas:{ scale:3, useCORS:true },
       jsPDF:{ unit:"px", format:"a4", orientation:"portrait" }
     };
 
