@@ -184,17 +184,68 @@ Utilize estas informações como ferramenta de autoconhecimento e evolução.
 // ===============================
 // GERAR PDF PROFISSIONAL (FIX)
 // ===============================
-function gerarPDFSeguro(){
-  requestAnimationFrame(()=>{
-    requestAnimationFrame(()=>{
-      setTimeout(()=>{
-        window.print();
-      },800);
-    });
-  });
-}
+<script>
+window.onload = function(){
 
-gerarPDFSeguro();
+  setTimeout(() => {
+
+    const relatorio = document.getElementById("paginaRelatorio");
+    if(!relatorio) return;
+
+    const janela = window.open('', '_blank');
+
+    janela.document.write(`
+      <html>
+      <head>
+        <title>Relatório Premium</title>
+        <style>
+          body{
+            margin:0;
+            font-family:Arial;
+            background:white;
+          }
+
+          .folha{
+            width:210mm;
+            min-height:297mm;
+            margin:0 auto;
+            padding:25mm;
+            box-sizing:border-box;
+            page-break-after:always;
+          }
+
+          h1,h2,h3{
+            page-break-after:avoid;
+          }
+
+          p{
+            orphans:3;
+            widows:3;
+          }
+
+          @page{
+            size:A4;
+            margin:18mm 15mm;
+          }
+        </style>
+      </head>
+      <body>
+        ${relatorio.innerHTML}
+      </body>
+      </html>
+    `);
+
+    janela.document.close();
+
+    janela.onload = () => {
+      janela.focus();
+      janela.print();
+      janela.close();
+    };
+
+  }, 2000);
+
+}
 </script>
 
 </body>
