@@ -314,6 +314,7 @@ let bancoMomentos=[];
 // ===== DADOS GLOBAIS PARA O RELATÓRIO PREMIUM =====
 let resultadoPlanosNatural = null;
 let textoPlanoNaturalFinal = "";
+let valoresBrutosNatural = null;  
 //================ PLANO NATURAL
 function planoNatural(nome){
 
@@ -361,6 +362,8 @@ const textoPlanoNatural = gerarTextoPlano("natural", dadosTexto);
 // salva para o relatório premium
 resultadoPlanosNatural = dadosTexto;
 textoPlanoNaturalFinal = textoPlanoNatural;  
+ // ⭐ SALVA OS NÚMEROS REAIS (ESSENCIAL PARA O GRÁFICO DO PREMIUM)
+valoresBrutosNatural = soma; 
 
 // mostra na tela
 document.getElementById("resumoNatural").innerText = textoPlanoNatural;
@@ -583,12 +586,20 @@ function exportarRelatorio(){
  }
 
  // pega dados do plano natural direto das barras
- const natural = {
-   fisico: document.getElementById("txtFisicoNat").innerText,
-   mental: document.getElementById("txtMentalNat").innerText,
-   emocional: document.getElementById("txtEmocionalNat").innerText,
-   intuitivo: document.getElementById("txtIntuitivoNat").innerText
- };
+// pega números REAIS do plano natural (sem texto da tela)
+const natural = {
+  fisico: resultadoPlanosNatural.fisico.numero === undefined ? 0 : 
+          resultadoPlanosNatural.fisico.numero, // não usado no gráfico, mas mantido
+
+  mental: resultadoPlanosNatural.mental.numero === undefined ? 0 :
+          resultadoPlanosNatural.mental.numero,
+
+  emocional: resultadoPlanosNatural.emocional.numero === undefined ? 0 :
+             resultadoPlanosNatural.emocional.numero,
+
+  intuitivo: resultadoPlanosNatural.intuitivo.numero === undefined ? 0 :
+             resultadoPlanosNatural.intuitivo.numero
+};
 
  // pega dados do ano escolhido
  const dadosAno = bancoMomentos.find(a => a.ano == anoSelecionado);
@@ -608,10 +619,11 @@ const pacoteRelatorio = {
   momento: momento,
 anoMomento: anoSelecionado,
   // valores dos planos naturais (das barras)
-  fisico: natural.fisico,
-  mental: natural.mental,
-  emocional: natural.emocional,
-  intuitivo: natural.intuitivo,
+// 🔥 AGORA ENVIANDO OS NÚMEROS CORRETOS
+fisico: valoresBrutosNatural.fisico,
+mental: valoresBrutosNatural.mental,
+emocional: valoresBrutosNatural.emocional,
+intuitivo: valoresBrutosNatural.intuitivo,
 
   // textos completos já gerados na tela
   textoNatural: document.getElementById("resumoNatural").innerText,
