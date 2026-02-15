@@ -186,8 +186,9 @@ body.relatorio-modo{
 const dadosSalvos = localStorage.getItem("relatorioMapa");
 
 if(!dadosSalvos){
+    document.getElementById("conteudo").innerHTML =
   document.body.classList.add("relatorio-modo");
-  document.getElementById("conteudo").innerHTML =
+
   "<p class='erro'>Nenhum mapa encontrado.<br>Volte e gere o mapa primeiro.</p>";
   throw new Error("Sem dados");
 }
