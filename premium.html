@@ -294,25 +294,17 @@ Instinto Superior • Relatório Confidencial
 
   <script>
 function gerarPDFSeguro(){
+  requestAnimationFrame(()=>{
+    requestAnimationFrame(()=>{
+      setTimeout(()=>{
+        window.print();
+      },800);
+    });
+  });
+}
 
-  const logo = document.querySelector("");
+gerarPDFSeguro();
 
-  // se não tiver logo, imprime normal
-  if(!logo){
-    window.print();
-    return;
-  }
-
-  // se já carregou → imprime
-  if(logo.complete){
-    window.print();
-    return;
-  }
-
-  // espera carregar → imprime
-
-
-window.onload = gerarPDFSeguro;
   </script>
 </body>
 </html>
