@@ -317,7 +317,28 @@ const pctMental    = Math.round((relatorio.mental    / maiorNumero) * 100);
 const pctEmocional = Math.round((relatorio.emocional / maiorNumero) * 100);
 const pctIntuitivo = Math.round((relatorio.intuitivo / maiorNumero) * 100);
 
+// ===============================
+// ESCALA DO GRÁFICO DO MOMENTO (NOVO)
+// ===============================
 
+const maiorNumeroMomento = Math.max(
+  relatorio.fisicoMomento,
+  relatorio.mentalMomento,
+  relatorio.emocionalMomento,
+  relatorio.intuitivoMomento
+);
+
+const pctFisicoMomento =
+  Math.round((relatorio.fisicoMomento / maiorNumeroMomento) * 100);
+
+const pctMentalMomento =
+  Math.round((relatorio.mentalMomento / maiorNumeroMomento) * 100);
+
+const pctEmocionalMomento =
+  Math.round((relatorio.emocionalMomento / maiorNumeroMomento) * 100);
+
+const pctIntuitivoMomento =
+  Math.round((relatorio.intuitivoMomento / maiorNumeroMomento) * 100);
 
 
 // ===============================
@@ -430,6 +451,43 @@ ${relatorio.textoNatural}
 <p style="font-size:18px;">
 <b>Vigência:</b> Ano ${relatorio.anoMomento}
 </p>
+
+<p><b>Físico:</b> ${relatorio.fisicoMomento}</p>
+<p><b>Mental:</b> ${relatorio.mentalMomento}</p>
+<p><b>Emocional:</b> ${relatorio.emocionalMomento}</p>
+<p><b>Intuitivo:</b> ${relatorio.intuitivoMomento}</p>
+
+<div class="grafico">
+
+  <div class="barra">
+    <span>Físico</span>
+    <div class="linha">
+      <div class="preenchimento fisico" style="width:${pctFisicoMomento}%"></div>
+    </div>
+  </div>
+
+  <div class="barra">
+    <span>Mental</span>
+    <div class="linha">
+      <div class="preenchimento mental" style="width:${pctMentalMomento}%"></div>
+    </div>
+  </div>
+
+  <div class="barra">
+    <span>Emocional</span>
+    <div class="linha">
+      <div class="preenchimento emocional" style="width:${pctEmocionalMomento}%"></div>
+    </div>
+  </div>
+
+  <div class="barra">
+    <span>Intuitivo</span>
+    <div class="linha">
+      <div class="preenchimento intuitivo" style="width:${pctIntuitivoMomento}%"></div>
+    </div>
+  </div>
+
+</div>
 
 <p style="white-space:pre-line">
 ${relatorio.textoMomento}
