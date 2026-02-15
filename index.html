@@ -449,64 +449,53 @@ function gerarStatusMomento(){
    return;
  }
 
- const maior = Math.max(dados.fisico,dados.mental,dados.emocional,dados.intuitivo);
+const maior = Math.max(dados.fisico,dados.mental,dados.emocional,dados.intuitivo);
 
- // atualiza barras
-// atualiza barras (IGUAL AO NATURAL)
+// 1️⃣ REDUÇÕES (PRIMEIRO!)
+const reducoesMomento = {
+  fisico: reduzirNumero(dados.fisico),
+  mental: reduzirNumero(dados.mental),
+  emocional: reduzirNumero(dados.emocional),
+  intuitivo: reduzirNumero(dados.intuitivo)
+};
+
+// 2️⃣ ATUALIZA BARRAS (IGUAL AO NATURAL)
 atualizarBarraNatural("Fisico",dados.fisico,maior,reducoesMomento.fisico);
 atualizarBarraNatural("Mental",dados.mental,maior,reducoesMomento.mental);
 atualizarBarraNatural("Emocional",dados.emocional,maior,reducoesMomento.emocional);
 atualizarBarraNatural("Intuitivo",dados.intuitivo,maior,reducoesMomento.intuitivo);
 
- // 🔢 números reduzidos
- const reducoesMomento = {
-   fisico: reduzirNumero(dados.fisico),
-   mental: reduzirNumero(dados.mental),
-   emocional: reduzirNumero(dados.emocional),
-   intuitivo: reduzirNumero(dados.intuitivo)
- };
+// 3️⃣ CLASSIFICA INTENSIDADE
+function classificar(valor, maior){
+  if(valor >= maior*0.75) return "forte";
+  if(valor >= maior*0.5) return "medio";
+  return "fraco";
+}
 
- // 🔵 classifica intensidade
- function classificar(valor, maior){
-   if(valor >= maior*0.75) return "forte";
-   if(valor >= maior*0.5) return "medio";
-   return "fraco";
- }
+const intensidadesMomento = {
+  fisico: classificar(dados.fisico, maior),
+  mental: classificar(dados.mental, maior),
+  emocional: classificar(dados.emocional, maior),
+  intuitivo: classificar(dados.intuitivo, maior)
+};
 
- const intensidadesMomento = {
-   fisico: classificar(dados.fisico, maior),
-   mental: classificar(dados.mental, maior),
-   emocional: classificar(dados.emocional, maior),
-   intuitivo: classificar(dados.intuitivo, maior)
- };
-
- // 🧠 objeto pro motor de texto
- const dadosTextoMomento = {
-   fisico:{ nivel:intensidadesMomento.fisico, numero:reducoesMomento.fisico },
-   mental:{ nivel:intensidadesMomento.mental, numero:reducoesMomento.mental },
-   emocional:{ nivel:intensidadesMomento.emocional, numero:reducoesMomento.emocional },
-   intuitivo:{ nivel:intensidadesMomento.intuitivo, numero:reducoesMomento.intuitivo }
- };
-
- // ✨ gera texto final
- const textoMomento = gerarTextoPlano("momento", dadosTextoMomento);
-
- // mostra na tela
- document.getElementById("resumoMomento").innerText = textoMomento;
-
+const dadosTextoMomento = {
+  fisico:{ nivel:intensidadesMomento.fisico, numero:reducoesMomento.fisico },
+  mental:{ nivel:intensidadesMomento.mental, numero:reducoesMomento.mental },
+  emocional:{ nivel:intensidadesMomento.emocional, numero:reducoesMomento.emocional },
+  intuitivo:{ nivel:intensidadesMomento.intuitivo, numero:reducoesMomento.intuitivo }
+};
 
 const textoBaseMomento = gerarTextoPlano("momento", dadosTextoMomento);
-
-// ⭐ pega o ano escolhido
 const anoSelecionado = document.getElementById("anoSelect").value;
 
-// ⭐ cria texto final com ano
 const textoMomentoFinal =
 "No ano de " + anoSelecionado + ", o seu Plano de Expressão do Momento revela:\n\n"
 + textoBaseMomento;
 
-// mostra na tela
 document.getElementById("resumoMomento").innerText = textoMomentoFinal;
+
+
 }
 //================ BARRAS (MANTIDAS)
 
