@@ -294,17 +294,32 @@ Instinto Superior • Relatório Confidencial
 </div>
 `;
 
-function gerarPDFSeguro(){
-  requestAnimationFrame(()=>{
-    requestAnimationFrame(()=>{
-      setTimeout(()=>{
-        window.print();
-      },800);
-    });
-  });
-}
+window.onload = function(){
 
-gerarPDFSeguro();
+  setTimeout(() => {
+
+    const relatorio = document.getElementById("paginaRelatorio");
+    const folha = document.getElementById("pdfFolha");
+
+    if(!relatorio) return;
+
+    // copia relatório pronto pra folha invisível
+    folha.innerHTML = relatorio.outerHTML;
+
+    const opt = {
+      margin:0,
+      filename:"Relatorio_Plano_Expressao.pdf",
+      image:{ type:"jpeg", quality:1 },
+      html2canvas:{ scale:2, useCORS:true },
+      jsPDF:{ unit:"px", format:"a4", orientation:"portrait" }
+    };
+
+    // gera PDF REAL (não depende do print)
+    html2pdf().set(opt).from(folha).save();
+
+  }, 2500);
+
+}
 
   </script>
 </body>
