@@ -125,6 +125,10 @@ h2{
    CONFIGURAÇÃO PROFISSIONAL DE IMPRESSÃO (PDF)
    ====================================================== */
 @media print {
+  *{
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
 
   body{
     background:white !important;
