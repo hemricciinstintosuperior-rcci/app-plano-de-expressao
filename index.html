@@ -382,73 +382,70 @@ function planoMomento(nomeCompleto,data){
 
  bancoMomentos=[];
 
- const nome = nomeCompleto.toUpperCase().replace(/\s+/g,"");
- const anoNasc = new Date(data).getFullYear();
+ const nomes = nomeCompleto
+   .toUpperCase()
+   .split(" ")
+   .filter(n=>n.length>1);
 
- // ==============================
- // 1) CRIA TIMELINE GERAL DO NOME COMPLETO
- // ==============================
- let timelineGeral = [];
+ const anoNasc=new Date(data).getFullYear();
 
- for(let letra of nome){
-   let anos = calcularValorComAcentos(letra);
-   for(let i=0;i<anos;i++){
-     timelineGeral.push(letra);
-   }
- }
+ // ============================================
+ // 1) CRIA TIMELINE VERTICAL DE CADA NOME
+ // (igual planilha: 1º nome, 2º nome, 3º nome...)
+ // ============================================
+ const timelines = nomes.map(nome=>{
+    let linhaTempo=[];
+    for(let letra of nome){
+        let anos = calcularValorComAcentos(letra);
+        for(let i=0;i<anos;i++){
+            linhaTempo.push(letra);
+        }
+    }
+    return linhaTempo;
+ });
 
- // segurança (caso nome inválido)
- if(timelineGeral.length === 0){
-   alert("Nome inválido.");
-   return;
- }
-
- // ==============================
+ // ============================================
  // 2) MONTA TABELA DO MOMENTO
- // ==============================
- let html="<h2>Plano do Momento</h2><table>";
- html+="<tr><th>Ano</th><th>Idade</th><th>Letra ativa</th><th>Físico</th><th>Mental</th><th>Emocional</th><th>Intuitivo</th></tr>";
+ // ============================================
+ let html="<h2>Plano do Momento</h2><table><tr><th>Ano</th><th>Idade</th>";
+ nomes.forEach((n,i)=>html+=`<th>${i+1}º Nome</th>`);
+ html+="<th>Físico</th><th>Mental</th><th>Emocional</th><th>Intuitivo</th></tr>";
 
- // ==============================
+ // ============================================
  // 3) PERCORRE A VIDA (0 a 100 anos)
- // ==============================
- for(let idade=0; idade<=100; idade++){
+ // ============================================
+ for(let idade=0;idade<=100;idade++){
 
-   const ano = anoNasc + idade;
+  let ano=anoNasc+idade;
+  let soma={fisico:0,mental:0,emocional:0,intuitivo:0};
 
-   let soma = {fisico:0, mental:0, emocional:0, intuitivo:0};
+  html+=`<tr><td>${ano}</td><td>${idade}</td>`;
 
-   // pega a letra da timeline (igual planilha)
-   const letra = timelineGeral[idade] || timelineGeral[timelineGeral.length-1];
+  timelines.forEach(linhaTempo=>{
+    const letra = linhaTempo[ idade ] || linhaTempo[ linhaTempo.length - 1 ];
+    const plano = descobrirPlano(letra);
+    const valor = calcularValorComAcentos(letra);
 
-   const plano = descobrirPlano(letra);
-   const valor = calcularValorComAcentos(letra);
+    if(plano){
+      soma[plano]+=valor;
+    }
 
-   if(plano){
-     soma[plano] += valor;
-   }
+    html+=`<td>${letra}</td>`;
+  });
 
-   // salva banco para o gráfico
-   bancoMomentos.push({ano,...soma});
+  // 🔴 AQUI ESTÁ A CHAVE DO GRÁFICO (SOMA IGUAL NATURAL)
+  bancoMomentos.push({ano,...soma});
 
-   // tabela visual
-   html += `<tr>
-     <td>${ano}</td>
-     <td>${idade}</td>
-     <td>${letra}</td>
-     <td>${soma.fisico}</td>
-     <td>${soma.mental}</td>
-     <td>${soma.emocional}</td>
-     <td>${soma.intuitivo}</td>
-   </tr>`;
+  html+=`<td>${soma.fisico}</td>
+         <td>${soma.mental}</td>
+         <td>${soma.emocional}</td>
+         <td>${soma.intuitivo}</td></tr>`;
  }
 
  html+="</table>";
-
- document.getElementById("momento").innerHTML = html;
+ document.getElementById("momento").innerHTML=html;
  preencherSeletorAnos();
 }
-
 
 function preencherSeletorAnos(){
  const select=document.getElementById("anoSelect");
