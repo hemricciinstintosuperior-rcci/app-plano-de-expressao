@@ -295,6 +295,22 @@ if(!dadosSalvos){
 }
 
 const relatorio = JSON.parse(dadosSalvos);
+// ===============================
+// CALCULAR PORCENTAGENS DO GRÁFICO
+// ===============================
+const valores = [
+  relatorio.fisico,
+  relatorio.mental,
+  relatorio.emocional,
+  relatorio.intuitivo
+];
+
+const maiorValor = Math.max(...valores);
+
+const pctFisico = (relatorio.fisico / maiorValor) * 100;
+const pctMental = (relatorio.mental / maiorValor) * 100;
+const pctEmocional = (relatorio.emocional / maiorValor) * 100;
+const pctIntuitivo = (relatorio.intuitivo / maiorValor) * 100;  
 
 // ===============================
 // SISTEMA TOKEN
@@ -366,28 +382,28 @@ nos planos físico, mental, emocional e intuitivo.
   <div class="barra">
     <span>Físico</span>
     <div class="linha">
-      <div class="preenchimento fisico" style="width:${relatorio.fisico*10}%"></div>
+      <div class="preenchimento fisico" style="width:${pctFisico}%"></div>
     </div>
   </div>
 
   <div class="barra">
     <span>Mental</span>
     <div class="linha">
-      <div class="preenchimento mental" style="width:${relatorio.mental*10}%"></div>
+      <div class="preenchimento mental" style="width:${pctMental}%"></div>
     </div>
   </div>
 
   <div class="barra">
     <span>Emocional</span>
     <div class="linha">
-      <div class="preenchimento emocional" style="width:${relatorio.emocional*10}%"></div>
+      <div class="preenchimento emocional" style="width:${pctEmocional}%"></div>
     </div>
   </div>
 
   <div class="barra">
     <span>Intuitivo</span>
     <div class="linha">
-      <div class="preenchimento intuitivo" style="width:${relatorio.intuitivo*10}%"></div>
+      <div class="preenchimento intuitivo" style="width:${pctIntuitivo}%"></div>
     </div>
   </div>
 
