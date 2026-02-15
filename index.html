@@ -384,54 +384,61 @@ function planoMomento(nomeCompleto,data){
 
  bancoMomentos=[];
 
- const nomes = nomeCompleto
-   .toUpperCase()
-   .split(" ")
-   .filter(n=>n.length>1);
+ // 🔴 1) TRANSFORMA O NOME COMPLETO EM SEQUÊNCIA CONTÍNUA DE LETRAS
+ const nomeLimpo = nomeCompleto.toUpperCase().replace(/ /g,"");
 
- const anoNasc=new Date(data).getFullYear();
+ const anoNasc = new Date(data).getFullYear();
 
- // 🔴 CRIA TIMELINE EXPANDIDA DE CADA NOME
- const timelines = nomes.map(nome=>{
-    let linhaTempo=[];
-    for(let letra of nome){
-        let anos = calcularValorComAcentos(letra); // valor cabalístico
-        for(let i=0;i<anos;i++){
-            linhaTempo.push(letra);
-        }
+ // 🔴 2) CRIA UMA ÚNICA TIMELINE GIGANTE (igual sua planilha)
+ let timelineGeral = [];
+
+ for(let letra of nomeLimpo){
+    const anos = calcularValorComAcentos(letra);
+
+    for(let i=0;i<anos;i++){
+        timelineGeral.push(letra);
     }
-    return linhaTempo;
- });
+ }
 
- let html="<h2>Plano do Momento</h2><table><tr><th>Ano</th><th>Idade</th>";
- nomes.forEach((n,i)=>html+=`<th>${i+1}º Nome</th>`);
- html+="<th>Físico</th><th>Mental</th><th>Emocional</th><th>Intuitivo</th></tr>";
+ // 🔴 segurança (nunca deve acontecer, mas evita crash)
+ if(timelineGeral.length === 0){
+   alert("Erro ao gerar timeline.");
+   return;
+ }
 
- for(let idade=0;idade<=100;idade++){
+ // 🔴 3) MONTA TABELA
+ let html="<h2>Plano do Momento</h2><table><tr><th>Ano</th><th>Idade</th><th>Letra ativa</th><th>Físico</th><th>Mental</th><th>Emocional</th><th>Intuitivo</th></tr>";
 
-  let ano=anoNasc+idade;
+ for(let idade=0; idade<=100; idade++){
+
+  const ano = anoNasc + idade;
+
   let soma={fisico:0,mental:0,emocional:0,intuitivo:0};
 
-  html+=`<tr><td>${ano}</td><td>${idade}</td>`;
+  // 🔴 PEGA A LETRA DA TIMELINE (EXATAMENTE COMO SUA PLANILHA)
+const letra = timeline[ idade % timeline.length ];
 
-  timelines.forEach(linhaTempo=>{
-    const letra = linhaTempo[ idade ] || linhaTempo[ linhaTempo.length - 1 ];
-      const plano = descobrirPlano(letra);
-      const valor = calcularValorComAcentos(letra);
-      soma[plano]+=valor;
-      html+=`<td>${letra}</td>`;
-  });
+  const plano = descobrirPlano(letra);
+  const valor = calcularValorComAcentos(letra);
+
+  soma[plano] += valor;
 
   bancoMomentos.push({ano,...soma});
 
-  html+=`<td>${soma.fisico}</td>
-         <td>${soma.mental}</td>
-         <td>${soma.emocional}</td>
-         <td>${soma.intuitivo}</td></tr>`;
+  html+=`<tr>
+    <td>${ano}</td>
+    <td>${idade}</td>
+    <td>${letra}</td>
+    <td>${soma.fisico}</td>
+    <td>${soma.mental}</td>
+    <td>${soma.emocional}</td>
+    <td>${soma.intuitivo}</td>
+  </tr>`;
  }
 
  html+="</table>";
- document.getElementById("momento").innerHTML=html;
+ document.getElementById("momento").innerHTML = html;
+
  preencherSeletorAnos();
 }
 function preencherSeletorAnos(){
