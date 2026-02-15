@@ -452,10 +452,11 @@ function gerarStatusMomento(){
  const maior = Math.max(dados.fisico,dados.mental,dados.emocional,dados.intuitivo);
 
  // atualiza barras
- atualizarBarra("Fisico",dados.fisico,maior);
- atualizarBarra("Mental",dados.mental,maior);
- atualizarBarra("Emocional",dados.emocional,maior);
- atualizarBarra("Intuitivo",dados.intuitivo,maior);
+// atualiza barras (IGUAL AO NATURAL)
+atualizarBarraNatural("Fisico",dados.fisico,maior,reducoesMomento.fisico);
+atualizarBarraNatural("Mental",dados.mental,maior,reducoesMomento.mental);
+atualizarBarraNatural("Emocional",dados.emocional,maior,reducoesMomento.emocional);
+atualizarBarraNatural("Intuitivo",dados.intuitivo,maior,reducoesMomento.intuitivo);
 
  // 🔢 números reduzidos
  const reducoesMomento = {
