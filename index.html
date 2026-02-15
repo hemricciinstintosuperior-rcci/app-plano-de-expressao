@@ -415,7 +415,7 @@ function planoMomento(nomeCompleto,data){
   html+=`<tr><td>${ano}</td><td>${idade}</td>`;
 
   timelines.forEach(linhaTempo=>{
-      const letra = linhaTempo[ idade % linhaTempo.length ]; // 🔴 agora correto
+    const letra = linhaTempo[ idade ] || linhaTempo[ linhaTempo.length - 1 ];
       const plano = descobrirPlano(letra);
       const valor = calcularValorComAcentos(letra);
       soma[plano]+=valor;
