@@ -43,29 +43,48 @@ body{
 .page-break{ page-break-after:always; }
 
 /* ===== MODO IMPRESSÃO (PDF) ===== */
+/* ==============================
+   AJUSTE PROFISSIONAL A4 CENTRALIZADO
+   ============================== */
 @media print {
 
-  body{
+  html, body{
+    width:210mm;
+    height:auto;
+    margin:0 !important;
+    padding:0 !important;
     background:white !important;
+  }
+
+  body{
+    display:flex;
+    justify-content:center;
+  }
+
+  #conteudo{
+    display:none !important;
+  }
+
+  #paginaRelatorio{
+    width:210mm !important;
+    margin:0 auto !important;
     padding:0 !important;
   }
 
-  #conteudo{ display:none !important; }
-
-  #paginaRelatorio{
-    width:auto !important;
-    margin:0 !important;
-  }
-
   .folha{
+    width:210mm !important;
+    min-height:297mm !important;
     margin:0 auto !important;
-    box-shadow:none !important;
+    padding:18mm 15mm !important;
+    box-sizing:border-box;
+    page-break-after:always;
   }
 
   @page{
-    size:A4;
-    margin:18mm 15mm;
+    size:A4 portrait;
+    margin:0;
   }
+
 }
 </style>
 </head>
