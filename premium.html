@@ -232,7 +232,41 @@ h2{
 }
 }
 
+/* ==============================
+   GRÁFICO DOS PLANOS (PDF)
+============================== */
 
+.grafico{
+  margin-top:25px;
+}
+
+.barra{
+  margin:18px 0;
+}
+
+.barra span{
+  font-weight:bold;
+  display:block;
+  margin-bottom:6px;
+}
+
+.linha{
+  width:100%;
+  height:14px;
+  background:#eee;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.preenchimento{
+  height:100%;
+  border-radius:20px;
+}
+
+.fisico{ background:#ef4444; }
+.mental{ background:#06b6d4; }
+.emocional{ background:#22c55e; }
+.intuitivo{ background:#eab308; }
 
 </style>
 </head>
@@ -321,6 +355,37 @@ nos planos físico, mental, emocional e intuitivo.
 <p><b>Mental:</b> ${relatorio.mental}</p>
 <p><b>Emocional:</b> ${relatorio.emocional}</p>
 <p><b>Intuitivo:</b> ${relatorio.intuitivo}</p>
+</div>
+<div class="grafico">
+
+  <div class="barra">
+    <span>Físico</span>
+    <div class="linha">
+      <div class="preenchimento fisico" style="width:${relatorio.fisico*6}%"></div>
+    </div>
+  </div>
+
+  <div class="barra">
+    <span>Mental</span>
+    <div class="linha">
+      <div class="preenchimento mental" style="width:${relatorio.mental*6}%"></div>
+    </div>
+  </div>
+
+  <div class="barra">
+    <span>Emocional</span>
+    <div class="linha">
+      <div class="preenchimento emocional" style="width:${relatorio.emocional*6}%"></div>
+    </div>
+  </div>
+
+  <div class="barra">
+    <span>Intuitivo</span>
+    <div class="linha">
+      <div class="preenchimento intuitivo" style="width:${relatorio.intuitivo*6}%"></div>
+    </div>
+  </div>
+
 </div>
 
 <div class="secao">
