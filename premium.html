@@ -329,31 +329,61 @@ Utilize estas informações como ferramenta de autoconhecimento e evolução.
 </script>
 
 <script>
-
-// 🚀 GERAR PDF PROFISSIONAL (MESMO SISTEMA DO OUTRO PREMIUM)
 window.onload = function(){
 
   setTimeout(() => {
 
-    // cria janela invisível
+    const relatorio = document.getElementById("paginaRelatorio");
+    if(!relatorio) return;
+
+    // pega SOMENTE o relatório pronto
+    const htmlRelatorio = relatorio.innerHTML;
+
+    // cria página limpa só para impressão
     const janela = window.open('', '_blank');
 
-    // copia TODA página pronta
-    const conteudo = document.documentElement.outerHTML;
+    janela.document.write(`
+      <html>
+      <head>
+        <title>Relatório Premium</title>
+        <style>
+          body{
+            font-family: Arial;
+            margin:0;
+            background:white;
+          }
+          .folha{
+            width:210mm;
+            min-height:297mm;
+            margin:0 auto;
+            padding:25mm;
+            box-sizing:border-box;
+          }
+          h1{font-size:40px;text-align:center;margin-top:80px}
+          h2{margin-top:25px}
+          p{line-height:1.6}
+          hr{margin:25px 0}
+        </style>
+      </head>
 
-    // escreve conteúdo na nova janela
-    janela.document.open();
-    janela.document.write(conteudo);
+      <body>
+        <div class="folha">
+          ${htmlRelatorio}
+        </div>
+      </body>
+      </html>
+    `);
+
     janela.document.close();
 
-    // espera renderizar e manda imprimir
-    janela.onload = () => {
+    // espera renderizar e imprime
+    setTimeout(()=>{
       janela.focus();
-      janela.print();   // ⭐ AQUI NASCE O PDF PERFEITO
+      janela.print();
       janela.close();
-    };
+    }, 800);
 
-  }, 3000); // espera relatório montar totalmente
+  }, 2500);
 
 }
 </script>
