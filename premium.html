@@ -104,6 +104,12 @@ body{
   }
 
 }
+/* FUNDO TOTAL BRANCO QUANDO RELATÓRIO APARECER */
+body.relatorio-modo{
+  background:#ffffff !important;
+  padding:0 !important;
+}
+  
 /* ==============================
    CAPA PROFISSIONAL
    ============================== */
@@ -178,6 +184,7 @@ body{
 const dadosSalvos = localStorage.getItem("relatorioMapa");
 
 if(!dadosSalvos){
+  document.body.classList.add("relatorio-modo");
   document.getElementById("conteudo").innerHTML =
   "<p class='erro'>Nenhum mapa encontrado.<br>Volte e gere o mapa primeiro.</p>";
   throw new Error("Sem dados");
@@ -208,7 +215,7 @@ document.getElementById("conteudo").innerHTML = `
 <!-- CAPA -->
 <div class="capa">
 
-<img class="logo" src="COLE_AQUI_SEU_LOGO">
+<img class="logo" src="https://github.com/hemricciinstintosuperior-rcci/app-plano-de-expressao/icon-192.png">
 
 <div class="titulo">INSTINTO SUPERIOR</div>
 <div class="subtitulo">Plano de Expressão Cabalístico</div>
