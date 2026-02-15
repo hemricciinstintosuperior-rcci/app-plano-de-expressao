@@ -436,15 +436,19 @@ function planoMomento(nomeCompleto,data){
    html+=`<tr><td>${ano}</td><td>${idade}</td>`;
 
    // 🔥 pega UMA letra de CADA nome
-   timelines.forEach(linhaTempo=>{
-      const letra = linhaTempo[idade] || linhaTempo[linhaTempo.length-1];
-      const plano = descobrirPlano(letra);
-      const valor = calcularValorComAcentos(letra);
+timelines.forEach(linhaTempo=>{
+   const letra = linhaTempo[idade] || linhaTempo[linhaTempo.length-1];
+   const plano = descobrirPlano(letra);
+   const valor = calcularValorComAcentos(letra);
 
-      if(plano) soma[plano]+=valor;
+   // 🔴 AQUI É A SOMA CORRETA POR PLANO (REGRA DA PLANILHA)
+   if(plano === "fisico") soma.fisico += valor;
+   if(plano === "mental") soma.mental += valor;
+   if(plano === "emocional") soma.emocional += valor;
+   if(plano === "intuitivo") soma.intuitivo += valor;
 
-      html+=`<td>${letra}</td>`;
-   });
+   html+=`<td>${letra}</td>`;
+});
 
    bancoMomentos.push({ano,...soma});
 
