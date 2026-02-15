@@ -52,67 +52,6 @@ body{
   padding:40px 40px 60px;
 }
 
-
-
-/* ===== MODO IMPRESSÃO (PDF) ===== */
-/* ==============================
-   AJUSTE PROFISSIONAL A4 CENTRALIZADO
-   ============================== */
-@media print {
-
-
-  body{
-    background:white !important;
-    margin:0 !important;
-  }
-
-  .card{
-    display:none !important;
-  }
-
-  #paginaRelatorio{
-    width:210mm !important;
-    margin:0 auto !important;
-    padding:0 !important;
-  }
-
-  .folha{
-    width:210mm !important;
-    min-height:297mm !important;
-    margin:0 auto !important;
-    padding:18mm 15mm !important;
-    box-sizing:border-box;
-    page-break-after:always;
-  }
-     /* área A4 */
-  #pdfFolha{
-    width:210mm;
-    margin:auto;
-    padding:12mm 10mm;
-    box-sizing:border-box;
-  } 
-  h1,h2,h3{
-    page-break-after:avoid;
-  }
-
-  p{
-    orphans:3;
-    widows:3;
-  }
-  @page{
-    size:A4 portrait;
-    margin:30;
-  }
-
-}
-/* FUNDO TOTAL BRANCO QUANDO RELATÓRIO APARECER */
-body.relatorio-modo{
-  background:#ffffff!important;
-  color:#000 !important;
-  padding:0 !important;
-  text-align:left !important;
-}
-
 /* ==============================
    CAPA PROFISSIONAL
    ============================== */
@@ -173,6 +112,67 @@ body.relatorio-modo{
   page-break-after:always;
 }  
   
+
+/* ===== MODO IMPRESSÃO (PDF) ===== */
+/* ==============================
+   AJUSTE PROFISSIONAL A4 CENTRALIZADO
+   ============================== */
+@media print {
+
+
+  body{
+    background:white !important;
+    margin:0 !important;
+  }
+
+  .card{
+    display:none !important;
+  }
+
+  #paginaRelatorio{
+    width:210mm !important;
+    margin:0 auto !important;
+    padding:0 !important;
+  }
+
+  .folha{
+    width:210mm !important;
+    min-height:297mm !important;
+    margin:0 auto !important;
+    padding:18mm 15mm !important;
+    box-sizing:border-box;
+    page-break-after:always;
+  }
+     /* área A4 */
+  #pdfFolha{
+    width:210mm;
+    margin:auto;
+    padding:12mm 10mm;
+    box-sizing:border-box;
+  } 
+  h1,h2,h3{
+    page-break-after:avoid;
+  }
+
+  p{
+    orphans:3;
+    widows:3;
+  }
+  @page{
+    size:A4 portrait;
+    margin:30;
+  }
+
+}
+/* FUNDO TOTAL BRANCO QUANDO RELATÓRIO APARECER */
+body.relatorio-modo{
+  background:#ffffff!important;
+  color:#000 !important;
+  padding:0 !important;
+  text-align:left !important;
+}
+
+
 </style>
 </head>
 
