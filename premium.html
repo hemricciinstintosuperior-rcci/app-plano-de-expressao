@@ -180,84 +180,50 @@ Utilize estas informações como ferramenta de autoconhecimento e evolução.
 </div>
 </div>
 `;
-
+</script>
 // ===============================
 // GERAR PDF PROFISSIONAL (FIX)
 // ===============================
+<!-- FOLHA A4 INVISÍVEL -->
+<div id="pdfFolha" style="
+position:fixed;
+left:-99999px;
+top:0;
+width:794px;
+background:white;
+padding:25px 30px;
+box-sizing:border-box;
+"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
 <script>
 window.onload = function(){
 
   setTimeout(() => {
 
     const relatorio = document.getElementById("paginaRelatorio");
+    const folha = document.getElementById("pdfFolha");
+
     if(!relatorio) return;
 
-    const janela = window.open('', '_blank');
+    // copia relatório pronto pra folha invisível
+    folha.innerHTML = relatorio.outerHTML;
 
-    janela.document.write(`
-      <html>
-      <head>
-        <title>Relatório Premium</title>
-        <style>
-          body{
-            margin:0;
-            font-family:Arial;
-            background:white;
-          }
-
-          .folha{
-            width:210mm;
-            min-height:297mm;
-            margin:0 auto;
-            padding:25mm;
-            box-sizing:border-box;
-            page-break-after:always;
-          }
-
-          h1,h2,h3{
-            page-break-after:avoid;
-          }
-
-          p{
-            orphans:3;
-            widows:3;
-          }
-
-          @page{
-            size:A4;
-            margin:18mm 15mm;
-          }
-        </style>
-      </head>
-      <body>
-        ${relatorio.innerHTML}
-      </body>
-      </html>
-    `);
-
-    janela.document.close();
-
-    janela.onload = () => {
-      janela.focus();
-      janela.print();
-      janela.close();
+    const opt = {
+      margin:0,
+      filename:"Relatorio_Plano_Expressao.pdf",
+      image:{ type:"jpeg", quality:1 },
+      html2canvas:{ scale:2, useCORS:true },
+      jsPDF:{ unit:"px", format:"a4", orientation:"portrait" }
     };
 
-  }, 2000);
+    // gera PDF REAL (não depende do print)
+    html2pdf().set(opt).from(folha).save();
+
+  }, 2500);
 
 }
-function gerarPDFSeguro(){
-  requestAnimationFrame(()=>{
-    requestAnimationFrame(()=>{
-      setTimeout(()=>{
-        window.print();
-      },800);
-    });
-  });
-}
-
-gerarPDFSeguro();
-  
 </script>
 
 </body>
