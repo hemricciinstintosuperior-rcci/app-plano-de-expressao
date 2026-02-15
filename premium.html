@@ -77,15 +77,49 @@ p{ font-size:16px; line-height:1.6; }
 .page-break{
   page-break-after: always;
 }
-@media print{
+/* ==============================
+   MODO IMPRESSÃO PROFISSIONAL
+   ============================== */
+@media print {
+
   body{
-    background:white;
+    background:white !important;
+    padding:0 !important;
+    text-align:left !important;
   }
+
+  #conteudo{
+    display:none !important; /* esconde tela preta */
+  }
+
+  #paginaRelatorio{
+    margin:0 !important;
+    padding:0 !important;
+    width:auto !important;
+  }
+
   .folha{
-    box-shadow:none;
-    margin:0;
+    width:210mm !important;
+    min-height:297mm !important;
+    margin:0 auto !important;
+    box-shadow:none !important;
+    page-break-after:always;
   }
-} 
+
+  h1, h2, h3{
+    page-break-after:avoid;
+  }
+
+  p{
+    orphans:3;
+    widows:3;
+  }
+
+  @page{
+    size:A4;
+    margin:18mm 15mm;
+  }
+}
 </style>
 </head>
 
