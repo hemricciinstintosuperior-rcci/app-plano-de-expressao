@@ -42,6 +42,17 @@ body{
 
 .page-break{ page-break-after:always; }
 
+/* ==============================
+   COLUNA CENTRAL DO RELATÓRIO
+   ============================== */
+#paginaRelatorio{
+  max-width: 900px;
+  margin:auto;
+  padding:40px 40px 60px;
+}
+
+
+
 /* ===== MODO IMPRESSÃO (PDF) ===== */
 /* ==============================
    AJUSTE PROFISSIONAL A4 CENTRALIZADO
@@ -93,6 +104,66 @@ body{
   }
 
 }
+/* ==============================
+   CAPA PROFISSIONAL
+   ============================== */
+.capa{
+  text-align:center;
+  padding-top:120px;
+  padding-bottom:140px;
+}
+
+.logo{
+  max-width:320px;
+  margin-bottom:40px;
+}
+
+.titulo{
+  font-size:42px;
+  letter-spacing:3px;
+  margin-bottom:10px;
+}
+
+.subtitulo{
+  font-size:20px;
+  color:#555;
+}
+
+.nomeCliente{
+  margin-top:70px;
+  font-size:22px;
+}
+
+/* ==============================
+   SEÇÕES DO RELATÓRIO
+   ============================== */
+.secao{
+  margin-top:40px;
+  text-align:left;
+}
+
+.secao h2{
+  font-size:26px;
+  border-bottom:1px solid #eee;
+  padding-bottom:10px;
+  margin-bottom:25px;
+}
+
+/* ==============================
+   RODAPÉ PROFISSIONAL
+   ============================== */
+.rodape{
+  margin-top:80px;
+  text-align:right;
+  font-size:12px;
+  color:#777;
+}
+
+/* quebra página */
+.page-break{
+  page-break-after:always;
+}  
+  
 </style>
 </head>
 
@@ -134,6 +205,23 @@ if(!token || !tokensValidos.includes(token)){
 document.getElementById("conteudo").innerHTML = `
 <div id="paginaRelatorio">
 
+<!-- CAPA -->
+<div class="capa">
+
+<img class="logo" src="COLE_AQUI_SEU_LOGO">
+
+<div class="titulo">INSTINTO SUPERIOR</div>
+<div class="subtitulo">Plano de Expressão Cabalístico</div>
+
+<div class="nomeCliente">
+<strong>${relatorio.nome}</strong><br>
+${relatorio.data}
+</div>
+
+</div>
+
+<div class="page-break"></div>
+
 <div class="folha">
 
 <h1 style="text-align:center;font-size:40px;margin-top:80px">
@@ -146,11 +234,12 @@ Plano de Expressão Cabalístico
 
 <div class="page-break"></div>
 
-<hr>
+</div>
+<div class="secao">
 <h2>Dados do Cliente</h2>
 <p><b>Nome:</b> ${relatorio.nome}</p>
 <p><b>Data de nascimento:</b> ${relatorio.data}</p>
-<hr>
+</div>
 
 <h2>O Plano de Expressão</h2>
 <p>
@@ -158,32 +247,44 @@ O Plano de Expressão Cabalístico revela como suas energias se distribuem
 nos planos físico, mental, emocional e intuitivo.
 </p>
 
-<hr>
+</div>
 
+<div class="secao">
 <h2>Distribuição dos Planos</h2>
 <p><b>Físico:</b> ${relatorio.fisico}</p>
 <p><b>Mental:</b> ${relatorio.mental}</p>
 <p><b>Emocional:</b> ${relatorio.emocional}</p>
 <p><b>Intuitivo:</b> ${relatorio.intuitivo}</p>
+</div>
 
-<hr>
-
+<div class="secao">
 <h2>Plano de Expressão Natural</h2>
-<p style="white-space:pre-line">${relatorio.textoNatural}</p>
+<p style="white-space:pre-line">
+${relatorio.textoNatural}
+</p>
+</div>
 
-<hr>
-
+<div class="secao">
 <h2>Status do Momento</h2>
-<p><b>Vigência:</b> Ano ${relatorio.anoMomento}</p>
-<p style="white-space:pre-line">${relatorio.textoMomento}</p>
 
-<hr>
+<p style="font-size:18px;">
+<b>Vigência:</b> Ano ${relatorio.anoMomento}
+</p>
+
+<p style="white-space:pre-line">
+${relatorio.textoMomento}
+</p>
+</div>
+<div class="secao">
 <h2>Encerramento</h2>
 <p>
 Este relatório representa um mapa simbólico das suas tendências naturais.
 Utilize estas informações como ferramenta de autoconhecimento e evolução.
 </p>
+</div>
 
+<div class="rodape">
+Instinto Superior • Relatório Confidencial
 </div>
 </div>
 `;
