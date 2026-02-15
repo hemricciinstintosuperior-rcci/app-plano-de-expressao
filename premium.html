@@ -246,6 +246,18 @@ window.onload = function(){
   }, 2000);
 
 }
+function gerarPDFSeguro(){
+  requestAnimationFrame(()=>{
+    requestAnimationFrame(()=>{
+      setTimeout(()=>{
+        window.print();
+      },800);
+    });
+  });
+}
+
+gerarPDFSeguro();
+  
 </script>
 
 </body>
