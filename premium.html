@@ -452,8 +452,7 @@ Instinto Superior • Relatório Confidencial
 </div>
 </div>
 `;
-// 🛑 impede execução duplicada na janela de impressão
-if (window.location.href.includes("print=true")) return;
+
 setTimeout(() => {
     window.print();
 }, 2000);
