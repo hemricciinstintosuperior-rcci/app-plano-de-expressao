@@ -9,60 +9,34 @@
 <style>
 body{
   font-family: "Times New Roman", serif;
-  background:#FFFFFF;
   color:#111;
-  text-align:center;
-  padding:40px;
+  background:#f4f4f4;
+  line-height:1.8;
+  margin:0;
 }
 
-.card{
-  background:#FFFFFF;
-  padding:30px;
-  border-radius:12px;
-  max-width:700px;
-  margin:auto;
+/* COLUNA CENTRAL */
+body > *{
+  max-width:1350px;
+  margin-left:auto;
+  margin-right:auto;
+  padding-left:40px;
+  padding-right:40px;
 }
 
-.erro{ color:#ef4444; font-size:22px; }
-
-#paginaRelatorio{
-  width:190mm;
-  margin:auto;
-  background:white;
-  color:black;
-  font-family:Arial;
-}
-
-.folha{
-  width:210mm;
-  min-height:297mm;
-  padding:25mm;
-  box-sizing:border-box;
-  page-break-after:always;
-}
-
-.page-break{ page-break-after:always; }
-
-/* ==============================
-   COLUNA CENTRAL DO RELATÓRIO
-   ============================== */
-#paginaRelatorio{
-  max-width: 900px;
-  margin:auto;
-  padding:40px 40px 60px;
-}
-
-/* ==============================
-   CAPA PROFISSIONAL
-   ============================== */
+/* CAPA */
 .capa{
   text-align:center;
-  padding-top:120px;
+  padding-top:140px;
   padding-bottom:140px;
+  margin-bottom:60px;
+  background:white;
+  box-shadow:0 0 25px rgba(0,0,0,0.05);
+  border-radius:10px;
 }
 
 .logo{
-  max-width:900px;
+  max-width:600px;
   margin-bottom:40px;
 }
 
@@ -74,103 +48,190 @@ body{
 
 .subtitulo{
   font-size:20px;
-  color:#000;
-}
-
-.nomeCliente{
-  margin-top:100px;
-  font-size:30px;
-}
-
-/* ==============================
-   SEÇÕES DO RELATÓRIO
-   ============================== */
-.secao{
-  margin-top:40px;
-  text-align:left;
-}
-
-.secao h2{
-  font-size:26px;
-  border-bottom:1px solid #eee;
-  padding-bottom:10px;
-  margin-bottom:25px;
-}
-
-/* ==============================
-   RODAPÉ PROFISSIONAL
-   ============================== */
-.rodape{
-  margin-top:80px;
-  text-align:right;
-  font-size:12px;
   color:#111;
 }
 
-/* quebra página */
-.page-break{
-  page-break-after:always;
-}  
-  
+.nome{
+  margin-top:70px;
+  font-size:22px;
+}
 
-/* ===== MODO IMPRESSÃO (PDF) ===== */
-/* ==============================
-   AJUSTE PROFISSIONAL A4 CENTRALIZADO
-   ============================== */
+/* SEÇÕES */
+.secao{
+  background:white;
+  padding:20px  10px;
+  margin-top:40px;
+  border-radius:10px;
+  box-shadow:0 0 20px rgba(0,0,0,0.05);
+}
+
+/* TÍTULOS */
+h2{
+  font-size:32px;
+  margin-bottom:25px;
+  border-bottom:1px solid #eee;
+  padding-bottom:10px;
+}
+
+.explicacao{
+  font-style: italic;
+  color:#111;
+  margin-bottom:18px;
+  line-height:1.75;
+  white-space: pre-line;
+}
+
+/* NÚMERO */
+.numero{
+  font-weight:bold;
+  margin-top:30px;
+  margin-bottom:20px;
+  font-size:22px;
+}
+
+/* TEXTOS DINÂMICOS */
+.secao div:not(.explicacao):not(.numero){
+  margin-bottom:18px;
+  font-size:18px;
+}
+
+/* ESPAÇO ENTRE PARÁGRAFOS */
+.secao div:not(.explicacao):not(.numero) br{
+  display:block;
+  margin-bottom:12px;
+}
+
+/* RODAPÉ DO SITE */
+.assinatura{
+  margin-top:100px;
+  margin-bottom:80px;
+  text-align:right;
+  font-size:2px;
+  color:#777;
+}
+
+/* área invisível usada pelo PDF */
+#areaPDF{
+  position:fixed;
+  left:-9999px;
+  top:0;
+  width:210mm;
+  background:white;
+  padding:15mm;
+  box-sizing:border-box;
+}
+
+/* ======================================================
+   CONFIGURAÇÃO PROFISSIONAL DE IMPRESSÃO (PDF)
+   ====================================================== */
 @media print {
-
 
   body{
     background:white !important;
     margin:0 !important;
   }
 
-  .card{
-    display:none !important;
-  }
-
-  #paginaRelatorio{
-    width:210mm !important;
-    margin:0 auto !important;
-    padding:0 !important;
-  }
-
-  .folha{
-    width:210mm !important;
-    min-height:297mm !important;
-    margin:0 auto !important;
-    padding:18mm 15mm !important;
-    box-sizing:border-box;
-    page-break-after:always;
-  }
-     /* área A4 */
+  /* área A4 */
   #pdfFolha{
     width:210mm;
     margin:auto;
     padding:12mm 10mm;
     box-sizing:border-box;
-  } 
-  h1,h2,h3{
+  }
+
+  /* evita quebra feia */
+  .secao{
+    page-break-inside:avoid;
+    margin-top:35px;
+  }
+
+  h1, h2, h3{
     page-break-after:avoid;
   }
 
-  p{
+  p, .explicacao, .numero, .secao div{
     orphans:3;
     widows:3;
   }
-  @page{
-    size:A4 portrait;
-    margin:30;
+
+  .btn-imprimir{
+    display:none !important;
   }
 
+  @page{
+    size:A4;
+    margin:18mm 15mm;
+  }
+
+  /* capa quebra página */
+  .capa{
+    page-break-after:always;
+  }
+
+  /* espaço topo/baixo para não cortar conteúdo */
+  #pdfFolha{
+    padding-top:25mm !important;
+    padding-bottom:15mm !important;
+  }
+
+  /* =====================================
+     RODAPÉ PROFISSIONAL COM PAGINAÇÃO
+     ===================================== */
+
+/* inicia contagem correta */
+
+
+/* rodapé pequeno canto direito */
+.printFooter{
+  margin-top:40px;
+  text-align:right;
+  font-size:5px;
+  color:#777;
 }
-/* FUNDO TOTAL BRANCO QUANDO RELATÓRIO APARECER */
-body.relatorio-modo{
-  background:#ffffff!important;
-  color:#000 !important;
-  padding:0 !important;
-  text-align:left !important;
+
+/* =======================================
+   RESPONSIVO CELULAR
+   ======================================= */
+
+
+/* ==============================
+   AJUSTE REAL DA ÁREA PREMIUM MOBILE
+   ============================== */
+@media screen and (max-width:768px){
+
+  /* REMOVE A COLUNA A4 DO SITE */
+  body > *{
+    max-width:100% !important;
+    padding-left:18px !important;
+    padding-right:18px !important;
+  }
+
+  /* REMOVE “caixa de livro” das seções */
+  .secao{
+    padding:24px 15px!important;
+    margin-top:25px !important;
+    border-radius:6px !important;
+  }
+
+  /* capa menor no celular */
+  .capa{
+    padding-top:60px !important;
+    padding-bottom:60px !important;
+  }
+
+  .logo{
+    max-width:90% !important;
+  }
+
+  /* textos proporcionais */
+  .titulo{ font-size:32px !important; }
+  .subtitulo{ font-size:18px !important; }
+  .nome{ font-size:18px !important; }
+  h2{ font-size:24px !important; }
+
 }
+}
+
 
 
 </style>
