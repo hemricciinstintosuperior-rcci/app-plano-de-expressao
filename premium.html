@@ -455,64 +455,55 @@ setTimeout(() => {
 }, 2000);
 // 🚀 GERAR PDF VIA IMPRESSÃO PROFISSIONAL (100% compatível Wix)
 setTimeout(() => {
- // só abre nova janela se NÃO for modo impressão
 
-    const janela = window.open(window.location.href + "&print=true", "_blank");
-
-    const conteudo = document.documentElement.outerHTML;
-
-    janela.document.open();
-    janela.document.write(conteudo);
-    janela.document.close();
-
-  }, 2500);
-}
+  // cria janela invisível
+  const janela = window.open('', '_blank');
 
   // copia TODO o HTML pronto da tela
   const conteudo = document.documentElement.outerHTML;
 
   // escreve na nova janela
- janela.document.open();
-janela.document.write(conteudo);
-janela.document.close();
+  janela.document.open();
+  janela.document.write(conteudo);
+  janela.document.close();
 
-janela.onload = () => {
-  // remove scripts da nova janela (impede recalcular gráfico)
-  const scripts = janela.document.querySelectorAll("script");
-  scripts.forEach(s => s.remove());
-
-  janela.focus();
-  janela.print();
-  janela.close();
-};
+  // espera renderizar e manda imprimir
+  janela.onload = () => {
+    janela.focus();
+    janela.print();
+    janela.close();
+  };
 
 }, 2500);
-window.onload = function(){
+// 📄 GERA PDF AUTOMATICAMENTE
+// 🚀 GERAR PDF SOMENTE QUANDO TUDO TERMINAR DE CARREGAR
+window.onload = function gerarPDF(){
 
-  setTimeout(() => {
+  const relatorioTela = document.body.innerHTML;
+  const folha = document.getElementById("pdfFolha");
 
-    const relatorio = document.getElementById("paginaRelatorio");
-    const folha = document.getElementById("pdfFolha");
+  // copia o relatório pronto para a folha A4 invisível
+  folha.innerHTML = relatorioTela;
 
-    if(!relatorio) return;
+  const opt = {
+    margin:0,
+    filename:"Relatorio_Numerologico.pdf",
+    image:{ type:"jpeg", quality:1 },
+    html2canvas:{ scale:2, useCORS:true },
+    jsPDF:{ unit:"px", format:"a4", orientation:"portrait" }
+  };
 
-    // copia relatório pronto pra folha invisível
-    folha.innerHTML = relatorio.outerHTML;
-
-    const opt = {
-      margin:0,
-      filename:"Relatorio_Plano_Expressao.pdf",
-      image:{ type:"jpeg", quality:1 },
-      html2canvas:{ scale:3, useCORS:true },
-      jsPDF:{ unit:"px", format:"a4", orientation:"portrait" }
-    };
-
-    // gera PDF REAL (não depende do print)
+  setTimeout(()=>{
     html2pdf().set(opt).from(folha).save();
-
-  }, 2500);
+  },1000);
 
 }
+
+observer.observe(document.body, { childList:true, subtree:true });
+
+
+document.oncontextmenu=()=>false;
+document.onselectstart=()=>false;
 
   </script>
 </body>
