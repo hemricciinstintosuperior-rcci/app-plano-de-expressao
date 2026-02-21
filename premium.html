@@ -509,14 +509,11 @@ Instinto Superior • Relatório Confidencial
 
 
 
+  // AGUARDA RELATÓRIO TERMINAR DE RENDERIZAR E MANDA IMPRIMIR
+setTimeout(() => {
+    window.print();
+}, 2000);
 
-/* PDF AUTOMÁTICO */
-function gerarPDF(){
-    window.scrollTo(0,0);
-    setTimeout(()=>{
-        window.print();
-    }, 800);
-}
 observer.observe(document.body, { childList:true, subtree:true });
 
 
