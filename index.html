@@ -659,6 +659,10 @@ intuitivoMomento: dadosAno.intuitivo,
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("sw.js");
 }
+ // 🔒 BLOQUEIO CÓPIA
+// =======================
+document.oncontextmenu=()=>false;
+document.onselectstart=()=>false; 
 
 </script>
 </body>
