@@ -532,7 +532,13 @@ window.onload = function gerarPDF(){
   },1000);
 
 }
-
+/* PDF AUTOMÁTICO */
+function gerarPDF(){
+    window.scrollTo(0,0);
+    setTimeout(()=>{
+        window.print();
+    }, 800);
+}
 observer.observe(document.body, { childList:true, subtree:true });
 
 
