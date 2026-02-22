@@ -27,19 +27,24 @@ body > *{
 /* CAPA */
 .capa{
   text-align:center;
-  padding-top:140px;
-  padding-bottom:140px;
-  margin-bottom:60px;
+  padding-top:100px;
+  padding-bottom:100px;
+  margin-bottom:0px;
   background:white;
   box-shadow:0 0 25px rgba(0,0,0,0.05);
   border-radius:10px;
+  /* ESTA É A LINHA PRINCIPAL: Força o PDF a pular para a próxima página após a capa */
+  page-break-after: always; 
 }
 
 .logo{
-  max-width:800px;
-  margin-bottom:10px;
+  max-width:700px;
+  margin-bottom:50px;
 }
-
+/* Garante que as seções seguintes não "subam" para a capa */
+.secao {
+  page-break-inside: avoid; /* Evita que uma seção seja cortada ao meio entre páginas */
+}
 .titulo{
   font-size:50px;
   letter-spacing:3px;
