@@ -51,7 +51,7 @@ body > *{
   color:#111;
 }
 
-.nome{
+.nomeCliente{
   margin-top:70px;
   font-size:22px;
 }
@@ -95,149 +95,17 @@ h2{
   font-size:18px;
 }
 
-/* ESPAÇO ENTRE PARÁGRAFOS */
-.secao div:not(.explicacao):not(.numero) br{
-  display:block;
-  margin-bottom:12px;
-}
-
 /* RODAPÉ DO SITE */
-.assinatura{
-  margin-top:100px;
-  margin-bottom:80px;
-  text-align:right;
-  font-size:2px;
+.rodape{
+  margin-top:60px;
+  margin-bottom:40px;
+  text-align:center;
+  font-size:12px;
   color:#777;
 }
 
-/* área invisível usada pelo PDF */
-#areaPDF{
-  position:fixed;
-  left:-9999px;
-  top:0;
-  width:210mm;
-  background:white;
-  padding:15mm;
-  box-sizing:border-box;
-}
-
-/* ======================================================
-   CONFIGURAÇÃO PROFISSIONAL DE IMPRESSÃO (PDF)
-   ====================================================== */
-@media print {
-  *{
-  -webkit-print-color-adjust: exact !important;
-  print-color-adjust: exact !important;
-}
-
-  body{
-    background:white !important;
-    margin:0 !important;
-  }
-
-  /* área A4 */
-  #pdfFolha{
-    width:210mm;
-    margin:auto;
-    padding:12mm 10mm;
-    box-sizing:border-box;
-  }
-
-  /* evita quebra feia */
-  .secao{
-    page-break-inside:avoid;
-    margin-top:35px;
-  }
-
-  h1, h2, h3{
-    page-break-after:avoid;
-  }
-
-  p, .explicacao, .numero, .secao div{
-    orphans:3;
-    widows:3;
-  }
-
-  .btn-imprimir{
-    display:none !important;
-  }
-
-  @page{
-    size:A4;
-    margin:18mm 15mm;
-  }
-
-  /* capa quebra página */
-  .capa{
-    page-break-after:always;
-  }
-
-  /* espaço topo/baixo para não cortar conteúdo */
-  #pdfFolha{
-    padding-top:25mm !important;
-    padding-bottom:15mm !important;
-  }
-
-  /* =====================================
-     RODAPÉ PROFISSIONAL COM PAGINAÇÃO
-     ===================================== */
-
-/* inicia contagem correta */
-
-
-/* rodapé pequeno canto direito */
-.printFooter{
-  margin-top:40px;
-  text-align:right;
-  font-size:5px;
-  color:#777;
-}
-
-/* =======================================
-   RESPONSIVO CELULAR
-   ======================================= */
-
-
 /* ==============================
-   AJUSTE REAL DA ÁREA PREMIUM MOBILE
-   ============================== */
-@media screen and (max-width:768px){
-
-  /* REMOVE A COLUNA A4 DO SITE */
-  body > *{
-    max-width:100% !important;
-    padding-left:18px !important;
-    padding-right:18px !important;
-  }
-
-  /* REMOVE “caixa de livro” das seções */
-  .secao{
-    padding:24px 15px!important;
-    margin-top:25px !important;
-    border-radius:6px !important;
-  }
-
-  /* capa menor no celular */
-  .capa{
-    padding-top:60px !important;
-    padding-bottom:60px !important;
-  }
-
-  .logo{
-    max-width:90% !important;
-  }
-
-  /* textos proporcionais */
-  .titulo{ font-size:32px !important; }
-  .subtitulo{ font-size:18px !important; }
-  .nome{ font-size:18px !important; }
-  h2{ font-size:24px !important; }
-
-}
-}
-
-/* ==============================
-   GRÁFICO DOS PLANOS (PDF)
+   GRÁFICO DOS PLANOS
 ============================== */
 
 .grafico{
@@ -252,6 +120,7 @@ h2{
   font-weight:bold;
   display:block;
   margin-bottom:6px;
+  font-size: 18px;
 }
 
 .linha{
@@ -263,7 +132,7 @@ h2{
 }
 
 .preenchimento{
-  display:block;          /* ← ISSO É O QUE FALTAVA */
+  display:block;
   height:14px;
   border-radius:20px;
 }
@@ -273,87 +142,57 @@ h2{
 .emocional{ background:#22c55e; }
 .intuitivo{ background:#eab308; }
 
+/* IMPRESSÃO */
+@media print {
+  body{ background:white !important; }
+  .secao{ box-shadow:none; border:1px solid #eee; page-break-inside:avoid; }
+  .capa{ page-break-after:always; }
+}
+
+@media screen and (max-width:768px){
+  body > *{ padding-left:18px !important; padding-right:18px !important; }
+  .titulo{ font-size:32px !important; }
+}
 </style>
 </head>
 
 <body>
 
-<div class="card" id="conteudo">Carregando acesso...</div>
+<div id="conteudo">Carregando acesso...</div>
 
 <script>
-  
 // ===============================
 // CARREGAR DADOS DO MAPA
 // ===============================
 const dadosSalvos = localStorage.getItem("relatorioMapa");
 
 if(!dadosSalvos){
-    document.getElementById("conteudo").innerHTML =
-  document.body.classList.add("relatorio-modo");
-
-  "<p class='erro'>Nenhum mapa encontrado.<br>Volte e gere o mapa primeiro.</p>";
+  document.getElementById("conteudo").innerHTML = "<p>Erro: Nenhum mapa encontrado.</p>";
   throw new Error("Sem dados");
 }
 
 const relatorio = JSON.parse(dadosSalvos);
-// ===============================
-// CALCULAR PORCENTAGEM REAL (PROPORÇÃO DO TOTAL)
-// ===============================
 
-// ===============================
-// ESCALA NUMEROLÓGICA DO GRÁFICO
-// (baseado no MAIOR número do mapa)
-// ===============================
-
-const maiorNumero = Math.max(
-  relatorio.fisico,
-  relatorio.mental,
-  relatorio.emocional,
-  relatorio.intuitivo
-);
-
-const pctFisico    = Math.round((relatorio.fisico    / maiorNumero) * 100);
-const pctMental    = Math.round((relatorio.mental    / maiorNumero) * 100);
-const pctEmocional = Math.round((relatorio.emocional / maiorNumero) * 100);
-const pctIntuitivo = Math.round((relatorio.intuitivo / maiorNumero) * 100);
-
-// ===============================
-// ESCALA DO GRÁFICO DO MOMENTO (NOVO)
-// ===============================
-
-const maiorNumeroMomento = Math.max(
-  relatorio.fisicoMomento,
-  relatorio.mentalMomento,
-  relatorio.emocionalMomento,
-  relatorio.intuitivoMomento
-);
-
-const pctFisicoMomento =
-  Math.round((relatorio.fisicoMomento / maiorNumeroMomento) * 100);
-
-const pctMentalMomento =
-  Math.round((relatorio.mentalMomento / maiorNumeroMomento) * 100);
-
-const pctEmocionalMomento =
-  Math.round((relatorio.emocionalMomento / maiorNumeroMomento) * 100);
-
-const pctIntuitivoMomento =
-  Math.round((relatorio.intuitivoMomento / maiorNumeroMomento) * 100);
-
-
-// ===============================
-// SISTEMA TOKEN
-// ===============================
-const params = new URLSearchParams(window.location.search);
-const token = params.get("token");
-
-const tokensValidos = ["ABC123","MAPA777","CLIENTE001"];
-
-if(!token || !tokensValidos.includes(token)){
-  document.getElementById("conteudo").innerHTML =
-  "<p class='erro'>Acesso inválido.</p>";
-  throw new Error("Bloqueado");
+// Função auxiliar para garantir que o número reduzido seja usado
+function obterReduzido(n) {
+    if (n > 9) {
+        return n.toString().split("").reduce((a,b)=>a + Number(b),0);
+    }
+    return n;
 }
+
+// Cálculos de Porcentagem para as Barras
+const maiorNumeroNat = Math.max(relatorio.fisico, relatorio.mental, relatorio.emocional, relatorio.intuitivo);
+const pctFisico = Math.round((relatorio.fisico / maiorNumeroNat) * 100);
+const pctMental = Math.round((relatorio.mental / maiorNumeroNat) * 100);
+const pctEmocional = Math.round((relatorio.emocional / maiorNumeroNat) * 100);
+const pctIntuitivo = Math.round((relatorio.intuitivo / maiorNumeroNat) * 100);
+
+const maiorNumeroMom = Math.max(relatorio.fisicoMomento, relatorio.mentalMomento, relatorio.emocionalMomento, relatorio.intuitivoMomento);
+const pctFisicoMomento = Math.round((relatorio.fisicoMomento / maiorNumeroMom) * 100);
+const pctMentalMomento = Math.round((relatorio.mentalMomento / maiorNumeroMom) * 100);
+const pctEmocionalMomento = Math.round((relatorio.emocionalMomento / maiorNumeroMom) * 100);
+const pctIntuitivoMomento = Math.round((relatorio.intuitivoMomento / maiorNumeroMom) * 100);
 
 // ===============================
 // GERAR RELATÓRIO NA TELA
@@ -361,165 +200,104 @@ if(!token || !tokensValidos.includes(token)){
 document.getElementById("conteudo").innerHTML = `
 <div id="paginaRelatorio">
 
-<!-- CAPA -->
-<div class="capa">
-
-<img class="logo" src="https://raw.githubusercontent.com/hemricciinstintosuperior-rcci/app-plano-de-expressao/main/icon-192.png">
-
-<div class="titulo">INSTINTO SUPERIOR</div>
-<div class="subtitulo">Plano de Expressão Cabalístico</div>
-
-<div class="nomeCliente">
-<strong>${relatorio.nome}</strong><br>
-${relatorio.data}
-</div>
-
-</div>
-
-<div class="page-break"></div>
-
-<div class="folha">
-
-
-
-<div class="page-break"></div>
-
-</div>
-<div class="secao">
-<h2>Dados do Cliente</h2>
-<p><b>Nome:</b> ${relatorio.nome}</p>
-<p><b>Data de nascimento:</b> ${relatorio.data}</p>
-</div>
-
-<h2>O Plano de Expressão</h2>
-<p>
-O Plano de Expressão Cabalístico revela como suas energias se distribuem
-nos planos físico, mental, emocional e intuitivo.
-</p>
-
-</div>
-
-<div class="secao">
-<h2>Distribuição dos Planos</h2>
-<p><b>Físico:</b> ${relatorio.fisico}</p>
-<p><b>Mental:</b> ${relatorio.mental}</p>
-<p><b>Emocional:</b> ${relatorio.emocional}</p>
-<p><b>Intuitivo:</b> ${relatorio.intuitivo}</p>
-
-<div class="grafico">
-
-  <div class="barra">
-    <span>Físico</span>
-    <div class="linha">
-      <div class="preenchimento fisico" style="width:${pctFisico}%"></div>
+    <div class="capa">
+        <img class="logo" src="https://raw.githubusercontent.com/hemricciinstintosuperior-rcci/app-plano-de-expressao/main/icon-192.png">
+        <div class="titulo">INSTINTO SUPERIOR</div>
+        <div class="subtitulo">Plano de Expressão Cabalístico</div>
+        <div class="nomeCliente">
+            <strong>${relatorio.nome}</strong><br>
+            ${relatorio.data}
+        </div>
     </div>
-  </div>
 
-  <div class="barra">
-    <span>Mental</span>
-    <div class="linha">
-      <div class="preenchimento mental" style="width:${pctMental}%"></div>
+    <div class="secao">
+        <h2>Dados do Cliente</h2>
+        <p><b>Nome:</b> ${relatorio.nome}</p>
+        <p><b>Data de nascimento:</b> ${relatorio.data}</p>
     </div>
-  </div>
 
-  <div class="barra">
-    <span>Emocional</span>
-    <div class="linha">
-      <div class="preenchimento emocional" style="width:${pctEmocional}%"></div>
+    <div class="secao">
+        <h2>O Plano de Expressão</h2>
+        <p>
+        O Plano de Expressão Cabalístico revela como suas energias se distribuem
+        nos planos físico, mental, emocional e intuitivo.
+        </p>
     </div>
-  </div>
 
-  <div class="barra">
-    <span>Intuitivo</span>
-    <div class="linha">
-      <div class="preenchimento intuitivo" style="width:${pctIntuitivo}%"></div>
+    <div class="secao">
+        <h2>Plano de Expressão Natural</h2>
+        
+        <div class="grafico">
+            <div class="barra">
+                <span>Físico: ${obterReduzido(relatorio.fisico)}</span>
+                <div class="linha"><div class="preenchimento fisico" style="width:${pctFisico}%"></div></div>
+            </div>
+            <div class="barra">
+                <span>Mental: ${obterReduzido(relatorio.mental)}</span>
+                <div class="linha"><div class="preenchimento mental" style="width:${pctMental}%"></div></div>
+            </div>
+            <div class="barra">
+                <span>Emocional: ${obterReduzido(relatorio.emocional)}</span>
+                <div class="linha"><div class="preenchimento emocional" style="width:${pctEmocional}%"></div></div>
+            </div>
+            <div class="barra">
+                <span>Intuitivo: ${obterReduzido(relatorio.intuitivo)}</span>
+                <div class="linha"><div class="preenchimento intuitivo" style="width:${pctIntuitivo}%"></div></div>
+            </div>
+        </div>
+
+        <p style="white-space:pre-line; margin-top:30px;">
+        ${relatorio.textoNatural}
+        </p>
     </div>
-  </div>
 
-</div>
+    <div class="secao">
+        <h2>Status do Momento</h2>
+        <p style="font-size:18px;"><b>Vigência:</b> Ano ${relatorio.anoMomento}</p>
 
-<div class="secao">
-<h2>Plano de Expressão Natural</h2>
-<p style="white-space:pre-line">
-${relatorio.textoNatural}
-</p>
-</div>
+        <div class="grafico">
+            <div class="barra">
+                <span>Físico: ${obterReduzido(relatorio.fisicoMomento)}</span>
+                <div class="linha"><div class="preenchimento fisico" style="width:${pctFisicoMomento}%"></div></div>
+            </div>
+            <div class="barra">
+                <span>Mental: ${obterReduzido(relatorio.mentalMomento)}</span>
+                <div class="linha"><div class="preenchimento mental" style="width:${pctMentalMomento}%"></div></div>
+            </div>
+            <div class="barra">
+                <span>Emocional: ${obterReduzido(relatorio.emocionalMomento)}</span>
+                <div class="linha"><div class="preenchimento emocional" style="width:${pctEmocionalMomento}%"></div></div>
+            </div>
+            <div class="barra">
+                <span>Intuitivo: ${obterReduzido(relatorio.intuitivoMomento)}</span>
+                <div class="linha"><div class="preenchimento intuitivo" style="width:${pctIntuitivoMomento}%"></div></div>
+            </div>
+        </div>
 
-<div class="secao">
-<h2>Status do Momento</h2>
-
-<p style="font-size:18px;">
-<b>Vigência:</b> Ano ${relatorio.anoMomento}
-</p>
-
-<p><b>Físico:</b> ${relatorio.fisicoMomento}</p>
-<p><b>Mental:</b> ${relatorio.mentalMomento}</p>
-<p><b>Emocional:</b> ${relatorio.emocionalMomento}</p>
-<p><b>Intuitivo:</b> ${relatorio.intuitivoMomento}</p>
-
-<div class="grafico">
-
-  <div class="barra">
-    <span>Físico</span>
-    <div class="linha">
-      <div class="preenchimento fisico" style="width:${pctFisicoMomento}%"></div>
+        <p style="white-space:pre-line; margin-top:30px;">
+        ${relatorio.textoMomento}
+        </p>
     </div>
-  </div>
 
-  <div class="barra">
-    <span>Mental</span>
-    <div class="linha">
-      <div class="preenchimento mental" style="width:${pctMentalMomento}%"></div>
+    <div class="secao">
+        <h2>Encerramento</h2>
+        <p>
+        Este relatório representa um mapa simbólico das suas tendências naturais.
+        Utilize estas informações como ferramenta de autoconhecimento e evolução.
+        </p>
     </div>
-  </div>
 
-  <div class="barra">
-    <span>Emocional</span>
-    <div class="linha">
-      <div class="preenchimento emocional" style="width:${pctEmocionalMomento}%"></div>
+    <div class="rodape">
+        Instinto Superior • Relatório Confidencial
     </div>
-  </div>
-
-  <div class="barra">
-    <span>Intuitivo</span>
-    <div class="linha">
-      <div class="preenchimento intuitivo" style="width:${pctIntuitivoMomento}%"></div>
-    </div>
-  </div>
-
-</div>
-
-<p style="white-space:pre-line">
-${relatorio.textoMomento}
-</p>
-</div>
-<div class="secao">
-<h2>Encerramento</h2>
-<p>
-Este relatório representa um mapa simbólico das suas tendências naturais.
-Utilize estas informações como ferramenta de autoconhecimento e evolução.
-</p>
-</div>
-
-<div class="rodape">
-Instinto Superior • Relatório Confidencial
-</div>
 </div>
 `;
 
-
-
-  // AGUARDA RELATÓRIO TERMINAR DE RENDERIZAR E MANDA IMPRIMIR
+// Impressão automática
 setTimeout(() => {
-    window.print();
+    // window.print(); // Descomente se quiser que abra a caixa de impressão ao carregar
 }, 2000);
 
-observer.observe(document.body, { childList:true, subtree:true });
-
-
-document.oncontextmenu=()=>false;
-document.onselectstart=()=>false;
-
-  </script>
+</script>
 </body>
 </html>
