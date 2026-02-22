@@ -224,17 +224,16 @@ document.getElementById("conteudo").innerHTML = `
         <img class="logo" src="https://raw.githubusercontent.com/hemricciinstintosuperior-rcci/app-plano-de-expressao/main/icon-192.png">
         <div class="titulo">INSTINTO SUPERIOR</div>
         <div class="subtitulo">Plano de Expressão Cabalístico</div>
-        <div class="nomeCliente">
-            <strong>${relatorio.nome}</strong><br>
-            ${relatorio.data}
-        </div>
-    </div>
+// Na Capa:
+<div class="nomeCliente">
+<strong>${relatorio.nome}</strong><br>
+${dataBr}  </div>
 
-    <div class="secao">
-        <h2>Dados do Cliente</h2>
-        <p><b>Nome:</b> ${relatorio.nome}</p>
-        <p><b>Data de nascimento:</b> ${relatorio.data}</p>
-    </div>
+// E na seção Dados do Cliente:
+<div class="secao">
+<h2>Dados do Cliente</h2>
+<p><b>Nome:</b> ${relatorio.nome}</p>
+<p><b>Data de nascimento:</b> ${dataBr}</p> </div>
 
     <div class="secao">
         <h2>O Plano de Expressão</h2>
