@@ -260,23 +260,23 @@ function gerarIntroducao(tipo, dadosTexto){
 
 function gerarConclusao(tipo, dados){
 
-  const planos = ["fisico","mental","emocional","intuitivo"];
-
-  // descobrir plano dominante e fraco
-  let dominante = planos[0];
-  let fraco = planos[0];
-
-  planos.forEach(p=>{
-    if(dados[p].nivel == "forte") dominante = p;
-    if(dados[p].nivel == "fraco") fraco = p;
-  });
-
   const nomes = {
     fisico:"plano físico",
     mental:"plano mental",
     emocional:"plano emocional",
     intuitivo:"plano intuitivo"
   };
+
+  // transforma objeto em array ordenável
+  const ordenado = Object.keys(dados)
+    .map(plano => ({
+      plano,
+      valor: dados[plano].valorReal ?? dados[plano].numero ?? 0
+    }))
+    .sort((a,b) => b.valor - a.valor);
+
+  const dominante = ordenado[0].plano;
+  const fraco = ordenado[ordenado.length - 1].plano;
 
   return `
 Em síntese, este período revela a predominância do ${nomes[dominante]},
@@ -351,10 +351,10 @@ const intensidades = {
 
 // monta objeto no formato correto para o gerador de texto
 const dadosTexto = {
-  fisico: { nivel:intensidades.fisico, numero:reducoes.fisico },
-  mental: { nivel:intensidades.mental, numero:reducoes.mental },
-  emocional: { nivel:intensidades.emocional, numero:reducoes.emocional },
-  intuitivo: { nivel:intensidades.intuitivo, numero:reducoes.intuitivo }
+  fisico: { nivel:intensidades.fisico, numero:reducoes.fisico, valorReal:soma.fisico },
+  mental: { nivel:intensidades.mental, numero:reducoes.mental, valorReal:soma.mental },
+  emocional: { nivel:intensidades.emocional, numero:reducoes.emocional, valorReal:soma.emocional },
+  intuitivo: { nivel:intensidades.intuitivo, numero:reducoes.intuitivo, valorReal:soma.intuitivo }
 };
 
 // gera texto final correto
@@ -513,10 +513,10 @@ const intensidadesMomento = {
 };
 
 const dadosTextoMomento = {
-  fisico:{ nivel:intensidadesMomento.fisico, numero:reducoesMomento.fisico },
-  mental:{ nivel:intensidadesMomento.mental, numero:reducoesMomento.mental },
-  emocional:{ nivel:intensidadesMomento.emocional, numero:reducoesMomento.emocional },
-  intuitivo:{ nivel:intensidadesMomento.intuitivo, numero:reducoesMomento.intuitivo }
+  fisico:{ nivel:intensidadesMomento.fisico, numero:reducoesMomento.fisico, valorReal:dados.fisico },
+  mental:{ nivel:intensidadesMomento.mental, numero:reducoesMomento.mental, valorReal:dados.mental },
+  emocional:{ nivel:intensidadesMomento.emocional, numero:reducoesMomento.emocional, valorReal:dados.emocional },
+  intuitivo:{ nivel:intensidadesMomento.intuitivo, numero:reducoesMomento.intuitivo, valorReal:dados.intuitivo }
 };
 
 const textoBaseMomento = gerarTextoPlano("momento", dadosTextoMomento);
