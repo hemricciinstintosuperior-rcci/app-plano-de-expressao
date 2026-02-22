@@ -190,6 +190,8 @@ if(!dadosSalvos){
 }
 
 const relatorio = JSON.parse(dadosSalvos);
+// CORREÇÃO DA DATA: Transforma 1988-03-09 em 09/03/1988
+const dataBr = relatorio.data.split('-').reverse().join('/');  
 
 // Função auxiliar para garantir que o número reduzido seja usado
 function obterReduzido(n) {
