@@ -34,7 +34,11 @@ th,td{border:1px solid #ccc;padding:6px;text-align:center}
 .emocional{background:#33cc66;}
 .intuitivo{background:#ffd633;}
 .resumoMomento{margin-top:25px;padding:20px;background:#1f2937;border-radius:8px;}
-
+/* Esconde o texto que fica abaixo das barras */
+#txtFisicoNat, #txtMentalNat, #txtEmocionalNat, #txtIntuitivoNat,
+#txtFisico, #txtMental, #txtEmocional, #txtIntuitivo {
+    display: none;
+}
 /* MOBILE */
 @media (max-width:768px){
   body{padding:15px;}
@@ -62,10 +66,10 @@ th,td{border:1px solid #ccc;padding:6px;text-align:center}
 <h2>PLANO NATURAL</h2>
 
 <div>
-Físico<div class="bar-bg"><div id="barFisicoNat" class="bar fisico"></div></div><p id="txtFisicoNat"></p>
-Mental<div class="bar-bg"><div id="barMentalNat" class="bar mental"></div></div><p id="txtMentalNat"></p>
-Emocional<div class="bar-bg"><div id="barEmocionalNat" class="bar emocional"></div></div><p id="txtEmocionalNat"></p>
-Intuitivo<div class="bar-bg"><div id="barIntuitivoNat" class="bar intuitivo"></div></div><p id="txtIntuitivoNat"></p>
+Físico: <span id="numFisicoNat"></span><div class="bar-bg"><div id="barFisicoNat" class="bar fisico"></div></div><p id="txtFisicoNat"></p>
+Mental: <span id="numMentalNat"></span><div class="bar-bg"><div id="barMentalNat" class="bar mental"></div></div><p id="txtMentalNat"></p>
+Emocional: <span id="numEmocionalNat"></span><div class="bar-bg"><div id="barEmocionalNat" class="bar emocional"></div></div><p id="txtEmocionalNat"></p>
+Intuitivo: <span id="numIntuitivoNat"></span><div class="bar-bg"><div id="barIntuitivoNat" class="bar intuitivo"></div></div><p id="txtIntuitivoNat"></p>
 </div>
 
 <div id="resumoNatural" class="resumoMomento"></div>
@@ -77,10 +81,10 @@ Intuitivo<div class="bar-bg"><div id="barIntuitivoNat" class="bar intuitivo"></d
 <button onclick="gerarStatusMomento()">Gerar Status</button>
 
 <div>
-Físico<div class="bar-bg"><div id="barFisico" class="bar fisico"></div></div><p id="txtFisico"></p>
-Mental<div class="bar-bg"><div id="barMental" class="bar mental"></div></div><p id="txtMental"></p>
-Emocional<div class="bar-bg"><div id="barEmocional" class="bar emocional"></div></div><p id="txtEmocional"></p>
-Intuitivo<div class="bar-bg"><div id="barIntuitivo" class="bar intuitivo"></div></div><p id="txtIntuitivo"></p>
+Físico: <span id="numFisico"></span><div class="bar-bg"><div id="barFisico" class="bar fisico"></div></div><p id="txtFisico"></p>
+Mental: <span id="numMental"></span><div class="bar-bg"><div id="barMental" class="bar mental"></div></div><p id="txtMental"></p>
+Emocional: <span id="numEmocional"></span><div class="bar-bg"><div id="barEmocional" class="bar emocional"></div></div><p id="txtEmocional"></p>
+Intuitivo: <span id="numIntuitivo"></span><div class="bar-bg"><div id="barIntuitivo" class="bar intuitivo"></div></div><p id="txtIntuitivo"></p>
 </div>
 
 <div id="resumoMomento" class="resumoMomento"></div>
@@ -546,17 +550,22 @@ function atualizarBarra(tipo,valor,maior){
 
 
 
-function atualizarBarraNatural(tipo,valor,maior,reducao){
- let largura=0;
+function atualizarBarraNatural(tipo, valor, maior, reducao) {
+    let largura = 0;
 
- if(maior>0 && valor>0){
-   largura=(valor/maior)*100;
-   if(largura<12) largura=12;
- }
+    if (maior > 0 && valor > 0) {
+        largura = (valor / maior) * 100;
+        if (largura < 12) largura = 12;
+    }
 
- document.getElementById("bar"+tipo).style.width=largura+"%";
- document.getElementById("txt"+tipo).innerText=
-  valor+" → Número "+reducao;
+    // Atualiza a largura da barra
+    document.getElementById("bar" + tipo).style.width = largura + "%";
+    
+    // Coloca o número reduzido ao lado do título (Ex: Físico: 9)
+    const spanNumero = document.getElementById("num" + tipo);
+    if (spanNumero) {
+        spanNumero.innerText = reducao;
+    }
 }
 // =======================
 // BOTÃO PRINCIPAL
