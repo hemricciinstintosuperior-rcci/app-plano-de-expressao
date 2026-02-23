@@ -488,34 +488,35 @@ function preencherSeletorAnos(){
 //================ STATUS DO MOMENTO (NOVO MOTOR)
 
 function gerarStatusMomento(){
+  const ano = document.getElementById("anoSelect").value;
+  if(!ano) return;
 
- const ano = document.getElementById("anoSelect").value;
- if(!ano){
-   alert("Selecione um ano.");
-   return;
- }
+  const dados = bancoMomentos.find(a => a.ano == ano);
+  if(!dados) return;
 
- const dados = bancoMomentos.find(a => a.ano == ano);
- if(!dados){
-   alert("Erro ao localizar dados do ano.");
-   return;
- }
+  // 1️⃣ CALCULA O MAIOR VALOR BRUTO (Intensidade Real)
+  // Isso garante que a barra seja proporcional à força das letras somadas
+  const maiorBruto = Math.max(dados.fisico, dados.mental, dados.emocional, dados.intuitivo);
 
-const maior = Math.max(dados.fisico,dados.mental,dados.emocional,dados.intuitivo);
+  // 2️⃣ CALCULA AS REDUÇÕES (Apenas para o significado numérico)
+  const red = {
+    fisico: reduzirNumero(dados.fisico),
+    mental: reduzirNumero(dados.mental),
+    emocional: reduzirNumero(dados.emocional),
+    intuitivo: reduzirNumero(dados.intuitivo)
+  };
 
-// 1️⃣ REDUÇÕES (PRIMEIRO!)
-const reducoesMomento = {
-  fisico: reduzirNumero(dados.fisico),
-  mental: reduzirNumero(dados.mental),
-  emocional: reduzirNumero(dados.emocional),
-  intuitivo: reduzirNumero(dados.intuitivo)
-};
+  // 3️⃣ ATUALIZA AS BARRAS
+  // Enviamos o valor bruto (dados.fisico) para a INTENSIDADE 
+  // e o valor reduzido (red.fisico) para aparecer no texto
+  atualizarBarraNatural("Fisico", dados.fisico, maiorBruto, red.fisico);
+  atualizarBarraNatural("Mental", dados.mental, maiorBruto, red.mental);
+  atualizarBarraNatural("Emocional", dados.emocional, maiorBruto, red.emocional);
+  atualizarBarraNatural("Intuitivo", dados.intuitivo, maiorBruto, red.intuitivo);
 
-// 2️⃣ ATUALIZA BARRAS (IGUAL AO NATURAL)
-atualizarBarraNatural("Fisico",dados.fisico,maior,reducoesMomento.fisico);
-atualizarBarraNatural("Mental",dados.mental,maior,reducoesMomento.mental);
-atualizarBarraNatural("Emocional",dados.emocional,maior,reducoesMomento.emocional);
-atualizarBarraNatural("Intuitivo",dados.intuitivo,maior,reducoesMomento.intuitivo);
+  // ... restante da sua lógica de texto ...
+  gerarTextosEAnalise(dados, red, maiorBruto); 
+}
 
 // 3️⃣ CLASSIFICA INTENSIDADE
 function classificar(valor, maior){
