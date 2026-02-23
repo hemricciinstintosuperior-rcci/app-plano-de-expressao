@@ -566,18 +566,22 @@ function atualizarBarra(tipo,valor,maior){
 
 
 
-function atualizarBarraNatural(tipo, valor, maior, reducao) {
+function atualizarBarraNatural(tipo, valorBruto, maiorBruto, reducao) {
     let largura = 0;
 
-    if (maior > 0 && valor > 0) {
-        largura = (valor / maior) * 100;
-        if (largura < 12) largura = 12;
+    // A intensidade (tamanho) usa o valor total das letras (ex: 13)
+    if (maiorBruto > 0 && valorBruto > 0) {
+        largura = (valorBruto / maiorBruto) * 100;
+        if (largura < 12) largura = 12; // Mantém o padrão do seu CSS
     }
 
-    // Atualiza a largura da barra
-    document.getElementById("bar" + tipo).style.width = largura + "%";
+    // 1. Ajusta a largura da barra colorida (fisico, mental, etc)
+    const elementoBarra = document.getElementById("bar" + tipo);
+    if (elementoBarra) {
+        elementoBarra.style.width = largura + "%";
+    }
     
-    // Coloca o número reduzido ao lado do título (Ex: Físico: 9)
+    // 2. Coloca apenas o número REDUZIDO (ex: 4) no span ao lado do título
     const spanNumero = document.getElementById("num" + tipo);
     if (spanNumero) {
         spanNumero.innerText = reducao;
