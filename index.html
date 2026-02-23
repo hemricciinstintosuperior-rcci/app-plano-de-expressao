@@ -487,36 +487,47 @@ function preencherSeletorAnos(){
 }
 //================ STATUS DO MOMENTO (NOVO MOTOR)
 
-function gerarStatusMomento(){
-  const ano = document.getElementById("anoSelect").value;
-  const dados = bancoMomentos.find(a => a.ano == ano);
-  if(!dados) return;
+function gerarStatusMomento() {
+    const ano = document.getElementById("anoSelect").value;
+    if (!ano) return;
 
-  // Pega o maior valor bruto para a escala das barras
-  const maior = Math.max(dados.fisico, dados.mental, dados.emocional, dados.intuitivo);
+    const dados = bancoMomentos.find(a => a.ano == ano);
+    if (!dados) return;
 
-  // Calcula as reduções para exibir o número
-  const red = {
-    fisico: reduzirNumero(dados.fisico),
-    mental: reduzirNumero(dados.mental),
-    emocional: reduzirNumero(dados.emocional),
-    intuitivo: reduzirNumero(dados.intuitivo)
-  };
+    // 1️⃣ INTENSIDADE: Pega o maior valor bruto para escala das barras
+    const maiorBruto = Math.max(dados.fisico, dados.mental, dados.emocional, dados.intuitivo);
 
-  // Chama a função passando: (Tipo, Valor Bruto, Maior Valor, Número Reduzido)
-  atualizarBarraNatural("Fisico", dados.fisico, maior, red.fisico);
-  atualizarBarraNatural("Mental", dados.mental, maior, red.mental);
-  atualizarBarraNatural("Emocional", dados.emocional, maior, red.emocional);
-  atualizarBarraNatural("Intuitivo", dados.intuitivo, maior, red.intuitivo);
+    // 2️⃣ DEFINIÇÃO: Aqui criamos a variável que estava dando erro no seu console
+    const significado = {
+        fisico: reduzirNumero(dados.fisico),
+        mental: reduzirNumero(dados.mental),
+        emocional: reduzirNumero(dados.emocional),
+        intuitivo: reduzirNumero(dados.intuitivo)
+    };
 
-  // ... restante do código para gerar os textos ...
+    // 3️⃣ ATUALIZAÇÃO DAS BARRAS: (Tipo, Valor Bruto, Maior Valor, Número Reduzido)
+    atualizarBarraNatural("Fisico", dados.fisico, maiorBruto, significado.fisico);
+    atualizarBarraNatural("Mental", dados.mental, maiorBruto, significado.mental);
+    atualizarBarraNatural("Emocional", dados.emocional, maiorBruto, significado.emocional);
+    atualizarBarraNatural("Intuitivo", dados.intuitivo, maiorBruto, significado.intuitivo);
 
+    // 4️⃣ GERAÇÃO DO TEXTO: Usa o banco de textosPlanos que você já tem
+    const dadosTextoMomento = {
+        fisico: { nivel: classificarIntensidade(dados.fisico, maiorBruto), numero: significado.fisico },
+        mental: { nivel: classificarIntensidade(dados.mental, maiorBruto), numero: significado.mental },
+        emocional: { nivel: classificarIntensidade(dados.emocional, maiorBruto), numero: significado.emocional },
+        intuitivo: { nivel: classificarIntensidade(dados.intuitivo, maiorBruto), numero: significado.intuitivo }
+    };
 
-// 3️⃣ CLASSIFICA INTENSIDADE
-function classificar(valor, maior){
-  if(valor >= maior*0.75) return "forte";
-  if(valor >= maior*0.5) return "medio";
-  return "fraco";
+    const textoBase = gerarTextoPlano("momento", dadosTextoMomento);
+    document.getElementById("resumoMomento").innerText = "No ano de " + ano + ":\n\n" + textoBase;
+}
+
+// Função auxiliar para classificar se é forte, medio ou fraco para o texto
+function classificarIntensidade(valor, maior) {
+    if (valor >= maior * 0.75) return "forte";
+    if (valor >= maior * 0.5) return "medio";
+    return "fraco";
 }
 
 const intensidadesMomento = {
