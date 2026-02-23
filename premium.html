@@ -243,6 +243,21 @@ h2{
   }
 
 }
+
+ /* Isso força os campos a aparecerem e ficarem empilhados no celular */
+@media (max-width: 768px) {
+    .container-inputs { /* Use a classe que envolve seus inputs */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    input, select {
+        display: block !important; /* Força a exibição */
+        width: 90% !important;     /* Ajusta a largura para o celular */
+        margin-bottom: 15px;      /* Dá um espaço entre o nome e a data */
+    }
+} 
   
 </style>
 </head>
