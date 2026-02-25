@@ -409,81 +409,75 @@ atualizarBarraNatural("IntuitivoNat",soma.intuitivo,maior,reducoes.intuitivo);
 
 }
 
-function planoMomento(nomeCompleto,data){
+function planoMomento(nomeCompleto, data) {
+  bancoMomentos = [];
 
- bancoMomentos=[];
+  // 1. Pegamos a data e garantimos que o fuso horário não mude o dia
+  const dataNascimento = new Date(data + 'T00:00:00'); 
+  const dia = String(dataNascimento.getDate()).padStart(2, '0');
+  const mes = String(dataNascimento.getMonth() + 1).padStart(2, '0');
+  const anoNasc = dataNascimento.getFullYear();
 
- const anoNasc = new Date(data).getFullYear();
+  // 2. Separar nomes e partículas (DA, DE, DO...)
+  const partes = nomeCompleto.toUpperCase().trim().split(/\s+/);
+  let blocos = [];
+  let buffer = "";
 
- // 🔴 1) SEPARAR NOMES CORRETAMENTE (colar partículas ao sobrenome)
- const partes = nomeCompleto.toUpperCase().trim().split(/\s+/);
- let blocos=[];
- let buffer="";
-
- partes.forEach(p=>{
-   if(["DA","DE","DO","DAS","DOS"].includes(p)){
+  partes.forEach(p => {
+    if (["DA", "DE", "DO", "DAS", "DOS"].includes(p)) {
       buffer += p;
-   }else{
+    } else {
       blocos.push(buffer + p);
-      buffer="";
-   }
- });
+      buffer = "";
+    }
+  });
 
- // 🔴 2) CRIAR TIMELINE DE CADA BLOCO
- let timelines=[];
+  // 3. Criar a timeline de cada bloco de nome
+  let timelines = [];
+  blocos.forEach(nome => {
+    let timeline = [];
+    for (let letra of nome) {
+      const anos = calcularValorComAcentos(letra);
+      for (let i = 0; i < anos; i++) {
+        timeline.push(letra);
+      }
+    }
+    timelines.push(timeline);
+  });
 
- blocos.forEach(nome=>{
-   let timeline=[];
+  if (timelines.length === 0) return;
 
-   for(let letra of nome){
-     const anos = calcularValorComAcentos(letra);
+  // 4. Percorrer a vida da pessoa (0 a 100 anos)
+  for (let idade = 0; idade <= 100; idade++) {
+    const anoInicio = anoNasc + idade;
+    const anoFim = anoInicio + 1;
 
-     for(let i=0;i<anos;i++){
-       timeline.push(letra);
-     }
-   }
+    // Criamos a frase do período exato
+    const periodoTexto = `${dia}/${mes}/${anoInicio} até ${dia}/${mes}/${anoFim}`;
 
-   timelines.push(timeline);
- });
+    let soma = { fisico: 0, mental: 0, emocional: 0, intuitivo: 0 };
 
- // segurança
- if(timelines.length===0){
-   alert("Nome inválido");
-   return;
- }
+    timelines.forEach(timeline => {
+      const posicao = idade % timeline.length;
+      const letra = timeline[posicao];
+      const plano = descobrirPlano(letra);
+      const valor = calcularValorComAcentos(letra);
 
- // 🔴 3) PERCORRER VIDA (0–100 anos)
- for(let idade=0; idade<=100; idade++){
+      if (plano === "fisico") soma.fisico += valor;
+      if (plano === "mental") soma.mental += valor;
+      if (plano === "emocional") soma.emocional += valor;
+      if (plano === "intuitivo") soma.intuitivo += valor;
+    });
 
-   const ano = anoNasc + idade;
+    // Guardamos o ano e o texto do período no banco
+    bancoMomentos.push({ 
+      ano: anoInicio, 
+      periodo: periodoTexto, 
+      ...soma 
+    });
+  }
 
-   let soma={
-     fisico:0,
-     mental:0,
-     emocional:0,
-     intuitivo:0
-   };
-
-   // ⭐ PEGA UMA LETRA DE CADA BLOCO (vertical)
-   timelines.forEach(timeline=>{
-
-    const posicao = idade % timeline.length;
-const letra = timeline[posicao];
-
-     const plano = descobrirPlano(letra);
-     const valor = calcularValorComAcentos(letra);
-
-     if(plano==="fisico") soma.fisico += valor;
-     if(plano==="mental") soma.mental += valor;
-     if(plano==="emocional") soma.emocional += valor;
-     if(plano==="intuitivo") soma.intuitivo += valor;
-
-   });
-
-   bancoMomentos.push({ano,...soma});
- }
-
- preencherSeletorAnos();
+  preencherSeletorAnos();
 }
 
 function preencherSeletorAnos(){
@@ -502,70 +496,43 @@ function preencherSeletorAnos(){
 //================ STATUS DO MOMENTO (NOVO MOTOR)
 
 function gerarStatusMomento() {
-    const ano = document.getElementById("anoSelect").value;
-    if (!ano) return;
+    const anoSelecionado = document.getElementById("anoSelect").value;
+    if (!anoSelecionado) return;
 
-    const dados = bancoMomentos.find(a => a.ano == ano);
+    // Busca os dados no banco que criamos
+    const dados = bancoMomentos.find(a => a.ano == anoSelecionado);
     if (!dados) return;
 
-    // 1️⃣ INTENSIDADE: Pega o maior valor bruto para escala das barras
+    // 1. Calcula o maior valor para as barras
     const maiorBruto = Math.max(dados.fisico, dados.mental, dados.emocional, dados.intuitivo);
 
-    // 2️⃣ DEFINIÇÃO: Aqui criamos a variável que estava dando erro no seu console
-    const significado = {
+    // 2. Define os números reduzidos (1-9)
+    const reducoes = {
         fisico: reduzirNumero(dados.fisico),
         mental: reduzirNumero(dados.mental),
         emocional: reduzirNumero(dados.emocional),
         intuitivo: reduzirNumero(dados.intuitivo)
     };
 
-    // 3️⃣ ATUALIZAÇÃO DAS BARRAS: (Tipo, Valor Bruto, Maior Valor, Número Reduzido)
-    atualizarBarraNatural("Fisico", dados.fisico, maiorBruto, significado.fisico);
-    atualizarBarraNatural("Mental", dados.mental, maiorBruto, significado.mental);
-    atualizarBarraNatural("Emocional", dados.emocional, maiorBruto, significado.emocional);
-    atualizarBarraNatural("Intuitivo", dados.intuitivo, maiorBruto, significado.intuitivo);
+    // 3. Atualiza as barras na tela
+    atualizarBarraNatural("Fisico", dados.fisico, maiorBruto, reducoes.fisico);
+    atualizarBarraNatural("Mental", dados.mental, maiorBruto, reducoes.mental);
+    atualizarBarraNatural("Emocional", dados.emocional, maiorBruto, reducoes.emocional);
+    atualizarBarraNatural("Intuitivo", dados.intuitivo, maiorBruto, reducoes.intuitivo);
 
-    // 4️⃣ GERAÇÃO DO TEXTO: Usa o banco de textosPlanos que você já tem
+    // 4. Prepara os dados para gerar o texto interpretativo
     const dadosTextoMomento = {
-        fisico: { nivel: classificarIntensidade(dados.fisico, maiorBruto), numero: significado.fisico },
-        mental: { nivel: classificarIntensidade(dados.mental, maiorBruto), numero: significado.mental },
-        emocional: { nivel: classificarIntensidade(dados.emocional, maiorBruto), numero: significado.emocional },
-        intuitivo: { nivel: classificarIntensidade(dados.intuitivo, maiorBruto), numero: significado.intuitivo }
+        fisico: { nivel: classificarIntensidade(dados.fisico, maiorBruto), numero: reducoes.fisico },
+        mental: { nivel: classificarIntensidade(dados.mental, maiorBruto), numero: reducoes.mental },
+        emocional: { nivel: classificarIntensidade(dados.emocional, maiorBruto), numero: reducoes.emocional },
+        intuitivo: { nivel: classificarIntensidade(dados.intuitivo, maiorBruto), numero: reducoes.intuitivo }
     };
 
+    // 5. Gera o texto e exibe o PERÍODO exato na tela
     const textoBase = gerarTextoPlano("momento", dadosTextoMomento);
-    document.getElementById("resumoMomento").innerText = "No ano de " + ano + ":\n\n" + textoBase;
+    document.getElementById("resumoMomento").innerText = 
+        "No período de " + dados.periodo + ", o seu Plano de Expressão do Momento revela:\n\n" + textoBase;
 }
-
-// Função auxiliar para classificar se é forte, medio ou fraco para o texto
-function classificarIntensidade(valor, maior) {
-    if (valor >= maior * 0.75) return "forte";
-    if (valor >= maior * 0.5) return "medio";
-    return "fraco";
-}
-
-const intensidadesMomento = {
-  fisico: classificar(dados.fisico, maior),
-  mental: classificar(dados.mental, maior),
-  emocional: classificar(dados.emocional, maior),
-  intuitivo: classificar(dados.intuitivo, maior)
-};
-
-const dadosTextoMomento = {
-  fisico:{ nivel:intensidadesMomento.fisico, numero:reducoesMomento.fisico, valorReal:dados.fisico },
-  mental:{ nivel:intensidadesMomento.mental, numero:reducoesMomento.mental, valorReal:dados.mental },
-  emocional:{ nivel:intensidadesMomento.emocional, numero:reducoesMomento.emocional, valorReal:dados.emocional },
-  intuitivo:{ nivel:intensidadesMomento.intuitivo, numero:reducoesMomento.intuitivo, valorReal:dados.intuitivo }
-};
-
-const textoBaseMomento = gerarTextoPlano("momento", dadosTextoMomento);
-const anoSelecionado = document.getElementById("anoSelect").value;
-
-const textoMomentoFinal =
-"No ano de " + anoSelecionado + ", o seu Plano de Expressão do Momento revela:\n\n"
-+ textoBaseMomento;
-
-document.getElementById("resumoMomento").innerText = textoMomentoFinal;
 
 
 
