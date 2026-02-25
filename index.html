@@ -492,6 +492,14 @@ function preencherSeletorAnos(){
    select.value = bancoMomentos[0].ano;
  }
 }
+
+
+  // Função que estava faltando e causando erro no seu console
+function classificarIntensidade(valor, maior) {
+    if (valor >= maior * 0.75) return "forte";
+    if (valor >= maior * 0.5) return "medio";
+    return "fraco";
+}
 //================ STATUS DO MOMENTO (NOVO MOTOR)
 
 function gerarStatusMomento() {
@@ -510,7 +518,7 @@ function gerarStatusMomento() {
         intuitivo: reduzirNumero(dados.intuitivo)
     };
 
-    // Atualiza as barras gráficas
+    // Atualiza as barras
     atualizarBarraNatural("Fisico", dados.fisico, maiorBruto, reducoes.fisico);
     atualizarBarraNatural("Mental", dados.mental, maiorBruto, reducoes.mental);
     atualizarBarraNatural("Emocional", dados.emocional, maiorBruto, reducoes.emocional);
@@ -525,19 +533,14 @@ function gerarStatusMomento() {
 
     const textoBase = gerarTextoPlano("momento", dadosTextoMomento);
 
-    // Selecionamos a caixa de texto
+    // Exibe o texto na tela
     const campoTexto = document.getElementById("resumoMomento");
-
-    // Escrevemos o conteúdo
     campoTexto.innerText = 
         "No ano de " + anoSelecionado + " (" + dados.intervalo + "):\n\n" + 
         "Você estará vivendo a seguinte expressão:\n\n" + textoBase;
-
-    // FORÇAR A APARECER (Isso resolve se o texto sumiu)
+    
     campoTexto.style.display = "block";
-    campoTexto.style.color = "white"; // Garante que a letra seja legível no fundo escuro
-}
-//================ BARRAS (MANTIDAS)
+} // FECHAMENTO DA FUNÇÃO
 
 function atualizarBarra(tipo,valor,maior){
  let largura=0;
