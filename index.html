@@ -525,13 +525,17 @@ function gerarStatusMomento() {
 
     const textoBase = gerarTextoPlano("momento", dadosTextoMomento);
 
-    // Montagem do texto final com o seu formato personalizado
-    document.getElementById("resumoMomento").innerText = 
+    // Selecionamos a caixa de texto
+    const campoTexto = document.getElementById("resumoMomento");
+
+    // Escrevemos o conteúdo
+    campoTexto.innerText = 
         "No ano de " + anoSelecionado + " (" + dados.intervalo + "):\n\n" + 
         "Você estará vivendo a seguinte expressão:\n\n" + textoBase;
-}
 
-
+    // FORÇAR A APARECER (Isso resolve se o texto sumiu)
+    campoTexto.style.display = "block";
+    campoTexto.style.color = "white"; // Garante que a letra seja legível no fundo escuro
 
 //================ BARRAS (MANTIDAS)
 
