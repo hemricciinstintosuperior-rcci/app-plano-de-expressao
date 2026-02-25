@@ -243,50 +243,36 @@ function analisarMapa(dados){
 // ===============================
 
 function gerarIntroducao(tipo, dadosTexto){
-
   const analise = analisarMapa(dadosTexto);
-
   let texto = "";
 
-  // ================= PARÁGRAFO 1 — VISÃO GERAL
-  texto += tipo === "natural"
-    ? "O seu Plano de Expressão Natural revela como sua energia se manifesta de forma permanente ao longo da vida. "
-    : "O seu Plano de Expressão do Momento revela as energias predominantes deste período da sua vida. ";
+  // ================= PARÁGRAFO 1 — CONTEXTUALIZAÇÃO (O "PORQUÊ")
+  if(tipo === "natural"){
+    texto += "O seu Plano de Expressão Natural representa a sua 'assinatura energética' fundamental. Ele descreve o conjunto de ferramentas que sua alma trouxe para esta existência, revelando como sua inteligência, emoção e instinto operam de forma estrutural e permanente. ";
+  } else {
+    texto += "O Plano de Expressão do Momento atua como uma lente temporal sobre a sua essência. Ele indica como as circunstâncias atuais estão moldando sua forma de agir e sentir, destacando quais habilidades estão sendo mais exigidas ou despertadas neste ciclo específico da sua jornada. ";
+  }
+
+  // ================= PARÁGRAFO 2 — A ANÁLISE TÉCNICA (O "O QUE")
+  texto += "\n\nAo analisarmos a distribuição das suas forças, ";
 
   if(analise.dominante){
-    texto += `Observa-se uma forte predominância do plano ${analise.dominante}, indicando que esta é a principal forma através da qual você tende a agir, reagir e se posicionar diante da realidade. `;
+    texto += `percebemos que o plano ${analise.dominante} exerce uma influência soberana. Isso significa que, independentemente da situação, sua primeira resposta ao mundo tende a passar por esse filtro, tornando-se sua maior força e, simultaneamente, seu porto seguro para tomada de decisões. `;
   }
   else if(analise.duplaDominante){
-    texto += `Existe uma dupla predominância entre os planos ${analise.duplaDominante[0]} e ${analise.duplaDominante[1]}, mostrando uma combinação marcante dessas duas formas de expressão na sua vida. `;
+    texto += `notamos uma dinâmica fascinante de dupla predominância entre os planos ${analise.duplaDominante[0]} e ${analise.duplaDominante[1]}. Essa composição cria um temperamento rico e equilibrado entre duas frentes, permitindo que você alterne sua forma de atuação com maior fluidez e versatilidade. `;
   }
   else if(analise.equilibrado){
-    texto += "Os quatro planos apresentam distribuição equilibrada, indicando uma personalidade versátil e adaptável. ";
+    texto += "encontramos um estado de raridade: o equilíbrio quase absoluto entre os quatro planos. Isso indica uma personalidade altamente adaptável, capaz de acessar o físico, o mental, o emocional ou o intuitivo com a mesma facilidade, dependendo apenas do que o momento exige. ";
   }
 
-  if(analise.fracos.length){
-    texto += `Os planos menos ativos são ${analise.fracos.join(", ")}, apontando áreas que podem exigir maior esforço, consciência e desenvolvimento ao longo do tempo.`;
+  // ================= PARÁGRAFO 3 — O DESAFIO (AS SOMBRAS)
+  if(analise.fracos.length > 0){
+    texto += `\n\nPor outro lado, os planos ${analise.fracos.join(" e ")} aparecem com uma atividade mais discreta. No contexto do autoconhecimento, essas não são falhas, mas sim 'zonas de aprendizado'. Elas apontam para habilidades que você pode sentir dificuldade em acessar instintivamente e que, portanto, demandam um esforço mais consciente e deliberado para serem integradas à sua rotina. `;
   }
 
-  // ================= PARÁGRAFO 2 — DINÂMICA ENERGÉTICA
-  texto += "\n\n";
-
-  if(analise.interno){
-    texto += "A predominância de planos internos indica uma natureza mais voltada ao mundo subjetivo, reflexivo e sensível. ";
-  }
-
-  if(analise.pratico){
-    texto += "A presença forte do plano físico indica grande ligação com a realidade prática, ação concreta e materialização. ";
-  }
-
-  if(analise.fortes.length === 1){
-    texto += "Essa configuração sugere uma personalidade bem direcionada, com tendência a agir sempre a partir de um eixo dominante.";
-  }
-  else if(analise.fortes.length >= 2){
-    texto += "Essa configuração revela uma personalidade multifacetada, com diferentes forças atuando simultaneamente.";
-  }
-  else{
-    texto += "Essa configuração sugere uma personalidade em busca de fortalecimento e desenvolvimento das suas energias principais.";
-  }
+  // ================= PARÁGRAFO 4 — A SÍNTESE FINAL
+  texto += "\n\nAbaixo, detalharemos como cada uma dessas energias se comporta individualmente, oferecendo uma visão clara de como você pode otimizar seu potencial.";
 
   return texto;
 }
