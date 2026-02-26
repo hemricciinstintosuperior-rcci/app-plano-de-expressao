@@ -593,124 +593,23 @@ O aprendizado envolve abrir-se para a percepção de que fazemos parte de algo m
 };
   
 const textosExpressao = {
-    criativo: `A criatividade é uma habilidade muito importante no seu desenvolvimento. Indica
-uma pessoa que têm ideias originais em sua vida cotidiana e vê sua realidade
-de uma forma diferenciada dos demais.
+    criativo: `Possui ideias originais, enxerga a realidade de forma diferenciada e encara imprevistos com otimismo e espontaneidade.
+Analisa problemas complexos dividindo-os em partes menores, focando em soluções eficazes e na adaptação rápida a novas situações.
+É movido por estímulos internos e grande motivação pessoal, ignorando rotinas estabelecidas para explorar diversas alternativas.
+Pelo lado negativo, pode manifestar arrogância, rebeldia contra regras e sofrer com grandes flutuações de humor e desconfiança.
+Sua busca constante pelo novo pode levá-lo a perder a noção de tempo e espaço ou a se deixar envolver por ilusões.`,
 
-Encara os acontecimentos de forma espontânea, agindo com racionalidade e
-otimismo, diante das adversidades e imprevistos, possui uma excelente
-capacidade de chegar a novas ideias para servir a um determinado propósito.
-Você possui uma grande habilidade para perceber problemas e desafios que
-escapam à maioria das pessoas, além de uma maior sensibilidade para entender
-aspectos menos óbvios ou os pontos mais promissores de uma situação,
-aquelas oportunidades ocultas que poucos notam.
+    indeciso: `Apresenta grande sensibilidade e necessidade de atenção, podendo agir de forma dramática ou precipitada sob pressão emocional.
+Suas reações são influenciáveis pelo ambiente, o que gera mudanças frequentes de opinião e certa dificuldade em agir sozinho.
+Possui um lado sedutor e provocante, mas que pode ser interpretado como inconveniência devido ao excesso de dramatização.
+O fortalecimento do caráter ocorre ao descobrir sua verdadeira identidade, trocando a busca por reconhecimento externo por desejos internos.
+Negativamente, pode se tornar uma pessoa inconstante, manipuladora e impulsiva quando dominada por receios e emoções intensas.`,
 
-Enquanto outras pessoas parecem querer “arrancar” a solução, sem perder
-tempo com análises, antes mesmo de compreenderem a estrutura do problema
-ou do desafio, você habilmente procura analisar e avaliar os problemas ou
-obstáculos dividindo em partes menores e essenciais para enxergar a relação
-entre a parte e o todo, pois dessa observação depende a qualidade das decisões
-que serão tomadas por você.
-
-Pessoas Criativas também procuram fazer coisas novas e excitantes, são
-envolventes e mais capazes de desenvolver ao máximo suas potências, são
-enérgicas e muito focadas em seus objetivos. Possuem uma grande flexibilidade
-de raciocínio e conseguem enfocar problemas por vários ângulos diferentes.
-Quando surgem novos fatos ou circunstâncias, você é capaz de se adaptar
-rapidamente à nova situação, não hesitando em abandonar uma linha de
-raciocínio, substituindo-a por outra mais plausível.
-
-Você gosta de experimentar, testar, examinar, avaliar, imaginar diversas
-alternativas e configurações antes de se decidir por aquela que considere ser a
-melhor solução para resolver o problema ou descobrir oportunidades. É capaz
-de gerar muitas ideias diferentes para as mais variadas situações, e não se deixa
-levar pelo tradicionalismo ou por rotinas estabelecidas.
-
-O desejo e a motivação de criar são elementos básicos para você. Não importa
-as dificuldades e obstáculos, você provavelmente seguirá em frente sem
-desanimar, pois seus estímulos são internos, não externos.
-
-Pelo lado negativo, pessoas criativas têm muito mais facilidade em mentir do que
-a maioria das pessoas, podem ser arrogantes e desconfiadas, resistir a regras e
-convenções e tem uma atitude rebelde devido a uma necessidade de fazer
-coisas que ninguém faz.
-
-Há uma tendência a experimentar emoções negativas, sofrer grandes flutuações
-de humor, de estado emocional e agir de forma sínica se for levado pela falta de
-autoconfiança. Há uma tendência ainda a ser tido(a) como uma pessoa pouco
-sociável por não ser muito atencioso(a) com as pessoas. Quando dominadas
-pelo lado negativo pessoas criativas tendem á serem obstinadas em encontrar
-defeitos e falhas nas pessoas e em suas ideias, podendo nesse caso inclusive
-serem levadas à desonestidade.
-
-Também não é raro que perca a noção de tempo e espaço ao se envolver com
-suas atividades, ou se deixarem levar pelas ilusões.`,
-
-    indeciso: `Você é uma pessoa mais sensível, e em determinadas situações pode ter uma
-necessidade constante de atenção e demonstrar um comportamento
-excessivamente dramáticos se precipitando em agir ou falar; em geral é bemintencionado(a) mas pouco eficiente em situações que exijam controle e
-decisões sob pressão.
-
-Suas reações são mais emocionais o que lhe torna mais influenciável pelas
-situações e pessoas, e pode fazer com que você mude facilmente de opinião,
-em momentos de crise precisa ser orientado(a) para que não tome decisões
-precipitadas ou aja por impulso, perdendo o controle da situação. Em geral é
-mais indeciso(a) e pode ficar sem ação diante de uma adversidade,
-principalmente quando acontece de forma inesperada.
-
-Sexualmente você pode ser muito sedutor(a) e provocante, mas por outro lado
-a necessidade de atenção e excesso de dramatização em suas atitudes pode
-acabar sendo entendido como alguém inconveniente.
-
-Estas não são característica negativas e podem ser controladas e até evitadas,
-à partir do momento que você toma desta características. Em geral, grande parte
-destas características vem da necessidade de encontrar sua verdadeira
-identidade e uma vez descoberta, mais forte se torna sua firmeza de caráter e
-personalidade.
-
-Desenvolver sua criatividade, ajudará a mudar a forma como você vê sua
-realidade. Busque novas experiências e procure examinar as coisas com mais
-profundidade, seja através de conversas ou por qualquer outro tipo de interação,
-olhe para o mundo ao seu redor e procure saber por quê e como as coisas são
-do jeito que são.
-
-Aja movido(a) por seus desejos internos e não apenas por uma recompensa ou
-reconhecimento externo.
-
-Pelo lado negativo, as pessoas oscilantes podem ser inconstantes em seu
-comportamento; receosas e muito emotivas, muito enérgicas, manipuladoras,
-sedutoras, impulsivas, inconstantes, e exigentes, quando dominadas por esse
-lado.`,
-
-    neutro: `Você é uma pessoa equilibrada e imparcial, procura não se envolver em disputas
-e dificilmente toma partido diante de um conflito. Procura analisar uma situação
-por vários pontos de vista antes de tomar uma decisão, é uma pessoa mais
-observadora e aberta a novas ideias e opiniões, desde que possa ser
-convencido(a).
-
-Em geral age movido(a) apenas por seus próprios interesses e dificilmente sairá
-de sua zona de conforto ou se arriscara a menos que a recompensa valha muito
-à pena. Sendo excessivamente cauteloso(a); tende à inatividade e a arrumar
-qualquer tipo de desculpas para não se envolver em qualquer tipo de conflito.
-Em geral se relaciona muito bem com as pessoas, mas raramente se expõem
-ou exporá seus sentimentos e intenções, intencionalmente acaba criando
-barreiras para evitar o sofrimento e assim pode não ser muito exigentes com as
-pessoas para evitar que elas sejam exigentes com você.
-
-Como é normalmente muito controlado(a), não se abate facilmente em
-momentos de dificuldade e por sua característica auto protecionista pode
-apresentar um alto níveis de confiança em si mesmo, mas ter dificuldade em
-confiar nas pessoas.
-
-Você gosta da rotina de sua vida e se esquiva de qualquer situação de conflito
-ou polêmica. Raramente perde o controle, em geral age de forma pacífica e é
-alguém fácil de lidar e conviver, pois tem facilidade para se adaptar a novos
-ambientes, situações e pessoas.
-
-Pelo lado negativo; pode ser pouco criativo(a), preguiçoso(a), pouco confiável e
-omisso(a), pode ser influenciável e ter medo de tomar decisões. Quando
-predomina o lado negativo a pessoa literalmente estará sempre “encima do
-muro”.`
+    neutro: `É alguém equilibrado e observador, que prefere analisar todos os pontos de vista antes de tomar partido em qualquer conflito.
+Age movido por interesses próprios e raramente sai da zona de conforto, sendo excessivamente cauteloso para evitar riscos inúteis.
+Relaciona-se bem com todos, mas constrói barreiras emocionais intencionais para evitar sofrimento, raramente expondo seus sentimentos.
+Possui facilidade de adaptação e mantém o autocontrole em situações difíceis, preferindo rotinas pacíficas e a ausência de polêmicas.
+No aspecto negativo, pode demonstrar preguiça, omissão e medo de decidir, mantendo-se "em cima do muro" e sendo pouco criativo.`
 };
 // =============================================
 // VARIÁVEIS LEGADAS (NECESSÁRIAS PARA O INDEX)
