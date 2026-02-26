@@ -4,417 +4,144 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Relatório Premium</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <style>
-body{
-  font-family: "Times New Roman", serif;
-  color:#111;
-  background:#f4f4f4;
-  line-height:1.8;
-  margin:0;
-}
+body{ font-family: "Times New Roman", serif; color:#111; background:#f4f4f4; line-height:1.8; margin:0; }
+body > *{ max-width:1350px; margin-left:auto; margin-right:auto; padding-left:40px; padding-right:40px; }
 
-/* COLUNA CENTRAL */
-body > *{
-  max-width:1350px;
-  margin-left:auto;
-  margin-right:auto;
-  padding-left:40px;
-  padding-right:40px;
-}
+.capa{ text-align:center; padding-top:100px; padding-bottom:100px; background:white; box-shadow:0 0 25px rgba(0,0,0,0.05); border-radius:10px; page-break-after: always; }
+.logo{ max-width:700px; margin-bottom:50px; }
+.secao { page-break-inside: avoid; background:white; padding:20px 10px; margin-top:40px; border-radius:10px; box-shadow:0 0 20px rgba(0,0,0,0.05); }
 
-/* CAPA */
-.capa{
-  text-align:center;
-  padding-top:100px;
-  padding-bottom:100px;
-  margin-bottom:0px;
-  background:white;
-  box-shadow:0 0 25px rgba(0,0,0,0.05);
-  border-radius:10px;
-  /* ESTA É A LINHA PRINCIPAL: Força o PDF a pular para a próxima página após a capa */
-  page-break-after: always; 
-}
+h2{ font-size:32px; margin-bottom:25px; border-bottom:1px solid #eee; padding-bottom:10px; }
+.nomeCliente{ margin-top:70px; font-size:32px; }
+.subtitulo{ font-size:50px; color:#191F42; }
 
-.logo{
-  max-width:700px;
-  margin-bottom:50px;
-}
-/* Garante que as seções seguintes não "subam" para a capa */
-.secao {
-  page-break-inside: avoid; /* Evita que uma seção seja cortada ao meio entre páginas */
-}
-.titulo{
-  font-size:50px;
-  letter-spacing:3px;
-  margin-bottom:10px;
-}
+/* ESTILOS DAS BARRAS */
+.grafico{ margin-top:20px; }
+.barra{ margin:18px 0; }
+.barra span{ font-weight:bold; display:block; margin-bottom:6px; font-size: 18px; }
+.linha{ width:100%; height:14px; background:#eee; border-radius:20px; overflow:hidden; }
+.preenchimento{ display:block; height:14px; border-radius:20px; }
 
-
-
-.nomeCliente{
-  margin-top:70px;
-  font-size:32px;
-}
-.subtitulo{
-  font-size:50px;
-  color:#191F42;
-}
-/* SEÇÕES */
-.secao{
-  background:white;
-  padding:20px  10px;
-  margin-top:40px;
-  border-radius:10px;
-  box-shadow:0 0 20px rgba(0,0,0,0.05);
-}
-
-/* TÍTULOS */
-h2{
-  font-size:32px;
-  margin-bottom:25px;
-  border-bottom:1px solid #eee;
-  padding-bottom:10px;
-}
-
-.explicacao{
-  font-style: italic;
-  color:#111;
-  margin-bottom:18px;
-  line-height:1.75;
-  white-space: pre-line;
-}
-
-/* NÚMERO */
-.numero{
-  font-weight:bold;
-  margin-top:30px;
-  margin-bottom:20px;
-  font-size:22px;
-}
-
-/* TEXTOS DINÂMICOS */
-.secao div:not(.explicacao):not(.numero){
-  margin-bottom:18px;
-  font-size:18px;
-}
-
-/* RODAPÉ DO SITE */
-.rodape{
-  margin-top:60px;
-  margin-bottom:40px;
-  text-align:center;
-  font-size:20px;
-  color:#111;
-}
-
-/* ==============================
-   GRÁFICO DOS PLANOS
-============================== */
-
-.grafico{
-  margin-top:20px;
-}
-
-.barra{
-  margin:18px 0;
-}
-
-.barra span{
-  font-weight:bold;
-  display:block;
-  margin-bottom:6px;
-  font-size: 18px;
-}
-
-.linha{
-  width:100%;
-  height:14px;
-  background:#eee;
-  border-radius:20px;
-  overflow:hidden;
-}
-
-.preenchimento{
-  display:block;
-  height:14px;
-  border-radius:20px;
-}
-
+/* CORES */
 .fisico{ background:#ef4444; }
 .mental{ background:#06b6d4; }
 .emocional{ background:#22c55e; }
 .intuitivo{ background:#eab308; }
+.criativo { background: #a855f7; } 
+.indeciso { background: #f97316; } 
+.neutro { background: #94a3b8; }
 
-/* IMPRESSÃO */
+.texto-grande {
+    margin-top: 25px;
+    padding: 20px;
+    background: #f9fafb;
+    border-left: 5px solid #a855f7;
+    font-style: italic;
+    white-space: pre-wrap; /* Mantém as quebras de linha das crases */
+}
+
+.rodape{ margin-top:60px; margin-bottom:40px; text-align:center; font-size:20px; }
+
 @media print {
-  * {
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-    color-adjust: exact !important;
-  }
-
-  body {
-    background: white !important;
-    margin: 0 !important;
-  }
-
-  .secao {
-    page-break-inside: avoid;
-    box-shadow: none !important;
-    border: 1px solid #eee !important;
-  }
-
-  /* Garante que o fundo das barras apareça */
-  .linha {
-    background-color: #eee !important;
-  }
-
-  .fisico { background-color: #ef4444 !important; }
-  .mental { background-color: #06b6d4 !important; }
-  .emocional { background-color: #22c55e !important; }
-  .intuitivo { background-color: #eab308 !important; }
+    .linha { background-color: #eee !important; }
+    .fisico { background-color: #ef4444 !important; }
+    .mental { background-color: #06b6d4 !important; }
+    .emocional { background-color: #22c55e !important; }
+    .intuitivo { background-color: #eab308 !important; }
+    .criativo { background-color: #a855f7 !important; }
+    .indeciso { background-color: #f97316 !important; }
+    .neutro { background-color: #94a3b8 !important; }
 }
-
-@media screen and (max-width: 768px){
-
-  body{
-    background:#fff;
-  }
-
-  .capa{
-    padding:60px 20px;
-  }
-
-  .logo{
-    width:90%;
-    max-width:320px;
-  }
-
-  .titulo{
-    font-size:28px;
-    letter-spacing:1px;
-  }
-
-  .subtitulo{
-    font-size:18px;
-  }
-
-  .nomeCliente{
-    font-size:18px;
-    margin-top:40px;
-  }
-
-  .secao{
-    margin:20px 12px;
-    padding:25px 18px;
-    border-radius:14px;
-  }
-
-  .texto{
-    font-size:16px;
-    line-height:1.7;
-  }
-
-  .tituloPiramide{
-    font-size:22px;
-  }
-
-  /* PIRÂMIDE MOBILE */
-  .num{
-    width:22px;
-    height:22px;
-    font-size:16px;
-    margin:1px;
-    border-radius:5px;
-  }
-
-  .linha{
-    margin:1px 0;
-  }
-
-  /* botão */
-  button{
-    width:90%;
-    padding:14px;
-    font-size:18px;
-    border-radius:10px;
-  }
-
-}
-
-
 </style>
 </head>
 
 <body>
-
-<div id="conteudo">Carregando acesso...</div>
+<div id="conteudo">Carregando relatório premium...</div>
 
 <script>
-// ===============================
-// CARREGAR DADOS DO MAPA
-// ===============================
 const dadosSalvos = localStorage.getItem("relatorioMapa");
-
 if(!dadosSalvos){
-  document.getElementById("conteudo").innerHTML = "<p>Erro: Nenhum mapa encontrado.</p>";
-  throw new Error("Sem dados");
-}
+    document.getElementById("conteudo").innerHTML = "<p>Erro: Nenhum mapa encontrado.</p>";
+} else {
+    const rel = JSON.parse(dadosSalvos);
+    const dataBr = rel.data.split('-').reverse().join('/');
 
-const relatorio = JSON.parse(dadosSalvos);
-// CORREÇÃO DA DATA: Transforma 1988-03-09 em 09/03/1988
-const dataBr = relatorio.data.split('-').reverse().join('/');  
+    // Função de cálculo de porcentagem (Tabela 3 utiliza os valores brutos enviados)
+    const calcPct = (val, max) => Math.round((val / max) * 100) || 0;
 
-// Função auxiliar para garantir que o número reduzido seja usado
-function obterReduzido(n) {
-    if (n > 9) {
-        return n.toString().split("").reduce((a,b)=>a + Number(b),0);
-    }
-    return n;
-}
+    const maxNat = Math.max(rel.fisico, rel.mental, rel.emocional, rel.intuitivo);
+    const maxExpNat = Math.max(rel.criativoNat, rel.indecisoNat, rel.neutroNat);
 
-// Cálculos de Porcentagem para as Barras
-const maiorNumeroNat = Math.max(relatorio.fisico, relatorio.mental, relatorio.emocional, relatorio.intuitivo);
-const pctFisico = Math.round((relatorio.fisico / maiorNumeroNat) * 100);
-const pctMental = Math.round((relatorio.mental / maiorNumeroNat) * 100);
-const pctEmocional = Math.round((relatorio.emocional / maiorNumeroNat) * 100);
-const pctIntuitivo = Math.round((relatorio.intuitivo / maiorNumeroNat) * 100);
+    const maxMom = Math.max(rel.fisicoMomento, rel.mentalMomento, rel.emocionalMomento, rel.intuitivoMomento);
+    const maxExpMom = Math.max(rel.criativoMom, rel.indecisoMom, rel.neutroMom);
 
-const maiorNumeroMom = Math.max(relatorio.fisicoMomento, relatorio.mentalMomento, relatorio.emocionalMomento, relatorio.intuitivoMomento);
-const pctFisicoMomento = Math.round((relatorio.fisicoMomento / maiorNumeroMom) * 100);
-const pctMentalMomento = Math.round((relatorio.mentalMomento / maiorNumeroMom) * 100);
-const pctEmocionalMomento = Math.round((relatorio.emocionalMomento / maiorNumeroMom) * 100);
-const pctIntuitivoMomento = Math.round((relatorio.intuitivoMomento / maiorNumeroMom) * 100);
-
-// ===============================
-// GERAR RELATÓRIO NA TELA
-// ===============================
-document.getElementById("conteudo").innerHTML = `
-<div id="paginaRelatorio">
-
+    document.getElementById("conteudo").innerHTML = `
     <div class="capa">
         <img class="logo" src="https://raw.githubusercontent.com/hemricciinstintosuperior-rcci/app-plano-de-expressao/main/icon-192.png">
-        
-<div class="nomeCliente">
-<strong>${relatorio.nome}</strong><br>
-${dataBr}  </div>
-
-<div class="titulo"></div>
-        <div class="subtitulo">"Sua jornada de autoconhecimento começa aqui: entenda a dinâmica da sua alma."</div>
-
-<div class="secao">
-    <h2>Entendendo os Quatro Planos</h2>
-     <p>
-Este texto aborda a complexa estrutura da experiência humana dividida em quatro pilares fundamentais: o corpo físico, a faculdade mental, a capacidade emocional e a intuição. Cada uma dessas esferas atua como um filtro distinto, moldando a maneira como percebemos estímulos e interagimos com o ambiente ao nosso redor.</p>
-
-<p>​O plano físico é descrito como a base sensorial da nossa existência, permitindo o contato direto com a matéria. Através dele, experimentamos sensações táteis, sabores, além das polaridades de prazer e dor, definindo nossa percepção da realidade concreta. É este plano que nos ancora no mundo material e proporciona a vivência biológica e tangível.</p>
-
-<p>​Em contraste, o plano mental, aliado às naturezas emocional e intuitiva, foca no que é abstrato e invisível. Ele representa a mecânica do pensamento e a forma como a mente organiza ideias para construir a realidade subjetiva de cada indivíduo. É o domínio da lógica, do processamento de informações e da arquitetura mental que define como interpretamos o mundo.</p>
-
-<p>​O plano emocional reflete a gestão e a expressão dos sentimentos internos. O texto enfatiza que as emoções são ferramentas pedagógicas, ensinando-nos sobre nós mesmos e sobre os outros. Este nível influencia diretamente nossas decisões e reações diante de eventos, mostrando como lidamos com as flutuações da vida afetiva.</p>
-
-<p>​Por fim, o plano intuitivo é apresentado como uma capacidade de percepção que transcende a lógica e a racionalidade. Ele permite antever situações e preparar-se para eventos de forma extra-racional, acessando conhecimentos que não dependem puramente do intelecto. É a conexão com o que está além do óbvio e do mensurável.</p>
-
-<p>​Embora todos possuam esses quatro planos, a intensidade de cada um varia drasticamente de pessoa para pessoa. Alguns indivíduos são movidos predominantemente pela ação física e material, enquanto outros operam sob uma lógica puramente racional. Há ainda aqueles cuja vida é governada quase inteiramente pela intuição ou pelas ondas emocionais.</p>
-
-<p>​O texto conclui mencionando a Numerologia Quântica como uma ferramenta de diagnóstico. Através do conceito de "Plano de Expressão", essa prática busca identificar como cada pessoa trabalha individualmente em cada um desses níveis. Assim, o equilíbrio ou a predominância de um plano sobre o outro define a identidade e o modo de vida de cada ser humano.</p>
-
-<p>​Em suma, a existência humana é uma dança entre o material, o mental, o sensível e o intuitivo. Compreender a força relativa de cada um desses planos em nossa própria vida permite um autoconhecimento mais profundo e uma condução mais consciente da nossa realidade. O "Plano de Expressão" surge, portanto, como um mapa das nossas tendências naturais de percepção e ação no mundo.</p>
-       
+        <div class="nomeCliente"><strong>${rel.nome}</strong><br>${dataBr}</div>
+        <div class="subtitulo">"Sua jornada de autoconhecimento começa aqui."</div>
     </div>
-</div>
 
     <div class="secao">
         <h2>Plano de Expressão Natural</h2>
-        
         <div class="grafico">
-            <div class="barra">
-                <span>Físico: ${obterReduzido(relatorio.fisico)}</span>
-                <div class="linha"><div class="preenchimento fisico" style="width:${pctFisico}%"></div></div>
-            </div>
-            <div class="barra">
-                <span>Mental: ${obterReduzido(relatorio.mental)}</span>
-                <div class="linha"><div class="preenchimento mental" style="width:${pctMental}%"></div></div>
-            </div>
-            <div class="barra">
-                <span>Emocional: ${obterReduzido(relatorio.emocional)}</span>
-                <div class="linha"><div class="preenchimento emocional" style="width:${pctEmocional}%"></div></div>
-            </div>
-            <div class="barra">
-                <span>Intuitivo: ${obterReduzido(relatorio.intuitivo)}</span>
-                <div class="linha"><div class="preenchimento intuitivo" style="width:${pctIntuitivo}%"></div></div>
-            </div>
+            ${gerarBarra("Físico", rel.fisico, maxNat, 'fisico')}
+            ${gerarBarra("Mental", rel.mental, maxNat, 'mental')}
+            ${gerarBarra("Emocional", rel.emocional, maxNat, 'emocional')}
+            ${gerarBarra("Intuitivo", rel.intuitivo, maxNat, 'intuitivo')}
         </div>
+        <p style="white-space:pre-line;">${rel.textoNatural}</p>
 
-        <p style="white-space:pre-line; margin-top:30px;">
-        ${relatorio.textoNatural}
-        </p>
+        <h3>Perfil de Expressão (Natural)</h3>
+        <div class="grafico">
+            ${gerarBarra("Criativo", rel.criativoNat, maxExpNat, 'criativo')}
+            ${gerarBarra("Indeciso", rel.indecisoNat, maxExpNat, 'indeciso')}
+            ${gerarBarra("Neutro", rel.neutroNat, maxExpNat, 'neutro')}
+        </div>
+        <div class="texto-grande">${rel.textoExpressaoNat}</div>
     </div>
 
     <div class="secao">
-        <h2>Status do Momento</h2>
-        <p style="font-size:18px;"><b>Vigência:</b> Ano ${relatorio.anoMomento}</p>
-
+        <h2>Status do Momento (Ano ${rel.anoMomento})</h2>
         <div class="grafico">
-            <div class="barra">
-                <span>Físico: ${obterReduzido(relatorio.fisicoMomento)}</span>
-                <div class="linha"><div class="preenchimento fisico" style="width:${pctFisicoMomento}%"></div></div>
-            </div>
-            <div class="barra">
-                <span>Mental: ${obterReduzido(relatorio.mentalMomento)}</span>
-                <div class="linha"><div class="preenchimento mental" style="width:${pctMentalMomento}%"></div></div>
-            </div>
-            <div class="barra">
-                <span>Emocional: ${obterReduzido(relatorio.emocionalMomento)}</span>
-                <div class="linha"><div class="preenchimento emocional" style="width:${pctEmocionalMomento}%"></div></div>
-            </div>
-            <div class="barra">
-                <span>Intuitivo: ${obterReduzido(relatorio.intuitivoMomento)}</span>
-                <div class="linha"><div class="preenchimento intuitivo" style="width:${pctIntuitivoMomento}%"></div></div>
-            </div>
+            ${gerarBarra("Físico", rel.fisicoMomento, maxMom, 'fisico')}
+            ${gerarBarra("Mental", rel.mentalMomento, maxMom, 'mental')}
+            ${gerarBarra("Emocional", rel.emocionalMomento, maxMom, 'emocional')}
+            ${gerarBarra("Intuitivo", rel.intuitivoMomento, maxMom, 'intuitivo')}
         </div>
+        <p style="white-space:pre-line;">${rel.textoMomento}</p>
 
-        <p style="white-space:pre-line; margin-top:30px;">
-        ${relatorio.textoMomento}
-        </p>
+        <h3>Perfil de Expressão (Momento)</h3>
+        <div class="grafico">
+            ${gerarBarra("Criativo", rel.criativoMom, maxExpMom, 'criativo')}
+            ${gerarBarra("Indeciso", rel.indecisoMom, maxExpMom, 'indeciso')}
+            ${gerarBarra("Neutro", rel.neutroMom, maxExpMom, 'neutro')}
+        </div>
+        <div class="texto-grande">${rel.textoExpressaoMom}</div>
     </div>
 
-    <div class="secao">
-        <h2>Encerramento</h2>
-        <p>
-<p>​A jornada do autoconhecimento, revelada através deste Plano de Expressão Quântico , é um convite para a maestria sobre a própria existência. Ao chegarmos ao final desta análise, é fundamental compreender que os números e gráficos aqui apresentados não são destinos imutáveis, mas sim bússolas que indicam a direção das suas correntes energéticas naturais. Cada dado coletado sobre os seus níveis Físico, Mental, Emocional e Intuitivo serve como um espelho da alma, refletindo como você processa a realidade e manifesta sua vontade no universo.</p>
+    <div class="rodape">https://www.instintosuperior.com</div>
+    `;
 
-<p>​A integração desses quatro pilares é o que permite ao ser humano transitar da reação inconsciente para a ação consciente. Quando compreendemos que o plano físico é o nosso ponto de ancoragem e realização, passamos a honrar o corpo e a matéria como templos da experiência. Ao reconhecermos a força do nosso plano mental, ganhamos clareza para arquitetar pensamentos que constroem, em vez de destruir. Ao validarmos o plano emocional, permitimos que os sentimentos fluam como guias de aprendizado, e ao silenciarmos para ouvir o plano intuitivo, acessamos a sabedoria ancestral que antecipa caminhos e evita obstáculos desnecessários.</p>
+    setTimeout(() => { window.print(); }, 2000);
+}
 
-<p>​Este relatório é uma ferramenta de poder. Ele revela onde sua energia flui com facilidade e onde ela encontra resistências que precisam ser trabalhadas. Lembre-se de que o equilíbrio perfeito não é a igualdade estatística entre os planos, mas sim a harmonia funcional entre eles. Uma pessoa com forte predominância física encontrará sua paz na realização concreta, enquanto alguém de natureza intuitiva brilhará na percepção do invisível. O segredo da evolução pessoal reside em não negar sua natureza, mas em desenvolvê-la com consciência, ao mesmo tempo em que se fortalece os planos que aparecem com menor intensidade.</p>
+function gerarBarra(label, valor, max, classe) {
+    const pct = Math.round((valor / max) * 100) || 0;
+    // Para mostrar o número reduzido na label
+    const reduzido = valor > 9 ? valor.toString().split("").reduce((a,b)=>a + Number(b),0) : valor;
+    // Se for Tabela 3, mostramos o valor bruto, se for planos, o reduzido
+    const valorExibido = (classe === 'criativo' || classe === 'indeciso' || classe === 'neutro') ? valor : reduzido;
 
-<p>​Utilize estas informações para tomar decisões mais alinhadas com sua essência vibracional. Nos momentos de dúvida, retorne a esta leitura para relembrar quais são suas ferramentas naturais de enfrentamento. Se o seu momento atual exige mais do seu plano mental e ele está baixo, use este conhecimento para buscar métodos de foco e organização. Se as emoções parecem transbordar, olhe para o seu gráfico e entenda se essa é uma tendência natural ou um desequilíbrio momentâneo que precisa de acolhimento.</p>
-
-<p>​O "Instinto Superior" que dá nome a este trabalho é justamente essa capacidade de elevar-se acima das circunstâncias externas através do domínio interno. Você agora possui o mapa das suas tendências naturais; o próximo passo é a aplicação prática deste saber no seu dia a dia. Que este conhecimento ilumine seus passos, traga estabilidade às suas emoções e clareza aos seus propósitos. A evolução é um processo contínuo de lapidação, e você acaba de dar um passo significativo na direção da sua melhor versão.</p>
-
-<p>​Este documento encerra uma análise, mas abre um novo capítulo na sua vida. Que a consciência aqui despertada seja a semente de grandes transformações, prosperidade e equilíbrio em todas as áreas do seu ser. Siga com a confiança de quem conhece a própria estrutura e a coragem de quem sabe que é o único autor da sua realidade.
-        </p>
-    </div>
-
-    <div class="rodape">
-       https://www.instintosuperior.com
-    </div>
-</div>
-`;
-
-  // AGUARDA RELATÓRIO TERMINAR DE RENDERIZAR E MANDA IMPRIMIR
-setTimeout(() => {
-    window.print();
-}, 2000);
-
-observer.observe(document.body, { childList:true, subtree:true });
-
-
-document.oncontextmenu=()=>false;
-document.onselectstart=()=>false;
-
+    return `
+        <div class="barra">
+            <span>${label}: ${valorExibido}</span>
+            <div class="linha"><div class="preenchimento ${classe}" style="width:${pct}%"></div></div>
+        </div>`;
+}
 </script>
 </body>
 </html>
