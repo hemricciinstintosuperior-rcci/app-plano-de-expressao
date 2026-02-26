@@ -223,47 +223,63 @@ function gerarTextoPlano(tipo, dados) {
         intuitivo: "Plano Intuitivo"
     };
 
-    // 1. Criar uma lista dos planos e ordenar do maior para o menor (Hierarquia)
+    // 1. RECLASSIFICAÇÃO: Criar a lista e ordenar especificamente para ESTE tipo (Natural ou Momento)
+    // Isso garante que se no Momento o 3º for maior que o 4º, ele apareça antes.
     let planosOrdenados = Object.keys(dados)
         .map(chave => ({ 
             chave, 
-            valor: dados[chave].valorReal, 
+            valor: parseFloat(dados[chave].valorReal) || 0, // Garante que trate como número
             nivel: dados[chave].nivel, 
             num: dados[chave].numero 
         }))
-        .sort((a, b) => b.valor - a.valor);
+        .sort((a, b) => b.valor - a.valor); // Ordena do maior para o menor
 
-    // 2. Iniciar o texto com a Introdução (buscada do textos.js)
+    // 2. Iniciar o texto com a Introdução
     let textoFinal = (introducoes[tipo] || "") + "\n\n";
 
-    // 3. Loop para colocar do 1º (mais forte) ao 4º (mais fraco)
+    // 3. Montagem da Hierarquia (1º ao 4º)
     planosOrdenados.forEach((plano, index) => {
         let posicao = index + 1;
         let nomePlano = nomesAmigaveis[plano.chave];
         
-        // Título da posição
+        // Título da posição (Ex: 1º - Plano Mental)
         textoFinal += `**${posicao}º - ${nomePlano}**\n`;
         
-        // Explicação da posição (1º ao 4º)
+        // Explicação do significado da posição (1º, 2º, 3º ou 4º)
         if (typeof explicacoesPosicao !== 'undefined') {
             textoFinal += (explicacoesPosicao[posicao] || "") + "\n\n";
         }
         
-        // Conteúdo técnico do plano
-        if (typeof textosPlanos !== 'undefined') {
-            textoFinal += (textosPlanos[plano.chave][plano.nivel][plano.num] || "") + "\n\n";
+        // O conteúdo técnico (buscado no textosPlanos)
+        if (typeof textosPlanos !== 'undefined' && textosPlanos[plano.chave]) {
+            const textoTecnico = textosPlanos[plano.chave][plano.nivel][plano.num];
+            textoFinal += (textoTecnico || "") + "\n\n";
         }
         
-        // Conector entre os blocos
+        // Adiciona conector narrativo
         if (index < 3 && typeof conectores !== 'undefined') {
             textoFinal += conectores[Math.floor(Math.random() * conectores.length)] + "\n\n";
         }
     });
 
-    // 4. Adicionar a Conclusão (Processando as variáveis dinâmicas)
+    // 4. Conclusão corrigida (pega o maior e o menor desta lista específica)
     textoFinal += processarConclusao(tipo, planosOrdenados, nomesAmigaveis);
 
     return textoFinal;
+}
+
+// Função de apoio para processar os nomes na conclusão
+function processarConclusao(tipo, ordenados, nomes) {
+    if (typeof conclusoes === 'undefined' || !conclusoes[tipo]) return "";
+    
+    const dominante = ordenados[0].chave; // O que ficou em 1º
+    const fraco = ordenados[3].chave;     // O que ficou em 4º
+    
+    let frase = conclusoes[tipo];
+    
+    return frase
+        .replace("${nomes[dominante]}", nomes[dominante])
+        .replace("${nomes[fraco]}", nomes[fraco]);
 }
 
 // Função auxiliar para evitar o erro de ${nomes[fraco]}
