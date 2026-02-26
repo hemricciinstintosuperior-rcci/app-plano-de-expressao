@@ -15,18 +15,17 @@ body { font-family: "Times New Roman", serif; color:#000; background:#ffffff; li
 .nomeCliente { font-size: 32px; font-weight: bold; margin-bottom: 10px; text-transform: uppercase; }
 .subtitulo { font-size: 24px; color: #191F42; font-style: italic; }
 
-/* SEÇÕES SEM BLOCOS CINZAS */
+/* SEÇÕES LIMPAS */
 .secao { page-break-inside: avoid; background: transparent; padding: 20px 0; margin-top: 30px; border-bottom: 1px solid #eee; }
 h2 { font-size: 26px; color: #111; margin-bottom: 20px; border-left: 5px solid #191F42; padding-left: 15px; }
-h3 { font-size: 22px; color: #333; }
 
-/* ESTILOS DAS BARRAS - SEM NÚMEROS */
+/* BARRAS SEM NÚMEROS */
 .barra { margin: 15px 0; page-break-inside: avoid; }
 .barra span { font-weight: bold; display: block; margin-bottom: 5px; font-size: 16px; color: #000 !important; }
 .linha { width: 100%; height: 12px; background: #eeeeee !important; border-radius: 10px; overflow: hidden; -webkit-print-color-adjust: exact; }
 .preenchimento { display: block; height: 100%; border-radius: 10px; -webkit-print-color-adjust: exact; box-shadow: inset 0 0 0 1000px; }
 
-/* CORES DAS BARRAS */
+/* CORES */
 .fisico { background-color: #ef4444 !important; box-shadow: inset 0 0 0 1000px #ef4444 !important; }
 .mental { background-color: #06b6d4 !important; box-shadow: inset 0 0 0 1000px #06b6d4 !important; }
 .emocional { background-color: #22c55e !important; box-shadow: inset 0 0 0 1000px #22c55e !important; }
@@ -35,13 +34,13 @@ h3 { font-size: 22px; color: #333; }
 .indeciso { background-color: #f97316 !important; box-shadow: inset 0 0 0 1000px #f97316 !important; }
 .neutro { background-color: #94a3b8 !important; box-shadow: inset 0 0 0 1000px #94a3b8 !important; }
 
-/* TEXTOS E SÍNTESE */
-.texto-grande { margin-top: 15px; padding: 15px; border-left: 4px solid #a855f7; font-style: italic; background: #fff; color: #333; font-size: 15px; }
+/* TEXTOS */
+.texto-grande { margin-top: 15px; padding: 15px; border-left: 4px solid #a855f7; font-style: italic; background: #fff; color: #333; font-size: 15px; white-space: pre-wrap; }
 p { text-align: justify; font-size: 16px; color: #222; }
 .rodape { margin-top: 50px; text-align: center; font-size: 12px; color: #999; border-top: 1px solid #eee; padding-top: 10px; }
 
-/* BLOCAGEM DE TRÂNSITO */
-.box-transito { border: 2px solid #ffd633; padding: 20px; border-radius: 10px; margin-top: 20px; }
+/* DESTAQUE PARA O TRÂNSITO NO FINAL */
+.box-transito { border: 1px solid #ddd; padding: 25px; border-radius: 8px; background-color: #fcfcfc; margin-top: 20px; font-size: 16px; line-height: 1.8; }
 
 @media print {
     body { background: #fff; }
@@ -61,7 +60,6 @@ if(!dadosSalvos){
     const rel = JSON.parse(dadosSalvos);
     const dataBr = rel.data.split('-').reverse().join('/');
 
-    // Cálculos de Proporção
     const maxNat = Math.max(rel.fisico, rel.mental, rel.emocional, rel.intuitivo);
     const maxExpNat = Math.max(rel.criativoNat, rel.indecisoNat, rel.neutroNat);
     const maxMom = Math.max(rel.fisicoMomento, rel.mentalMomento, rel.emocionalMomento, rel.intuitivoMomento);
@@ -72,7 +70,7 @@ if(!dadosSalvos){
             <img class="logo" src="https://raw.githubusercontent.com/hemricciinstintosuperior-rcci/app-plano-de-expressao/main/icon-192.png">
             <div class="nomeCliente">${rel.nome}</div>
             <div class="subtitulo">${dataBr}</div>
-            <p style="text-align:center; margin-top:20px;">Relatório Numerológico Quântico</p>
+            <p style="text-align:center; margin-top:20px;">Relatório de Análise Vibracional Premium</p>
         </div>
 
         <div class="secao">
@@ -88,7 +86,7 @@ if(!dadosSalvos){
 
         <div class="secao">
             <h2>2. Plano de Expressão Natural</h2>
-            <p>As ferramentas estruturais da sua alma: como sua inteligência, ação e emoção operam de forma permanente.</p>
+            <p>Representa as ferramentas estruturais da sua alma: como sua inteligência, ação e emoção operam de forma permanente.</p>
             <div class="grafico">
                 ${gerarBarra("Físico", rel.fisico, maxNat, 'fisico')}
                 ${gerarBarra("Mental", rel.mental, maxNat, 'mental')}
@@ -99,16 +97,8 @@ if(!dadosSalvos){
         </div>
 
         <div class="secao">
-            <h2>3. Vibração de Trânsito (Ano ${rel.anoMomento})</h2>
-            <p>A energia predominante que regerá suas decisões e o fluxo dos acontecimentos neste ciclo específico.</p>
-            <div class="box-transito">
-                ${rel.transitoHTML || "Trânsito não calculado."}
-            </div>
-        </div>
-
-        <div class="secao">
-            <h2>4. Status do Momento (Ciclo Atual)</h2>
-            <p>As energias que estão sendo mais exigidas de você agora para manter o equilíbrio.</p>
+            <h2>3. Status do Momento (Ciclo Atual)</h2>
+            <p>As energias que estão sendo mais exigidas de você neste período para manter o seu equilíbrio e evolução.</p>
             <div class="grafico">
                 ${gerarBarra("Físico", rel.fisicoMomento, maxMom, 'fisico')}
                 ${gerarBarra("Mental", rel.mentalMomento, maxMom, 'mental')}
@@ -116,6 +106,14 @@ if(!dadosSalvos){
                 ${gerarBarra("Intuitivo", rel.intuitivoMomento, maxMom, 'intuitivo')}
             </div>
             <div style="white-space:pre-line; margin-top:20px;">${rel.textoMomento}</div>
+        </div>
+
+        <div class="secao">
+            <h2>4. Vibração de Trânsito (Ano ${rel.anoMomento})</h2>
+            <p>Esta é a energia predominante do seu ano. Ela indica o "clima" vibracional que regerá suas decisões e o fluxo dos acontecimentos neste ciclo.</p>
+            <div class="box-transito" style="white-space: pre-wrap;">
+                ${rel.transitoHTML || "Trânsito não calculado."}
+            </div>
         </div>
 
         <div class="rodape">Gerado por Instinto Superior - www.instintosuperior.com</div>
