@@ -593,19 +593,23 @@ O aprendizado envolve abrir-se para a percepção de que fazemos parte de algo m
 };
   
 const textosExpressao = {
-    criativo: `Possui ideias originais, enxerga a realidade de forma diferenciada e encara imprevistos com otimismo e espontaneidade.
+    criativo: ` "Plano Criativo" 
+    
+Possui ideias originais, enxerga a realidade de forma diferenciada e encara imprevistos com otimismo e espontaneidade.
 Analisa problemas complexos dividindo-os em partes menores, focando em soluções eficazes e na adaptação rápida a novas situações.
 É movido por estímulos internos e grande motivação pessoal, ignorando rotinas estabelecidas para explorar diversas alternativas.
 Pelo lado negativo, pode manifestar arrogância, rebeldia contra regras e sofrer com grandes flutuações de humor e desconfiança.
 Sua busca constante pelo novo pode levá-lo a perder a noção de tempo e espaço ou a se deixar envolver por ilusões.`,
 
-    indeciso: `Apresenta grande sensibilidade e necessidade de atenção, podendo agir de forma dramática ou precipitada sob pressão emocional.
+    indeciso: ` "Plano Indeciso" 
+Apresenta grande sensibilidade e necessidade de atenção, podendo agir de forma dramática ou precipitada sob pressão emocional.
 Suas reações são influenciáveis pelo ambiente, o que gera mudanças frequentes de opinião e certa dificuldade em agir sozinho.
 Possui um lado sedutor e provocante, mas que pode ser interpretado como inconveniência devido ao excesso de dramatização.
 O fortalecimento do caráter ocorre ao descobrir sua verdadeira identidade, trocando a busca por reconhecimento externo por desejos internos.
 Negativamente, pode se tornar uma pessoa inconstante, manipuladora e impulsiva quando dominada por receios e emoções intensas.`,
 
-    neutro: `É alguém equilibrado e observador, que prefere analisar todos os pontos de vista antes de tomar partido em qualquer conflito.
+    neutro: ` "Plano Neutro" 
+É alguém equilibrado e observador, que prefere analisar todos os pontos de vista antes de tomar partido em qualquer conflito.
 Age movido por interesses próprios e raramente sai da zona de conforto, sendo excessivamente cauteloso para evitar riscos inúteis.
 Relaciona-se bem com todos, mas constrói barreiras emocionais intencionais para evitar sofrimento, raramente expondo seus sentimentos.
 Possui facilidade de adaptação e mantém o autocontrole em situações difíceis, preferindo rotinas pacíficas e a ausência de polêmicas.
