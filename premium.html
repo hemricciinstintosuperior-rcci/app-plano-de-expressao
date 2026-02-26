@@ -221,7 +221,7 @@ function gerarBarra(label, valor, max, classe) {
 
     return `
         <div class="barra">
-            <span>${label}: </span>
+            <span>${label}: ${valorExibido}</span>
             <div class="linha"><div class="preenchimento ${classe}" style="width:${pct}%"></div></div>
         </div>`;
 }
