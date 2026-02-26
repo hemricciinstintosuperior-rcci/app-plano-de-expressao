@@ -55,6 +55,22 @@ h2{ font-size:32px; margin-bottom:25px; border-bottom:1px solid #eee; padding-bo
     .indeciso { background-color: #f97316 !important; }
     .neutro { background-color: #94a3b8 !important; }
 }
+
+ 0/* Forçar a impressão de cores de fundo sem depender da ação do usuário */
+* {
+    -webkit-print-color-adjust: exact !important; /* Para Chrome, Edge e Safari */
+    print-color-adjust: exact !important;         /* Para Firefox */
+    color-adjust: exact !important;               /* Padrão antigo */
+}
+
+/* Garante que as barras especificamente mantenham as cores no PDF */
+.fisico { background-color: #ef4444 !important; }
+.mental { background-color: #06b6d4 !important; }
+.emocional { background-color: #22c55e !important; }
+.intuitivo { background-color: #eab308 !important; }
+.criativo { background-color: #a855f7 !important; }
+.indeciso { background-color: #f97316 !important; }
+.neutro { background-color: #94a3b8 !important; }   
 </style>
 </head>
 
