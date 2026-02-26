@@ -154,6 +154,15 @@ if(!dadosSalvos){
     </div>
 
     <div class="secao">
+
+        <h3>Perfil de Expressão (Natural)</h3>
+        <div class="grafico">
+            ${gerarBarra("Criativo", rel.criativoNat, maxExpNat, 'criativo')}
+            ${gerarBarra("Indeciso", rel.indecisoNat, maxExpNat, 'indeciso')}
+            ${gerarBarra("Neutro", rel.neutroNat, maxExpNat, 'neutro')}
+        </div>
+        <div class="texto-grande">${rel.textoExpressaoNat}</div>
+    
         <h2>Plano de Expressão Natural</h2>
         <div class="grafico">
             ${gerarBarra("Físico", rel.fisico, maxNat, 'fisico')}
@@ -163,16 +172,19 @@ if(!dadosSalvos){
         </div>
         <p style="white-space:pre-line;">${rel.textoNatural}</p>
 
-        <h3>Perfil de Expressão (Natural)</h3>
-        <div class="grafico">
-            ${gerarBarra("Criativo", rel.criativoNat, maxExpNat, 'criativo')}
-            ${gerarBarra("Indeciso", rel.indecisoNat, maxExpNat, 'indeciso')}
-            ${gerarBarra("Neutro", rel.neutroNat, maxExpNat, 'neutro')}
-        </div>
-        <div class="texto-grande">${rel.textoExpressaoNat}</div>
+
     </div>
 
     <div class="secao">
+
+     <h3>Perfil de Expressão (Momento)</h3>
+        <div class="grafico">
+            ${gerarBarra("Criativo", rel.criativoMom, maxExpMom, 'criativo')}
+            ${gerarBarra("Indeciso", rel.indecisoMom, maxExpMom, 'indeciso')}
+            ${gerarBarra("Neutro", rel.neutroMom, maxExpMom, 'neutro')}
+        </div>
+        <div class="texto-grande">${rel.textoExpressaoMom}</div>
+    
         <h2>Status do Momento (Ano ${rel.anoMomento})</h2>
         <div class="grafico">
             ${gerarBarra("Físico", rel.fisicoMomento, maxMom, 'fisico')}
@@ -182,13 +194,7 @@ if(!dadosSalvos){
         </div>
         <p style="white-space:pre-line;">${rel.textoMomento}</p>
 
-        <h3>Perfil de Expressão (Momento)</h3>
-        <div class="grafico">
-            ${gerarBarra("Criativo", rel.criativoMom, maxExpMom, 'criativo')}
-            ${gerarBarra("Indeciso", rel.indecisoMom, maxExpMom, 'indeciso')}
-            ${gerarBarra("Neutro", rel.neutroMom, maxExpMom, 'neutro')}
-        </div>
-        <div class="texto-grande">${rel.textoExpressaoMom}</div>
+   
     </div>
 
     <div class="rodape">https://www.instintosuperior.com</div>
