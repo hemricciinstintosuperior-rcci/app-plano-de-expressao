@@ -635,13 +635,13 @@ const numerosPlanos = {
 // =============================================
 
 const introducoes = {
-  natural: "",
-  momento: ""
+  natural: "O seu Plano de Expressão Natural representa a sua 'assinatura energética' fundamental. Ele descreve o conjunto de ferramentas que sua alma trouxe para esta existência, revelando como sua inteligência, emoção e instinto operam de forma estrutural e permanente.",
+  momento: "O Plano de Expressão do Momento atua como uma lente temporal sobre a sua essência. Ele indica como as circunstâncias atuais estão moldando sua forma de agir e sentir, destacando quais habilidades estão sendo mais exigidas ou despertadas neste ciclo específico da sua jornada."
 };
 
 const conclusoes = {
-  natural: "",
-  momento: ""
+  natural: "Concluindo, é revelado a predominância do ${nomes[dominante]}, enquanto o ${nomes[fraco]} aparece como área que exige maior atenção, equilíbrio e desenvolvimento consciente. A integração harmoniosa desses quatro planos representa o caminho para maior estabilidade, evolução pessoal e realização prática ao longo da vida.",
+  momento: "Concluindo, é revelado a predominância do ${nomes[dominante]}, enquanto o ${nomes[fraco]} aparece como área que exige maior atenção, equilíbrio e desenvolvimento consciente. A integração harmoniosa desses quatro planos representa o caminho para maior estabilidade, evolução pessoal e realização prática ao longo da vida.",
 };
 
 // conectores narrativos usados pelo motor antigo
