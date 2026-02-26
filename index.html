@@ -269,6 +269,10 @@ function planoNatural(nome){
 function planoMomento(nomeCompleto, data) {
     bancoMomentos = [];
     const dtNasc = new Date(data + 'T00:00:00');
+    const dia = String(dtNasc.getDate()).padStart(2, '0');
+    const mes = String(dtNasc.getMonth() + 1).padStart(2, '0');
+    const anoNasc = dtNasc.getFullYear();
+
     const partes = nomeCompleto.toUpperCase().trim().split(/\s+/);
     let timelines = partes.map(p => {
         let t = [];
@@ -286,9 +290,15 @@ function planoMomento(nomeCompleto, data) {
             let p = descobrirPlano(l);
             if(p) soma[p] += calcularValorComAcentos(l);
         });
+
+        // AQUI ESTÁ A LÓGICA DAS DATAS QUE VOLTOU:
+        const anoInicio = anoNasc + i;
+        const anoFim = anoInicio + 1;
+        const intervaloData = `de ${dia}/${mes}/${anoInicio} até ${dia}/${mes}/${anoFim}`;
+
         bancoMomentos.push({ 
-            ano: dtNasc.getFullYear() + i, 
-            intervalo: `Idade: ${i}`, 
+            ano: anoInicio, 
+            intervalo: intervaloData, 
             letras: letrasAno, 
             ...soma 
         });
@@ -328,7 +338,11 @@ function gerarStatusMomento() {
         intuitivo: { nivel: classificarIntensidade(d.intuitivo, maior), numero: red.intuitivo }
     };
 
-    document.getElementById("resumoMomento").innerText = "No ano de " + anoSel + ":\n\n" + gerarTextoPlano("momento", dadosTxt);
+    // AQUI O TEXTO EXIBE O INTERVALO CORRETO NOVAMENTE:
+    document.getElementById("resumoMomento").innerText = 
+        "No ano de " + anoSel + " (" + d.intervalo + "):\n\n" + 
+        "Você estará vivendo a seguinte expressão:\n\n" + 
+        gerarTextoPlano("momento", dadosTxt);
 }
 
 function atualizarBarraNatural(tipo, val, maior, red) {
