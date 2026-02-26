@@ -195,16 +195,21 @@ function atualizarTabela3(letras, sufixo) {
     ["Criativo", "Indeciso", "Neutro"].forEach(id => {
         let val = cont[id.toLowerCase()];
         let larg = maior > 0 ? Math.max((val / maior) * 100, 12) : 0;
-        document.getElementById("bar" + id + sufixo).style.width = larg + "%";
-        document.getElementById("num" + id + sufixo).innerText = val;
+        let elBar = document.getElementById("bar" + id + sufixo);
+        let elNum = document.getElementById("num" + id + sufixo);
+        if(elBar) elBar.style.width = larg + "%";
+        if(elNum) elNum.innerText = val;
     });
 
-    // Descobre o dominante para colocar o texto do textos.js
+    // Descobre o dominante
     let dominante = Object.keys(cont).reduce((a, b) => cont[a] >= cont[b] ? a : b);
     let campoTexto = document.getElementById("resumoExpressao" + sufixo);
     
+    // CONEXÃO COM O TEXTOS.JS (Usando innerHTML para aceitar textos grandes e formatados)
     if(campoTexto && typeof textosExpressao !== 'undefined') {
-        campoTexto.innerText = textosExpressao[dominante] || "";
+        // Usamos innerHTML para garantir que as quebras de linha e formatação das crases funcionem
+        campoTexto.innerHTML = textosExpressao[dominante] || "";
+        campoTexto.style.display = "block"; 
     }
 }
 
