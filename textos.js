@@ -644,11 +644,13 @@ const introducoes = {
 };
 
 const conclusoes = {
-  natural: "Concluindo, é revelado a predominância do ${nomes[dominante]}, enquanto o ${nomes[fraco]} aparece como área que exige maior atenção, equilíbrio e desenvolvimento consciente. A integração harmoniosa desses quatro planos representa o caminho para maior estabilidade, evolução pessoal e realização prática ao longo da vida.",
-  momento: "Concluindo, é revelado a predominância do ${nomes[dominante]}, enquanto o ${nomes[fraco]} aparece como área que exige maior atenção, equilíbrio e desenvolvimento consciente. A integração harmoniosa desses quatro planos representa o caminho para maior estabilidade, evolução pessoal e realização prática ao longo da vida.",
+  // ATENÇÃO: Usei crases ( ` ) aqui para o JavaScript processar as variáveis corretamente
+  natural: `Concluindo, é revelado a predominância do \${nomes[dominante]}, enquanto o \${nomes[fraco]} aparece como área que exige maior atenção, equilíbrio e desenvolvimento consciente. A integração harmoniosa desses quatro planos representa o caminho para maior estabilidade, evolução pessoal e realização prática ao longo da vida.`,
+  
+  momento: `Concluindo, é revelado a predominância do \${nomes[dominante]}, enquanto o \${nomes[fraco]} aparece como área que exige maior atenção, equilíbrio e desenvolvimento consciente. A integração harmoniosa desses quatro planos representa o caminho para maior estabilidade, evolução pessoal e realização prática ao longo da vida.`
 };
 
-// conectores narrativos usados pelo motor antigo
+// conectores narrativos usados pelo motor
 const conectores = [
   "Além disso,",
   "Também,",
