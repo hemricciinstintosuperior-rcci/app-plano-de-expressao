@@ -221,12 +221,9 @@ document.getElementById("conteudo").innerHTML = `
 function gerarBarra(label, valor, maior, classe) {
     let pct = maior > 0 ? Math.max((valor / maior) * 100, 8) : 0;
     
-    // Lista das categorias onde o número DEVE ser escondido
-    const esconderNumero = ['criativo', 'indeciso', 'neutro'];
-    
-    // Se for uma dessas categorias, mostra apenas o nome. 
-    // Se for um plano (fisico, mental...), mostra Nome: Valor
-    let textoExibicao = esconderNumero.includes(classe) ? label : `${label}: ${valor}`;
+    // Agora, como você quer esconder TODOS os números, 
+    // basta mostrar apenas o 'label' (o nome do plano ou expressão)
+    let textoExibicao = label; 
 
     return `
         <div class="barra" style="margin-bottom: 15px;">
