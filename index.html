@@ -309,18 +309,45 @@ function gerarTudo() {
 
 function exportarRelatorio() {
     if(!resultadoPlanosNatural) return alert("Gere o mapa primeiro.");
+    
     const anoSel = document.getElementById("anoSelect").value;
     const dAno = bancoMomentos.find(a => a.ano == anoSel);
+
     const pacote = {
         nome: document.getElementById("nome").value,
         data: document.getElementById("dataNascimento").value,
         anoMomento: anoSel,
-        natural: { fisico: resultadoPlanosNatural.fisico.numero, mental: resultadoPlanosNatural.mental.numero, emocional: resultadoPlanosNatural.emocional.numero, intuitivo: resultadoPlanosNatural.intuitivo.numero },
-        fisico: valoresBrutosNatural.fisico, mental: valoresBrutosNatural.mental, emocional: valoresBrutosNatural.emocional, intuitivo: valoresBrutosNatural.intuitivo,
-        fisicoMomento: dAno.fisico, mentalMomento: dAno.mental, emocionalMomento: dAno.emocional, intuitivoMomento: dAno.intuitivo,
+        
+        // Dados dos Planos (Físico, Mental, etc)
+        fisico: valoresBrutosNatural.fisico,
+        mental: valoresBrutosNatural.mental,
+        emocional: valoresBrutosNatural.emocional,
+        intuitivo: valoresBrutosNatural.intuitivo,
+        fisicoMomento: dAno.fisico,
+        mentalMomento: dAno.mental,
+        emocionalMomento: dAno.emocional,
+        intuitivoMomento: dAno.intuitivo,
+        
+        // Textos dos Planos
         textoNatural: document.getElementById("resumoNatural").innerText,
-        textoMomento: document.getElementById("resumoMomento").innerText
+        textoMomento: document.getElementById("resumoMomento").innerText,
+
+        // === AQUI ESTÁ O QUE FALTA PARA O PREMIUM PARAR DE DAR UNDEFINED ===
+        
+        // Números da Tabela 3
+        criativoNat: document.getElementById("numCriativoNat").innerText,
+        indecisoNat: document.getElementById("numIndecisoNat").innerText,
+        neutroNat: document.getElementById("numNeutroNat").innerText,
+        
+        criativoMom: document.getElementById("numCriativoMom").innerText,
+        indecisoMom: document.getElementById("numIndecisoMom").innerText,
+        neutroMom: document.getElementById("numNeutroMom").innerText,
+
+        // Textos da Tabela 3 (O que aparece na caixa roxa)
+        textoExpressaoNat: document.getElementById("resumoExpressaoNat").innerHTML,
+        textoExpressaoMom: document.getElementById("resumoExpressaoMom").innerHTML
     };
+
     localStorage.setItem("relatorioMapa", JSON.stringify(pacote));
     window.open("https://hemricciinstintosuperior-rcci.github.io/app-plano-de-expressao/premium.html", "_blank");
 }
