@@ -215,16 +215,41 @@ function atualizarTabela3(letras, sufixo) {
 
 //================ MOTOR DE TEXTOS PLANOS
 function gerarTextoPlano(tipo, dados) {
-    let textoFinal = (typeof gerarIntroducao === 'function' ? gerarIntroducao(tipo, dados) : "") + "\n\n";
-    const ordem = ["fisico","mental","emocional","intuitivo"];
+    // 1. Identifica o plano dominante para a conclusão
+    const dominante = Object.keys(dados).reduce((a, b) => dados[a].valorReal > dados[b].valorReal ? a : b);
+    
+    const nomesAmigaveis = {
+        fisico: "Plano Físico",
+        mental: "Plano Mental",
+        emocional: "Plano Emocional",
+        intuitivo: "Plano Intuitivo"
+    };
+
+    // 2. Inicia com a INTRODUÇÃO (do objeto 'introducoes')
+    let textoFinal = (introducoes[tipo] || "") + "\n\n";
+
+    // 3. Monta o CORPO com conectores aleatórios
+    const ordem = ["fisico", "mental", "emocional", "intuitivo"];
     ordem.forEach((p, i) => {
         const nivel = dados[p].nivel;
         const num = dados[p].numero;
-        if(i > 0 && typeof conectores !== 'undefined') textoFinal += "\n\n" + conectores[Math.floor(Math.random()*conectores.length)] + "\n\n";
-        let bloco = (typeof textosPlanos !== 'undefined') ? textosPlanos?.[p]?.[nivel]?.[num] : null;
-        textoFinal += bloco || "";
+        
+        if (i > 0 && typeof conectores !== 'undefined') {
+            textoFinal += "\n\n" + conectores[Math.floor(Math.random() * conectores.length)] + "\n\n";
+        }
+        
+        const bloco = textosPlanos?.[p]?.[nivel]?.[num] || "";
+        textoFinal += bloco;
     });
-    return textoFinal + "\n\n" + (typeof gerarConclusao === 'function' ? gerarConclusao(tipo, dados) : "");
+
+    // 4. Finaliza com a CONCLUSÃO (do objeto 'conclusoes')
+    // Substitui o código ${nomes[dominante]} pelo nome real do plano
+    if (conclusoes[tipo]) {
+        let conclusaoFormatada = conclusoes[tipo].replace("${nomes[dominante]}", nomesAmigaveis[dominante]);
+        textoFinal += "\n\n" + conclusaoFormatada;
+    }
+
+    return textoFinal;
 }
 
 //================ PLANO NATURAL
