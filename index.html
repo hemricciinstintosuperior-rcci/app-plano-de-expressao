@@ -253,29 +253,40 @@ function gerarTextoPlano(tipo, dados) {
         }
     });
 
-    // 3. CONCLUSÃO: Resolve o erro do ${nomes[fraco]}
-    const dominante = planosOrdenados[0].chave;
-    const fraco = planosOrdenados[3].chave;
-    let fraseFinal = (conclusoes[tipo] || "");
+// --- INÍCIO DA LÓGICA DE INTERPRETAÇÃO HUMANA ---
+    const fortes = planosOrdenados.filter(p => p.valor >= (max * 0.75)).map(p => nomesAmigaveis[p.chave]);
+    const medios = planosOrdenados.filter(p => p.valor < (max * 0.75) && p.valor >= (max * 0.4)).map(p => nomesAmigaveis[p.chave]);
+    const fracos = planosOrdenados.filter(p => p.valor < (max * 0.4)).map(p => nomesAmigaveis[p.chave]);
 
-    let conclusaoProcessada = fraseFinal
-        .replace("${nomes[dominante]}", nomesAmigaveis[dominante])
-        .replace("${nomes[fraco]}", nomesAmigaveis[fraco]);
+    let analiseFinal = "";
 
-    return textoFinal + "\n" + conclusaoProcessada;
-}
-// Função de apoio para processar os nomes na conclusão
-function processarConclusao(tipo, ordenados, nomes) {
-    if (typeof conclusoes === 'undefined' || !conclusoes[tipo]) return "";
+    // CENÁRIO 1: Um Grande Dominante e o resto Fraco (O Especialista Sobrecarregado)
+    if (fortes.length === 1 && fracos.length >= 2) {
+        analiseFinal = `Sua estrutura atual está altamente concentrada no **${fortes[0]}**. Você opera como um especialista que confia demais em uma única ferramenta, enquanto o ${fracos.join(" e o ")} estão operando "no reserva". O desafio aqui é não esgotar sua força principal e aprender a delegar funções para suas áreas menos ativas.`;
+    } 
     
-    const dominante = ordenados[0].chave; // O que ficou em 1º
-    const fraco = ordenados[3].chave;     // O que ficou em 4º
-    
-    let frase = conclusoes[tipo];
-    
-    return frase
-        .replace("${nomes[dominante]}", nomes[dominante])
-        .replace("${nomes[fraco]}", nomes[fraco]);
+    // CENÁRIO 2: Dois Fortes e Dois Fracos (O Perfil Dual/Extremista)
+    else if (fortes.length === 2 && fracos.length >= 1) {
+        analiseFinal = `Notamos um equilíbrio dinâmico entre o **${fortes[0]}** e o **${fortes[1]}**. Você vive um cabo de guerra positivo entre essas duas forças. Contudo, a ausência de intensidade no **${fracos[0]}** indica que você pode estar negligenciando o lado prático ou emocional para sustentar essa dualidade.`;
+    }
+
+    // CENÁRIO 3: Três Fortes e Um Fraco (O Perfil Versátil com Ponto Cego)
+    else if (fortes.length === 3) {
+        analiseFinal = `Você possui uma base de atuação muito ampla, com forte presença no ${fortes.slice(0, 2).join(", ")} e ${fortes[2]}. Isso lhe dá versatilidade. Seu único "ponto cego" real é o **${fracos[0]}**. Como quase tudo flui bem, você tende a ignorar essa pequena falha, mas é nela que moram as suas perdas de energia mais sutis.`;
+    }
+
+    // CENÁRIO 4: Todos Médios/Baixos (O Momento de Transição/Indefinição)
+    else if (fortes.length === 0) {
+        analiseFinal = `Este é um momento de "baixa voltagem" ou transição. Nenhum plano está gritando mais alto. Isso sugere uma fase de observação, onde você não deve forçar grandes decisões, mas sim nutrir o **${planosOrdenados[0].chave}** (que mesmo baixo, é seu melhor recurso hoje) para recuperar o fôlego.`;
+    }
+
+    // CENÁRIO PADRÃO (Caso não caia nos anteriores)
+    else {
+        analiseFinal = `Concluindo, a predominância do **${nomesAmigaveis[dominante]}** traz a direção, enquanto o equilíbrio moderado dos demais planos sugere uma caminhada constante. O ponto de atenção imediata é o **${nomesAmigaveis[fraco]}**, que precisa ser "vitaminado" para não travar o seu progresso.`;
+    }
+
+    // Unindo a introdução, o ranking e a análise interpretativa
+    return textoFinal + "\n---\n**ANÁLISE ESTRUTURAL:**\n" + analiseFinal;
 }
 
 
