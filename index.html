@@ -192,19 +192,22 @@ function atualizarTabela3(letras, sufixo) {
 
     const maior = Math.max(cont.criativo, cont.indeciso, cont.neutro);
     
-// Atualiza as Barras
+// Atualiza as Barras sem apagar os nomes
     ["Criativo", "Indeciso", "Neutro"].forEach(id => {
         let val = cont[id.toLowerCase()];
         let larg = maior > 0 ? Math.max((val / maior) * 100, 12) : 0;
+        
         let elBar = document.getElementById("bar" + id + sufixo);
         let elNum = document.getElementById("num" + id + sufixo);
         
         if(elBar) elBar.style.width = larg + "%";
         
-        // AQUI ESTÁ A MUDANÇA: 
-        // Deixamos o número vazio para que ele não apareça ao lado do nome
-        if(elNum) elNum.innerText = ""; 
-    });// Fechamento do forEach das barras (Linha 202 original)
+        // Mantém o valor guardado no span (para o PDF ler), mas deixa invisível na tela
+        if(elNum) {
+            elNum.innerText = val;
+            elNum.style.display = "none"; 
+        }
+    });
 
     // Descobre o dominante
     let dominanteExpressao = Object.keys(cont).reduce((a, b) => cont[a] >= cont[b] ? a : b);
