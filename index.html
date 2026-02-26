@@ -527,14 +527,19 @@ function classificarIntensidade(valor, maior) {
 //================ STATUS DO MOMENTO (NOVO MOTOR)
 
 function gerarStatusMomento() {
+    const nomeRaw = document.getElementById("nome").value; // Captura o valor do texto
     const anoSelecionado = document.getElementById("anoSelect").value;
-    if (!anoSelecionado) return;
+    const dataNascStr = document.getElementById("dataNascimento").value;
+
+    if (!anoSelecionado || !nomeRaw) return;
+
+    // Converte para maiúsculas com segurança
+    const nomeParaStatus = nomeRaw.toUpperCase();
 
     const dados = bancoMomentos.find(a => a.ano == anoSelecionado);
     if (!dados) return;
 
     const maiorBruto = Math.max(dados.fisico, dados.mental, dados.emocional, dados.intuitivo);
-
     const reducoes = {
         fisico: reduzirNumero(dados.fisico),
         mental: reduzirNumero(dados.mental),
@@ -542,11 +547,24 @@ function gerarStatusMomento() {
         intuitivo: reduzirNumero(dados.intuitivo)
     };
 
-    // Atualiza as barras
+    // Atualiza as barras de Plano (Físico, Mental, etc)
     atualizarBarraNatural("Fisico", dados.fisico, maiorBruto, reducoes.fisico);
     atualizarBarraNatural("Mental", dados.mental, maiorBruto, reducoes.mental);
     atualizarBarraNatural("Emocional", dados.emocional, maiorBruto, reducoes.emocional);
     atualizarBarraNatural("Intuitivo", dados.intuitivo, maiorBruto, reducoes.intuitivo);
+
+    // Lógica para a Tabela 3 do Momento (Criativo, Indeciso, Neutro)
+    const anoRef = parseInt(anoSelecionado);
+    const nasc = new Date(dataNascStr + 'T00:00:00').getFullYear();
+    const idadeRef = anoRef - nasc;
+    
+    let letrasMom = [];
+    nomeParaStatus.split(/\s+/).filter(p => p.length > 0).forEach(p => {
+        letrasMom.push(p[idadeRef % p.length]);
+    });
+    
+    // Chama a atualização para as barras novas no Momento
+    atualizarTabela3(letrasMom, "Mom");
 
     const dadosTextoMomento = {
         fisico: { nivel: classificarIntensidade(dados.fisico, maiorBruto), numero: reducoes.fisico },
@@ -556,14 +574,10 @@ function gerarStatusMomento() {
     };
 
     const textoBase = gerarTextoPlano("momento", dadosTextoMomento);
-
-    // Exibe o texto na tela
     const campoTexto = document.getElementById("resumoMomento");
-    campoTexto.innerText = 
-        "No ano de " + anoSelecionado + " (" + dados.intervalo + "):\n\n" + 
-        "Você estará vivendo a seguinte expressão:\n\n" + textoBase;
-    
+    campoTexto.innerText = "No ano de " + anoSelecionado + " (" + dados.intervalo + "):\n\n" + textoBase;
     campoTexto.style.display = "block";
+}
 
  // Lógica para pegar as letras que regem o ano atual
     const anoRef = parseInt(anoSelecionado);
