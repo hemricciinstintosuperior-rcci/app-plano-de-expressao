@@ -105,7 +105,8 @@ Intuitivo: <span id="numIntuitivoNat"></span><div class="bar-bg"><div id="barInt
 <hr style="border: 0; border-top: 1px solid #374151; margin: 20px 0;">
 Criativo: <span id="numCriativoNat"></span><div class="bar-bg"><div id="barCriativoNat" class="bar criativo"></div></div>
 Indeciso: <span id="numIndecisoNat"></span><div class="bar-bg"><div id="barIndecisoNat" class="bar indeciso"></div></div>
-Neutro: <span id="numNeutroNat"></span><div class="bar-bg"><div id="barNeutroNat" class="bar neutro"></div></div>  
+Neutro: <span id="numNeutroNat"></span><div class="bar-bg"><div id="barNeutroNat" class="bar neutro"></div></div> 
+<div id="resumoExpressaoNat" class="resumoMomento" style="margin-top:10px; border-left: 4px solid #a855f7;"></div>  
 </div>
 
 <div id="resumoNatural" class="resumoMomento"></div>
@@ -124,7 +125,8 @@ Intuitivo: <span id="numIntuitivo"></span><div class="bar-bg"><div id="barIntuit
 <hr style="border: 0; border-top: 1px solid #374151; margin: 20px 0;">
 Criativo: <span id="numCriativoMom"></span><div class="bar-bg"><div id="barCriativoMom" class="bar criativo"></div></div>
 Indeciso: <span id="numIndecisoMom"></span><div class="bar-bg"><div id="barIndecisoMom" class="bar indeciso"></div></div>
-Neutro: <span id="numNeutroMom"></span><div class="bar-bg"><div id="barNeutroMom" class="bar neutro"></div></div>  
+Neutro: <span id="numNeutroMom"></span><div class="bar-bg"><div id="barNeutroMom" class="bar neutro"></div></div>
+<div id="resumoExpressaoMom" class="resumoMomento" style="margin-top:10px; border-left: 4px solid #a855f7;"></div>  
 </div>
 
 <div id="resumoMomento" class="resumoMomento"></div>
@@ -132,18 +134,9 @@ Neutro: <span id="numNeutroMom"></span><div class="bar-bg"><div id="barNeutroMom
 <script src="textos.js"></script>
 <script>
 //================ TABELA CABALÍSTICA
-const tabela={
-    A:1,J:1,I:1,Q:1,Y:1,
-    B:2,K:2,R:2,
-    C:3,G:3,L:3,S:3,
-    D:4,M:4,T:4,
-    E:5,H:5,N:5,
-    U:6,V:6,W:6,X:6,Ç:6,
-    O:7,Z:7,
-    F:8,P:8
-};
+//================ CONFIGURAÇÃO E TABELAS
+const tabela = { A:1, J:1, I:1, Q:1, Y:1, B:2, K:2, R:2, C:3, G:3, L:3, S:3, D:4, M:4, T:4, E:5, H:5, N:5, U:6, V:6, W:6, X:6, Ç:6, O:7, Z:7, F:8, P:8 };
 
-//================ MAPEAMENTO DA TABELA 3
 const tabelaExpressao = {
     'E':'criativo','W':'indeciso','D':'neutro','M':'neutro',
     'A':'criativo','H':'indeciso','J':'indeciso','N':'indeciso','P':'indeciso','G':'neutro','L':'neutro',
@@ -151,39 +144,31 @@ const tabelaExpressao = {
     'K':'criativo','F':'indeciso','Q':'indeciso','U':'indeciso','Y':'indeciso','C':'neutro','V':'neutro'
 };
 
-const planos={
-    fisico:["E","W","D","M"],
-    mental:["A","H","J","N","P","G","L"],
-    emocional:["I","O","R","Z","B","S","T","X"],
-    intuitivo:["K","F","Q","U","Y","C","V"]
-};
+const planos = { fisico: ["E","W","D","M"], mental: ["A","H","J","N","P","G","L"], emocional: ["I","O","R","Z","B","S","T","X"], intuitivo: ["K","F","Q","U","Y","C","V"] };
 
-// Variáveis de Controle
-let bancoMomentos=[];
+let bancoMomentos = [];
 let resultadoPlanosNatural = null;
 let valoresBrutosNatural = null;
 
-//================ FUNÇÕES DE CÁLCULO
-function calcularValorComAcentos(letra){
-    const base=letra.normalize("NFD")[0];
-    const valorBase=tabela[base] || 0;
-    let soma=0, mult=1;
-    for(let c of letra.normalize("NFD")){
-        if(c==="\u0301") soma+=2;
-        else if(c==="\u0302") soma+=7;
-        else if(c==="\u0303") soma+=3;
-        else if(c==="\u0327") soma+=6;
+//================ FUNÇÕES DE APOIO
+function calcularValorComAcentos(letra) {
+    const base = letra.normalize("NFD")[0];
+    const valorBase = tabela[base] || 0;
+    let soma = 0, mult = 1;
+    for(let c of letra.normalize("NFD")) {
+        if(c==="\u0301") soma+=2; else if(c==="\u0302") soma+=7;
+        else if(c==="\u0303") soma+=3; else if(c==="\u0327") soma+=6;
         else if(c==="\u0300" || c==="\u0308") mult*=2;
     }
-    return (valorBase+soma)*mult;
+    return (valorBase + soma) * mult;
 }
 
-function reduzirNumero(n){
-    while(n > 9) n = n.toString().split("").reduce((a,b)=>a + Number(b),0);
+function reduzirNumero(n) {
+    while(n > 9) n = n.toString().split("").reduce((a,b) => a + Number(b), 0);
     return n;
 }
 
-function descobrirPlano(letra){
+function descobrirPlano(letra) {
     let l = letra.normalize("NFD")[0].toUpperCase();
     for(let p in planos) if(planos[p].includes(l)) return p;
     return null;
@@ -195,30 +180,7 @@ function classificarIntensidade(valor, maior) {
     return "fraco";
 }
 
-//================ MOTOR DE TEXTOS (INTEGRADO COM TEXTOS.JS)
-function gerarTextoPlano(tipo, dados){
-    // Tenta usar as funções do seu textos.js. Se não existirem, usa um fallback simples.
-    let intro = (typeof gerarIntroducao === 'function') ? gerarIntroducao(tipo, dados) : "";
-    let textoFinal = intro + "\n\n";
-
-    const ordem = ["fisico","mental","emocional","intuitivo"];
-    ordem.forEach((p, i)=>{
-        const nivel = dados[p].nivel;
-        const numero = dados[p].numero;
-        
-        if(i > 0 && typeof conectores !== 'undefined'){
-            textoFinal += "\n\n" + conectores[Math.floor(Math.random()*conectores.length)] + "\n\n";
-        }
-
-        let bloco = (typeof textosPlanos !== 'undefined') ? textosPlanos?.[p]?.[nivel]?.[numero] : null;
-        textoFinal += bloco || `[Plano: ${p} ${nivel} nº ${numero}]`;
-    });
-
-    let conclui = (typeof gerarConclusao === 'function') ? gerarConclusao(tipo, dados) : "";
-    return textoFinal + "\n\n" + conclui;
-}
-
-//================ TABELA 3 (CRIATIVO, INDECISO, NEUTRO)
+//================ LÓGICA DA TABELA 3 (TEXTOS E BARRAS)
 function atualizarTabela3(letras, sufixo) {
     let cont = { criativo: 0, indeciso: 0, neutro: 0 };
     letras.forEach(l => {
@@ -226,21 +188,44 @@ function atualizarTabela3(letras, sufixo) {
         let letra = l.normalize("NFD")[0].toUpperCase();
         if (tabelaExpressao[letra]) cont[tabelaExpressao[letra]]++;
     });
+
     const maior = Math.max(cont.criativo, cont.indeciso, cont.neutro);
+    
+    // Atualiza as Barras
     ["Criativo", "Indeciso", "Neutro"].forEach(id => {
         let val = cont[id.toLowerCase()];
         let larg = maior > 0 ? Math.max((val / maior) * 100, 12) : 0;
-        let elBar = document.getElementById("bar" + id + sufixo);
-        let elNum = document.getElementById("num" + id + sufixo);
-        if(elBar) elBar.style.width = larg + "%";
-        if(elNum) elNum.innerText = val;
+        document.getElementById("bar" + id + sufixo).style.width = larg + "%";
+        document.getElementById("num" + id + sufixo).innerText = val;
     });
+
+    // Descobre o dominante para colocar o texto do textos.js
+    let dominante = Object.keys(cont).reduce((a, b) => cont[a] >= cont[b] ? a : b);
+    let campoTexto = document.getElementById("resumoExpressao" + sufixo);
+    
+    if(campoTexto && typeof textosExpressao !== 'undefined') {
+        campoTexto.innerText = textosExpressao[dominante] || "";
+    }
+}
+
+//================ MOTOR DE TEXTOS PLANOS
+function gerarTextoPlano(tipo, dados) {
+    let textoFinal = (typeof gerarIntroducao === 'function' ? gerarIntroducao(tipo, dados) : "") + "\n\n";
+    const ordem = ["fisico","mental","emocional","intuitivo"];
+    ordem.forEach((p, i) => {
+        const nivel = dados[p].nivel;
+        const num = dados[p].numero;
+        if(i > 0 && typeof conectores !== 'undefined') textoFinal += "\n\n" + conectores[Math.floor(Math.random()*conectores.length)] + "\n\n";
+        let bloco = (typeof textosPlanos !== 'undefined') ? textosPlanos?.[p]?.[nivel]?.[num] : null;
+        textoFinal += bloco || "";
+    });
+    return textoFinal + "\n\n" + (typeof gerarConclusao === 'function' ? gerarConclusao(tipo, dados) : "");
 }
 
 //================ PLANO NATURAL
-function planoNatural(nome){
-    let soma={fisico:0,mental:0,emocional:0,intuitivo:0};
-    for(let l of nome.toUpperCase()){
+function planoNatural(nome) {
+    let soma = { fisico: 0, mental: 0, emocional: 0, intuitivo: 0 };
+    for(let l of nome.toUpperCase()) {
         let p = descobrirPlano(l);
         if(p) soma[p] += calcularValorComAcentos(l);
     }
@@ -251,153 +236,86 @@ function planoNatural(nome){
         emocional: { nivel: classificarIntensidade(soma.emocional, maior), numero: reduzirNumero(soma.emocional), valorReal: soma.emocional },
         intuitivo: { nivel: classificarIntensidade(soma.intuitivo, maior), numero: reduzirNumero(soma.intuitivo), valorReal: soma.intuitivo }
     };
-
-    resultadoPlanosNatural = dados;
-    valoresBrutosNatural = soma;
-
+    resultadoPlanosNatural = dados; valoresBrutosNatural = soma;
     document.getElementById("resumoNatural").innerText = gerarTextoPlano("natural", dados);
-    
-    atualizarBarraNatural("FisicoNat", soma.fisico, maior, dados.fisico.numero);
-    atualizarBarraNatural("MentalNat", soma.mental, maior, dados.mental.numero);
-    atualizarBarraNatural("EmocionalNat", soma.emocional, maior, dados.emocional.numero);
-    atualizarBarraNatural("IntuitivoNat", soma.intuitivo, maior, dados.intuitivo.numero);
-    
+    for(let p in soma) atualizarBarraNatural(p.charAt(0).toUpperCase() + p.slice(1) + "Nat", soma[p], maior, dados[p].numero);
     atualizarTabela3(nome.split(""), "Nat");
 }
 
-//================ PLANO MOMENTO
+//================ PLANO MOMENTO (COM DATAS EXATAS)
 function planoMomento(nomeCompleto, data) {
     bancoMomentos = [];
-    const dtNasc = new Date(data + 'T00:00:00');
-    const dia = String(dtNasc.getDate()).padStart(2, '0');
-    const mes = String(dtNasc.getMonth() + 1).padStart(2, '0');
-    const anoNasc = dtNasc.getFullYear();
-
+    const dt = new Date(data + 'T00:00:00');
+    const dia = String(dt.getDate()).padStart(2, '0');
+    const mes = String(dt.getMonth() + 1).padStart(2, '0');
     const partes = nomeCompleto.toUpperCase().trim().split(/\s+/);
     let timelines = partes.map(p => {
         let t = [];
-        for(let l of p) { 
-            let v = calcularValorComAcentos(l); 
-            for(let i=0; i<v; i++) t.push(l); 
-        }
+        for(let l of p) { let v = calcularValorComAcentos(l); for(let i=0; i<v; i++) t.push(l); }
         return t;
     });
-
     for (let i = 0; i <= 100; i++) {
         let soma = { fisico: 0, mental: 0, emocional: 0, intuitivo: 0 };
-        let letrasAno = timelines.map(t => t[i % t.length]);
-        letrasAno.forEach(l => {
+        let letras = timelines.map(t => t[i % t.length]);
+        letras.forEach(l => {
             let p = descobrirPlano(l);
             if(p) soma[p] += calcularValorComAcentos(l);
         });
-
-        // AQUI ESTÁ A LÓGICA DAS DATAS QUE VOLTOU:
-        const anoInicio = anoNasc + i;
-        const anoFim = anoInicio + 1;
-        const intervaloData = `de ${dia}/${mes}/${anoInicio} até ${dia}/${mes}/${anoFim}`;
-
+        const anoI = dt.getFullYear() + i;
         bancoMomentos.push({ 
-            ano: anoInicio, 
-            intervalo: intervaloData, 
-            letras: letrasAno, 
-            ...soma 
+            ano: anoI, 
+            intervalo: `de ${dia}/${mes}/${anoI} até ${dia}/${mes}/${anoI + 1}`, 
+            letras: letras, ...soma 
         });
     }
-    preencherSeletorAnos();
-}
-
-function preencherSeletorAnos(){
     const sel = document.getElementById("anoSelect");
     sel.innerHTML = bancoMomentos.map(a => `<option value="${a.ano}">${a.ano}</option>`).join("");
 }
 
 function gerarStatusMomento() {
-    const anoSel = document.getElementById("anoSelect").value;
-    const d = bancoMomentos.find(a => a.ano == anoSel);
+    const ano = document.getElementById("anoSelect").value;
+    const d = bancoMomentos.find(a => a.ano == ano);
     if (!d) return;
-
     const maior = Math.max(d.fisico, d.mental, d.emocional, d.intuitivo);
-    const red = { 
-        fisico: reduzirNumero(d.fisico), 
-        mental: reduzirNumero(d.mental), 
-        emocional: reduzirNumero(d.emocional), 
-        intuitivo: reduzirNumero(d.intuitivo) 
-    };
-
-    atualizarBarraNatural("Fisico", d.fisico, maior, red.fisico);
-    atualizarBarraNatural("Mental", d.mental, maior, red.mental);
-    atualizarBarraNatural("Emocional", d.emocional, maior, red.emocional);
-    atualizarBarraNatural("Intuitivo", d.intuitivo, maior, red.intuitivo);
-    
+    const red = { fisico: reduzirNumero(d.fisico), mental: reduzirNumero(d.mental), emocional: reduzirNumero(d.emocional), intuitivo: reduzirNumero(d.intuitivo) };
+    for(let p in d) if(p !== "ano" && p !== "letras" && p !== "intervalo") atualizarBarraNatural(p.charAt(0).toUpperCase() + p.slice(1), d[p], maior, reduzirNumero(d[p]));
     atualizarTabela3(d.letras, "Mom");
-
     const dadosTxt = {
         fisico: { nivel: classificarIntensidade(d.fisico, maior), numero: red.fisico },
         mental: { nivel: classificarIntensidade(d.mental, maior), numero: red.mental },
         emocional: { nivel: classificarIntensidade(d.emocional, maior), numero: red.emocional },
         intuitivo: { nivel: classificarIntensidade(d.intuitivo, maior), numero: red.intuitivo }
     };
-
-    // AQUI O TEXTO EXIBE O INTERVALO CORRETO NOVAMENTE:
-    document.getElementById("resumoMomento").innerText = 
-        "No ano de " + anoSel + " (" + d.intervalo + "):\n\n" + 
-        "Você estará vivendo a seguinte expressão:\n\n" + 
-        gerarTextoPlano("momento", dadosTxt);
+    document.getElementById("resumoMomento").innerText = "No ano de " + ano + " (" + d.intervalo + "):\n\n" + gerarTextoPlano("momento", dadosTxt);
 }
 
 function atualizarBarraNatural(tipo, val, maior, red) {
     let larg = maior > 0 ? Math.max((val/maior)*100, 12) : 0;
-    let elB = document.getElementById("bar" + tipo);
-    let elN = document.getElementById("num" + tipo);
-    if(elB) elB.style.width = larg + "%";
-    if(elN) elN.innerText = red;
+    document.getElementById("bar"+tipo).style.width = larg + "%";
+    document.getElementById("num"+tipo).innerText = red;
 }
 
-//================ BOTÕES PRINCIPAIS
-function gerarTudo(){
+function gerarTudo() {
     const n = document.getElementById("nome").value;
     const d = document.getElementById("dataNascimento").value;
     if(!n || !d) return alert("Preencha nome e data.");
-    planoNatural(n); 
-    planoMomento(n, d); 
-    gerarStatusMomento();
+    planoNatural(n); planoMomento(n, d); gerarStatusMomento();
 }
 
-//================ EXPORTAR PARA RELATÓRIO PREMIUM (COMPLETO)
-function exportarRelatorio(){
-    const nome = document.getElementById("nome").value;
-    const data = document.getElementById("dataNascimento").value;
+function exportarRelatorio() {
+    if(!resultadoPlanosNatural) return alert("Gere o mapa primeiro.");
     const anoSel = document.getElementById("anoSelect").value;
-
-    if(!nome || !data || !resultadoPlanosNatural){
-        alert("Gere o mapa antes de exportar.");
-        return;
-    }
-
-    const dadosAno = bancoMomentos.find(a => a.ano == anoSel);
-
+    const dAno = bancoMomentos.find(a => a.ano == anoSel);
     const pacote = {
-        nome: nome,
-        data: data,
+        nome: document.getElementById("nome").value,
+        data: document.getElementById("dataNascimento").value,
         anoMomento: anoSel,
-        natural: {
-            fisico: resultadoPlanosNatural.fisico.numero,
-            mental: resultadoPlanosNatural.mental.numero,
-            emocional: resultadoPlanosNatural.emocional.numero,
-            intuitivo: resultadoPlanosNatural.intuitivo.numero
-        },
-        fisico: valoresBrutosNatural.fisico,
-        mental: valoresBrutosNatural.mental,
-        emocional: valoresBrutosNatural.emocional,
-        intuitivo: valoresBrutosNatural.intuitivo,
-        fisicoMomento: dadosAno.fisico,
-        mentalMomento: dadosAno.mental,
-        emocionalMomento: dadosAno.emocional,
-        intuitivoMomento: dadosAno.intuitivo,
+        natural: { fisico: resultadoPlanosNatural.fisico.numero, mental: resultadoPlanosNatural.mental.numero, emocional: resultadoPlanosNatural.emocional.numero, intuitivo: resultadoPlanosNatural.intuitivo.numero },
+        fisico: valoresBrutosNatural.fisico, mental: valoresBrutosNatural.mental, emocional: valoresBrutosNatural.emocional, intuitivo: valoresBrutosNatural.intuitivo,
+        fisicoMomento: dAno.fisico, mentalMomento: dAno.mental, emocionalMomento: dAno.emocional, intuitivoMomento: dAno.intuitivo,
         textoNatural: document.getElementById("resumoNatural").innerText,
         textoMomento: document.getElementById("resumoMomento").innerText
     };
-
     localStorage.setItem("relatorioMapa", JSON.stringify(pacote));
     window.open("https://hemricciinstintosuperior-rcci.github.io/app-plano-de-expressao/premium.html", "_blank");
 }
