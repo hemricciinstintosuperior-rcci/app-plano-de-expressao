@@ -65,7 +65,7 @@ if(!dadosSalvos){
     const maxMom = Math.max(rel.fisicoMomento, rel.mentalMomento, rel.emocionalMomento, rel.intuitivoMomento);
     const maxExpMom = Math.max(rel.criativoMom, rel.indecisoMom, rel.neutroMom);
 
-    document.getElementById("conteudo").innerHTML = `
+  document.getElementById("conteudo").innerHTML = `
         <div class="capa">
             <img class="logo" src="https://raw.githubusercontent.com/hemricciinstintosuperior-rcci/app-plano-de-expressao/main/icon-192.png">
             <div class="nomeCliente">${rel.nome}</div>
@@ -97,7 +97,7 @@ if(!dadosSalvos){
         </div>
 
         <div class="secao">
-            <h2>3. Status do Momento (Ciclo Atual)</h2>
+            <h2>3. Status do Momento (Ano ${rel.anoMomento})</h2>
             <p>As energias que estão sendo mais exigidas de você neste período para manter o seu equilíbrio e evolução.</p>
             <div class="grafico">
                 ${gerarBarra("Físico", rel.fisicoMomento, maxMom, 'fisico')}
@@ -109,8 +109,19 @@ if(!dadosSalvos){
         </div>
 
         <div class="secao">
-            <h2>4. Vibração de Trânsito (Ano ${rel.anoMomento})</h2>
-            <p>Esta é a energia predominante do seu ano. Ela indica o "clima" vibracional que regerá suas decisões e o fluxo dos acontecimentos neste ciclo.</p>
+            <h2>4. Perfil de Expressão do Momento</h2>
+            <p>Indica como você está canalizando sua força de vontade neste ciclo: se através da criação, da ponderação ou da observação.</p>
+            <div class="grafico">
+                ${gerarBarra("Criativo", rel.criativoMom, maxExpMom, 'criativo')}
+                ${gerarBarra("Indeciso", rel.indecisoMom, maxExpMom, 'indeciso')}
+                ${gerarBarra("Neutro", rel.neutroMom, maxExpMom, 'neutro')}
+            </div>
+            <div class="texto-grande">${rel.textoExpressaoMom}</div>
+        </div>
+
+        <div class="secao">
+            <h2>5. Vibração de Trânsito</h2>
+            <p>Esta é a energia predominante do seu ano, indicando o clima vibracional que regerá suas decisões e o fluxo dos acontecimentos.</p>
             <div class="box-transito" style="white-space: pre-wrap;">
                 ${rel.transitoHTML || "Trânsito não calculado."}
             </div>
@@ -118,7 +129,6 @@ if(!dadosSalvos){
 
         <div class="rodape">Gerado por Instinto Superior - www.instintosuperior.com</div>
     `;
-
     setTimeout(() => { window.print(); }, 1500);
 }
 
