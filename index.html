@@ -215,9 +215,6 @@ function atualizarTabela3(letras, sufixo) {
 
 //================ MOTOR DE TEXTOS PLANOS
 function gerarTextoPlano(tipo, dados) {
-    // 1. Identifica o plano dominante para a conclusão
-    const dominante = Object.keys(dados).reduce((a, b) => dados[a].valorReal > dados[b].valorReal ? a : b);
-    
     const nomesAmigaveis = {
         fisico: "Plano Físico",
         mental: "Plano Mental",
@@ -225,28 +222,37 @@ function gerarTextoPlano(tipo, dados) {
         intuitivo: "Plano Intuitivo"
     };
 
-    // 2. Inicia com a INTRODUÇÃO (do objeto 'introducoes')
+    // 1. Criar uma lista dos planos e ordenar do maior para o menor valorReal
+    let planosOrdenados = Object.keys(dados)
+        .map(chave => ({ chave, valor: dados[chave].valorReal, nivel: dados[chave].nivel, num: dados[chave].numero }))
+        .sort((a, b) => b.valor - a.valor);
+
+    // 2. Iniciar o texto com a Introdução
     let textoFinal = (introducoes[tipo] || "") + "\n\n";
 
-    // 3. Monta o CORPO com conectores aleatórios
-    const ordem = ["fisico", "mental", "emocional", "intuitivo"];
-    ordem.forEach((p, i) => {
-        const nivel = dados[p].nivel;
-        const num = dados[p].numero;
+    // 3. Loop para colocar do 1º (mais forte) ao 4º (mais fraco) com explicações
+    planosOrdenados.forEach((plano, index) => {
+        let posicao = index + 1;
+        let nomePlano = nomesAmigaveis[plano.chave];
         
-        if (i > 0 && typeof conectores !== 'undefined') {
-            textoFinal += "\n\n" + conectores[Math.floor(Math.random() * conectores.length)] + "\n\n";
+        // Título da posição (Ex: 1º - Plano Físico)
+        textoFinal += `**${posicao}º - ${nomePlano}**\n`;
+        
+        // Explicação da posição (do 1º ao 4º)
+        textoFinal += (explicacoesPosicao[posicao] || "") + "\n\n";
+        
+        // O conteúdo técnico do plano (texto específico do número)
+        textoFinal += textosPlanos[plano.chave][plano.nivel][plano.num] + "\n\n";
+        
+        // Adiciona um conector entre os planos, exceto no último
+        if (index < 3 && typeof conectores !== 'undefined') {
+            textoFinal += conectores[Math.floor(Math.random() * conectores.length)] + "\n\n";
         }
-        
-        const bloco = textosPlanos?.[p]?.[nivel]?.[num] || "";
-        textoFinal += bloco;
     });
 
-    // 4. Finaliza com a CONCLUSÃO (do objeto 'conclusoes')
-    // Substitui o código ${nomes[dominante]} pelo nome real do plano
-    if (conclusoes[tipo]) {
-        let conclusaoFormatada = conclusoes[tipo].replace("${nomes[dominante]}", nomesAmigaveis[dominante]);
-        textoFinal += "\n\n" + conclusaoFormatada;
+    // 4. Adicionar a Conclusão Dinâmica
+    if (typeof gerarConclusao === 'function') {
+        textoFinal += gerarConclusao(tipo, dados);
     }
 
     return textoFinal;
