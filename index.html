@@ -577,7 +577,7 @@ function gerarStatusMomento() {
     const campoTexto = document.getElementById("resumoMomento");
     campoTexto.innerText = "No ano de " + anoSelecionado + " (" + dados.intervalo + "):\n\n" + textoBase;
     campoTexto.style.display = "block";
-}
+
 
 // Lógica para pegar as letras que regem o ano selecionado
     const nomeTexto = document.getElementById("nome").value;
@@ -595,7 +595,7 @@ function gerarStatusMomento() {
         
         atualizarTabela3(letrasMom, "Mom");
     }
- // <--- ESTE É O FECHAMENTO QUE FALTA NA SUA IMAGEM!
+ }// <--- ESTE É O FECHAMENTO QUE FALTA NA SUA IMAGEM!
 
 function atualizarBarra(tipo,valor,maior){
  let largura=0;
