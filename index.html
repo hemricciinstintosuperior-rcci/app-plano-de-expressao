@@ -33,6 +33,9 @@ th,td{border:1px solid #ccc;padding:6px;text-align:center}
 .mental{background:#4da6ff;}
 .emocional{background:#33cc66;}
 .intuitivo{background:#ffd633;}
+.criativo { background: #a855f7; } 
+.indeciso { background: #f97316; } 
+.neutro { background: #94a3b8; }  
 .resumoMomento{margin-top:25px;padding:20px;background:#1f2937;border-radius:8px;}
 /* Esconde o texto que fica abaixo das barras */
 #txtFisicoNat, #txtMentalNat, #txtEmocionalNat, #txtIntuitivoNat,
@@ -99,6 +102,10 @@ Físico: <span id="numFisicoNat"></span><div class="bar-bg"><div id="barFisicoNa
 Mental: <span id="numMentalNat"></span><div class="bar-bg"><div id="barMentalNat" class="bar mental"></div></div><p id="txtMentalNat"></p>
 Emocional: <span id="numEmocionalNat"></span><div class="bar-bg"><div id="barEmocionalNat" class="bar emocional"></div></div><p id="txtEmocionalNat"></p>
 Intuitivo: <span id="numIntuitivoNat"></span><div class="bar-bg"><div id="barIntuitivoNat" class="bar intuitivo"></div></div><p id="txtIntuitivoNat"></p>
+<hr style="border: 0; border-top: 1px solid #374151; margin: 20px 0;">
+Criativo: <span id="numCriativoNat"></span><div class="bar-bg"><div id="barCriativoNat" class="bar criativo"></div></div>
+Indeciso: <span id="numIndecisoNat"></span><div class="bar-bg"><div id="barIndecisoNat" class="bar indeciso"></div></div>
+Neutro: <span id="numNeutroNat"></span><div class="bar-bg"><div id="barNeutroNat" class="bar neutro"></div></div>  
 </div>
 
 <div id="resumoNatural" class="resumoMomento"></div>
@@ -114,6 +121,10 @@ Físico: <span id="numFisico"></span><div class="bar-bg"><div id="barFisico" cla
 Mental: <span id="numMental"></span><div class="bar-bg"><div id="barMental" class="bar mental"></div></div><p id="txtMental"></p>
 Emocional: <span id="numEmocional"></span><div class="bar-bg"><div id="barEmocional" class="bar emocional"></div></div><p id="txtEmocional"></p>
 Intuitivo: <span id="numIntuitivo"></span><div class="bar-bg"><div id="barIntuitivo" class="bar intuitivo"></div></div><p id="txtIntuitivo"></p>
+<hr style="border: 0; border-top: 1px solid #374151; margin: 20px 0;">
+Criativo: <span id="numCriativoMom"></span><div class="bar-bg"><div id="barCriativoMom" class="bar criativo"></div></div>
+Indeciso: <span id="numIndecisoMom"></span><div class="bar-bg"><div id="barIndecisoMom" class="bar indeciso"></div></div>
+Neutro: <span id="numNeutroMom"></span><div class="bar-bg"><div id="barNeutroMom" class="bar neutro"></div></div>  
 </div>
 
 <div id="resumoMomento" class="resumoMomento"></div>
@@ -131,7 +142,32 @@ U:6,V:6,W:6,X:6,Ç:6,
 O:7,Z:7,
 F:8,P:8
 };
+//================ MAPEAMENTO DA TABELA 3 (CRIATIVO, INDECISO, NEUTRO)
+const tabelaExpressao = {
+    'E':'criativo','W':'indeciso','D':'neutro','M':'neutro',
+    'A':'criativo','H':'indeciso','J':'indeciso','N':'indeciso','P':'indeciso','G':'neutro','L':'neutro',
+    'I':'criativo','O':'criativo','R':'criativo','Z':'criativo','B':'indeciso','S':'indeciso','T':'indeciso','X':'indeciso',
+    'K':'criativo','F':'indeciso','Q':'indeciso','U':'indeciso','Y':'indeciso','C':'neutro','V':'neutro'
+};
 
+function atualizarTabela3(letras, sufixo) {
+    let contagem = { criativo: 0, indeciso: 0, neutro: 0 };
+    letras.forEach(l => {
+        let letra = l.normalize("NFD")[0].toUpperCase();
+        let tipo = tabelaExpressao[letra];
+        if (tipo) contagem[tipo]++;
+    });
+    const maior = Math.max(contagem.criativo, contagem.indeciso, contagem.neutro);
+    const setBar = (id, valor) => {
+        let largura = maior > 0 ? (valor / maior) * 100 : 0;
+        if (largura > 0 && largura < 12) largura = 12;
+        document.getElementById("bar" + id + sufixo).style.width = largura + "%";
+        document.getElementById("num" + id + sufixo).innerText = valor;
+    };
+    setBar("Criativo", contagem.criativo);
+    setBar("Indeciso", contagem.indeciso);
+    setBar("Neutro", contagem.neutro);
+}
 //================ ACENTOS
 function calcularValorComAcentos(letra){
  const base=letra.normalize("NFD")[0];
@@ -393,6 +429,8 @@ atualizarBarraNatural("MentalNat",soma.mental,maior,reducoes.mental);
 atualizarBarraNatural("EmocionalNat",soma.emocional,maior,reducoes.emocional);
 atualizarBarraNatural("IntuitivoNat",soma.intuitivo,maior,reducoes.intuitivo);
 
+atualizarTabela3(nome.split(""), "Nat");  
+
 }
 
 function planoMomento(nomeCompleto, data) {
@@ -526,6 +564,16 @@ function gerarStatusMomento() {
         "Você estará vivendo a seguinte expressão:\n\n" + textoBase;
     
     campoTexto.style.display = "block";
+
+ // Lógica para pegar as letras que regem o ano atual
+    const anoRef = parseInt(anoSelecionado);
+    const nasc = new Date(document.getElementById("dataNascimento").value).getFullYear();
+    const idadeRef = anoRef - nasc;
+    let letrasMom = [];
+    nome.toUpperCase().split(/\s+/).forEach(p => {
+        if(p.length > 0) letrasMom.push(p[idadeRef % p.length]);
+    });
+    atualizarTabela3(letrasMom, "Mom"); 
 } // FECHAMENTO DA FUNÇÃO
 
 function atualizarBarra(tipo,valor,maior){
@@ -575,7 +623,29 @@ function gerarTudo(){
     alert("Digite nome e data.");
     return;
   }
+function calcularPerfilExpressao(nome) {
+    let contagem = { criativo: 0, indeciso: 0, neutro: 0 };
+    
+    // Limpa o nome (remove espaços e acentos para bater com a tabela)
+    const nomeLimpo = nome.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
+    for (let letra of nomeLimpo) {
+        const tipo = tabelaExpressao[letra];
+        if (tipo) {
+            contagem[tipo]++;
+        }
+    }
+
+    // Cálculo de porcentagem para facilitar a exibição futura
+    const total = contagem.criativo + contagem.indeciso + contagem.neutro;
+    const porcentagens = {
+        criativo: total > 0 ? Math.round((contagem.criativo / total) * 100) : 0,
+        indeciso: total > 0 ? Math.round((contagem.indeciso / total) * 100) : 0,
+        neutro: total > 0 ? Math.round((contagem.neutro / total) * 100) : 0
+    };
+
+    return { contagem, porcentagens };
+}
   // gera plano natural
   planoNatural(nome);
 
