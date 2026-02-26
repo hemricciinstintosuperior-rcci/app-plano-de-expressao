@@ -214,6 +214,7 @@ function atualizarTabela3(letras, sufixo) {
 }
 
 //================ MOTOR DE TEXTOS PLANOS
+// ============================== MOTOR DE TEXTOS PLANOS ARRUMADO ==============================
 function gerarTextoPlano(tipo, dados) {
     const nomesAmigaveis = {
         fisico: "Plano Físico",
@@ -222,40 +223,62 @@ function gerarTextoPlano(tipo, dados) {
         intuitivo: "Plano Intuitivo"
     };
 
-    // 1. Criar uma lista dos planos e ordenar do maior para o menor valorReal
+    // 1. Criar uma lista dos planos e ordenar do maior para o menor (Hierarquia)
     let planosOrdenados = Object.keys(dados)
-        .map(chave => ({ chave, valor: dados[chave].valorReal, nivel: dados[chave].nivel, num: dados[chave].numero }))
+        .map(chave => ({ 
+            chave, 
+            valor: dados[chave].valorReal, 
+            nivel: dados[chave].nivel, 
+            num: dados[chave].numero 
+        }))
         .sort((a, b) => b.valor - a.valor);
 
-    // 2. Iniciar o texto com a Introdução
+    // 2. Iniciar o texto com a Introdução (buscada do textos.js)
     let textoFinal = (introducoes[tipo] || "") + "\n\n";
 
-    // 3. Loop para colocar do 1º (mais forte) ao 4º (mais fraco) com explicações
+    // 3. Loop para colocar do 1º (mais forte) ao 4º (mais fraco)
     planosOrdenados.forEach((plano, index) => {
         let posicao = index + 1;
         let nomePlano = nomesAmigaveis[plano.chave];
         
-        // Título da posição (Ex: 1º - Plano Físico)
+        // Título da posição
         textoFinal += `**${posicao}º - ${nomePlano}**\n`;
         
-        // Explicação da posição (do 1º ao 4º)
-        textoFinal += (explicacoesPosicao[posicao] || "") + "\n\n";
+        // Explicação da posição (1º ao 4º)
+        if (typeof explicacoesPosicao !== 'undefined') {
+            textoFinal += (explicacoesPosicao[posicao] || "") + "\n\n";
+        }
         
-        // O conteúdo técnico do plano (texto específico do número)
-        textoFinal += textosPlanos[plano.chave][plano.nivel][plano.num] + "\n\n";
+        // Conteúdo técnico do plano
+        if (typeof textosPlanos !== 'undefined') {
+            textoFinal += (textosPlanos[plano.chave][plano.nivel][plano.num] || "") + "\n\n";
+        }
         
-        // Adiciona um conector entre os planos, exceto no último
+        // Conector entre os blocos
         if (index < 3 && typeof conectores !== 'undefined') {
             textoFinal += conectores[Math.floor(Math.random() * conectores.length)] + "\n\n";
         }
     });
 
-    // 4. Adicionar a Conclusão Dinâmica
-    if (typeof gerarConclusao === 'function') {
-        textoFinal += gerarConclusao(tipo, dados);
-    }
+    // 4. Adicionar a Conclusão (Processando as variáveis dinâmicas)
+    textoFinal += processarConclusao(tipo, planosOrdenados, nomesAmigaveis);
 
     return textoFinal;
+}
+
+// Função auxiliar para evitar o erro de ${nomes[fraco]}
+function processarConclusao(tipo, ordenados, nomes) {
+    if (typeof conclusoes === 'undefined' || !conclusoes[tipo]) return "";
+    
+    const dominante = ordenados[0].chave; // O primeiro da lista (mais forte)
+    const fraco = ordenados[3].chave;     // O último da lista (mais fraco)
+    
+    let frase = conclusoes[tipo];
+    
+    // Substitui manualmente os códigos pelos nomes reais
+    return frase
+        .replace("${nomes[dominante]}", nomes[dominante])
+        .replace("${nomes[fraco]}", nomes[fraco]);
 }
 
 //================ PLANO NATURAL
