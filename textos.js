@@ -653,6 +653,66 @@ const conclusoes = {
   
   A integração harmoniosa desses quatro planos representa o caminho para maior estabilidade, evolução pessoal e realização prática no momento.`
 };
+// =================================================================
+// DICIONÁRIO DE TEXTOS: VIBRAÇÃO DE TRÂNSITO (SOMA DOS 4 PLANOS)
+// =================================================================
+
+const textosTrânsito = {
+    1: `Você inicia agora um ciclo de novos começos e renovação profunda. Este trânsito marca o limiar de uma fase inovadora, onde novas ideias devem ser aceitas e desenvolvidas com coragem. É a hora de avançar em direção a novos objetivos, abandonando o passado e eliminando tudo o que não tem mais utilidade ou benefício, sejam hábitos, valores ou relacionamentos que não servem mais ao seu futuro.
+
+Uma nova identidade está surgindo: mais eficiente, corajosa e líder. O período exigirá que você enfrente desafios de frente, parando de adiar resoluções. Você terá o poder necessário para promover as mudanças que deseja, mas precisará de força de vontade e atitude prática. É um tempo de luta, mas com promessas de grandes recompensas e independência.
+
+Sua determinação será testada e, embora o desânimo possa surgir ocasionalmente, seguir adiante garantirá um nível elevado de autoestima e autoconhecimento. Aproveite para tirar projetos do papel e aumentar seu poder pessoal. Se este trânsito se repetir por muitos anos ou coincidir com seu Ano Pessoal 1, prepare-se para mudanças dramáticas e escolhas cuidadosas que moldarão seu destino a longo prazo.`,
+
+    2: `Este é um período voltado para a cooperação e a sensibilidade. Diferente de ciclos de liderança, a vibração 2 pede que você aprenda a seguir, buscar orientação e trabalhar em parceria para alcançar bens maiores. O sucesso agora depende da sua capacidade de adaptação e de ouvir os outros. Você estará mais intuitivo e sensível, percebendo nuances sutis em pessoas e situações, o que favorece o papel de conselheiro e confidente.
+
+Mantenha o foco em seus ideais, mas evite a teimosia e a rigidez. Deixe que as coisas fluam naturalmente; a imposição pela força encontrará resistência, enquanto a gentileza e a persuasão abrirão portas. É uma fase de consolidação e organização, onde os relacionamentos ganham protagonismo. Você pode se sentir mais dependente da opinião alheia, por isso, cerque-se de pessoas de confiança para evitar manipulações.
+
+Este trânsito pode trazer atrasos e obstáculos que servem como aprendizado e teste de paciência. Se a vibração durar muitos anos ou coincidir com o Ano Pessoal 2, cuide da sua saúde emocional, pois a ansiedade e a sensibilidade excessiva podem aflorar. Busque ambientes harmoniosos e compartilhe seus sentimentos com quem ama para manter o equilíbrio e a tranquilidade.`,
+
+    3: `Sua capacidade de expressão e comunicação atinge o ápice neste ciclo. Este é um período de inspiração, criatividade e sucesso social, onde seu magnetismo pessoal atrairá oportunidades, especialmente na carreira. Você se sentirá mais leve, jovial e vivo, como se um fardo fosse retirado de seus ombros, permitindo que a vida flua com mais alegria e diversão.
+
+O grande desafio desta vibração é a disciplina: com tantas ideias e convites sociais, há o risco de dispersar energia em futilidades. É essencial manter o foco em atividades duradouras para não desperdiçar seus talentos em projetos inacabados. O número 3 rege as palavras, por isso, meça o que diz para não ressuscitar problemas do passado ou ferir pessoas queridas por impulsividade emocional.
+
+Aproveite este momento para empreender e expandir seus horizontes. É uma fase de realização pessoal e contentamento que, se bem aproveitada, pode representar uma grande virada em sua vida, trazendo reconhecimento e até fama. Contudo, cuidado com o exibicionismo e a falta de autodisciplina, especialmente se coincidir com um Ano Pessoal 3, para não comprometer sua estabilidade futura por prazeres imediatos.`,
+
+    4: `Este é o ciclo da construção e do esforço recompensado. O período exige organização, disciplina e muito trabalho para estabelecer as bases sólidas do seu futuro. Não espere facilidades; as recompensas virão na medida direta do seu empenho e atenção aos detalhes, especialmente nas finanças e negócios. É o momento de agir com praticidade, encarando a realidade como ela é, sem ilusões.
+
+Gerencie seu tempo com rigor e valorize cada pequena conquista. As pessoas podem vê-lo como um porto seguro e exigir muito de você, por isso, seja dedicado, mas não permita ser sobrecarregado por responsabilidades que não são suas. Este trânsito é sério e sóbrio, ideal para colocar a vida em ordem e criar um alicerce que sustentará seus projetos por muitos anos.
+
+Embora possa parecer um período monótono ou restritivo, o triunfo final é garantido para quem não foge da luta. Se este trânsito for longo, a vida pode parecer uma batalha constante, mas o resultado será um sucesso consolidado e duradouro. Mantenha a economia e o equilíbrio financeiro como prioridades, garantindo que cada passo seja dado com segurança e realismo.`,
+
+    5: `Um tempo de progresso acelerado, liberdade e expansão espera por você. O trânsito 5 traz um sentimento de alívio, facilitando a interação social e abrindo portas inesperadas nos negócios. Seu magnetismo pessoal e habilidade com as palavras serão ferramentas poderosas para promover suas ideias e atrair colaboradores. Prepare-se para conhecer novas pessoas, lugares e adotar uma nova visão de mundo.
+
+Velhos hábitos e valores ultrapassados tendem a desaparecer naturalmente, abrindo espaço para um crescimento pessoal rápido. No entanto, o desejo de satisfazer os sentidos aumenta, exigindo cuidado com excessos e abusos. O grande desafio aqui é manter a disciplina e o foco em objetivos de longo prazo em meio a tantos acontecimentos repentinos e distrações.
+
+Este ciclo favorece viagens e mudanças, mas exige flexibilidade constante. Se durar muitos anos, pode trazer instabilidade financeira e desgaste mental pela dificuldade em manter o controle. Quando unido ao Ano Pessoal 5, evite a impulsividade e o egoísmo, lembrando que mudança nem sempre significa evolução. Mantenha os pés no chão enquanto aproveita a liberdade de voar.`,
+
+    6: `Este ciclo coloca a família, o lar e as responsabilidades sociais no centro das atenções. Você será impelido a apoiar os outros e a agir com altruísmo, servindo como fonte de inspiração e orientação para quem o rodeia. O sucesso virá através da sua disposição em ajudar, mas é fundamental não se anular completamente nem interferir excessivamente na vida alheia com zelo exagerado.
+
+Na carreira, o progresso tende a vir acompanhado de novas responsabilidades e desafios que exigirão dedicação integral. Emocionalmente, é um período de cobranças: você estará mais exigente e as pessoas também esperarão mais de você. Questões mal resolvidas em relacionamentos ou na família podem vir à tona, sendo um momento comum para definições importantes, como casamentos ou divórcios.
+
+Busque a harmonia em todos os ambientes e proteja seus laços afetivos com cautela e diálogo. É um trânsito acolhedor e doméstico, ideal para melhorar o convívio e se dedicar a causas que beneficiem sua comunidade. Se aceitar as responsabilidades com amor, as recompensas e o reconhecimento serão imensos. Apenas cuide para que o sacrifício pessoal não tire sua paz e equilíbrio interior.`,
+
+    7: `Um período sagrado para a autorreflexão, o estudo e o crescimento interior. Você sentirá uma necessidade natural de introspecção e solitude para avaliar sua vida e suas motivações profundas. Sua sensibilidade e intuição estarão aguçadas, permitindo que você enxergue verdades que antes passavam despercebidas. Não é o momento para agressividade ou expansão externa, mas para o autoconhecimento.
+
+Refine sua forma de se expressar para evitar conflitos desnecessários com familiares e colegas. Este ciclo é ideal para se aprofundar em conhecimentos específicos, pois sua clareza mental e capacidade de concentração estão potencializadas. Use este tempo para se recompor psicologicamente, livrando-se de mágoas e frustrações antigas que impedem sua evolução.
+
+Evite o ceticismo excessivo ou o isolamento total que beira a solidão. O desafio é equilibrar sua busca interna com o convívio social mínimo necessário. Se este trânsito for muito longo ou coincidir com seu Ano Pessoal 7, cuidado com a fuga da realidade e o apego a conceitos obsoletos. Use o silêncio para ouvir sua verdadeira voz e descobrir o que realmente lhe traz satisfação na vida.`,
+
+    8: `O foco agora recai sobre o poder material, a carreira e a justiça. Este é um trânsito de grande potencial para o progresso financeiro e o reconhecimento profissional, mas que exige planejamento rigoroso e organização absoluta. Questões de negócios devem ser tratadas com inteligência e cautela; erros cometidos agora podem ter reflexos por muitos anos, assim como o sucesso pode ser monumental.
+
+O número 8 reflete a lei do retorno: situações do passado podem reaparecer para serem resolvidas com justiça e equilíbrio. Você sentirá que é um sobrevivente, retomando o controle de sua trajetória e ganhando credibilidade no mercado. É um momento de autoridade e eficiência, onde muitas pessoas estarão dispostas a apoiar seus projetos ambiciosos.
+
+Atenção para não negligenciar a saúde e a família devido à obsessão pelo trabalho. O estresse pode ser alto, especialmente se coincidir com o Ano Pessoal 8. Use o poder com sabedoria, seja justo em suas negociações e lembre-se que o verdadeiro sucesso depende do equilíbrio entre a ambição material e a paz espiritual. É tempo de colher o que foi plantado com dedicação e estratégia.`,
+
+    9: `Um ciclo de conclusões, desapego e expansão da consciência. Você passará por uma transformação psicológica e espiritual que o levará a abandonar relacionamentos, hábitos e ideias que não servem mais à sua identidade. É a hora de perdoar mágoas antigas e deixar o passado seguir seu caminho; manter-se apegado a sentimentos negativos apenas atrasará seu florescimento.
+
+Sua sensibilidade à dor alheia estará elevada, despertando o desejo de servir, ensinar e orientar os outros por um bem maior. O altruísmo e a compaixão são as chaves para as grandes recompensas deste período. Você terá uma visão mais ampla e humanitária da vida, agindo como um visionário que busca harmonia e compreensão universal em vez de interesses meramente individuais.
+
+Prepare-se para finalizações e mudanças de interesses, pois o que antes era importante pode perder o sentido. Se durar muitos anos, cuidado com o fanatismo ou ilusões excessivas. No Ano Pessoal 9, o desgaste emocional pode ser maior, exigindo clareza de pensamento e atenção redobrada às decisões. Encerre seus ciclos com gratidão para que o novo possa entrar em sua vida com força total.`
+};
+
 
 // conectores narrativos usados pelo motor
 const conectores = [
