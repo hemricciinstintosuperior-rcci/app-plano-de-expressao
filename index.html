@@ -199,7 +199,19 @@ function atualizarTabela3(letras, sufixo) {
         let elNum = document.getElementById("num" + id + sufixo);
         if(elBar) elBar.style.width = larg + "%";
         if(elNum) elNum.innerText = val;
-//============================== MOTOR DE TEXTOS PLANOS (CORRIGIDO)
+}); // Fechamento do forEach das barras (Linha 202 original)
+
+    // Descobre o dominante
+    let dominanteExpressao = Object.keys(cont).reduce((a, b) => cont[a] >= cont[b] ? a : b);
+    let campoTexto = document.getElementById("resumoExpressao" + sufixo);
+    
+    if(campoTexto && typeof textosExpressao !== 'undefined') {
+        campoTexto.innerHTML = textosExpressao[dominanteExpressao] || "";
+        campoTexto.style.display = "block"; 
+    }
+} // Fechamento da função atualizarTabela3
+
+//============================== MOTOR DE TEXTOS PLANOS (VERSÃO FINAL)
 function gerarTextoPlano(tipo, dados) {
     const nomesAmigaveis = {
         fisico: "Plano Físico",
@@ -208,7 +220,7 @@ function gerarTextoPlano(tipo, dados) {
         intuitivo: "Plano Intuitivo"
     };
 
-    // 1. RANKING: Converte para número puro para o 3 ganhar do 0
+    // 1. RANKING: Converte para número para o 3 ganhar do 0 sempre
     let planosOrdenados = Object.keys(dados)
         .map(chave => ({ 
             chave, 
@@ -220,7 +232,7 @@ function gerarTextoPlano(tipo, dados) {
 
     let textoFinal = (introducoes[tipo] || "") + "\n\n";
 
-    // 2. MONTAGEM DO CORPO DO TEXTO
+    // 2. MONTAGEM DOS PLANOS
     planosOrdenados.forEach((plano, index) => {
         let posicao = index + 1;
         let nomePlano = nomesAmigaveis[plano.chave];
@@ -241,35 +253,17 @@ function gerarTextoPlano(tipo, dados) {
         }
     });
 
-    // 3. CONCLUSÃO: Processa as variáveis da frase final
+    // 3. CONCLUSÃO: Resolve o erro do ${nomes[fraco]}
     const dominante = planosOrdenados[0].chave;
     const fraco = planosOrdenados[3].chave;
-    let fraseBase = (conclusoes[tipo] || "");
+    let fraseFinal = (conclusoes[tipo] || "");
 
-    let conclusaoFinal = fraseBase
+    let conclusaoProcessada = fraseFinal
         .replace("${nomes[dominante]}", nomesAmigaveis[dominante])
         .replace("${nomes[fraco]}", nomesAmigaveis[fraco]);
 
-    return textoFinal + "\n" + conclusaoFinal;
+    return textoFinal + "\n" + conclusaoProcessada;
 }
-    // Troca os códigos pelos nomes reais (Físico, Mental, etc)
-    let conclusaoFinal = fraseConclusao
-        .replace("${nomes[dominante]}", nomesAmigaveis[dominante])
-        .replace("${nomes[fraco]}", nomesAmigaveis[fraco]);
-
-    return textoFinal + "\n" + conclusaoFinal;
-}
-
-// Função para garantir que o ${nomes[fraco]} vire o nome real
-function processarConclusao(tipo, ordenados, nomes) {
-    if (typeof conclusoes === 'undefined' || !conclusoes[tipo]) return "";
-    const dominante = ordenados[0].chave;
-    const fraco = ordenados[3].chave;
-    return conclusoes[tipo]
-        .replace("${nomes[dominante]}", nomes[dominante])
-        .replace("${nomes[fraco]}", nomes[fraco]);
-}
-
 // Função de apoio para processar os nomes na conclusão
 function processarConclusao(tipo, ordenados, nomes) {
     if (typeof conclusoes === 'undefined' || !conclusoes[tipo]) return "";
@@ -284,20 +278,6 @@ function processarConclusao(tipo, ordenados, nomes) {
         .replace("${nomes[fraco]}", nomes[fraco]);
 }
 
-// Função auxiliar para evitar o erro de ${nomes[fraco]}
-function processarConclusao(tipo, ordenados, nomes) {
-    if (typeof conclusoes === 'undefined' || !conclusoes[tipo]) return "";
-    
-    const dominante = ordenados[0].chave; // O primeiro da lista (mais forte)
-    const fraco = ordenados[3].chave;     // O último da lista (mais fraco)
-    
-    let frase = conclusoes[tipo];
-    
-    // Substitui manualmente os códigos pelos nomes reais
-    return frase
-        .replace("${nomes[dominante]}", nomes[dominante])
-        .replace("${nomes[fraco]}", nomes[fraco]);
-}
 
 //================ PLANO NATURAL
 function planoNatural(nome) {
