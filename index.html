@@ -253,45 +253,64 @@ function gerarTextoPlano(tipo, dados) {
         }
     });
 
-// --- INÍCIO DA LÓGICA DE INTERPRETAÇÃO     // --- INÍCIO DA LÓGICA DE INTERPRETAÇÃO INTELIGENTE ---
-// --- LÓGICA DE INTERPRETAÇÃO BASEADA NO EQUILÍBRIO (VERSÃO REAL) ---
-    const valorMaxCenario = Math.max(...planosOrdenados.map(p => p.valor));
+// --- MOTOR DE INTERPRETAÇÃO COMBINADA (BASEADO NO SEU TEXTO) ---
+    const baseTextos = {
+        fisico: {
+            fraco: "Sua falta de praticidade e objetividade, associada a uma tendência em evitar ações repetitivas, pode fazer com que você complique as coisas mais do que realmente são, tornando difícil colocar planos em andamento.",
+            medio: "O bom senso é sua chave para o sucesso. Você tem a capacidade de cumprir atividades perfeitamente mesmo sem vontade, mantendo o foco sem ultrapassar seus limites.",
+            forte: "Suas atitudes são poderosas e seguras. Você foge de improvisos e foca na solução imediata, sendo alguém difícil de ser superado devido ao seu forte senso de valores."
+        },
+        mental: {
+            fraco: "Você pode ter dificuldade em resistir a opiniões alheias, tornando-se influenciável. Precisa de mais disciplina para que nada o desvie de seus próprios interesses.",
+            medio: "Você é cauteloso e lida bem com questões complexas, captando dinâmicas sociais sem exigir um esforço mental exaustivo ou desgastante.",
+            forte: "Você é extremamente analítico e racional. Analisa cada detalhe e é apegado aos seus valores, o que lhe dá capacidade para ser um líder excepcional."
+        },
+        emocional: {
+            fraco: "Você pode ter problemas em expressar sentimentos, o que gera incerteza interna. Os outros podem interpretá-lo como alguém frio ou desinteressado.",
+            medio: "Equilíbrio emocional pleno. Você se comunica de forma saudável, mantendo a harmonia sem dizer mais do que realmente sente.",
+            forte: "Suas emoções comandam suas decisões e o coração geralmente vence a razão. Isso alimenta uma criatividade incrível, mas exige cuidado com ilusões."
+        },
+        intuitivo: {
+            fraco: "O lado sensorial e espiritual não é sua prioridade. Isso dificulta entender o que acontece dentro de si e o torna mais influenciável pelo meio.",
+            medio: "Você é mais introspectivo e profundo ao lidar com o que está além da lógica, usando o recolhimento para recuperar sua energia mental.",
+            forte: "Seu sentido espiritual é vital. Você capta facilmente as intenções das pessoas e deixa que seus instintos mostrem a direção certa."
+        }
+    };
+
+    const p1 = planosOrdenados[0]; // O 1º colocado (Dominante)
+    const p4 = planosOrdenados[3]; // O 4º colocado (Desafio)
     
-    // Filtros baseados na sua regra de negócio
-    const fortes = planosOrdenados.filter(p => p.nivel === "forte").map(p => ({ nome: nomesAmigaveis[p.chave], chave: p.chave }));
-    const medios = planosOrdenados.filter(p => p.nivel === "medio").map(p => ({ nome: nomesAmigaveis[p.chave], chave: p.chave }));
-    const fracos = planosOrdenados.filter(p => p.nivel === "fraco").map(p => ({ nome: nomesAmigaveis[p.chave], chave: p.chave }));
+    let conclusaoDinamica = "";
 
-    let analiseFinal = "";
-
-    // 1. CENÁRIO: EXCESSO DE POTÊNCIA (Muitos Fortes)
-    if (fortes.length >= 2) {
-        analiseFinal = `Sua configuração mostra uma predominância de planos **Fortes** em **${fortes.map(f => f.nome).join(" e ")}**. Isso indica uma personalidade de muita força e prontidão, mas que exige cuidado com os excessos. No Físico você realiza, no Mental você racionaliza ao extremo, mas essa intensidade pode gerar um transbordo, como uma confusão mental ou uma impulsividade física. O desafio aqui é buscar o tempero do "Médio" para que essa potência não te desgaste.`;
+    // CENÁRIO A: FORTE NO TOPO E FRACO NA BASE (O Especialista em uma área)
+    if (p1.nivel === "forte" && p4.nivel === "fraco") {
+        conclusaoDinamica = `Identificamos que você opera em um estado de **Alta Polaridade**. Enquanto seu **${nomesAmigaveis[p1.chave]}** é uma ferramenta poderosa que você domina com segurança, seu **${nomesAmigaveis[p4.chave]}** aparece como um ponto de vulnerabilidade onde você se torna influenciável. \n\n*Conselho:* Use a força do seu ${nomesAmigaveis[p1.chave]} para proteger sua fragilidade no ${nomesAmigaveis[p4.chave]}.`;
     } 
     
-    // 2. CENÁRIO: O EQUILÍBRIO IDEAL (Predomínio de Médios)
-    else if (medios.length >= 2) {
-        analiseFinal = `Identificamos um excelente **Equilíbrio Operacional** em sua estrutura, especialmente nos planos **${medios.map(m => m.nome).join(" e ")}**. Estar no nível Médio significa que você não peca nem pela falta, nem pelo excesso. Você consegue sentir, pensar ou agir com a medida certa, mantendo a estabilidade necessária para não ser influenciado externamente, mas também sem se sobrecarregar com intensidades desnecessárias.`;
+    // CENÁRIO B: EQUILÍBRIO DE MÉDIOS (O Perfil Estável)
+    else if (p1.nivel === "medio" && p4.nivel === "medio") {
+        conclusaoDinamica = `Sua análise revela um raro **Equilíbrio de Moderado**. Você não peca pelo excesso nem pela falta. Sua jornada é guiada pelo bom senso em quase todos os planos, o que lhe confere uma estabilidade emocional e prática muito acima da média.`;
     }
 
-    // 3. CENÁRIO: VULNERABILIDADE E INFLUÊNCIA (Muitos Fracos)
-    else if (fracos.length >= 2) {
-        analiseFinal = `Observamos que você possui planos em nível **Fraco** em **${fracos.map(f => f.nome).join(" e ")}**. Isso não significa falta de capacidade, mas sim uma maior permeabilidade: você se torna mais fácil de ser influenciado por opiniões ou energias externas nessas áreas. Seja pela falta de ação física ou por uma percepção intuitiva menos aguçada, o segredo é fortalecer sua autoconfiança para que esses pontos de "baixa voltagem" não permitam que outros tomem as rédeas da sua vida.`;
+    // CENÁRIO C: CONFLITO DE EXCESSO (Dois Fortes)
+    else if (p1.nivel === "forte" && planosOrdenados[1].nivel === "forte") {
+        const p2 = planosOrdenados[1];
+        conclusaoDinamica = `Você vive um **Dinamismo de Alta Intensidade** entre o **${nomesAmigaveis[p1.chave]}** e o **${nomesAmigaveis[p2.chave]}**. Duas forças poderosas disputam sua atenção. Isso te dá muita capacidade de realização, mas cuidado para que essa "vontade de fazer tudo" não te gere uma confusão mental ou estresse físico.`;
     }
 
-    // 4. CENÁRIO MISTO (O Caso do Intuitivo Forte)
-    else if (fortes.some(f => f.chave === 'intuitivo')) {
-        analiseFinal = `Destaque especial para o seu **Plano Intuitivo Forte**. Enquanto os outros buscam equilíbrio, sua percepção vai além, alcançando nuances e "coisas obscuras" que a maioria ignora. Você enxerga o que está oculto. Se os seus outros planos estiverem no Médio, você usa essa visão para guiar seus passos com maestria; se estiverem Fracos, essa intuição pode te assustar por não ter onde se apoiar na matéria.`;
-    }
+    // MONTAGEM DO TEXTO FINAL (Combinando tudo)
+    let textoVeredito = `--- \n### SÍNTESE DO PERFIL \n\n`;
+    
+    // Texto do 1º colocado
+    textoVeredito += `**Sua Força Principal (${nomesAmigaveis[p1.chave]} - ${p1.nivel.toUpperCase()}):** \n${baseTextos[p1.chave][p1.nivel]} \n\n`;
+    
+    // Texto do 4º colocado
+    textoVeredito += `**Seu Desafio Atual (${nomesAmigaveis[p4.chave]} - ${p4.nivel.toUpperCase()}):** \n${baseTextos[p4.chave][p4.nivel]} \n\n`;
+    
+    // O fechamento "feito à mão" (A ponte entre eles)
+    textoVeredito += `**A CONEXÃO FINAL:** \n${conclusaoDinamica}`;
 
-    // 5. CENÁRIO PADRÃO (A dinâmica entre agir e silenciar)
-    else {
-        const d = nomesAmigaveis[planosOrdenados[0].chave];
-        const f = nomesAmigaveis[planosOrdenados[3].chave];
-        analiseFinal = `Sua análise mostra que você se move primariamente pelo **${d}**. Se ele for Forte, você lidera e toma as rédeas; se for Fraco, você espera o movimento do mundo. O seu maior ponto de atenção é o **${f}**, onde a energia circula menos, exigindo que você pare de apenas observar e comece a imprimir sua própria vontade para não ser apenas um reflexo do ambiente.`;
-    }
-
-    return textoFinal + "\n---\n### SÍNTESE DO PERFIL DE EXPRESSÃO\n" + analiseFinal;
+    return textoFinal + "\n" + textoVeredito;
 }
 
 
