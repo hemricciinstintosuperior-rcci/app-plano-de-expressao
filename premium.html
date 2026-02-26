@@ -71,6 +71,44 @@ h2{ font-size:32px; margin-bottom:25px; border-bottom:1px solid #eee; padding-bo
 .criativo { background-color: #a855f7 !important; }
 .indeciso { background-color: #f97316 !important; }
 .neutro { background-color: #94a3b8 !important; }   
+
+ /* ESTILO DAS BARRAS OTIMIZADO PARA CELULAR */
+.linha {
+    width: 100%;
+    height: 14px;
+    background-color: #eee !important;
+    border-radius: 20px;
+    margin: 4px 0;
+    /* Força a cor de fundo no celular */
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+}
+
+.preenchimento {
+    height: 14px;
+    border-radius: 20px;
+    display: block;
+    /* Truque: o PDF do celular reconhece sombras internas como cor mesmo sem "gráficos de fundo" */
+    box-shadow: inset 0 0 0 1000px; 
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+}
+
+/* Cores aplicadas via Shadow para garantir exibição no Mobile */
+.fisico { color: #ef4444 !important; background-color: #ef4444 !important; }
+.mental { color: #06b6d4 !important; background-color: #06b6d4 !important; }
+.emocional { color: #22c55e !important; background-color: #22c55e !important; }
+.intuitivo { color: #eab308 !important; background-color: #eab308 !important; }
+.criativo { color: #a855f7 !important; background-color: #a855f7 !important; }
+.indeciso { color: #f97316 !important; background-color: #f97316 !important; }
+.neutro { color: #94a3b8 !important; background-color: #94a3b8 !important; }
+
+/* Evita quebras de página ruins no meio das barras no celular */
+.barra {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    margin-bottom: 15px;
+}   
 </style>
 </head>
 
