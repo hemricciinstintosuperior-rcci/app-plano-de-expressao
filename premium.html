@@ -177,13 +177,7 @@ if(!dadosSalvos){
 
     <div class="secao">
 
-     <h3>Perfil de Expressão (Momento)</h3>
-        <div class="grafico">
-            ${gerarBarra("Criativo", rel.criativoMom, maxExpMom, 'criativo')}
-            ${gerarBarra("Indeciso", rel.indecisoMom, maxExpMom, 'indeciso')}
-            ${gerarBarra("Neutro", rel.neutroMom, maxExpMom, 'neutro')}
-        </div>
-        <div class="texto-grande">${rel.textoExpressaoMom}</div>
+
     
         <h2>Status do Momento (Ano ${rel.anoMomento})</h2>
         <div class="grafico">
@@ -193,7 +187,14 @@ if(!dadosSalvos){
             ${gerarBarra("Intuitivo", rel.intuitivoMomento, maxMom, 'intuitivo')}
         </div>
         <p style="white-space:pre-line;">${rel.textoMomento}</p>
-
+        
+     <h3>Perfil de Expressão (Momento)</h3>
+        <div class="grafico">
+            ${gerarBarra("Criativo", rel.criativoMom, maxExpMom, 'criativo')}
+            ${gerarBarra("Indeciso", rel.indecisoMom, maxExpMom, 'indeciso')}
+            ${gerarBarra("Neutro", rel.neutroMom, maxExpMom, 'neutro')}
+        </div>
+        <div class="texto-grande">${rel.textoExpressaoMom}</div>
    
     </div>
 
