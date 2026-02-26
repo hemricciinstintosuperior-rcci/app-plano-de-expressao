@@ -218,17 +218,22 @@ document.getElementById("conteudo").innerHTML = `
     setTimeout(() => { window.print(); }, 2000);
 }
 
-function gerarBarra(label, valor, max, classe) {
-    const pct = Math.round((valor / max) * 100) || 0;
-    // Para mostrar o número reduzido na label
-    const reduzido = valor > 9 ? valor.toString().split("").reduce((a,b)=>a + Number(b),0) : valor;
-    // Se for Tabela 3, mostramos o valor bruto, se for planos, o reduzido
-    const valorExibido = (classe === 'criativo' || classe === 'indeciso' || classe === 'neutro') ? valor : reduzido;
+function gerarBarra(label, valor, maior, classe) {
+    let pct = maior > 0 ? Math.max((valor / maior) * 100, 8) : 0;
+    
+    // Lista das categorias onde o número DEVE ser escondido
+    const esconderNumero = ['criativo', 'indeciso', 'neutro'];
+    
+    // Se for uma dessas categorias, mostra apenas o nome. 
+    // Se for um plano (fisico, mental...), mostra Nome: Valor
+    let textoExibicao = esconderNumero.includes(classe) ? label : `${label}: ${valor}`;
 
     return `
-        <div class="barra">
-            <span>${label}: ${valorExibido}</span>
-            <div class="linha"><div class="preenchimento ${classe}" style="width:${pct}%"></div></div>
+        <div class="barra" style="margin-bottom: 15px;">
+            <span style="color: #333; font-weight: bold; display: block; margin-bottom: 5px;">${textoExibicao}</span>
+            <div class="linha" style="background: #e5e7eb; height: 12px; border-radius: 6px; width: 100%;">
+                <div class="preenchimento ${classe}" style="width:${pct}%; height: 100%; border-radius: 6px;"></div>
+            </div>
         </div>`;
 }
 </script>
