@@ -579,16 +579,23 @@ function gerarStatusMomento() {
     campoTexto.style.display = "block";
 }
 
- // Lógica para pegar as letras que regem o ano atual
+// Lógica para pegar as letras que regem o ano selecionado
+    const nomeTexto = document.getElementById("nome").value;
     const anoRef = parseInt(anoSelecionado);
-    const nasc = new Date(document.getElementById("dataNascimento").value).getFullYear();
-    const idadeRef = anoRef - nasc;
-    let letrasMom = [];
-    nome.toUpperCase().split(/\s+/).forEach(p => {
-        if(p.length > 0) letrasMom.push(p[idadeRef % p.length]);
-    });
-    atualizarTabela3(letrasMom, "Mom"); 
-} // FECHAMENTO DA FUNÇÃO
+    const dataCampo = document.getElementById("dataNascimento").value;
+    
+    if (nomeTexto && dataCampo) {
+        const nasc = new Date(dataCampo + 'T00:00:00').getFullYear();
+        const idadeRef = anoRef - nasc;
+        let letrasMom = [];
+        
+        nomeTexto.toUpperCase().split(/\s+/).forEach(p => {
+            if(p.length > 0) letrasMom.push(p[idadeRef % p.length]);
+        });
+        
+        atualizarTabela3(letrasMom, "Mom");
+    }
+ // <--- ESTE É O FECHAMENTO QUE FALTA NA SUA IMAGEM!
 
 function atualizarBarra(tipo,valor,maior){
  let largura=0;
