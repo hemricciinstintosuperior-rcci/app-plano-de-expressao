@@ -151,7 +151,7 @@ if(!dadosSalvos){
     const maxMom = Math.max(rel.fisicoMomento, rel.mentalMomento, rel.emocionalMomento, rel.intuitivoMomento);
     const maxExpMom = Math.max(rel.criativoMom, rel.indecisoMom, rel.neutroMom);
 
-    document.getElementById("conteudo").innerHTML = `
+document.getElementById("conteudo").innerHTML = `
     <div class="capa">
         <img class="logo" src="https://raw.githubusercontent.com/hemricciinstintosuperior-rcci/app-plano-de-expressao/main/icon-192.png">
         <div class="nomeCliente"><strong>${rel.nome}</strong><br>${dataBr}</div>
@@ -159,16 +159,21 @@ if(!dadosSalvos){
     </div>
 
     <div class="secao">
-
-        <h3>Perfil de Expressão (Natural)</h3>
+        <h2>Perfil de Expressão (Natural)</h2>
+        <p>O Perfil de Expressão revela a sua tendência comportamental instintiva. Ele descreve como você processa a realidade de forma primária, seja através da criação ativa, da ponderação indecisa ou da observação neutra. Esta é a base da sua personalidade no cotidiano.</p>
+        
         <div class="grafico">
             ${gerarBarra("Criativo", rel.criativoNat, maxExpNat, 'criativo')}
             ${gerarBarra("Indeciso", rel.indecisoNat, maxExpNat, 'indeciso')}
             ${gerarBarra("Neutro", rel.neutroNat, maxExpNat, 'neutro')}
         </div>
         <div class="texto-grande">${rel.textoExpressaoNat}</div>
-    
+    </div>
+
+    <div class="secao">
         <h2>Plano de Expressão Natural</h2>
+        <p>O seu Plano Natural é a sua "assinatura de alma". Ele representa o conjunto de ferramentas estruturais que você trouxe para esta vida. Aqui entendemos como sua inteligência (Mental), sua ação (Físico), seus sentimentos (Emocional) e sua percepção (Intuitivo) operam de forma permanente e original.</p>
+        
         <div class="grafico">
             ${gerarBarra("Físico", rel.fisico, maxNat, 'fisico')}
             ${gerarBarra("Mental", rel.mental, maxNat, 'mental')}
@@ -176,15 +181,12 @@ if(!dadosSalvos){
             ${gerarBarra("Intuitivo", rel.intuitivo, maxNat, 'intuitivo')}
         </div>
         <p style="white-space:pre-line;">${rel.textoNatural}</p>
-
-
     </div>
 
     <div class="secao">
-
-
-    
         <h2>Status do Momento (Ano ${rel.anoMomento})</h2>
+        <p>Diferente do plano natural, o Status do Momento indica as energias que estão sendo mais exigidas de você neste ciclo específico. Ele funciona como uma previsão de comportamento, mostrando onde sua energia está focada agora e quais áreas precisam de mais atenção para manter o equilíbrio durante este ano.</p>
+        
         <div class="grafico">
             ${gerarBarra("Físico", rel.fisicoMomento, maxMom, 'fisico')}
             ${gerarBarra("Mental", rel.mentalMomento, maxMom, 'mental')}
@@ -193,14 +195,15 @@ if(!dadosSalvos){
         </div>
         <p style="white-space:pre-line;">${rel.textoMomento}</p>
         
-     <h3>Perfil de Expressão (Momento)</h3>
+        <h3>Tendência Comportamental do Momento</h3>
+        <p>Esta análise mostra como você está reagindo aos desafios atuais, indicando se este ano pede mais proatividade (Criativo) ou mais cautela (Indeciso/Neutro).</p>
+        
         <div class="grafico">
             ${gerarBarra("Criativo", rel.criativoMom, maxExpMom, 'criativo')}
             ${gerarBarra("Indeciso", rel.indecisoMom, maxExpMom, 'indeciso')}
             ${gerarBarra("Neutro", rel.neutroMom, maxExpMom, 'neutro')}
         </div>
         <div class="texto-grande">${rel.textoExpressaoMom}</div>
-   
     </div>
 
     <div class="rodape">https://www.instintosuperior.com</div>
