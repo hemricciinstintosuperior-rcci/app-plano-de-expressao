@@ -253,50 +253,41 @@ function gerarTextoPlano(tipo, dados) {
         }
     });
 
-// --- INÍCIO DA LÓGICA DE INTERPRETAÇÃO INTELIGENTE ---
-    // Definindo o valor máximo para evitar o erro "max is not defined"
-    const valorMaximoCenario = Math.max(...planosOrdenados.map(p => p.valor));
+// --- INÍCIO DA LÓGICA DE INTERPRETAÇÃO     // --- INÍCIO DA LÓGICA DE INTERPRETAÇÃO INTELIGENTE ---
+    const valorMaxCenario = Math.max(...planosOrdenados.map(p => p.valor));
     
-    const fortes = planosOrdenados.filter(p => p.valor >= (valorMaximoCenario * 0.75)).map(p => nomesAmigaveis[p.chave]);
-    const medios = planosOrdenados.filter(p => p.valor < (valorMaximoCenario * 0.75) && p.valor >= (valorMaximoCenario * 0.4)).map(p => nomesAmigaveis[p.chave]);
-    const fracos = planosOrdenados.filter(p => p.valor < (valorMaximoCenario * 0.4)).map(p => nomesAmigaveis[p.chave]);
+    const fortes = planosOrdenados.filter(p => p.valor >= (valorMaxCenario * 0.75)).map(p => nomesAmigaveis[p.chave]);
+    const fracos = planosOrdenados.filter(p => p.valor < (valorMaxCenario * 0.4)).map(p => nomesAmigaveis[p.chave]);
 
     let analiseFinal = "";
     const dominanteNome = nomesAmigaveis[planosOrdenados[0].chave];
     const fracoNome = nomesAmigaveis[planosOrdenados[3].chave];
 
-    // CENÁRIO A: Um Grande Dominante e o resto Fraco
+    // CENÁRIO 1: Um Grande Dominante e o resto Fraco
     if (fortes.length === 1 && fracos.length >= 2) {
         analiseFinal = `Sua estrutura está muito concentrada no **${fortes[0]}**. Você opera como um especialista que confia demais em uma única ferramenta, enquanto o ${fracos.join(" e o ")} estão operando com baixa reserva de energia.`;
     } 
-    // CENÁRIO B: Dois Fortes e o resto Fraco/Médio
+    // CENÁRIO 2: Dois Fortes e o resto Fraco/Médio
     else if (fortes.length === 2 && fracos.length >= 1) {
-        analiseFinal = `Notamos um equilíbrio dinâmico entre o **${fortes[0]}** e o **${fortes[1]}**. Contudo, a baixa intensidade no **${fracos[0]}** indica que você pode estar negligenciando uma área importante para sustentar essa dualidade.`;
+        analiseFinal = `Notamos um equilíbrio dinâmico entre o **${fortes[0]}** e o **${fortes[1]}**. Contudo, a baixa intensidade no **${fracos[0]}** indica um ponto cego que exige atenção imediata.`;
     }
-    // CENÁRIO C: Três Fortes (Perfil Versátil)
+    // CENÁRIO 3: Três Fortes (Perfil Versátil)
     else if (fortes.length === 3) {
         analiseFinal = `Você possui uma base de atuação muito ampla no ${fortes.slice(0, 2).join(", ")} e ${fortes[2]}. Seu único "ponto cego" real hoje é o **${fracos[0]}**.`;
     }
+    // CENÁRIO 4: Todos Médios/Baixos (Transição)
+    else if (fortes.length === 0) {
+        analiseFinal = `Este é um momento de "baixa voltagem" ou transição. Nenhum plano está gritando mais alto. Sugerimos nutrir o **${dominanteNome}** para recuperar o fôlego.`;
+    }
     // CENÁRIO PADRÃO
     else {
-        analiseFinal = `A predominância do **${dominanteNome}** traz a direção principal, enquanto o **${fracoNome}** aparece como o ponto que exige maior atenção e desenvolvimento para não travar seu progresso.`;
+        analiseFinal = `A predominância do **${dominanteNome}** traz a direção principal, enquanto o **${fracoNome}** aparece como o ponto que exige maior desenvolvimento para não travar seu progresso.`;
     }
 
-    // Retorno final unindo tudo
+    // Retorno final unindo tudo dentro da função
     return textoFinal + "\n---\n**ANÁLISE ESTRUTURAL:**\n" + analiseFinal;
-}
-    // CENÁRIO 4: Todos Médios/Baixos (O Momento de Transição/Indefinição)
-    else if (fortes.length === 0) {
-        analiseFinal = `Este é um momento de "baixa voltagem" ou transição. Nenhum plano está gritando mais alto. Isso sugere uma fase de observação, onde você não deve forçar grandes decisões, mas sim nutrir o **${planosOrdenados[0].chave}** (que mesmo baixo, é seu melhor recurso hoje) para recuperar o fôlego.`;
-    }
+} 
 
-    // CENÁRIO PADRÃO (Caso não caia nos anteriores)
-    else {
-        analiseFinal = `Concluindo, a predominância do **${nomesAmigaveis[dominante]}** traz a direção, enquanto o equilíbrio moderado dos demais planos sugere uma caminhada constante. O ponto de atenção imediata é o **${nomesAmigaveis[fraco]}**, que precisa ser "vitaminado" para não travar o seu progresso.`;
-    }
-
-    // Unindo a introdução, o ranking e a análise interpretativa
-    return textoFinal + "\n---\n**ANÁLISE ESTRUTURAL:**\n" + analiseFinal;
 
 
 
