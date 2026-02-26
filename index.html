@@ -199,22 +199,7 @@ function atualizarTabela3(letras, sufixo) {
         let elNum = document.getElementById("num" + id + sufixo);
         if(elBar) elBar.style.width = larg + "%";
         if(elNum) elNum.innerText = val;
-    });
-
-    // Descobre o dominante
-    let dominante = Object.keys(cont).reduce((a, b) => cont[a] >= cont[b] ? a : b);
-    let campoTexto = document.getElementById("resumoExpressao" + sufixo);
-    
-    // CONEXÃO COM O TEXTOS.JS (Usando innerHTML para aceitar textos grandes e formatados)
-    if(campoTexto && typeof textosExpressao !== 'undefined') {
-        // Usamos innerHTML para garantir que as quebras de linha e formatação das crases funcionem
-        campoTexto.innerHTML = textosExpressao[dominante] || "";
-        campoTexto.style.display = "block"; 
-    }
-}
-
-//================ MOTOR DE TEXTOS PLANOS
-// ============================== MOTOR DE TEXTOS PLANOS ARRUMADO ==============================
+//============================== MOTOR DE TEXTOS PLANOS (CORRIGIDO)
 function gerarTextoPlano(tipo, dados) {
     const nomesAmigaveis = {
         fisico: "Plano Físico",
@@ -223,8 +208,7 @@ function gerarTextoPlano(tipo, dados) {
         intuitivo: "Plano Intuitivo"
     };
 
-    // 1. RANKING INFALÍVEL: Converte para número e ordena
-    // Isso garante que 8 > 5 > 3 > 0, sem erro de inversão.
+    // 1. RANKING: Converte para número puro para o 3 ganhar do 0
     let planosOrdenados = Object.keys(dados)
         .map(chave => ({ 
             chave, 
@@ -236,12 +220,11 @@ function gerarTextoPlano(tipo, dados) {
 
     let textoFinal = (introducoes[tipo] || "") + "\n\n";
 
-    // 2. MONTAGEM DO TEXTO (Mantendo o número visível)
+    // 2. MONTAGEM DO CORPO DO TEXTO
     planosOrdenados.forEach((plano, index) => {
         let posicao = index + 1;
         let nomePlano = nomesAmigaveis[plano.chave];
         
-        // Mantém o número como você pediu (Ex: 3º - Plano Intuitivo (3))
         textoFinal += `**${posicao}º - ${nomePlano} (${plano.valor})**\n`;
         
         if (typeof explicacoesPosicao !== 'undefined') {
@@ -249,20 +232,26 @@ function gerarTextoPlano(tipo, dados) {
         }
         
         if (typeof textosPlanos !== 'undefined' && textosPlanos[plano.chave]) {
-            textoFinal += (textosPlanos[plano.chave][plano.nivel][plano.num] || "") + "\n\n";
+            let txt = textosPlanos[plano.chave][plano.nivel][plano.num];
+            textoFinal += (txt || "") + "\n\n";
         }
         
         if (index < 3 && typeof conectores !== 'undefined') {
-            textoFinal += "\n" + conectores[Math.floor(Math.random() * conectores.length)] + "\n\n";
+            textoFinal += conectores[Math.floor(Math.random() * conectores.length)] + "\n\n";
         }
     });
 
-    // 3. CONCLUSÃO: Resolve o problema do ${nomes[fraco]}
+    // 3. CONCLUSÃO: Processa as variáveis da frase final
     const dominante = planosOrdenados[0].chave;
     const fraco = planosOrdenados[3].chave;
-    
-    let fraseConclusao = (conclusoes[tipo] || "");
-    
+    let fraseBase = (conclusoes[tipo] || "");
+
+    let conclusaoFinal = fraseBase
+        .replace("${nomes[dominante]}", nomesAmigaveis[dominante])
+        .replace("${nomes[fraco]}", nomesAmigaveis[fraco]);
+
+    return textoFinal + "\n" + conclusaoFinal;
+}
     // Troca os códigos pelos nomes reais (Físico, Mental, etc)
     let conclusaoFinal = fraseConclusao
         .replace("${nomes[dominante]}", nomesAmigaveis[dominante])
@@ -364,16 +353,32 @@ function gerarStatusMomento() {
     const ano = document.getElementById("anoSelect").value;
     const d = bancoMomentos.find(a => a.ano == ano);
     if (!d) return;
+    
     const maior = Math.max(d.fisico, d.mental, d.emocional, d.intuitivo);
-    const red = { fisico: reduzirNumero(d.fisico), mental: reduzirNumero(d.mental), emocional: reduzirNumero(d.emocional), intuitivo: reduzirNumero(d.intuitivo) };
-    for(let p in d) if(p !== "ano" && p !== "letras" && p !== "intervalo") atualizarBarraNatural(p.charAt(0).toUpperCase() + p.slice(1), d[p], maior, reduzirNumero(d[p]));
-    atualizarTabela3(d.letras, "Mom");
-    const dadosTxt = {
-        fisico: { nivel: classificarIntensidade(d.fisico, maior), numero: red.fisico },
-        mental: { nivel: classificarIntensidade(d.mental, maior), numero: red.mental },
-        emocional: { nivel: classificarIntensidade(d.emocional, maior), numero: red.emocional },
-        intuitivo: { nivel: classificarIntensidade(d.intuitivo, maior), numero: red.intuitivo }
+    const red = { 
+        fisico: reduzirNumero(d.fisico), 
+        mental: reduzirNumero(d.mental), 
+        emocional: reduzirNumero(d.emocional), 
+        intuitivo: reduzirNumero(d.intuitivo) 
     };
+
+    // Atualiza as barras visuais
+    for(let p in d) {
+        if(p !== "ano" && p !== "letras" && p !== "intervalo") {
+            atualizarBarraNatural(p.charAt(0).toUpperCase() + p.slice(1), d[p], maior, reduzirNumero(d[p]));
+        }
+    }
+    
+    atualizarTabela3(d.letras, "Mom");
+
+    // AQUI ESTÁ O CONSERTO: Enviando o valor bruto (d.fisico, etc) como valorReal
+    const dadosTxt = {
+        fisico: { nivel: classificarIntensidade(d.fisico, maior), numero: red.fisico, valorReal: d.fisico },
+        mental: { nivel: classificarIntensidade(d.mental, maior), numero: red.mental, valorReal: d.mental },
+        emocional: { nivel: classificarIntensidade(d.emocional, maior), numero: red.emocional, valorReal: d.emocional },
+        intuitivo: { nivel: classificarIntensidade(d.intuitivo, maior), numero: red.intuitivo, valorReal: d.intuitivo }
+    };
+
     document.getElementById("resumoMomento").innerText = "No ano de " + ano + " (" + d.intervalo + "):\n\n" + gerarTextoPlano("momento", dadosTxt);
 }
 
