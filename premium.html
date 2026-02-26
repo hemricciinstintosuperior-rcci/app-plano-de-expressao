@@ -3,236 +3,134 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Relatório Premium</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
+<title>Relatório Premium - Plano de Expressão</title>
 <style>
-body{ font-family: "Times New Roman", serif; color:#111; background:#ffffff; line-height:1.8; margin:0; }
-body > *{ max-width:1350px; margin-left:auto; margin-right:auto; padding-left:40px; padding-right:40px; }
+/* CONFIGURAÇÃO BASE - FUNDO BRANCO TOTAL */
+body { font-family: "Times New Roman", serif; color:#000; background:#ffffff; line-height:1.6; margin:0; padding: 0; }
+#conteudo { width: 100%; max-width: 800px; margin: 0 auto; padding: 20px; }
 
-.capa{ text-align:center; padding-top:100px; padding-bottom:100px; background:white; box-shadow:0 0 25px rgba(0,0,0,0.05); border-radius:10px; page-break-after: always; }
-.logo{ max-width:400px; margin-bottom:50px; }
-.secao { page-break-inside: avoid; background:white; padding:20px 10px; margin-top:40px; border-radius:10px; box-shadow:0 0 20px rgba(0,0,0,0.05); }
+/* CAPA */
+.capa { text-align:center; padding: 100px 20px; page-break-after: always; background: #fff; }
+.logo { max-width:250px; margin-bottom:40px; }
+.nomeCliente { font-size: 32px; font-weight: bold; margin-bottom: 10px; text-transform: uppercase; }
+.subtitulo { font-size: 24px; color: #191F42; font-style: italic; }
 
-h2{ font-size:32px; margin-bottom:25px; border-bottom:1px solid #eee; padding-bottom:10px; }
-.nomeCliente{ margin-top:70px; font-size:32px; }
-.subtitulo{ font-size:50px; color:#191F42; }
-.barra span {
-    color: #000!important; /* Força o branco sólido */
-    font-weight: bold;         /* Deixa o nome mais grosso */
-    font-size: 14px;
-    display: block;
-    margin-bottom: 5px;
-}
-/* ESTILOS DAS BARRAS */
-.grafico{ margin-top:20px; }
-.barra{ margin:18px 0; }
-.barra span{ font-weight:bold; display:block; margin-bottom:6px; font-size: 18px; }
-.linha{ width:100%; height:14px; background:#eee; border-radius:20px; overflow:hidden; }
-.preenchimento{ display:block; height:14px; border-radius:20px; }
+/* SEÇÕES SEM BLOCOS CINZAS */
+.secao { page-break-inside: avoid; background: transparent; padding: 20px 0; margin-top: 30px; border-bottom: 1px solid #eee; }
+h2 { font-size: 26px; color: #111; margin-bottom: 20px; border-left: 5px solid #191F42; padding-left: 15px; }
+h3 { font-size: 22px; color: #333; }
 
-/* CORES */
-.fisico{ background:#ef4444; }
-.mental{ background:#06b6d4; }
-.emocional{ background:#22c55e; }
-.intuitivo{ background:#eab308; }
-.criativo { background: #a855f7; } 
-.indeciso { background: #f97316; } 
-.neutro { background: #94a3b8; }
+/* ESTILOS DAS BARRAS - SEM NÚMEROS */
+.barra { margin: 15px 0; page-break-inside: avoid; }
+.barra span { font-weight: bold; display: block; margin-bottom: 5px; font-size: 16px; color: #000 !important; }
+.linha { width: 100%; height: 12px; background: #eeeeee !important; border-radius: 10px; overflow: hidden; -webkit-print-color-adjust: exact; }
+.preenchimento { display: block; height: 100%; border-radius: 10px; -webkit-print-color-adjust: exact; box-shadow: inset 0 0 0 1000px; }
 
-.texto-grande {
-    margin-top: 25px;
-    padding: 20px;
-    background: #f9fafb;
-    border-left: 5px solid #a855f7;
-    font-style: italic;
-    white-space: pre-wrap; /* Mantém as quebras de linha das crases */
-}
+/* CORES DAS BARRAS */
+.fisico { background-color: #ef4444 !important; box-shadow: inset 0 0 0 1000px #ef4444 !important; }
+.mental { background-color: #06b6d4 !important; box-shadow: inset 0 0 0 1000px #06b6d4 !important; }
+.emocional { background-color: #22c55e !important; box-shadow: inset 0 0 0 1000px #22c55e !important; }
+.intuitivo { background-color: #eab308 !important; box-shadow: inset 0 0 0 1000px #eab308 !important; }
+.criativo { background-color: #a855f7 !important; box-shadow: inset 0 0 0 1000px #a855f7 !important; }
+.indeciso { background-color: #f97316 !important; box-shadow: inset 0 0 0 1000px #f97316 !important; }
+.neutro { background-color: #94a3b8 !important; box-shadow: inset 0 0 0 1000px #94a3b8 !important; }
 
-.rodape{ margin-top:60px; margin-bottom:40px; text-align:rigth; font-size:15px; }
+/* TEXTOS E SÍNTESE */
+.texto-grande { margin-top: 15px; padding: 15px; border-left: 4px solid #a855f7; font-style: italic; background: #fff; color: #333; font-size: 15px; }
+p { text-align: justify; font-size: 16px; color: #222; }
+.rodape { margin-top: 50px; text-align: center; font-size: 12px; color: #999; border-top: 1px solid #eee; padding-top: 10px; }
+
+/* BLOCAGEM DE TRÂNSITO */
+.box-transito { border: 2px solid #ffd633; padding: 20px; border-radius: 10px; margin-top: 20px; }
 
 @media print {
-    .linha { background-color: #eee !important; }
-    .fisico { background-color: #ef4444 !important; }
-    .mental { background-color: #06b6d4 !important; }
-    .emocional { background-color: #22c55e !important; }
-    .intuitivo { background-color: #eab308 !important; }
-    .criativo { background-color: #a855f7 !important; }
-    .indeciso { background-color: #f97316 !important; }
-    .neutro { background-color: #94a3b8 !important; }
+    body { background: #fff; }
+    .secao { border-bottom: 1px solid #eee; }
 }
-
- 0/* Forçar a impressão de cores de fundo sem depender da ação do usuário */
-* {
-    -webkit-print-color-adjust: exact !important; /* Para Chrome, Edge e Safari */
-    print-color-adjust: exact !important;         /* Para Firefox */
-    color-adjust: exact !important;               /* Padrão antigo */
-}
-
-/* Garante que as barras especificamente mantenham as cores no PDF */
-.fisico { background-color: #ef4444 !important; }
-.mental { background-color: #06b6d4 !important; }
-.emocional { background-color: #22c55e !important; }
-.intuitivo { background-color: #eab308 !important; }
-.criativo { background-color: #a855f7 !important; }
-.indeciso { background-color: #f97316 !important; }
-.neutro { background-color: #94a3b8 !important; }   
-
- /* ESTILO DAS BARRAS OTIMIZADO PARA CELULAR */
-.linha {
-    width: 100%;
-    height: 14px;
-    background-color: #eee !important;
-    border-radius: 20px;
-    margin: 4px 0;
-    /* Força a cor de fundo no celular */
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-}
-
-.preenchimento {
-    height: 14px;
-    border-radius: 20px;
-    display: block;
-    /* Truque: o PDF do celular reconhece sombras internas como cor mesmo sem "gráficos de fundo" */
-    box-shadow: inset 0 0 0 1000px; 
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-}
-
-/* Cores aplicadas via Shadow para garantir exibição no Mobile */
-.fisico { color: #ef4444 !important; background-color: #ef4444 !important; }
-.mental { color: #06b6d4 !important; background-color: #06b6d4 !important; }
-.emocional { color: #22c55e !important; background-color: #22c55e !important; }
-.intuitivo { color: #eab308 !important; background-color: #eab308 !important; }
-.criativo { color: #a855f7 !important; background-color: #a855f7 !important; }
-.indeciso { color: #f97316 !important; background-color: #f97316 !important; }
-.neutro { color: #94a3b8 !important; background-color: #94a3b8 !important; }
-
-/* Evita quebras de página ruins no meio das barras no celular */
-.barra {
-    page-break-inside: avoid;
-    break-inside: avoid;
-    margin-bottom: 15px;
-}   
-.secao p, .texto-grande {
-    text-align: justify;
-    margin-bottom: 15px;
-    line-height: 1.6;
-    font-size: 16px; /* Tamanho ideal para leitura no celular */
-}
-@media print {
-    body {
-        padding: 0 !important;
-        margin: 0 !important;
-    }
-    .secao {
-        margin: 10px !important;
-        padding: 15px !important;
-        box-shadow: none !important;
-        border: 1px solid #eee !important;
-    }
-}    
- 
 </style>
 </head>
-
 <body>
+
 <div id="conteudo">Carregando relatório premium...</div>
 
 <script>
 const dadosSalvos = localStorage.getItem("relatorioMapa");
 if(!dadosSalvos){
-    document.getElementById("conteudo").innerHTML = "<p>Erro: Nenhum mapa encontrado.</p>";
+    document.getElementById("conteudo").innerHTML = "<h2>Erro: Nenhum mapa encontrado.</h2>";
 } else {
     const rel = JSON.parse(dadosSalvos);
     const dataBr = rel.data.split('-').reverse().join('/');
 
-    // Função de cálculo de porcentagem (Tabela 3 utiliza os valores brutos enviados)
-    const calcPct = (val, max) => Math.round((val / max) * 100) || 0;
-
+    // Cálculos de Proporção
     const maxNat = Math.max(rel.fisico, rel.mental, rel.emocional, rel.intuitivo);
     const maxExpNat = Math.max(rel.criativoNat, rel.indecisoNat, rel.neutroNat);
-
     const maxMom = Math.max(rel.fisicoMomento, rel.mentalMomento, rel.emocionalMomento, rel.intuitivoMomento);
     const maxExpMom = Math.max(rel.criativoMom, rel.indecisoMom, rel.neutroMom);
 
-document.getElementById("conteudo").innerHTML = `
-    <div class="capa">
-        <img class="logo" src="https://raw.githubusercontent.com/hemricciinstintosuperior-rcci/app-plano-de-expressao/main/icon-192.png">
-        <div class="nomeCliente"><strong>${rel.nome}</strong><br>${dataBr}</div>
-        <div class="subtitulo">"Sua jornada de autoconhecimento começa aqui."</div>
-    </div>
-
-    <div class="secao">
-        <h2>Perfil de Expressão (Natural)</h2>
-        <p>O Perfil de Expressão revela a sua tendência comportamental instintiva. Ele descreve como você processa a realidade de forma primária, seja através da criação ativa, da ponderação indecisa ou da observação neutra. Esta é a base da sua personalidade no cotidiano.</p>
-        
-        <div class="grafico">
-            ${gerarBarra("Criativo", rel.criativoNat, maxExpNat, 'criativo')}
-            ${gerarBarra("Indeciso", rel.indecisoNat, maxExpNat, 'indeciso')}
-            ${gerarBarra("Neutro", rel.neutroNat, maxExpNat, 'neutro')}
+    document.getElementById("conteudo").innerHTML = `
+        <div class="capa">
+            <img class="logo" src="https://raw.githubusercontent.com/hemricciinstintosuperior-rcci/app-plano-de-expressao/main/icon-192.png">
+            <div class="nomeCliente">${rel.nome}</div>
+            <div class="subtitulo">${dataBr}</div>
+            <p style="text-align:center; margin-top:20px;">Relatório Numerológico Quântico</p>
         </div>
-        <div class="texto-grande">${rel.textoExpressaoNat}</div>
-    </div>
 
-    <div class="secao">
-        <h2>Plano de Expressão Natural</h2>
-        <p>O seu Plano Natural é a sua "assinatura de alma". Ele representa o conjunto de ferramentas estruturais que você trouxe para esta vida. Aqui entendemos como sua inteligência (Mental), sua ação (Físico), seus sentimentos (Emocional) e sua percepção (Intuitivo) operam de forma permanente e original.</p>
-        
-        <div class="grafico">
-            ${gerarBarra("Físico", rel.fisico, maxNat, 'fisico')}
-            ${gerarBarra("Mental", rel.mental, maxNat, 'mental')}
-            ${gerarBarra("Emocional", rel.emocional, maxNat, 'emocional')}
-            ${gerarBarra("Intuitivo", rel.intuitivo, maxNat, 'intuitivo')}
+        <div class="secao">
+            <h2>1. Perfil de Expressão Natural</h2>
+            <p>O Perfil Natural descreve sua essência primária e como você se posiciona diante do mundo de forma instintiva.</p>
+            <div class="grafico">
+                ${gerarBarra("Criativo", rel.criativoNat, maxExpNat, 'criativo')}
+                ${gerarBarra("Indeciso", rel.indecisoNat, maxExpNat, 'indeciso')}
+                ${gerarBarra("Neutro", rel.neutroNat, maxExpNat, 'neutro')}
+            </div>
+            <div class="texto-grande">${rel.textoExpressaoNat}</div>
         </div>
-        <p style="white-space:pre-line;">${rel.textoNatural}</p>
-    </div>
 
-    <div class="secao">
-
-        <h3>Tendência Comportamental do Momento</h3>
-        <p>Esta análise mostra como você está reagindo aos desafios atuais, indicando se este ano pede mais proatividade (Criativo) ou mais cautela (Indeciso/Neutro).</p>
-        
-        <div class="grafico">
-            ${gerarBarra("Criativo", rel.criativoMom, maxExpMom, 'criativo')}
-            ${gerarBarra("Indeciso", rel.indecisoMom, maxExpMom, 'indeciso')}
-            ${gerarBarra("Neutro", rel.neutroMom, maxExpMom, 'neutro')}
+        <div class="secao">
+            <h2>2. Plano de Expressão Natural</h2>
+            <p>As ferramentas estruturais da sua alma: como sua inteligência, ação e emoção operam de forma permanente.</p>
+            <div class="grafico">
+                ${gerarBarra("Físico", rel.fisico, maxNat, 'fisico')}
+                ${gerarBarra("Mental", rel.mental, maxNat, 'mental')}
+                ${gerarBarra("Emocional", rel.emocional, maxNat, 'emocional')}
+                ${gerarBarra("Intuitivo", rel.intuitivo, maxNat, 'intuitivo')}
+            </div>
+            <div style="white-space:pre-line; margin-top:20px;">${rel.textoNatural}</div>
         </div>
-        <div class="texto-grande">${rel.textoExpressaoMom}</div>
-    
-        <h2>Status do Momento (Ano ${rel.anoMomento})</h2>
-        <p>Diferente do plano natural, o Status do Momento indica as energias que estão sendo mais exigidas de você neste ciclo específico. Ele funciona como uma previsão de comportamento, mostrando onde sua energia está focada agora e quais áreas precisam de mais atenção para manter o equilíbrio durante este ano.</p>
-        
-        <div class="grafico">
-            ${gerarBarra("Físico", rel.fisicoMomento, maxMom, 'fisico')}
-            ${gerarBarra("Mental", rel.mentalMomento, maxMom, 'mental')}
-            ${gerarBarra("Emocional", rel.emocionalMomento, maxMom, 'emocional')}
-            ${gerarBarra("Intuitivo", rel.intuitivoMomento, maxMom, 'intuitivo')}
+
+        <div class="secao">
+            <h2>3. Vibração de Trânsito (Ano ${rel.anoMomento})</h2>
+            <p>A energia predominante que regerá suas decisões e o fluxo dos acontecimentos neste ciclo específico.</p>
+            <div class="box-transito">
+                ${rel.transitoHTML || "Trânsito não calculado."}
+            </div>
         </div>
-        <p style="white-space:pre-line;">${rel.textoMomento}</p>
-        
 
-    </div>
+        <div class="secao">
+            <h2>4. Status do Momento (Ciclo Atual)</h2>
+            <p>As energias que estão sendo mais exigidas de você agora para manter o equilíbrio.</p>
+            <div class="grafico">
+                ${gerarBarra("Físico", rel.fisicoMomento, maxMom, 'fisico')}
+                ${gerarBarra("Mental", rel.mentalMomento, maxMom, 'mental')}
+                ${gerarBarra("Emocional", rel.emocionalMomento, maxMom, 'emocional')}
+                ${gerarBarra("Intuitivo", rel.intuitivoMomento, maxMom, 'intuitivo')}
+            </div>
+            <div style="white-space:pre-line; margin-top:20px;">${rel.textoMomento}</div>
+        </div>
 
-    <div class="rodape">https://www.instintosuperior.com</div>
+        <div class="rodape">Gerado por Instinto Superior - www.instintosuperior.com</div>
     `;
 
-    setTimeout(() => { window.print(); }, 2000);
+    setTimeout(() => { window.print(); }, 1500);
 }
 
 function gerarBarra(label, valor, maior, classe) {
     let pct = maior > 0 ? Math.max((valor / maior) * 100, 8) : 0;
-    
-    // Agora, como você quer esconder TODOS os números, 
-    // basta mostrar apenas o 'label' (o nome do plano ou expressão)
-    let textoExibicao = label; 
-
     return `
-        <div class="barra" style="margin-bottom: 15px;">
-            <span style="color: #333; font-weight: bold; display: block; margin-bottom: 5px;">${textoExibicao}</span>
-            <div class="linha" style="background: #e5e7eb; height: 12px; border-radius: 6px; width: 100%;">
-                <div class="preenchimento ${classe}" style="width:${pct}%; height: 100%; border-radius: 6px;"></div>
+        <div class="barra">
+            <span>${label}</span>
+            <div class="linha">
+                <div class="preenchimento ${classe}" style="width:${pct}%;"></div>
             </div>
         </div>`;
 }
