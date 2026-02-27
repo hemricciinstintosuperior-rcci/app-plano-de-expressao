@@ -246,7 +246,7 @@ function gerarTextoPlano(tipo, dados) {
     const p1 = planosOrdenados[0]; const p4 = planosOrdenados[3];
     let conclusaoDinamica = "";
     if (p1.nivel === "forte" && p4.nivel === "fraco") {
-        conclusaoDinamica = `Identificamos que você opera em um estado de **Alta Polaridade**. Enquanto seu ${nomesAmigaveis[p1.chave]} é uma ferramenta poderosa que você domina com segurança, seu ${nomesAmigaveis[p4.chave]} aparece como um ponto de vulnerabilidade onde você se torna influenciável. \n\n*Conselho: Use a força do seu ${nomesAmigaveis[p1.chave]} para proteger sua fragilidade no ${nomesAmigaveis[p4.chave]}.`;
+        conclusaoDinamica = `Identificamos que você opera em um estado de Alta Polaridade. Enquanto seu ${nomesAmigaveis[p1.chave]} é uma ferramenta poderosa que você domina com segurança, seu ${nomesAmigaveis[p4.chave]} aparece como um ponto de vulnerabilidade onde você se torna influenciável. \n\n*Conselho: Use a força do seu ${nomesAmigaveis[p1.chave]} para proteger sua fragilidade no ${nomesAmigaveis[p4.chave]}.`;
     } else if (p1.nivel === "medio" && p4.nivel === "medio") {
         conclusaoDinamica = `Sua análise revela um raro "Equilíbrio Moderado". Você não peca pelo excesso nem pela falta. Sua jornada é guiada pelo bom senso em quase todos os planos, o que lhe confere uma estabilidade emocional e prática muito acima da média.`;
     } else if (p1.nivel === "forte" && planosOrdenados[1].nivel === "forte") {
@@ -254,7 +254,7 @@ function gerarTextoPlano(tipo, dados) {
         conclusaoDinamica = `Você vive um "Dinamismo de Alta Intensidade" entre o ${nomesAmigaveis[p1.chave]} e o ${nomesAmigaveis[p2.chave]}. Duas forças poderosas disputam sua atenção. Isso te dá muita capacidade de realização, mas cuidado para que essa "vontade de fazer tudo" não te gere uma confusão mental ou estresse físico.`;
     }
 
-    let textoVeredito = `--- \n### SÍNTESE DO PERFIL \n\n`;
+    let textoVeredito = `--- \n SÍNTESE DO PERFIL \n\n`;
     textoVeredito += `Sua Força Principal (${nomesAmigaveis[p1.chave]} - ${p1.nivel.toUpperCase()}): \n${baseTextos[p1.chave][p1.nivel]} \n\n`;
     textoVeredito += `Seu Desafio Atual (${nomesAmigaveis[p4.chave]} - ${p4.nivel.toUpperCase()}): \n${baseTextos[p4.chave][p4.nivel]} \n\n`;
     textoVeredito += `A CONEXÃO FINAL: \n${conclusaoDinamica}`;
