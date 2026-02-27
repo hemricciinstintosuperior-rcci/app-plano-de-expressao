@@ -211,7 +211,7 @@ function gerarTextoPlano(tipo, dados) {
     planosOrdenados.forEach((plano, index) => {
         let posicao = index + 1;
         let nomePlano = nomesAmigaveis[plano.chave];
-        textoFinal += `${posicao}ºIntensidade - ${nomePlano} (${plano.valor})\n`;
+        textoFinal += `${posicao}ºIntensidade - ${nomePlano} \n`;
         if (typeof explicacoesPosicao !== 'undefined') textoFinal += (explicacoesPosicao[posicao] || "") + "\n\n";
         if (typeof textosPlanos !== 'undefined' && textosPlanos[plano.chave]) {
             let txt = textosPlanos[plano.chave][plano.nivel][plano.num];
