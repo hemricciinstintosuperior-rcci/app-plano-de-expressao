@@ -381,15 +381,45 @@ function gerarTudo() {
 
 function exportarRelatorio() {
     if(!resultadoPlanosNatural) return alert("Gere o mapa primeiro.");
+    
+    // Captura os valores das barras do Natural
+    const valNat = valoresBrutosNatural;
+    const expNat = document.getElementById("resumoExpressaoNat").innerHTML;
+    
+    // Captura os valores do Momento selecionado
+    const ano = document.getElementById("anoSelect").value;
+    const d = bancoMomentos.find(a => a.ano == ano);
+
     const pacote = {
         nome: document.getElementById("nome").value,
         data: document.getElementById("dataNascimento").value,
+        anoMomento: ano,
+        // Textos
         textoNatural: document.getElementById("resumoNatural").innerHTML,
         textoMomento: document.getElementById("resumoMomento").innerHTML,
-        transitoHTML: document.getElementById("resultadoTrânsito").innerHTML
+        textoExpressaoNat: expNat,
+        textoExpressaoMom: document.getElementById("resumoExpressaoMom").innerHTML,
+        transitoHTML: document.getElementById("resultadoTrânsito").innerHTML,
+        // Valores para os Gráficos Natural
+        fisico: valNat.fisico,
+        mental: valNat.mental,
+        emocional: valNat.emocional,
+        intuitivo: valNat.intuitivo,
+        criativoNat: parseInt(document.getElementById("numCriativoNat").innerText),
+        indecisoNat: parseInt(document.getElementById("numIndecisoNat").innerText),
+        neutroNat: parseInt(document.getElementById("numNeutroNat").innerText),
+        // Valores para os Gráficos Momento
+        fisicoMomento: d.fisico,
+        mentalMomento: d.mental,
+        emocionalMomento: d.emocional,
+        intuitivoMomento: d.intuitivo,
+        criativoMom: parseInt(document.getElementById("numCriativoMom").innerText),
+        indecisoMom: parseInt(document.getElementById("numIndecisoMom").innerText),
+        neutroMom: parseInt(document.getElementById("numNeutroMom").innerText)
     };
+    
     localStorage.setItem("relatorioMapa", JSON.stringify(pacote));
-    window.open("https://hemricciinstintosuperior-rcci.github.io/app-plano-de-expressao/premium.html", "_blank");
+    window.open("premium.html", "_blank");
 }
 </script>
 
