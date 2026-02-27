@@ -2,62 +2,62 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Relatório Premium - Plano de Expressão</title>
 <style>
-/* CONFIGURAÇÃO BASE - FUNDO BRANCO TOTAL */
-body { font-family: "Times New Roman", serif; color:#000; background:#ffffff; line-height:1.6; margin:0; padding: 0; }
-#conteudo { width: 100%; max-width: 800px; margin: 0 auto; padding: 20px; }
+    /* Design focado em leitura e sofisticação */
+    body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color:#222; background:#fff; line-height:1.7; margin:0; padding: 0; }
+    #conteudo { width: 90%; max-width: 850px; margin: 0 auto; padding: 40px 20px; }
 
-/* CAPA */
-.capa { text-align:center; padding: 100px 20px; page-break-after: always; background: #fff; }
-.logo { max-width:600px; margin-bottom:20px; }
-.nomeCliente { font-size: 22px; font-weight: bold; margin-bottom: 10px; text-transform: uppercase; }
-.subtitulo { font-size: 30px; color: #191F42; font-style: arial; }
+    /* Capa Impactante */
+    .capa { text-align:center; padding: 80px 20px; page-break-after: always; border-bottom: 2px solid #eee; margin-bottom: 40px; }
+    .logo { max-width:180px; margin-bottom:30px; border-radius: 20px; }
+    .nomeCliente { font-size: 32px; font-weight: 800; color: #111827; text-transform: uppercase; letter-spacing: 2px; }
+    .subtitulo { font-size: 20px; color: #6b7280; margin-top: 10px; }
 
-/* SEÇÕES LIMPAS */
-.secao { page-break-inside: avoid; background: transparent; padding: 20px 0; margin-top: 30px; border-bottom: 1px solid #fff; }
-h2 { font-size: 26px; color: #111; margin-bottom: 20px; border-left: 5px solid #fff; padding-left: 15px; }
-
-/* BARRAS SEM NÚMEROS */
-.barra { margin: 15px 0; page-break-inside: avoid; }
-.barra span { font-weight: bold; display: block; margin-bottom: 5px; font-size: 16px; color: #000 !important; }
-.linha { width: 100%; height: 12px; background: #fff !important; border-radius: 10px; overflow: hidden; -webkit-print-color-adjust: exact; }
-.preenchimento { display: block; height: 100%; border-radius: 10px; -webkit-print-color-adjust: exact; box-shadow: inset 0 0 0 1000px; }
-
-/* CORES */
-.fisico { background-color: #ef4444 !important; box-shadow: inset 0 0 0 1000px #ef4444 !important; }
-.mental { background-color: #06b6d4 !important; box-shadow: inset 0 0 0 1000px #06b6d4 !important; }
-.emocional { background-color: #22c55e !important; box-shadow: inset 0 0 0 1000px #22c55e !important; }
-.intuitivo { background-color: #eab308 !important; box-shadow: inset 0 0 0 1000px #eab308 !important; }
-.criativo { background-color: #a855f7 !important; box-shadow: inset 0 0 0 1000px #a855f7 !important; }
-.indeciso { background-color: #f97316 !important; box-shadow: inset 0 0 0 1000px #f97316 !important; }
-.neutro { background-color: #94a3b8 !important; box-shadow: inset 0 0 0 1000px #94a3b8 !important; }
-
-/* TEXTOS */
-.texto-grande { margin-top: 15px; padding: 15px; border-left: 4px solid #fff; font-style: arial; background: #fff; color: #111; font-size: 18px; white-space: pre-wrap; }
-p { text-align: justify; font-size: 20px; color: #111; }
-.rodape { margin-top: 50px; text-align: left; font-size: 14px; color: #222; border-top: 1px solid #fff; padding-top: 10px; }
-
-/* DESTAQUE PARA O TRÂNSITO NO FINAL */
-.box-transito { border: 1px solid #fff; padding: 25px; border-radius: 8px; background-color: #ffffff; margin-top: 20px; font-size: 18px; line-height: 1.8; }
+    /* Seções e Títulos */
+    .secao { margin-bottom: 50px; page-break-inside: avoid; }
+    h2 { font-size: 24px; color: #111827; border-bottom: 3px solid #f3f4f6; padding-bottom: 10px; margin-bottom: 25px; text-transform: uppercase; }
     
+    /* Gráficos Modernos */
+    .grafico { background: #f9fafb; padding: 25px; border-radius: 15px; margin-bottom: 25px; }
+    .barra { margin-bottom: 18px; }
+    .barra span { font-weight: 600; font-size: 14px; text-transform: uppercase; color: #4b5563; display: block; margin-bottom: 5px; }
+    .linha { width: 100%; height: 10px; background: #e5e7eb; border-radius: 20px; overflow: hidden; }
+    .preenchimento { height: 100%; border-radius: 20px; transition: width 1s ease-in-out; }
 
-@media print {
-    body { background: #fff; }
-    .secao { border-bottom: 1px solid #fff; }
-}
-@media print {
-    body {
-        font-size: 20px;
+    /* Cores do Sistema */
+    .fisico { background: #ef4444; }
+    .mental { background: #06b6d4; }
+    .emocional { background: #22c55e; }
+    .intuitivo { background: #eab308; }
+    .criativo { background: #a855f7; }
+    .indeciso { background: #f97316; }
+    .neutro { background: #94a3b8; }
+
+    /* FORMATAÇÃO DE TEXTO (O que você pediu) */
+    .texto-analise { 
+        font-size: 18px; 
+        color: #374151; 
+        white-space: pre-line; /* Respeita as quebras do JS */
+        text-align: justify;
+    }
+    .texto-analise strong { color: #111; }
+    
+    /* Destaque para o Trânsito */
+    .box-transito { 
+        background: #fffbeb; 
+        border-left: 6px solid #fbbf24; 
+        padding: 30px; 
+        border-radius: 0 15px 15px 0;
+        font-size: 19px;
     }
 
-    .resultado {
-        font-size: 20px;
-        line-height: 1.8;
+    @media print {
+        .capa { padding-top: 0; }
+        #conteudo { width: 100%; padding: 0; }
+        .secao { page-break-inside: avoid; }
     }
-}
-    
 </style>
 </head>
 <body>
@@ -72,98 +72,69 @@ if(!dadosSalvos){
     const rel = JSON.parse(dadosSalvos);
     const dataBr = rel.data.split('-').reverse().join('/');
 
+    // Cálculo das escalas dos gráficos
     const maxNat = Math.max(rel.fisico, rel.mental, rel.emocional, rel.intuitivo);
     const maxExpNat = Math.max(rel.criativoNat, rel.indecisoNat, rel.neutroNat);
     const maxMom = Math.max(rel.fisicoMomento, rel.mentalMomento, rel.emocionalMomento, rel.intuitivoMomento);
     const maxExpMom = Math.max(rel.criativoMom, rel.indecisoMom, rel.neutroMom);
 
-  document.getElementById("conteudo").innerHTML = `
+    document.getElementById("conteudo").innerHTML = `
         <div class="capa">
             <img class="logo" src="https://raw.githubusercontent.com/hemricciinstintosuperior-rcci/app-plano-de-expressao/main/icon-192.png">
             <div class="nomeCliente">${rel.nome}</div>
-            <div class="subtitulo">${dataBr}</div>
-            <p style="text-align:center; margin-top:20px;">Relatório de Análise Vibracional da energias</p>
+            <div class="subtitulo">Mapa Gerado em ${dataBr}</div>
         </div>
-        
-                                                    <div class="secao">
-                                                <h2> Ciclos de Trânsito  </h2>
-            <p> Os ciclos de Trânsito na Numerologia Quântica refletem suas mudanças e influências internas e pessoais.
-São os únicos ciclos em um Estudo Numerológico que são originados do nome de nascimento.</p>
 
-<p>O nome que lhe foi dado ao nascer; pode ser visto lido da mesma forma como se lê uma partitura musical; sua vida pode ser visualizada através das letras de
-seu nome, da mesma forma como uma sequência de notas se apresenta em uma partitura musical; onde cada letra individualmente pode ser vista como uma
-nota que é entonada em um momento específico, com uma determinada intensidade e característica.</p>
-
-<p>Assim como as notas musicais determinam o ritmo da música as letras de seu nome de nascimento determinam o ritmo de sua vida. Horas mais intensa, em
-outra mais amena ou tênue.</p>
-
-<p>Cada letra possui uma duração específica e assim; exercem uma influência específica sobre sua vida durante um período de tempo determinado.</p>
-
-             </div>
-                                                             <div class="secao">
-                                                    <h2> Perfil de Expressão Natural</h2>
-            <p>O Perfil Natural descreve sua essência primária e como você se posiciona diante do mundo de forma instintiva.</p>
+        <div class="secao">
+            <h2>1. Perfil de Expressão Natural</h2>
             <div class="grafico">
                 ${gerarBarra("Criativo", rel.criativoNat, maxExpNat, 'criativo')}
                 ${gerarBarra("Indeciso", rel.indecisoNat, maxExpNat, 'indeciso')}
                 ${gerarBarra("Neutro", rel.neutroNat, maxExpNat, 'neutro')}
             </div>
-            <div class="texto-grande">${rel.textoExpressaoNat}</div>
+            <div class="texto-analise">${rel.textoExpressaoNat}</div>
         </div>
 
-                                                    <div class="secao">
-                                             <h2> Plano de Expressão Natural</h2>
-            <p>Representa as ferramentas estruturais da sua alma: como sua inteligência, ação e emoção operam de forma permanente.</p>
+        <div class="secao">
+            <h2>2. Plano de Expressão Estrutural</h2>
             <div class="grafico">
                 ${gerarBarra("Físico", rel.fisico, maxNat, 'fisico')}
                 ${gerarBarra("Mental", rel.mental, maxNat, 'mental')}
                 ${gerarBarra("Emocional", rel.emocional, maxNat, 'emocional')}
                 ${gerarBarra("Intuitivo", rel.intuitivo, maxNat, 'intuitivo')}
             </div>
-            <div style="white-space:pre-line; margin-top:20px;">${rel.textoNatural}</div>
+            <div class="texto-analise">${rel.textoNatural}</div>
         </div>
 
-                                          <div class="secao">
-                                  <h2> Plano de Expressão do Momento (Ano ${rel.anoMomento})</h2>
-            <p>As energias que estão sendo mais exigidas de você neste período para manter o seu equilíbrio e evolução.</p>
+        <div class="secao">
+            <h2>3. Plano de Expressão do Momento (Ano ${rel.anoMomento})</h2>
             <div class="grafico">
                 ${gerarBarra("Físico", rel.fisicoMomento, maxMom, 'fisico')}
                 ${gerarBarra("Mental", rel.mentalMomento, maxMom, 'mental')}
                 ${gerarBarra("Emocional", rel.emocionalMomento, maxMom, 'emocional')}
                 ${gerarBarra("Intuitivo", rel.intuitivoMomento, maxMom, 'intuitivo')}
             </div>
-            <div style="white-space:pre-line; margin-top:20px;">${rel.textoMomento}</div>
+            <div class="texto-analise">${rel.textoMomento}</div>
         </div>
 
-                                     <div class="secao">
-                                   <h2> Perfil de Expressão do Momento</h2>
-            <p>Indica como você está canalizando sua força de vontade neste ciclo: se através da criação, da ponderação ou da observação.</p>
-            <div class="grafico">
-                ${gerarBarra("Criativo", rel.criativoMom, maxExpMom, 'criativo')}
-                ${gerarBarra("Indeciso", rel.indecisoMom, maxExpMom, 'indeciso')}
-                ${gerarBarra("Neutro", rel.neutroMom, maxExpMom, 'neutro')}
-            </div>
-            <div class="texto-grande">${rel.textoExpressaoMom}</div>
-        </div>
-
-                                             <div class="secao">
-                                           <h2> Ciclos de Trânsito </h2>
-            <p> Os ciclos de Trânsito na Numerologia Quântica refletem suas mudanças e influências internas e pessoais.
-São os únicos ciclos em um Estudo Numerológico que são originados do nome de nascimento.</p>
-
-
-            <div class="box-transito" style="white-space: pre-wrap;">
-                ${rel.transitoHTML || "Trânsito não calculado."}
+        <div class="secao">
+            <h2>4. Vibração de Trânsito Anual</h2>
+            <div class="box-transito">
+                ${rel.transitoHTML}
             </div>
         </div>
 
-        <div class="rodape">Gerado por Instinto Superior - www.instintosuperior.com</div>
+        <div style="text-align:center; color:#9ca3af; font-size:12px; margin-top:100px;">
+            © Instinto Superior - Todos os direitos reservados.
+        </div>
     `;
-    setTimeout(() => { window.print(); }, 1500);
+
+    // Pequeno delay para garantir que os gráficos carreguem antes do print
+    setTimeout(() => { window.print(); }, 1200);
 }
 
 function gerarBarra(label, valor, maior, classe) {
-    let pct = maior > 0 ? Math.max((valor / maior) * 100, 8) : 0;
+    let pct = maior > 0 ? Math.max((valor / maior) * 100, 5) : 0;
     return `
         <div class="barra">
             <span>${label}</span>
