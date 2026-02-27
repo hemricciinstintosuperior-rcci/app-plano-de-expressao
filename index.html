@@ -60,7 +60,10 @@ input {
   input,button,select{width:100%;box-sizing:border-box;margin:8px 0;}
   .bloco-momento{padding:20px;margin-top:30px;}
 }
-
+  
+#resultado {
+    font-size: 18px;
+}
 @media (max-width: 768px) {
     .container-inputs { 
         display: flex;
@@ -85,8 +88,8 @@ Nome Completo (igual certidão)
   Data de Nascimento
 <input type="date" id="dataNascimento" required data-placeholder="Data de Nascimento">
                  
-<button onclick="gerarTudo()">GERAR MAPA</button>
-<button onclick="exportarRelatorio()">GERAR RELATÓRIO PDF</button>
+<button onclick="gerarTudo()">GERAR o seu Plano de Expressão</button>
+<button onclick="exportarRelatorio()">LIberar o acesso ao relatório e baixar o PDF</button>
 
 <div id="natural" class="card"></div>
 <div id="momento" style="display:none"></div>
