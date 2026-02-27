@@ -137,6 +137,28 @@ Neutro: <span id="numNeutroMom"></span><div class="bar-bg"><div id="barNeutroMom
 
 <script src="textos.js"></script>
 <script>
+// ============================================
+// 1. FUNÇÕES DE PERSONALIZAÇÃO (O PULO DO GATO)
+// ============================================
+
+function formatarNomeDinamico() {
+    let nomeInput = document.getElementById("nome").value.trim();
+    if (!nomeInput) return "Você";
+    let primeiroNome = nomeInput.split(' ')[0];
+    return primeiroNome.charAt(0).toUpperCase() + primeiroNome.slice(1).toLowerCase();
+}
+
+function aplicarFiltroTexto(texto) {
+    if (!texto) return "";
+    let nome = formatarNomeDinamico();
+    // Substitui todas as variações de "você" pelo nome em negrito
+    return texto.replace(/você/gi, `<strong>${nome}</strong>`);
+}
+
+// ============================================
+// 2. LÓGICA DE CÁLCULO E TABELAS
+// ============================================
+
 const tabela = { A:1, J:1, I:1, Q:1, Y:1, B:2, K:2, R:2, C:3, G:3, L:3, S:3, D:4, M:4, T:4, E:5, H:5, N:5, U:6, V:6, W:6, X:6, Ç:6, O:7, Z:7, F:8, P:8 };
 const tabelaExpressao = {
     'E':'criativo','W':'indeciso','D':'neutro','M':'neutro',
@@ -199,7 +221,8 @@ function atualizarTabela3(letras, sufixo) {
     let dominanteExpressao = Object.keys(cont).reduce((a, b) => cont[a] >= cont[b] ? a : b);
     let campoTexto = document.getElementById("resumoExpressao" + sufixo);
     if(campoTexto && typeof textosExpressao !== 'undefined') {
-        campoTexto.innerHTML = textosExpressao[dominanteExpressao] || "";
+        let textoBruto = textosExpressao[dominanteExpressao] || "";
+        campoTexto.innerHTML = aplicarFiltroTexto(textoBruto);
         campoTexto.style.display = "block"; 
     }
 }
@@ -223,45 +246,44 @@ function gerarTextoPlano(tipo, dados) {
         if (index < 3 && typeof conectores !== 'undefined') textoFinal += conectores[Math.floor(Math.random() * conectores.length)] + "\n\n";
     });
 
+    // TEXTOS BASE (FALLBACK)
     const baseTextos = {
         fisico: {
-            fraco: "Sua falta de praticidade e objetividade, associada a uma tendência em evitar ações repetitivas, pode fazer com que você complique as coisas mais do que realmente são, tornando difícil colocar planos em andamento.",
-            medio: "O bom senso é sua chave para o sucesso. Você tem a capacidade de cumprir atividades perfeitamente mesmo sem vontade, mantendo o foco sem ultrapassar seus limites.",
-            forte: "Suas atitudes são poderosas e seguras. Você foge de improvisos e foca na solução imediata, sendo alguém difícil de ser superado devido ao seu forte senso de valores."
+            fraco: "Sua falta de praticidade e objetividade pode dificultar colocar planos em andamento.",
+            medio: "O bom senso é sua chave. Você cumpre atividades mantendo o foco.",
+            forte: "Suas atitudes são poderosas e seguras, focando na solução imediata."
         },
         mental: {
-            fraco: "Você pode ter dificuldade em resistir a opiniões alheias, tornando-se influenciável. Precisa de mais disciplina para que nada o desvie de seus próprios interesses.",
-            medio: "Você é cauteloso e lida bem com questões complexas, captando dinâmicas sociais sem exigir um esforço mental exaustivo ou desgastante.",
-            forte: "Você é extremamente analítico e racional. Analisa cada detalhe e é apegado aos seus valores, o que lhe dá capacidade para ser um líder excepcional."
+            fraco: "Pode ter dificuldade em resistir a opiniões alheias.",
+            medio: "Você é cauteloso e lida bem com questões complexas.",
+            forte: "Extremamente analítico e racional, com grande capacidade de liderança."
         },
         emocional: {
-            fraco: "Você pode ter problemas em expressar sentimentos, o que gera incerteza interna. Os outros podem interpretá-lo como alguém frio ou desinteressado.",
-            medio: "Equilíbrio emocional pleno. Você se comunica de forma saudável, mantendo a harmonia sem dizer mais do que realmente sente.",
-            forte: "Suas emoções comandam suas decisões e o coração geralmente vence a razão. Isso alimenta uma criatividade incrível, mas exige cuidado com ilusões."
+            fraco: "Pode ter problemas em expressar sentimentos.",
+            medio: "Equilíbrio emocional pleno e comunicação saudável.",
+            forte: "Suas emoções comandam suas decisões, alimentando muita criatividade."
         },
         intuitivo: {
-            fraco: "O lado sensorial e espiritual não é sua prioridade. Isso dificulta entender o que acontece dentro de si e o torna mais influenciável pelo meio.",
-            medio: "Você é mais introspectivo e profundo ao lidar com o que está além da lógica, usando o recolhimento para recuperar sua energia mental.",
-            forte: "Seu sentido espiritual é vital. Você capta facilmente as intenções das pessoas e deixa que seus instintos mostrem a direção certa."
+            fraco: "O lado espiritual não é prioridade imediata.",
+            medio: "Introspectivo, usa o recolhimento para recuperar energia.",
+            forte: "Sentido espiritual vital, capta intenções facilmente."
         }
     };
 
     const p1 = planosOrdenados[0]; const p4 = planosOrdenados[3];
     let conclusaoDinamica = "";
     if (p1.nivel === "forte" && p4.nivel === "fraco") {
-        conclusaoDinamica = `Identificamos que você opera em um estado de Alta Polaridade. Enquanto seu ${nomesAmigaveis[p1.chave]} é uma ferramenta poderosa que você domina com segurança, seu ${nomesAmigaveis[p4.chave]} aparece como um ponto de vulnerabilidade onde você se torna influenciável. \n\n*Conselho: Use a força do seu ${nomesAmigaveis[p1.chave]} para proteger sua fragilidade no ${nomesAmigaveis[p4.chave]}.`;
-    } else if (p1.nivel === "medio" && p4.nivel === "medio") {
-        conclusaoDinamica = `Sua análise revela um raro "Equilíbrio Moderado". Você não peca pelo excesso nem pela falta. Sua jornada é guiada pelo bom senso em quase todos os planos, o que lhe confere uma estabilidade emocional e prática muito acima da média.`;
-    } else if (p1.nivel === "forte" && planosOrdenados[1].nivel === "forte") {
-        const p2 = planosOrdenados[1];
-        conclusaoDinamica = `Você vive um "Dinamismo de Alta Intensidade" entre o ${nomesAmigaveis[p1.chave]} e o ${nomesAmigaveis[p2.chave]}. Duas forças poderosas disputam sua atenção. Isso te dá muita capacidade de realização, mas cuidado para que essa "vontade de fazer tudo" não te gere uma confusão mental ou estresse físico.`;
+        conclusaoDinamica = `Você opera em Alta Polaridade. Sua força no ${nomesAmigaveis[p1.chave]} protege sua fragilidade no ${nomesAmigaveis[p4.chave]}.`;
+    } else {
+        conclusaoDinamica = `Seu perfil mostra uma dinâmica entre ${nomesAmigaveis[p1.chave]} e ${nomesAmigaveis[p4.chave]}.`;
     }
 
     let textoVeredito = `--- \n SÍNTESE DO PERFIL \n\n`;
-    textoVeredito += `Sua Força Principal (${nomesAmigaveis[p1.chave]} - ${p1.nivel.toUpperCase()}): \n${baseTextos[p1.chave][p1.nivel]} \n\n`;
-    textoVeredito += `Seu Desafio Atual (${nomesAmigaveis[p4.chave]} - ${p4.nivel.toUpperCase()}): \n${baseTextos[p4.chave][p4.nivel]} \n\n`;
+    textoVeredito += `Sua Força Principal (${nomesAmigaveis[p1.chave]}): \n${baseTextos[p1.chave][p1.nivel]} \n\n`;
+    textoVeredito += `Seu Desafio Atual (${nomesAmigaveis[p4.chave]}): \n${baseTextos[p4.chave][p4.nivel]} \n\n`;
     textoVeredito += `A CONEXÃO FINAL: \n${conclusaoDinamica}`;
-    return textoFinal + "\n" + textoVeredito;
+    
+    return aplicarFiltroTexto(textoFinal + "\n" + textoVeredito);
 }
 
 function planoNatural(nome) {
@@ -278,7 +300,7 @@ function planoNatural(nome) {
         intuitivo: { nivel: classificarIntensidade(soma.intuitivo, maior), numero: reduzirNumero(soma.intuitivo), valorReal: soma.intuitivo }
     };
     resultadoPlanosNatural = dados; valoresBrutosNatural = soma;
-    document.getElementById("resumoNatural").innerText = gerarTextoPlano("natural", dados);
+    document.getElementById("resumoNatural").innerHTML = gerarTextoPlano("natural", dados);
     for(let p in soma) atualizarBarraNatural(p.charAt(0).toUpperCase() + p.slice(1) + "Nat", soma[p], maior, dados[p].numero);
     atualizarTabela3(nome.split(""), "Nat");
 }
@@ -328,12 +350,11 @@ function gerarStatusMomento() {
         emocional: { nivel: classificarIntensidade(d.emocional, maior), numero: red.emocional, valorReal: d.emocional },
         intuitivo: { nivel: classificarIntensidade(d.intuitivo, maior), numero: red.intuitivo, valorReal: d.intuitivo }
     };
-    document.getElementById("resumoMomento").innerText = "No ano de " + ano + " (" + d.intervalo + "):\n\n" + gerarTextoPlano("momento", dadosTxt);
+    document.getElementById("resumoMomento").innerHTML = "No ano de " + ano + " (" + d.intervalo + "):\n\n" + gerarTextoPlano("momento", dadosTxt);
 
-    // IMPLEMENTAÇÃO DO TRÂNSITO (SOMA E REDUÇÃO)
     const somaTransito = d.fisico + d.mental + d.emocional + d.intuitivo;
     const numTransito = reduzirNumero(somaTransito);
-    let txtTransito = (typeof textosTrânsito !== 'undefined' && textosTrânsito[numTransito]) ? textosTrânsito[numTransito] : "A vibração deste ciclo é " + numTransito;
+    let txtTransito = (typeof textosTrânsito !== 'undefined' && textosTrânsito[numTransito]) ? aplicarFiltroTexto(textosTrânsito[numTransito]) : "A vibração deste ciclo é " + numTransito;
     
     document.getElementById("resultadoTrânsito").innerHTML = `
         <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
@@ -347,7 +368,6 @@ function atualizarBarraNatural(tipo, val, maior, red) {
     let larg = maior > 0 ? Math.max((val/maior)*100, 12) : 0;
     let elBar = document.getElementById("bar"+tipo);
     if(elBar) elBar.style.width = larg + "%";
-    // Esconde o número na tela conforme solicitado
     let elNum = document.getElementById("num"+tipo);
     if(elNum) { elNum.innerText = red; elNum.style.display = "none"; }
 }
@@ -361,22 +381,11 @@ function gerarTudo() {
 
 function exportarRelatorio() {
     if(!resultadoPlanosNatural) return alert("Gere o mapa primeiro.");
-    const anoSel = document.getElementById("anoSelect").value;
-    const dAno = bancoMomentos.find(a => a.ano == anoSel);
-    
     const pacote = {
         nome: document.getElementById("nome").value,
         data: document.getElementById("dataNascimento").value,
-        anoMomento: anoSel,
-        fisico: valoresBrutosNatural.fisico, mental: valoresBrutosNatural.mental, emocional: valoresBrutosNatural.emocional, intuitivo: valoresBrutosNatural.intuitivo,
-        fisicoMomento: dAno.fisico, mentalMomento: dAno.mental, emocionalMomento: dAno.emocional, intuitivoMomento: dAno.intuitivo,
-        textoNatural: document.getElementById("resumoNatural").innerText,
-        textoMomento: document.getElementById("resumoMomento").innerText,
-        criativoNat: document.getElementById("numCriativoNat").innerText, indecisoNat: document.getElementById("numIndecisoNat").innerText, neutroNat: document.getElementById("numNeutroNat").innerText,
-        criativoMom: document.getElementById("numCriativoMom").innerText, indecisoMom: document.getElementById("numIndecisoMom").innerText, neutroMom: document.getElementById("numNeutroMom").innerText,
-        textoExpressaoNat: document.getElementById("resumoExpressaoNat").innerHTML,
-        textoExpressaoMom: document.getElementById("resumoExpressaoMom").innerHTML,
-        // Envia o Trânsito para o PDF
+        textoNatural: document.getElementById("resumoNatural").innerHTML,
+        textoMomento: document.getElementById("resumoMomento").innerHTML,
         transitoHTML: document.getElementById("resultadoTrânsito").innerHTML
     };
     localStorage.setItem("relatorioMapa", JSON.stringify(pacote));
