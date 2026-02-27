@@ -16,7 +16,7 @@ body { font-family: "Times New Roman", serif; color:#000; background:#ffffff; li
 .subtitulo { font-size: 30px; color: #191F42; font-style: arial; }
 
 /* SEÇÕES LIMPAS */
-.secao { page-break-inside: avoid; background: transparent; padding: 20px 0; margin-top: 30px; border-bottom: 1px solid #eee; }
+.secao { page-break-inside: avoid; background: transparent; padding: 20px 0; margin-top: 30px; border-bottom: 1px solid #fff; }
 h2 { font-size: 26px; color: #111; margin-bottom: 20px; border-left: 5px solid #fff; padding-left: 15px; }
 
 /* BARRAS SEM NÚMEROS */
@@ -35,7 +35,7 @@ h2 { font-size: 26px; color: #111; margin-bottom: 20px; border-left: 5px solid #
 .neutro { background-color: #94a3b8 !important; box-shadow: inset 0 0 0 1000px #94a3b8 !important; }
 
 /* TEXTOS */
-.texto-grande { margin-top: 15px; padding: 15px; border-left: 4px solid #a855f7; font-style: italic; background: #fff; color: #333; font-size: 15px; white-space: pre-wrap; }
+.texto-grande { margin-top: 15px; padding: 15px; border-left: 4px solid #fff; font-style: italic; background: #fff; color: #111; font-size: 15px; white-space: pre-wrap; }
 p { text-align: justify; font-size: 18px; color: #111; }
 .rodape { margin-top: 50px; text-align: rigth; font-size: 12px; color: #222; border-top: 1px solid #fff; padding-top: 10px; }
 
@@ -74,7 +74,7 @@ if(!dadosSalvos){
         </div>
 
         <div class="secao">
-            <h2>1. Perfil de Expressão Natural</h2>
+            <h2> Perfil de Expressão Natural</h2>
             <p>O Perfil Natural descreve sua essência primária e como você se posiciona diante do mundo de forma instintiva.</p>
             <div class="grafico">
                 ${gerarBarra("Criativo", rel.criativoNat, maxExpNat, 'criativo')}
@@ -85,7 +85,7 @@ if(!dadosSalvos){
         </div>
 
         <div class="secao">
-            <h2>2. Plano de Expressão Natural</h2>
+            <h2> Plano de Expressão Natural</h2>
             <p>Representa as ferramentas estruturais da sua alma: como sua inteligência, ação e emoção operam de forma permanente.</p>
             <div class="grafico">
                 ${gerarBarra("Físico", rel.fisico, maxNat, 'fisico')}
@@ -97,7 +97,7 @@ if(!dadosSalvos){
         </div>
 
         <div class="secao">
-            <h2>3. Status do Momento (Ano ${rel.anoMomento})</h2>
+            <h2> Status do Momento (Ano ${rel.anoMomento})</h2>
             <p>As energias que estão sendo mais exigidas de você neste período para manter o seu equilíbrio e evolução.</p>
             <div class="grafico">
                 ${gerarBarra("Físico", rel.fisicoMomento, maxMom, 'fisico')}
@@ -109,7 +109,7 @@ if(!dadosSalvos){
         </div>
 
         <div class="secao">
-            <h2>4. Perfil de Expressão do Momento</h2>
+            <h2> Perfil de Expressão do Momento</h2>
             <p>Indica como você está canalizando sua força de vontade neste ciclo: se através da criação, da ponderação ou da observação.</p>
             <div class="grafico">
                 ${gerarBarra("Criativo", rel.criativoMom, maxExpMom, 'criativo')}
@@ -120,7 +120,7 @@ if(!dadosSalvos){
         </div>
 
         <div class="secao">
-            <h2>5. Ciclos de Trânsito </h2>
+            <h2> Ciclos de Trânsito </h2>
             <p> Os ciclos de Trânsito na Numerologia Quântica refletem suas mudanças e influências internas e pessoais.
 São os únicos ciclos em um Estudo Numerológico que são originados do nome de nascimento.</p>
 
