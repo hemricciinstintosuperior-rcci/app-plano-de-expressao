@@ -205,7 +205,8 @@ Este texto aborda a complexa estrutura da experiência humana dividida em quatro
 
         <div class="secao">
         
-            <h2>1. Perfil de Expressão Natural</h2>
+            <h2> Perfil de Expressão Natural</h2>
+            <p>O Perfil Natural descreve sua essência primária e como você se posiciona diante do mundo de forma instintiva.</p>
             <div class="grafico">
                 ${gerarBarra("Criativo", rel.criativoNat, maxExpNat, 'criativo')}
                 ${gerarBarra("Indeciso", rel.indecisoNat, maxExpNat, 'indeciso')}
@@ -215,7 +216,8 @@ Este texto aborda a complexa estrutura da experiência humana dividida em quatro
         </div>
 
         <div class="secao">
-            <h2>2. Plano de Expressão Estrutural</h2>
+            <h2> Plano de Expressão Estrutural</h2>
+                        <p>Representa as ferramentas estruturais da sua alma: como sua inteligência, ação e emoção operam de forma permanente.</p>
             <div class="grafico">
                 ${gerarBarra("Físico", rel.fisico, maxNat, 'fisico')}
                 ${gerarBarra("Mental", rel.mental, maxNat, 'mental')}
@@ -224,9 +226,18 @@ Este texto aborda a complexa estrutura da experiência humana dividida em quatro
             </div>
             <div class="texto-analise">${rel.textoNatural}</div>
         </div>
-
         <div class="secao">
-            <h2>3. Plano de Expressão do Momento (Ano ${rel.anoMomento})</h2>
+            <h2>4. Perfil de Expressão do Momento</h2>
+            <p>Indica como você está canalizando sua força de vontade neste ciclo: se através da criação, da ponderação ou da observação.</p>
+            <div class="grafico">
+                ${gerarBarra("Criativo", rel.criativoMom, maxExpMom, 'criativo')}
+                ${gerarBarra("Indeciso", rel.indecisoMom, maxExpMom, 'indeciso')}
+                ${gerarBarra("Neutro", rel.neutroMom, maxExpMom, 'neutro')}
+            </div>
+            <div class="texto-grande">${rel.textoExpressaoMom}</div>
+        </div>
+        <div class="secao">
+            <h2> Plano de Expressão do Momento (Ano ${rel.anoMomento})</h2>
             <div class="grafico">
                 ${gerarBarra("Físico", rel.fisicoMomento, maxMom, 'fisico')}
                 ${gerarBarra("Mental", rel.mentalMomento, maxMom, 'mental')}
@@ -237,7 +248,8 @@ Este texto aborda a complexa estrutura da experiência humana dividida em quatro
         </div>
 
         <div class="secao">
-            <h2>4. Vibração de Trânsito Anual</h2>
+            <h2> Vibração de Trânsito Anual</h2>
+            <p>Esta é a energia predominante do seu ano, indicando o clima vibracional que regerá suas decisões e o fluxo dos acontecimentos.</p>
             <div class="box-transito">
                 ${rel.transitoHTML}
             </div>
