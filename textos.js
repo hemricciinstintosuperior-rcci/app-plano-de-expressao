@@ -601,6 +601,7 @@ const textosExpressao = {
     
 Você possui ideias originais, enxerga a realidade de forma diferenciada e encara imprevistos com otimismo e espontaneidade.
 Analisa problemas complexos dividindo-os em partes menores, focando em soluções eficazes e na adaptação rápida a novas situações.
+
 Você é movido por estímulos internos e grande motivação pessoal, ignorando rotinas estabelecidas para explorar diversas alternativas.
 Pelo lado negativo, você pode manifestar arrogância, rebeldia contra regras e sofrer com grandes flutuações de humor e desconfiança.
 Sua busca constante pelo novo pode levar você a perder a noção de tempo e espaço ou a se deixar envolver por ilusões.`,
@@ -609,6 +610,7 @@ Sua busca constante pelo novo pode levar você a perder a noção de tempo e esp
     
 Você apresenta grande sensibilidade e necessidade de atenção, podendo agir de forma dramática ou precipitada sob pressão emocional.
 Suas reações são influenciáveis pelo ambiente, o que gera em você mudanças frequentes de opinião e certa dificuldade em agir sozinho.
+
 Você possui um lado sedutor e provocante, mas que pode ser interpretado como inconveniência devido ao seu excesso de dramatização.
 O fortalecimento do seu caráter ocorre ao descobrir sua verdadeira identidade, trocando a busca por reconhecimento por desejos internos.
 Negativamente, você pode se tornar inconstante, manipuladora e impulsiva quando é dominada por seus receios e emoções intensas.`,
@@ -618,6 +620,7 @@ Negativamente, você pode se tornar inconstante, manipuladora e impulsiva quando
 Você é alguém equilibrado e observador, que prefere analisar todos os pontos de vista antes de tomar partido em qualquer conflito.
 Age movido por interesses próprios e raramente sai da zona de conforto, sendo você excessivamente cauteloso para evitar riscos inúteis.
 Relaciona-se bem com todos, mas constrói barreiras emocionais intencionais para evitar sofrimento, raramente expondo o que você sente.
+
 Você possui facilidade de adaptação e mantém o autocontrole em situações difíceis, preferindo rotinas pacíficas e a ausência de polêmicas.
 No aspecto negativo, você pode demonstrar preguiça, omissão e medo de decidir, mantendo-se "em cima do muro" e sendo pouco criativo.`
 };
