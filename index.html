@@ -684,6 +684,10 @@ textoNeuro +
 
     for(let p in soma) atualizarBarraNatural(p.charAt(0).toUpperCase() + p.slice(1) + "Nat", soma[p], maior, dados[p].numero);
     atualizarTabela3(nome.split(""), "Nat");
+// Marca que o mapa natural foi gerado para liberar o PDF
+resultadoPlanosNatural = true;      // Sinaliza que o mapa foi gerado
+valoresBrutosNatural = soma;        // Guarda os valores brutos para o PDF
+  
 }
 
 function planoMomento(nomeCompleto, data) {
