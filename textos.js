@@ -8,52 +8,52 @@ const textosPlanos = {
       1: `Existe em você um grande impulso de ação, iniciativa e realização prática no mundo material. A sua energia física manifesta-se com intensidade, favorecendo o começo de projetos e a tomada de decisões rápidas.
 Você tem uma tendência natural à autonomia e à liderança na execução, sentindo necessidade de abrir caminhos próprios e construir sua independência.
 O seu principal aprendizado envolve desenvolver constância e paciência, garantindo que sua forte iniciativa produza resultados duradouros.
-Sua vitalidade é um motor constante que empurra você para a superação de obstáculos físicos e materiais.`,
+A vitalidade é um motor constante que empurra você para a superação de obstáculos físicos e materiais.`,
 
       2: `A sua energia física manifesta-se de forma cooperativa, constante e extremamente equilibrada no dia a dia. Você possui grande capacidade de trabalhar em equipe e sustentar projetos de longo prazo com ritmo.
 Sua ação prática acontece com sensibilidade ao ambiente, favorecendo que você mantenha relações harmoniosas e produtivas no trabalho.
-O seu desafio está em manter a autonomia pessoal e não depender excessivamente de suporte externo para que você tome atitudes práticas.
+O seu desafio de você  está em manter a autonomia pessoal e não depender excessivamente de suporte externo para que tome atitudes práticas.
 Sua força física é sutil, agindo como a "cola" que mantém os seus processos materiais funcionando sem grandes sobressaltos.`,
 
       3: `A sua energia física é dinâmica e versátil, permitindo que você se adapte a diferentes funções com facilidade. Existe em você uma facilidade natural para executar tarefas múltiplas e manter um ritmo entusiasmado.
-Sua ação costuma ser acompanhada de criatividade, tornando a sua produtividade mais leve e expressiva para quem observa você.
+A ação de você  costuma ser acompanhada de criatividade, tornando a sua produtividade mais leve e expressiva para quem a observa.
 O seu principal cuidado é evitar a dispersão de forças e aprender a direcionar o seu dinamismo para objetivos verdadeiramente significativos.
 Sua vitalidade manifesta-se como alegria em realizar, transformando o seu trabalho em uma forma de expressão pessoal.`,
 
       4: `Você possui forte capacidade de disciplina, organização rigorosa e construção material sólida. Sua energia física favorece a rotina e a sua perseverança diante de tarefas complexas ou repetitivas.
 Seus projetos tendem a ser desenvolvidos com método e planejamento, garantindo que você entregue resultados tangíveis ao longo do tempo.
-O seu desafio consiste em equilibrar essa rigidez com a flexibilidade, evitando que você sofra com sobrecarga física por perfeccionismo.
+O desafio de você  consiste em equilibrar essa rigidez com a flexibilidade, evitando que sofra com sobrecarga física por perfeccionismo.
 É a sua energia de construtor, que prefere a segurança do progresso gradual à incerteza dos saltos impulsivos.`,
 
       5: `Sua energia física manifesta-se com grande vitalidade e uma adaptabilidade impressionante. Existe em você um forte impulso para agir, explorar novos territórios e experimentar possibilidades práticas.
 Mudanças repentinas estimulam a sua ação e aumentam a sua produtividade, favorecendo o seu crescimento através da experiência direta.
 O seu principal aprendizado envolve desenvolver foco para transformar o seu movimento frenético em realização concreta e estável.
-A liberdade de movimento é essencial para que você não se sinta estagnado, sendo o dinamismo a sua característica central.`,
+A liberdade de movimento é essencial para que você não sinta estagnação, sendo o dinamismo a sua característica central.`,
 
       6: `Existe em você forte disposição para assumir responsabilidades e cuidar da estabilidade do seu ambiente. Sua energia física favorece o compromisso com o dever e a manutenção do bem-estar material ao seu redor.
-Sua ação é direcionada à construção de harmonia e funcionalidade no espaço em que você vive e trabalha.
+A ação de  você é direcionada à construção de harmonia e funcionalidade no espaço em que vive e trabalha.
 O seu desafio está em evitar a sobrecarga de tarefas alheias e aprender a equilibrar suas responsabilidades com o seu autocuidado.
-Sua produtividade é guiada pelo desejo de servir, tornando você um pilar de sustentação prática para o seu grupo.`,
+Sua produtividade de você é guiada pelo desejo de servir, tornando um pilar de sustentação prática para o seu grupo.`,
 
       7: `Sua energia física manifesta-se com direção e uma busca constante por eficiência estratégica. Você tem capacidade de agir com foco profundo, poupando sua energia para o que realmente exige precisão.
 Sua ação tende a acontecer de forma seletiva ou quando você encontra um significado claro ou uma necessidade técnica na realidade.
-O seu principal aprendizado envolve manter o equilíbrio entre a ação externa e o seu recolhimento, evitando que você sofra cansaço por excesso de análise.
-Sua força física é canalizada através da mente, resultando em movimentos precisos e execuções de alta qualidade feitas por você.`,
+O  principal aprendizado de você envolve manter o equilíbrio entre a ação externa e o seu recolhimento, evitando que  sofra cansaço por excesso de análise.
+A força  física de você é canalizada através da mente, resultando em movimentos precisos e execuções de alta qualidade.`,
 
       8: `Você possui forte capacidade de realização material em larga escala, com foco total em resultados e poder. Sua energia física favorece a sua liderança executiva e o cumprimento de metas ambiciosas.
-Seus projetos são conduzidos com determinação férrea e uma visão prática voltada para a sua eficiência e o seu lucro.
+Os  projetos de você são conduzidos com determinação férrea e uma visão prática voltada para a sua eficiência e o seu lucro.
 O seu desafio consiste em equilibrar essa ambição com o seu bem-estar, evitando que sua busca pelo sucesso resulte em negligência com sua saúde.
 É a sua energia de comando, capaz de gerenciar recursos para que você construa obras de grande impacto.`,
 
       9: `Sua energia física manifesta-se com impulso de realização voltado a propósitos coletivos. Existe em você uma disposição incansável para agir em projetos que tragam contribuição social para o mundo.
 Sua ação é guiada por ideais elevados e um profundo senso de missão que transcende o seu interesse puramente individual.
 O seu principal aprendizado envolve equilibrar esse idealismo com a praticidade necessária nas pequenas tarefas que você executa no cotidiano.
-Sua vitalidade é alimentada pela inspiração, permitindo que você realize grandes feitos físicos em nome de uma causa maior.`
+A vitalidade de você  é alimentada pela inspiração, permitindo que você realize grandes feitos físicos em nome de uma causa maior.`
     },
 
     medio: {
       1: `Você tem boa capacidade de iniciativa e ação quando possui motivação clara e um objetivo definido. Sua energia física tende a responder bem a metas, permitindo que você coloque ideias em prática.
-Sua constância pode variar, exigindo esforço consciente para que você não desanime diante de obstáculos lentos ou burocráticos.
+A constância de  você  pode variar, exigindo esforço consciente para que não desanime diante de obstáculos lentos ou burocráticos.
 Equilibrar sua iniciativa com disciplina permite que você transforme esse potencial em resultados sólidos e consistentes.
 A autonomia é presente em você, mas você ainda valoriza o reconhecimento para sentir que sua ação está no caminho correto.`,
 
