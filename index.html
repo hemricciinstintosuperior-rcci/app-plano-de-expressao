@@ -191,6 +191,30 @@ const neuroMapa = {
 9: "Integração neural ampla ligada à empatia coletiva e visão humanitária."
 };
 
+const perfisNeuro = {
+
+fisico:{
+titulo:"Perfil Neural: Executor Motor",
+descricao:"Predominância do sistema motor cerebral. Indica uma mente orientada para ação, movimento e execução prática das ideias."
+},
+
+mental:{
+titulo:"Perfil Neural: Estrategista Cognitivo",
+descricao:"Predominância do córtex pré-frontal. Perfil associado a raciocínio analítico, planejamento e visão estratégica."
+},
+
+emocional:{
+titulo:"Perfil Neural: Integrador Emocional",
+descricao:"Predominância do sistema límbico. Indica forte sensibilidade emocional, empatia e percepção social."
+},
+
+intuitivo:{
+titulo:"Perfil Neural: Observador Introspectivo",
+descricao:"Predominância da rede de reflexão interna (Default Mode Network). Perfil ligado à introspecção, percepção simbólica e reflexão profunda."
+}
+
+};  
+
 // ============================================
 // MAPA NEUROCOGNITIVO DOS PLANOS
 // ============================================
@@ -341,6 +365,24 @@ Essas atividades fortalecem a capacidade de percepção interna e criatividade.
 `
 };
 
+function gerarDominanciaNeuro(dados){
+
+let dominante = Object.keys(dados).sort((a,b)=>dados[b].valorReal-dados[a].valorReal)[0];
+
+let perfil = perfisNeuro[dominante];
+
+let html = `
+<h3>Dominância Neurocognitiva</h3>
+
+<p>
+<strong>${perfil.titulo}</strong><br><br>
+${perfil.descricao}
+</p>
+`;
+
+return html;
+
+}  
   
 function gerarInterpretacaoNeuro(dados){
 
@@ -519,12 +561,16 @@ function planoNatural(nome) {
 
 let textoPlano = gerarTextoPlano("natural", dados);
 
+let textoDominancia = gerarDominanciaNeuro(dados);
+
 let textoNeuro = gerarInterpretacaoNeuro(dados);
 
 let textoEducacao = gerarEducacaoNeuro(dados);
 
 document.getElementById("resumoNatural").innerHTML =
 textoPlano +
+"<br><br>" +
+textoDominancia +
 "<br><br>" +
 textoNeuro +
 "<br><br>" +
