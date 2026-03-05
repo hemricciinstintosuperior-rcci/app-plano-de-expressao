@@ -6,8 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Plano de Expressão Quântico</title>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#111827">
+
 
 <style>
 body{font-family:Arial;padding:30px;background:#f4f4f4}
@@ -168,6 +167,93 @@ const tabelaExpressao = {
 };
 const planos = { fisico: ["E","W","D","M"], mental: ["A","H","J","N","P","G","L"], emocional: ["I","O","R","Z","B","S","T","X"], intuitivo: ["K","F","Q","U","Y","C","V"] };
 
+// MAPA NEUROCOGNITIVO
+
+const neuroMapa = {
+
+1: "Predominância do córtex pré-frontal. Indica forte capacidade de decisão, iniciativa e comando consciente das ações.",
+
+2: "Ativação elevada do sistema límbico relacional. Sensibilidade social e percepção emocional ampliada.",
+
+3: "Estímulo nas áreas criativas do hemisfério direito. Comunicação simbólica, imaginação e expressão mental fluida.",
+
+4: "Circuitos executivos e de organização cognitiva dominantes. Estrutura mental lógica e foco em estabilidade.",
+
+5: "Alta atividade dopaminérgica ligada à novidade e adaptação. Perfil explorador e mente dinâmica.",
+
+6: "Integração empática e afetiva elevada. Forte resposta emocional e cuidado interpessoal.",
+
+7: "Ativação do modo introspectivo cerebral (Default Mode Network). Tendência à reflexão profunda.",
+
+8: "Redes estratégicas e de controle ativadas. Foco em liderança, estratégia e realização material.",
+
+9: "Integração neural ampla ligada à empatia coletiva e visão humanitária."
+};
+
+// ============================================
+// MAPA NEUROCOGNITIVO DOS PLANOS
+// ============================================
+
+const mapaNeuro = {
+
+fisico:{
+regiao:"Córtex Motor e Cerebelo",
+funcao:"execução de ações, coordenação motora e resposta prática ao ambiente",
+forte:"Predominância de circuitos motores e pragmáticos. A tendência é agir rapidamente e transformar ideias em ação concreta.",
+medio:"Boa integração entre planejamento mental e execução prática.",
+fraco:"Pode haver dificuldade em transformar ideias em ação ou manter constância comportamental."
+},
+
+mental:{
+regiao:"Córtex Pré-frontal",
+funcao:"planejamento, raciocínio lógico e tomada de decisão",
+forte:"Predominância de circuitos executivos ligados à análise, estratégia e visão de longo prazo.",
+medio:"Equilíbrio entre reflexão racional e adaptação emocional.",
+fraco:"Pode existir tendência a agir mais pela emoção ou impulso do que pela análise."
+},
+
+emocional:{
+regiao:"Sistema Límbico",
+funcao:"processamento emocional, empatia e vínculos sociais",
+forte:"Alta sensibilidade emocional e forte capacidade de conexão afetiva.",
+medio:"Regulação emocional equilibrada entre razão e sentimento.",
+fraco:"Tendência a reprimir emoções ou ter dificuldade em expressar sentimentos."
+},
+
+intuitivo:{
+regiao:"Rede Default Mode",
+funcao:"introspecção, imaginação e percepção simbólica",
+forte:"Grande capacidade introspectiva, criatividade simbólica e percepção de padrões profundos.",
+medio:"Boa integração entre reflexão interior e interação com o mundo externo.",
+fraco:"Pouca tendência a reflexão profunda ou busca de significado interno."
+}
+
+};
+
+function gerarInterpretacaoNeuro(dados){
+
+let html = "<h3>Análise Neurocognitiva</h3>";
+
+for(let plano in dados){
+
+let nivel = dados[plano].nivel;
+let info = mapaNeuro[plano];
+
+let textoNivel = info[nivel] || "";
+
+html += `
+<p>
+<strong>${plano.toUpperCase()}</strong> — ${info.regiao}<br>
+${textoNivel}
+</p>
+`;
+
+}
+
+return html;
+
+}
+
 let bancoMomentos = [];
 let resultadoPlanosNatural = null;
 let valoresBrutosNatural = null;
@@ -299,8 +385,13 @@ function planoNatural(nome) {
         emocional: { nivel: classificarIntensidade(soma.emocional, maior), numero: reduzirNumero(soma.emocional), valorReal: soma.emocional },
         intuitivo: { nivel: classificarIntensidade(soma.intuitivo, maior), numero: reduzirNumero(soma.intuitivo), valorReal: soma.intuitivo }
     };
-    resultadoPlanosNatural = dados; valoresBrutosNatural = soma;
-    document.getElementById("resumoNatural").innerHTML = gerarTextoPlano("natural", dados);
+
+let textoPlano = gerarTextoPlano("natural", dados);
+
+let textoNeuro = gerarInterpretacaoNeuro(dados);
+
+document.getElementById("resumoNatural").innerHTML = textoPlano + "<br><br>" + textoNeuro;
+
     for(let p in soma) atualizarBarraNatural(p.charAt(0).toUpperCase() + p.slice(1) + "Nat", soma[p], maior, dados[p].numero);
     atualizarTabela3(nome.split(""), "Nat");
 }
@@ -350,7 +441,11 @@ function gerarStatusMomento() {
         emocional: { nivel: classificarIntensidade(d.emocional, maior), numero: red.emocional, valorReal: d.emocional },
         intuitivo: { nivel: classificarIntensidade(d.intuitivo, maior), numero: red.intuitivo, valorReal: d.intuitivo }
     };
-    document.getElementById("resumoMomento").innerHTML = "No ano de " + ano + " (" + d.intervalo + "):\n\n" + gerarTextoPlano("momento", dadosTxt);
+
+document.getElementById("resumoMomento").innerHTML =
+"No ano de " + ano + " (" + d.intervalo + "):\n\n" +
+gerarTextoPlano("momento", dadosTxt) +
+gerarInterpretacaoNeuro(dadosTxt);
 
     const somaTransito = d.fisico + d.mental + d.emocional + d.intuitivo;
     const numTransito = reduzirNumero(somaTransito);
@@ -422,12 +517,14 @@ function exportarRelatorio() {
     localStorage.setItem("relatorioMapa", JSON.stringify(pacote));
     window.open("premium.html", "_blank");
 }
-</script>
 
-<script>
-if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js"); }
+
+
+
 document.oncontextmenu=()=>false;
 document.onselectstart=()=>false; 
 </script>
 </body>
 </html>
+
+
