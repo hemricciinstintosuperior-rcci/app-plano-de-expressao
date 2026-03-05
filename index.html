@@ -517,9 +517,14 @@ function exportarRelatorio() {
     
     localStorage.setItem("relatorioMapa", JSON.stringify(pacote));
     window.open("premium.html", "_blank");
-}
 
 
+    setTimeout(() => {
+        window.location.href = "index.html";
+    }, 3000);
+},
+
+  
   document.oncontextmenu=()=>false;
 document.onselectstart=()=>false; 
 </script>
