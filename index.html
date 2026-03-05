@@ -6,7 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Plano de Expressão Quântico</title>
-
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#111827">
 
 <style>
 body{font-family:Arial;padding:30px;background:#f4f4f4}
@@ -1048,11 +1049,14 @@ function exportarRelatorio() {
     window.open("premium.html", "_blank");
 }
 
-
-
-
-document.oncontextmenu=()=>false;
+  document.oncontextmenu=()=>false;
 document.onselectstart=()=>false; 
+</script>
+
+
+<script>
+if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js"); }
+
 </script>
 </body>
 </html>
