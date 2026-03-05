@@ -83,8 +83,10 @@ input {
 <body>
 
 <h1>Plano de Expressão Quântico</h1>
-  <div class="campo"> Nome completo (igual certidão) <input id="nome" type="text" placeholder="Ex: João Silva"> </div>
-  <div class="campo"> Data de nascimento <input id="data" type="date"> </div>
+Nome Completo (igual certidão)
+<input id="nome" placeholder="">
+  Data de Nascimento
+<input type="date" id="dataNascimento" required data-placeholder="Data de Nascimento">
                  
 <button onclick="gerarTudo()">GERAR o seu Plano de Expressão</button>
 <button onclick="exportarRelatorio()">LIberar o acesso ao relatório e baixar o PDF</button>
