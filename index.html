@@ -680,7 +680,7 @@ textoDominancia +
 "<br><br>" +
 textoNeuro +
 "<br><br>" +
-textoEducacao;
+ gerarEducacaoNeuro(); // <-- substitui o texto antigo de educação
 
     for(let p in soma) atualizarBarraNatural(p.charAt(0).toUpperCase() + p.slice(1) + "Nat", soma[p], maior, dados[p].numero);
     atualizarTabela3(nome.split(""), "Nat");
@@ -736,6 +736,7 @@ document.getElementById("resumoMomento").innerHTML =
 "No ano de " + ano + " (" + d.intervalo + "):\n\n" +
 gerarTextoPlano("momento", dadosTxt) +
 gerarInterpretacaoNeuro(dadosTxt);
+ gerarEducacaoNeuro(); // <-- aqui mesmo, logo abaixo  
 
     const somaTransito = d.fisico + d.mental + d.emocional + d.intuitivo;
     const numTransito = reduzirNumero(somaTransito);
