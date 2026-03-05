@@ -108,7 +108,7 @@ Neutro: <span id="numNeutroNat"></span><div class="bar-bg"><div id="barNeutroNat
 <div id="resumoExpressaoNat" class="resumoMomento" style="margin-top:10px; border-left: 4px solid #a855f7;"></div>  
 </div>
 <div id="resumoNatural" class="resumoMomento"></div>
-<div id="educacaoNeuro" class="resumoMomento"></div>
+
   
 </section>
 
@@ -135,7 +135,7 @@ Neutro: <span id="numNeutroMom"></span><div class="bar-bg"><div id="barNeutroMom
     <h3 style="color: #ffd633;">VIBRAÇÃO DE TRÂNSITO DO ANO</h3>
     <div id="resultadoTrânsito"></div>
 </div>
-
+<div id="educacaoNeuro" class="resumoMomento"></div>
   
 </section>
 
@@ -365,17 +365,13 @@ HÁBITOS QUE ESTIMULAM ESSA REDE
 // FUNÇÃO PARA GERAR O CONTEÚDO NA DIV DO HTML
 // ============================================
 
-function gerarEducacaoNeuro() {
-    const div = document.getElementById("educacaoNeuro");
-    if (!div) return;
-
+function gerarEducacaoNeuroRetorno() {
     let html = "<h3>Educação Neurocognitiva</h3>";
     for (let plano in mapaEducacaoNeuro) {
         html += `<h4>${plano.toUpperCase()}</h4>`;
         html += `<p>${mapaEducacaoNeuro[plano]}</p>`;
     }
-
-    div.innerHTML = html;
+    return html;
 }
 
 // ============================================
@@ -674,7 +670,8 @@ let textoPlano = gerarTextoPlano("natural", dados);
 let textoDominancia = gerarDominanciaNeuro(dados);
 
 let textoNeuro = gerarInterpretacaoNeuro(dados);
-
+  
+let textoEducacao = gerarEducacaoNeuroRetorno();
 
 document.getElementById("resumoNatural").innerHTML =
 textoPlano +
