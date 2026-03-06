@@ -52,7 +52,13 @@ input {
   display: block;            
   margin: 10px auto;         
 }
-  
+.bloco-momento img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 15px auto;
+    filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.5)); /* Dá um destaque legal no ícone */
+}  
 /* MOBILE */
 @media (max-width:768px){
   body{padding:15px;}
@@ -498,17 +504,20 @@ const imagensPerfil = {
 // Função para gerar dominância neurocognitiva
 // Apenas retorna o HTML da dominância
 function gerarDominanciaNeuro(dados){
-    // Determina o dominante
-    let dominante = Object.keys(dados).sort((a,b)=>dados[b].valorReal - dados[a].valorReal)[0];
+    // Determina qual plano tem o maior valorReal
+    let dominante = Object.keys(dados).sort((a,b) => dados[b].valorReal - dados[a].valorReal)[0];
     let perfil = perfisNeuro[dominante];
+    let urlImagem = imagensPerfil[dominante]; // Puxa o link do seu repositório
 
-    // Retorna apenas o HTML
+    // Retorna o HTML incluindo a imagem centralizada
     return `
+        <div style="text-align: center; margin-bottom: 20px;">
+            <img src="${urlImagem}" alt="${perfil.titulo}" style="width: 150px; height: auto; border-radius: 10px;">
+        </div>
         <h3>Dominância Neurocognitiva</h3>
         <p><strong>${perfil.titulo}</strong><br><br>${perfil.descricao}</p>
     `;
 }
-  
 function gerarInterpretacaoNeuro(dados){
 
 let html = "<h3>Análise Neurocognitiva</h3>";
