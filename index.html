@@ -496,22 +496,23 @@ const imagensPerfil = {
 };
 
 // Função para gerar dominância neurocognitiva
-function gerarDominanciaNeuro(dados){
-    // dados: objeto com valores de cada plano, ex: { fisico: 85, mental: 60, emocional: 70, intuitivo: 50 }
-    let dominante = Object.keys(dados).sort((a,b)=>dados[b]-dados[a])[0]; // encontra o plano dominante
+// Apenas retorna o HTML da dominância
+function gerarDominanciaNeuroHTML(dados){
+    let dominante = Object.keys(dados).sort((a,b)=>dados[b]-dados[a])[0];
     let perfil = perfisNeuro[dominante];
-    
-    // Atualiza o texto
-    let html = `
+    return `
         <h3>Dominância Neurocognitiva</h3>
         <p><strong>${perfil.titulo}</strong><br><br>${perfil.descricao}</p>
     `;
-    document.getElementById("textoDominancia").innerHTML = html;
-    
-    // Atualiza a imagem correspondente
-    let img = document.getElementById("imgDominancia");
-    if(img) img.src = imagensPerfil[dominante] || "";
-    
+}
+
+// Atualiza DOM (apenas se os elementos existirem)
+function atualizarDominanciaNeuro(dados, sufixo="") {
+    let html = gerarDominanciaNeuroHTML(dados);
+    let elTexto = document.getElementById("textoDominancia"+sufixo);
+    if(elTexto) elTexto.innerHTML = html;
+    let img = document.getElementById("imgDominancia"+sufixo);
+    if(img) img.src = imagensPerfil[Object.keys(dados).sort((a,b)=>dados[b]-dados[a])[0]] || "";
     return html;
 }
   
