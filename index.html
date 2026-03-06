@@ -720,11 +720,13 @@ let textoDominancia = gerarDominanciaNeuro(dados);
 let textoNeuro = gerarInterpretacaoNeuro(dados);
   
 let textoEducacao = gerarEducacaoNeuroRetorno();
-
+  
+let resultadoNeuro = gerarDominanciaNeuro(dados);
+  
 document.getElementById("resumoNatural").innerHTML =
 textoPlano +
 "<br><br>" +
-textoDominancia +
+resultadoNeuro +
 "<br><br>" +
 textoNeuro +
 "<br><br>" +
@@ -783,12 +785,15 @@ function gerarStatusMomento() {
         emocional: { nivel: classificarIntensidade(d.emocional, maior), numero: red.emocional, valorReal: d.emocional },
         intuitivo: { nivel: classificarIntensidade(d.intuitivo, maior), numero: red.intuitivo, valorReal: d.intuitivo }
     };
-
+  
+let resultadoNeuro = gerarDominanciaNeuro(dadosTxt);  
 document.getElementById("resumoMomento").innerHTML =
 "No ano de " + ano + " (" + d.intervalo + "):\n\n" +
 gerarTextoPlano("momento", dadosTxt) +
 "<br><br>" +
+  
 gerarDominanciaNeuro(dadosTxt) + "<br><br>" +  
+  
 gerarInterpretacaoNeuro(dadosTxt) +
 "<br><br>" +
 gerarEducacaoNeuroRetorno(); // <-- aqui mesmo, já concatenado
