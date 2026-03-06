@@ -483,24 +483,7 @@ Essas atividades fortalecem a capacidade de percepção interna e criatividade.
 `
 };
 
-function gerarDominanciaNeuro(dados){
 
-let dominante = Object.keys(dados).sort((a,b)=>dados[b].valorReal-dados[a].valorReal)[0];
-
-let perfil = perfisNeuro[dominante];
-
-let html = `
-<h3>Dominância Neurocognitiva</h3>
-
-<p>
-<strong>${perfil.titulo}</strong><br><br>
-${perfil.descricao}
-</p>
-`;
-
-return html;
-
-}  
 
 
 
