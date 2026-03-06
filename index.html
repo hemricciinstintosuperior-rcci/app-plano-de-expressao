@@ -693,7 +693,6 @@ function planoNatural(nome) {
 
 let textoPlano = gerarTextoPlano("natural", dados);
 
-let textoDominancia = gerarDominanciaNeuro(dados);
 
 let textoNeuro = gerarInterpretacaoNeuro(dados);
   
@@ -764,7 +763,7 @@ function gerarStatusMomento() {
         intuitivo: { nivel: classificarIntensidade(d.intuitivo, maior), numero: red.intuitivo, valorReal: d.intuitivo }
     };
   
-let resultadoNeuro = gerarDominanciaNeuro(dadosTxt);  
+
 document.getElementById("resumoMomento").innerHTML =
 "No ano de " + ano + " (" + d.intervalo + "):\n\n" +
 gerarTextoPlano("momento", dadosTxt) +
