@@ -505,6 +505,54 @@ ${perfil.descricao}
 return html;
 
 }  
+
+// Mapeamento dos perfis neurocognitivos
+const perfisNeuro = {
+    fisico: {
+        titulo: "Executor Motor",
+        descricao: "Você atua principalmente com ações físicas e respostas rápidas. Sua energia se concentra no corpo e na execução prática das tarefas."
+    },
+    mental: {
+        titulo: "Analítico Mental",
+        descricao: "Sua força está na análise lógica e na resolução de problemas complexos. O pensamento racional domina suas decisões."
+    },
+    emocional: {
+        titulo: "Sensível Emocional",
+        descricao: "Você processa o mundo através das emoções e da empatia. Conecta-se profundamente com sentimentos próprios e alheios."
+    },
+    intuitivo: {
+        titulo: "Intuitivo Estratégico",
+        descricao: "Sua percepção vai além do óbvio. Você capta padrões sutis e conecta ideias de forma criativa e estratégica."
+    }
+};
+
+// Mapeamento das imagens correspondentes
+const imagensPerfil = {
+    fisico: "img/icon-fisico.png",
+    mental: "img/icon-mental.png",
+    emocional: "img/icon-emocional.png",
+    intuitivo: "img/icon-intuitivo.png"
+};
+
+// Função para gerar dominância neurocognitiva
+function gerarDominanciaNeuro(dados){
+    // dados: objeto com valores de cada plano, ex: { fisico: 85, mental: 60, emocional: 70, intuitivo: 50 }
+    let dominante = Object.keys(dados).sort((a,b)=>dados[b]-dados[a])[0]; // encontra o plano dominante
+    let perfil = perfisNeuro[dominante];
+    
+    // Atualiza o texto
+    let html = `
+        <h3>Dominância Neurocognitiva</h3>
+        <p><strong>${perfil.titulo}</strong><br><br>${perfil.descricao}</p>
+    `;
+    document.getElementById("textoDominancia").innerHTML = html;
+    
+    // Atualiza a imagem correspondente
+    let img = document.getElementById("imgDominancia");
+    if(img) img.src = imagensPerfil[dominante] || "";
+    
+    return html;
+}
   
 function gerarInterpretacaoNeuro(dados){
 
