@@ -657,7 +657,7 @@ function gerarTextoPlano(tipo, dados) {
 
     let textoVeredito = `--- \n SÍNTESE DO PERFIL \n\n`;
     textoVeredito += `Sua Força Principal (${nomesAmigaveis[p1.chave]}): \n${baseTextos[p1.chave][p1.nivel]} \n\n`;
-    textoVeredito += `Seu Desafio Atual (${nomesAmigaveis[p4.chave]}): \n${baseTextos[p4.chave][p4.nivel]} \n\n`;
+    textoVeredito += `Seu Equilibrio Atual (${nomesAmigaveis[p4.chave]}): \n${baseTextos[p4.chave][p4.nivel]} \n\n`;
     textoVeredito += `A CONEXÃO FINAL: \n${conclusaoDinamica}`;
     
     return aplicarFiltroTexto(textoFinal + "\n" + textoVeredito);
@@ -838,9 +838,7 @@ function exportarRelatorio() {
     window.open("premium.html", "_blank");
 
 
-    setTimeout(() => {
-        window.location.href = "premium.html";
-    }, 3000);
+   
 }
 
   
