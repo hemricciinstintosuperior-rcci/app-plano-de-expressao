@@ -10,37 +10,79 @@
 
 body{
 font-family:Segoe UI,Arial;
-background:#f3f4f6;
+background:#eef1f5;
 margin:0;
 }
 
+/* CONTAINER PRINCIPAL */
+
 .relatorio{
-max-width:1000px;
+max-width:1050px;
 margin:auto;
 background:white;
-padding:50px;
-box-shadow:0 10px 40px rgba(0,0,0,0.2);
+padding:60px;
+box-shadow:0 20px 60px rgba(0,0,0,0.15);
 }
+
+/* TITULOS */
 
 h1{
 text-align:center;
 margin-bottom:10px;
+font-size:32px;
 }
 
 h2{
-margin-top:40px;
-border-left:6px solid #3b82f6;
-padding-left:10px;
+margin-top:45px;
+border-left:6px solid #6366f1;
+padding-left:12px;
+font-size:22px;
 }
 
 h3{
 margin-top:25px;
 }
 
+/* CAPA */
+
 .capa{
 text-align:center;
 margin-bottom:40px;
 }
+
+/* BOTÃO PDF */
+
+.btn-container{
+text-align:center;
+margin:35px 0 45px 0;
+}
+
+.btn-container button{
+
+background:#7c3aed;
+color:white;
+border:none;
+
+padding:14px 38px;
+
+font-size:18px;
+font-weight:600;
+
+border-radius:10px;
+
+cursor:pointer;
+
+transition:0.3s;
+}
+
+.btn-container button:hover{
+
+background:#6d28d9;
+
+transform:scale(1.05);
+}
+
+/* SUMÁRIO */
 
 .sumario ul{
 list-style:none;
@@ -48,9 +90,11 @@ padding:0;
 }
 
 .sumario li{
-padding:6px 0;
-border-bottom:1px dotted #ccc;
+padding:7px 0;
+border-bottom:1px dotted #c9c9c9;
 }
+
+/* GRID */
 
 .grid{
 display:grid;
@@ -58,44 +102,93 @@ grid-template-columns:1fr 1fr;
 gap:40px;
 }
 
+/* BLOCOS */
+
+.bloco{
+background:#f9fafb;
+padding:25px;
+border-radius:12px;
+border:1px solid #e5e7eb;
+}
+
+/* BARRAS */
+
 .barra{
-height:16px;
-background:#ddd;
+height:18px;
+background:#e5e7eb;
 border-radius:10px;
 overflow:hidden;
-margin-bottom:10px;
+margin-bottom:12px;
 }
 
 .barra span{
 display:block;
 height:100%;
 width:0%;
-background:linear-gradient(90deg,#3b82f6,#06b6d4);
 }
 
-.barraExpressao span{
-background:linear-gradient(90deg,#a855f7,#ec4899);
+/* CORES PLANOS */
+
+#barFisicoNat,
+#barFisicoMom{
+background:#ef4444;
 }
 
-.bloco{
-background:#f9fafb;
-padding:20px;
-border-radius:10px;
+#barMentalNat,
+#barMentalMom{
+background:#3b82f6;
 }
+
+#barEmocionalNat,
+#barEmocionalMom{
+background:#22c55e;
+}
+
+#barIntuitivoNat,
+#barIntuitivoMom{
+background:#facc15;
+}
+
+/* EXPRESSÃO */
+
+#barCriativoNat,
+#barCriativoMom{
+background:#9333ea;
+}
+
+#barIndecisoNat,
+#barIndecisoMom{
+background:#fb923c;
+}
+
+#barNeutroNat,
+#barNeutroMom{
+background:#6b7280;
+}
+
+/* TEXTOS */
 
 .texto{
 margin-top:15px;
-line-height:1.6;
+line-height:1.7;
+font-size:16px;
 }
 
-@media(max-width:800px){
+/* RESPONSIVO */
+
+@media(max-width:850px){
+
 .grid{
 grid-template-columns:1fr;
 }
-}
-@media print {
 
-#btnContainer{
+}
+
+/* IMPRESSÃO */
+
+@media print{
+
+.btn-container{
 display:none;
 }
 
@@ -106,10 +199,11 @@ background:white;
 .relatorio{
 box-shadow:none;
 margin:0;
-padding:20px;
+padding:25px;
 }
 
 }
+
 </style>
 
 </head>
