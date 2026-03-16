@@ -843,6 +843,8 @@ gerarEducacaoNeuroRetorno(); // <-- aqui mesmo, já concatenado
         </div>
         <p>${txtTransito}</p>
     `;
+
+    return aplicarFiltroTexto(textoFinal + "\n" + textoVeredito);
 }
 
 function atualizarBarraNatural(tipo, val, maior, red) {
