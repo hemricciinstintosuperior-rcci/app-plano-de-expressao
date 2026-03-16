@@ -469,7 +469,9 @@ Neutro
 
 <div class="texto" id="textoExpressaoMom"></div>
 <div class="texto" id="textoMomento"></div>
+<h2>Dados Neurocognitivos</h2>
 
+<div class="texto" id="textoNeuro"></div>
 <h2>Vibração de Trânsito do Ano</h2>
 <p class="intro">
 A Vibração de Trânsito Anual representa o campo vibracional que influencia o período atual da vida. Ela indica tendências de movimento, mudanças e oportunidades que podem se manifestar ao longo do ciclo anual, funcionando como um direcionamento energético para experiências e aprendizados.
@@ -515,6 +517,7 @@ document.getElementById("textoExpressaoNat").innerHTML = formatarTexto(dados.tex
 document.getElementById("textoExpressaoMom").innerHTML = formatarTexto(dados.textoExpressaoMom);
 
 document.getElementById("transito").innerHTML = dados.transitoHTML;
+document.getElementById("textoNeuro").innerHTML = aplicarNome(dados.textoNeuro);          
 
 /* FUNÇÃO PARA BARRAS */
 
