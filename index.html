@@ -6,26 +6,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Plano de Expressão Quântico</title>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#111827">
 
 <style>
-body{font-family:Arial;padding:30px;background:#f4f4f4}
-input,button{padding:10px;margin:5px}
-.card{background:#fff;padding:20px;margin-top:20px;border-radius:10px}
-table{border-collapse:collapse;width:100%;margin-top:15px}
-th,td{border:1px solid #ccc;padding:6px;text-align:center}
-.vermelho{color:#c0392b}
-.azul{color:#2980b9}
-.verde{color:#27ae60}
-.amarelo{color:#f1c40f}
 
-.bloco-momento{
-  margin-top:60px;
-  padding:30px;
-  background:#111827;
-  color:white;
-  border-radius:10px;
+body{
+font-family:'Segoe UI',Arial,sans-serif;
+margin:0;
+background:linear-gradient(135deg,#111827,#1f2937);
+color:#fff;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
 }
 .bar-bg{background:#2a2a2a;height:18px;border-radius:10px;margin:8px 0;}
 .bar{height:100%;width:0%;border-radius:10px;transition:1s;}
@@ -42,27 +34,101 @@ th,td{border:1px solid #ccc;padding:6px;text-align:center}
 #txtFisico, #txtMental, #txtEmocional, #txtIntuitivo {
     display: none;
 }
-input {
-  width: 600px;
-  font-size: 18px;
-  padding: 14px;
-  background-color: #e5e7eb; 
-  border: 1px solid #ccc;    
-  color: #333;               
-  display: block;            
-  margin: 10px auto;         
+
+.barra{
+height:18px;
+border-radius:12px;
+margin-bottom:14px;
+background:#1f2937;
+overflow:hidden;
 }
-.bloco-momento img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 15px auto;
-    filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.5)); /* Dá um destaque legal no ícone */
-}  
+
+.barra::after{
+content:"";
+display:block;
+height:100%;
+background:linear-gradient(90deg,#06b6d4,#3b82f6);
+width:0;
+transition:width 0.8s ease;
+}
+.container{
+background:#0f172a;
+padding:40px;
+border-radius:16px;
+box-shadow:0 20px 40px rgba(0,0,0,0.4);
+width:90%;
+max-width:700px;
+}
+
+h1{
+text-align:center;
+margin-bottom:30px;
+font-size:32px;
+}
+
+label{
+display:block;
+margin-top:18px;
+font-weight:600;
+}
+
+input{
+width:100%;
+padding:14px;
+border-radius:8px;
+border:none;
+margin-top:6px;
+background:#1f2937;
+color:#fff;
+font-size:16px;
+}
+
+input:focus{
+outline:none;
+border:1px solid #06b6d4;
+}
+
+.buttons{
+margin-top:30px;
+display:flex;
+gap:5px;
+flex-wrap:wrap;
+}
+
+button{
+padding:8px;
+border:none;
+border-radius:8px;
+font-size:14px;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+}
+
+.btn-gerar{
+background:#06b6d4;
+color:#fff;
+}
+
+.btn-gerar:hover{
+background:#0891b2;
+}
+
+.btn-pdf{
+background:#22c55e;
+color:#fff;
+}
+
+.btn-pdf:hover{
+background:#16a34a;
+}
+
+
+
 /* MOBILE */
-@media (max-width:768px){
+@media (max-width:600px){
   body{padding:15px;}
-  h1{font-size:28px;}
+  h1{font-size:26px;}
   input,button,select{width:100%;box-sizing:border-box;margin:8px 0;}
   .bloco-momento{padding:20px;margin-top:30px;}
 }
@@ -75,27 +141,33 @@ input {
         display: flex;
         flex-direction: column;
         align-items: center;
-    }
+    }  
 
-    input, select {
-        display: block !important; 
-        width: 90% !important;     
-        margin-bottom: 25px;      
-    }
-} 
 </style>
 
 </head>
+
 <body>
 
+<div class="container">
+
 <h1>Plano de Expressão Quântico</h1>
-Nome Completo (igual certidão)
-<input id="nome" placeholder="">
-  Data de Nascimento
-<input type="date" id="dataNascimento" required data-placeholder="Data de Nascimento">
-                 
-<button onclick="gerarTudo()">GERAR o seu Plano de Expressão</button>
-<button onclick="exportarRelatorio()">LIberar o acesso ao relatório e baixar o PDF</button>
+
+<label>Nome Completo (igual certidão)</label>
+<input id="nome">
+
+<label>Data de Nascimento</label>
+<input type="date" id="dataNascimento">
+
+<div class="buttons">
+
+<button class="btn-gerar" onclick="gerarTudo()">
+GERAR o seu Plano de Expressão
+</button>
+
+<button class="btn-pdf" onclick="exportarRelatorio()">
+Liberar acesso ao relatório e baixar o PDF
+</button>
 
 <div id="natural" class="card"></div>
 <div id="momento" style="display:none"></div>
