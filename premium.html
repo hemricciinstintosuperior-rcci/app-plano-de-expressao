@@ -260,6 +260,27 @@ Relatório gerado automaticamente • Sistema Instinto Superior
 </div>
 
 </div>
+<script>
 
+let dados = JSON.parse(localStorage.getItem("relatorioMapa"));
+
+document.getElementById("nomePessoa").innerText = dados.nome;
+document.getElementById("dataNascimento").innerText = dados.data;
+
+/* BARRAS PLANO NATURAL */
+
+document.getElementById("fisicoBar").style.width = dados.fisico + "%";
+document.getElementById("mentalBar").style.width = dados.mental + "%";
+document.getElementById("emocionalBar").style.width = dados.emocional + "%";
+document.getElementById("intuitivoBar").style.width = dados.intuitivo + "%";
+
+/* STATUS DO MOMENTO */
+
+document.getElementById("fisicoMomento").style.width = dados.fisicoMomento + "%";
+document.getElementById("mentalMomento").style.width = dados.mentalMomento + "%";
+document.getElementById("emocionalMomento").style.width = dados.emocionalMomento + "%";
+document.getElementById("intuitivoMomento").style.width = dados.intuitivoMomento + "%";
+
+</script>
 </body>
 </html>
