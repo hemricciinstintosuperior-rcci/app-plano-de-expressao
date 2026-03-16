@@ -832,7 +832,7 @@ gerarDominanciaNeuro(dadosTxt) + "<br><br>" +
 gerarInterpretacaoNeuro(dadosTxt) +
 "<br><br>" +
 gerarEducacaoNeuroRetorno(); // <-- aqui mesmo, já concatenado
-return aplicarFiltroTexto(textoFinal + "\n" + textoVeredito);
+
     const somaTransito = d.fisico + d.mental + d.emocional + d.intuitivo;
     const numTransito = reduzirNumero(somaTransito);
     let txtTransito = (typeof textosTrânsito !== 'undefined' && textosTrânsito[numTransito]) ? aplicarFiltroTexto(textosTrânsito[numTransito]) : "A vibração deste ciclo é " + numTransito;
@@ -844,7 +844,7 @@ return aplicarFiltroTexto(textoFinal + "\n" + textoVeredito);
         <p>${txtTransito}</p>
     `;
 
-    return aplicarFiltroTexto(textoFinal + "\n" + textoVeredito);
+ 
 }
 
 function atualizarBarraNatural(tipo, val, maior, red) {
