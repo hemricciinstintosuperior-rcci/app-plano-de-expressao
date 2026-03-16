@@ -2,61 +2,44 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Relatório Premium - Plano de Expressão</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Relatório Premium</title>
 
 <style>
 
 body{
-font-family:"Segoe UI",Arial,sans-serif;
-background:#f4f6f8;
+font-family:Segoe UI,Arial;
+background:#f3f4f6;
 margin:0;
-color:#333;
 }
 
 .relatorio{
-max-width:900px;
+max-width:1000px;
 margin:auto;
-background:#fff;
-padding:40px;
-box-shadow:0 10px 30px rgba(0,0,0,0.15);
+background:white;
+padding:50px;
+box-shadow:0 10px 40px rgba(0,0,0,0.2);
 }
 
-/* CAPA */
+h1{
+text-align:center;
+margin-bottom:10px;
+}
+
+h2{
+margin-top:40px;
+border-left:6px solid #3b82f6;
+padding-left:10px;
+}
+
+h3{
+margin-top:25px;
+}
 
 .capa{
 text-align:center;
-padding:80px 20px;
-border-bottom:2px solid #eee;
-}
-
-.capa h1{
-font-size:40px;
-margin-bottom:10px;
-color:#0f172a;
-}
-
-.capa h2{
-font-size:22px;
-font-weight:normal;
-color:#555;
-}
-
-.capa .nome{
-margin-top:30px;
-font-size:20px;
-font-weight:bold;
-}
-
-/* SUMÁRIO */
-
-.sumario{
-margin:40px 0;
-}
-
-.sumario h2{
-border-bottom:2px solid #ddd;
-padding-bottom:10px;
+margin-bottom:40px;
 }
 
 .sumario ul{
@@ -65,287 +48,259 @@ padding:0;
 }
 
 .sumario li{
-padding:8px 0;
+padding:6px 0;
 border-bottom:1px dotted #ccc;
 }
 
-.sumario a{
-text-decoration:none;
-color:#1d4ed8;
-}
-
-/* SEÇÕES */
-
-.secao{
-margin-top:50px;
-}
-
-.secao h2{
-border-left:6px solid #3b82f6;
-padding-left:10px;
-margin-bottom:20px;
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:40px;
 }
 
 .barra{
-height:18px;
-border-radius:10px;
+height:16px;
 background:#ddd;
-margin-bottom:15px;
+border-radius:10px;
 overflow:hidden;
+margin-bottom:10px;
 }
 
 .barra span{
 display:block;
 height:100%;
-background:linear-gradient(90deg,#3b82f6,#06b6d4);
 width:0%;
+background:linear-gradient(90deg,#3b82f6,#06b6d4);
 }
 
-.bloco-texto{
+.barraExpressao span{
+background:linear-gradient(90deg,#a855f7,#ec4899);
+}
+
+.bloco{
 background:#f9fafb;
 padding:20px;
-border-left:4px solid #22c55e;
-margin-top:10px;
+border-radius:10px;
 }
 
-/* RODAPÉ */
-
-.footer{
-margin-top:60px;
-padding-top:20px;
-border-top:1px solid #ddd;
-text-align:center;
-font-size:14px;
-color:#666;
+.texto{
+margin-top:15px;
+line-height:1.6;
 }
 
-@media print{
-body{
-background:white;
-}
-.relatorio{
-box-shadow:none;
+@media(max-width:800px){
+.grid{
+grid-template-columns:1fr;
 }
 }
 
 </style>
 
 </head>
+
 <body>
 
 <div class="relatorio">
 
-<!-- CAPA -->
 <div class="capa">
 <h1>Plano de Expressão Quântico</h1>
-<h2>Relatório Numerológico Completo</h2>
-
-<div class="nome" id="nomePessoa"></div>
-<div id="dataNascimento"></div>
+<h3 id="nomePessoa"></h3>
+<p id="dataPessoa"></p>
 </div>
 
-
-<!-- SUMÁRIO -->
-
 <div class="sumario">
+
 <h2>Sumário</h2>
 
 <ul>
-<li><a href="#planos">1. Entendendo os Quatro Planos</a></li>
-<li><a href="#perfil-natural">2. Perfil de Expressão Natural</a></li>
-<li><a href="#estrutura">3. Plano de Expressão Estrutural</a></li>
-<li><a href="#momento">4. Perfil de Expressão do Momento</a></li>
-<li><a href="#status">5. Plano de Expressão do Momento</a></li>
-<li><a href="#transito">6. Vibração de Trânsito Anual</a></li>
-<li><a href="#conclusao">7. Síntese Final</a></li>
+<li>1. Plano de Expressão Natural</li>
+<li>2. Perfil de Expressão Natural</li>
+<li>3. Plano de Expressão do Momento</li>
+<li>4. Perfil de Expressão do Momento</li>
+<li>5. Vibração de Trânsito Anual</li>
 </ul>
-</div>
-
-
-<!-- PLANOS -->
-
-<div id="planos" class="secao">
-<h2>Entendendo os Quatro Planos</h2>
-
-<p>
-A numerologia estrutural considera quatro campos fundamentais de manifestação da consciência humana:
-físico, mental, emocional e intuitivo. Cada um representa uma forma específica de interação com a realidade.
-</p>
-</div>
-
-
-<!-- PERFIL NATURAL -->
-
-<div id="perfil-natural" class="secao">
-<h2>Perfil de Expressão Natural</h2>
-
-<p>Físico</p>
-<div class="barra"><span id="fisicoBar"></span></div>
-
-<p>Mental</p>
-<div class="barra"><span id="mentalBar"></span></div>
-
-<p>Emocional</p>
-<div class="barra"><span id="emocionalBar"></span></div>
-
-<p>Intuitivo</p>
-<div class="barra"><span id="intuitivoBar"></span></div>
-
-<div class="bloco-texto" id="textoPerfil"></div>
 
 </div>
 
+<h2>Plano de Expressão Natural</h2>
 
-<!-- EXPRESSÃO ESTRUTURAL -->
+<div class="grid">
 
-<div id="estrutura" class="secao">
-<h2>Plano de Expressão Estrutural</h2>
+<div class="bloco">
 
-<p id="textoEstrutura"></p>
+<h3>Planos</h3>
+
+Físico
+<div class="barra"><span id="barFisicoNat"></span></div>
+
+Mental
+<div class="barra"><span id="barMentalNat"></span></div>
+
+Emocional
+<div class="barra"><span id="barEmocionalNat"></span></div>
+
+Intuitivo
+<div class="barra"><span id="barIntuitivoNat"></span></div>
+
 </div>
 
+<div class="bloco">
 
-<!-- MOMENTO -->
+<h3>Expressão</h3>
 
-<div id="momento" class="secao">
-<h2>Perfil de Expressão do Momento</h2>
+Criativo
+<div class="barra barraExpressao"><span id="barCriativoNat"></span></div>
 
-<div id="textoMomento"></div>
+Indeciso
+<div class="barra barraExpressao"><span id="barIndecisoNat"></span></div>
+
+Neutro
+<div class="barra barraExpressao"><span id="barNeutroNat"></span></div>
 
 </div>
 
+</div>
 
-<!-- STATUS DO MOMENTO -->
+<div class="texto" id="textoExpressaoNat"></div>
+<div class="texto" id="textoNatural"></div>
 
-<div id="status" class="secao">
 <h2>Plano de Expressão do Momento</h2>
 
-<p>Físico</p>
-<div class="barra"><span id="fisicoMomento"></span></div>
+<p><strong>Ano analisado:</strong> <span id="anoMomento"></span></p>
+<p><strong>Ciclo:</strong> <span id="intervaloMomento"></span></p>
 
-<p>Mental</p>
-<div class="barra"><span id="mentalMomento"></span></div>
+<div class="grid">
 
-<p>Emocional</p>
-<div class="barra"><span id="emocionalMomento"></span></div>
+<div class="bloco">
 
-<p>Intuitivo</p>
-<div class="barra"><span id="intuitivoMomento"></span></div>
+<h3>Planos</h3>
 
-</div>
+Físico
+<div class="barra"><span id="barFisicoMom"></span></div>
 
+Mental
+<div class="barra"><span id="barMentalMom"></span></div>
 
-<!-- TRÂNSITO -->
+Emocional
+<div class="barra"><span id="barEmocionalMom"></span></div>
 
-<div id="transito" class="secao">
-<h2>Vibração de Trânsito Anual</h2>
-
-<p id="textoTransito"></p>
-
-</div>
-
-
-<!-- CONCLUSÃO -->
-
-<div id="conclusao" class="secao">
-<h2>Síntese Final</h2>
-
-<div class="bloco-texto" id="textoFinal"></div>
+Intuitivo
+<div class="barra"><span id="barIntuitivoMom"></span></div>
 
 </div>
 
+<div class="bloco">
 
-<div class="footer">
-Relatório gerado automaticamente • Sistema Instinto Superior
+<h3>Expressão</h3>
+
+Criativo
+<div class="barra barraExpressao"><span id="barCriativoMom"></span></div>
+
+Indeciso
+<div class="barra barraExpressao"><span id="barIndecisoMom"></span></div>
+
+Neutro
+<div class="barra barraExpressao"><span id="barNeutroMom"></span></div>
+
 </div>
 
 </div>
+
+<div class="texto" id="textoExpressaoMom"></div>
+<div class="texto" id="textoMomento"></div>
+
+<h2>Vibração de Trânsito do Ano</h2>
+
+<div id="transito"></div>
+
+</div>
+
 <script>
 
 const dados = JSON.parse(localStorage.getItem("relatorioMapa"));
 
 if(!dados){
-console.warn("Nenhum dado recebido do index.");
+alert("Nenhum relatório encontrado.");
 }
 
 /* CAPA */
 
-document.getElementById("nomePessoa").innerText = dados.nome || "";
-document.getElementById("dataNascimento").innerText = dados.data || "";
+document.getElementById("nomePessoa").innerText = dados.nome;
+document.getElementById("dataPessoa").innerText = dados.data;
 
+/* MOMENTO */
 
-/* =========================
-PLANO DE EXPRESSÃO NATURAL
-========================= */
+document.getElementById("anoMomento").innerText = dados.anoMomento;
+document.getElementById("intervaloMomento").innerText = dados.inicioFimMomento;
 
-if(dados.fisico !== undefined)
-document.getElementById("fisicoBar").style.width = dados.fisico + "%";
+/* TEXTOS */
 
-if(dados.mental !== undefined)
-document.getElementById("mentalBar").style.width = dados.mental + "%";
-
-if(dados.emocional !== undefined)
-document.getElementById("emocionalBar").style.width = dados.emocional + "%";
-
-if(dados.intuitivo !== undefined)
-document.getElementById("intuitivoBar").style.width = dados.intuitivo + "%";
-
-
-/* TEXTO PERFIL NATURAL */
-
-if(dados.textoPerfil)
-document.getElementById("textoPerfil").innerHTML = dados.textoPerfil;
-
-
-/* =========================
-PLANO DE EXPRESSÃO ESTRUTURAL
-========================= */
-
-if(dados.textoEstrutura)
-document.getElementById("textoEstrutura").innerHTML = dados.textoEstrutura;
-
-
-/* =========================
-PERFIL DO MOMENTO
-========================= */
-
-if(dados.textoMomento)
+document.getElementById("textoNatural").innerHTML = dados.textoNatural;
 document.getElementById("textoMomento").innerHTML = dados.textoMomento;
+document.getElementById("textoExpressaoNat").innerHTML = dados.textoExpressaoNat;
+document.getElementById("textoExpressaoMom").innerHTML = dados.textoExpressaoMom;
 
+document.getElementById("transito").innerHTML = dados.transitoHTML;
 
-/* =========================
-STATUS DO MOMENTO (BARRAS)
-========================= */
+/* FUNÇÃO PARA BARRAS */
 
-if(dados.fisicoMomento !== undefined)
-document.getElementById("fisicoMomento").style.width = dados.fisicoMomento + "%";
+function barra(id, valor, max){
 
-if(dados.mentalMomento !== undefined)
-document.getElementById("mentalMomento").style.width = dados.mentalMomento + "%";
+let perc = (valor/max)*100;
 
-if(dados.emocionalMomento !== undefined)
-document.getElementById("emocionalMomento").style.width = dados.emocionalMomento + "%";
+document.getElementById(id).style.width = perc + "%";
 
-if(dados.intuitivoMomento !== undefined)
-document.getElementById("intuitivoMomento").style.width = dados.intuitivoMomento + "%";
+}
 
+/* NATURAL */
 
-/* =========================
-TRÂNSITO ANUAL
-========================= */
+let maxNat = Math.max(
+dados.fisico,
+dados.mental,
+dados.emocional,
+dados.intuitivo
+);
 
-if(dados.textoTransito)
-document.getElementById("textoTransito").innerHTML = dados.textoTransito;
+barra("barFisicoNat",dados.fisico,maxNat);
+barra("barMentalNat",dados.mental,maxNat);
+barra("barEmocionalNat",dados.emocional,maxNat);
+barra("barIntuitivoNat",dados.intuitivo,maxNat);
 
+let maxExpNat = Math.max(
+dados.criativoNat,
+dados.indecisoNat,
+dados.neutroNat
+);
 
-/* =========================
-CONCLUSÃO
-========================= */
+barra("barCriativoNat",dados.criativoNat,maxExpNat);
+barra("barIndecisoNat",dados.indecisoNat,maxExpNat);
+barra("barNeutroNat",dados.neutroNat,maxExpNat);
 
-if(dados.textoFinal)
-document.getElementById("textoFinal").innerHTML = dados.textoFinal;
+/* MOMENTO */
 
+let maxMom = Math.max(
+dados.fisicoMomento,
+dados.mentalMomento,
+dados.emocionalMomento,
+dados.intuitivoMomento
+);
+
+barra("barFisicoMom",dados.fisicoMomento,maxMom);
+barra("barMentalMom",dados.mentalMomento,maxMom);
+barra("barEmocionalMom",dados.emocionalMomento,maxMom);
+barra("barIntuitivoMom",dados.intuitivoMomento,maxMom);
+
+let maxExpMom = Math.max(
+dados.criativoMom,
+dados.indecisoMom,
+dados.neutroMom
+);
+
+barra("barCriativoMom",dados.criativoMom,maxExpMom);
+barra("barIndecisoMom",dados.indecisoMom,maxExpMom);
+barra("barNeutroMom",dados.neutroMom,maxExpMom);
 
 </script>
+
 </body>
 </html>
