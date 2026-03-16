@@ -347,10 +347,21 @@ document.getElementById("intervaloMomento").innerText = dados.inicioFimMomento;
 
 /* TEXTOS */
 
-document.getElementById("textoNatural").innerHTML = dados.textoNatural;
-document.getElementById("textoMomento").innerHTML = dados.textoMomento;
-document.getElementById("textoExpressaoNat").innerHTML = dados.textoExpressaoNat;
-document.getElementById("textoExpressaoMom").innerHTML = dados.textoExpressaoMom;
+function formatarTexto(texto){
+
+return texto
+.split("\n")
+.map(linha => linha.trim())
+.filter(linha => linha.length > 0)
+.map(linha => `<p>${linha}</p>`)
+.join("");
+
+}
+
+document.getElementById("textoNatural").innerHTML = formatarTexto(dados.textoNatural);
+document.getElementById("textoMomento").innerHTML = formatarTexto(dados.textoMomento);
+document.getElementById("textoExpressaoNat").innerHTML = formatarTexto(dados.textoExpressaoNat);
+document.getElementById("textoExpressaoMom").innerHTML = formatarTexto(dados.textoExpressaoMom);
 
 document.getElementById("transito").innerHTML = dados.transitoHTML;
 
