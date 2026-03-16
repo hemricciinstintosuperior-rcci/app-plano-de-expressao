@@ -324,7 +324,7 @@ fraco:"Tendência a reprimir emoções ou ter dificuldade em expressar sentiment
 },
 
 intuitivo:{
-regiao:"Rede Default Mode",
+regiao:"Rede de Modo Padrão",
 funcao:"introspecção, imaginação e percepção simbólica",
 forte:"Grande capacidade introspectiva, criatividade simbólica e percepção de padrões profundos.",
 medio:"Boa integração entre reflexão interior e interação com o mundo externo.",
@@ -729,7 +729,7 @@ function gerarTextoPlano(tipo, dados) {
 
     let textoVeredito = `--- \n SÍNTESE DO PERFIL \n\n`;
     textoVeredito += `Sua Força Principal (${nomesAmigaveis[p1.chave]}): \n${baseTextos[p1.chave][p1.nivel]} \n\n`;
-    textoVeredito += `Seu Equilibrio Atual (${nomesAmigaveis[p4.chave]}): \n${baseTextos[p4.chave][p4.nivel]} \n\n`;
+    textoVeredito += `Seu dasafio Atual (${nomesAmigaveis[p4.chave]}): \n${baseTextos[p4.chave][p4.nivel]} \n\n`;
     textoVeredito += `A CONEXÃO FINAL: \n${conclusaoDinamica}`;
     
     return aplicarFiltroTexto(textoFinal + "\n" + textoVeredito);
@@ -838,8 +838,8 @@ gerarEducacaoNeuroRetorno(); // <-- aqui mesmo, já concatenado
     let txtTransito = (typeof textosTrânsito !== 'undefined' && textosTrânsito[numTransito]) ? aplicarFiltroTexto(textosTrânsito[numTransito]) : "A vibração deste ciclo é " + numTransito;
     
     document.getElementById("resultadoTrânsito").innerHTML = `
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
-            <span style="background:#ffd633; color:#000; padding:5px 12px; border-radius:50%; font-weight:bold; font-size:1.4rem;">${numTransito}</span>
+        <div style="display:flex; align-items:left; gap:10px; margin-bottom:10px;">
+            <span style="background:#FFFFFF; color:#000; padding:5px 12px; border-radius:50%; font-weight:bold; font-size:1.4rem;">${numTransito}</span>
         </div>
         <p>${txtTransito}</p>
     `;
