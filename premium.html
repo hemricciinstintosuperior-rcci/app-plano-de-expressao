@@ -262,24 +262,89 @@ Relatório gerado automaticamente • Sistema Instinto Superior
 </div>
 <script>
 
-let dados = JSON.parse(localStorage.getItem("relatorioMapa"));
+const dados = JSON.parse(localStorage.getItem("relatorioMapa"));
 
-document.getElementById("nomePessoa").innerText = dados.nome;
-document.getElementById("dataNascimento").innerText = dados.data;
+if(!dados){
+console.warn("Nenhum dado recebido do index.");
+}
 
-/* BARRAS PLANO NATURAL */
+/* CAPA */
 
+document.getElementById("nomePessoa").innerText = dados.nome || "";
+document.getElementById("dataNascimento").innerText = dados.data || "";
+
+
+/* =========================
+PLANO DE EXPRESSÃO NATURAL
+========================= */
+
+if(dados.fisico !== undefined)
 document.getElementById("fisicoBar").style.width = dados.fisico + "%";
+
+if(dados.mental !== undefined)
 document.getElementById("mentalBar").style.width = dados.mental + "%";
+
+if(dados.emocional !== undefined)
 document.getElementById("emocionalBar").style.width = dados.emocional + "%";
+
+if(dados.intuitivo !== undefined)
 document.getElementById("intuitivoBar").style.width = dados.intuitivo + "%";
 
-/* STATUS DO MOMENTO */
 
+/* TEXTO PERFIL NATURAL */
+
+if(dados.textoPerfil)
+document.getElementById("textoPerfil").innerHTML = dados.textoPerfil;
+
+
+/* =========================
+PLANO DE EXPRESSÃO ESTRUTURAL
+========================= */
+
+if(dados.textoEstrutura)
+document.getElementById("textoEstrutura").innerHTML = dados.textoEstrutura;
+
+
+/* =========================
+PERFIL DO MOMENTO
+========================= */
+
+if(dados.textoMomento)
+document.getElementById("textoMomento").innerHTML = dados.textoMomento;
+
+
+/* =========================
+STATUS DO MOMENTO (BARRAS)
+========================= */
+
+if(dados.fisicoMomento !== undefined)
 document.getElementById("fisicoMomento").style.width = dados.fisicoMomento + "%";
+
+if(dados.mentalMomento !== undefined)
 document.getElementById("mentalMomento").style.width = dados.mentalMomento + "%";
+
+if(dados.emocionalMomento !== undefined)
 document.getElementById("emocionalMomento").style.width = dados.emocionalMomento + "%";
+
+if(dados.intuitivoMomento !== undefined)
 document.getElementById("intuitivoMomento").style.width = dados.intuitivoMomento + "%";
+
+
+/* =========================
+TRÂNSITO ANUAL
+========================= */
+
+if(dados.textoTransito)
+document.getElementById("textoTransito").innerHTML = dados.textoTransito;
+
+
+/* =========================
+CONCLUSÃO
+========================= */
+
+if(dados.textoFinal)
+document.getElementById("textoFinal").innerHTML = dados.textoFinal;
+
 
 </script>
 </body>
