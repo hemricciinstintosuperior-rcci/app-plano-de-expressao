@@ -123,7 +123,10 @@ color:#fff;
 background:#16a34a;
 }
 
-
+.resumoMomento p {
+    margin-bottom: 15px;
+    display: block !important; /* Garante que o parágrafo ocupe a linha toda */
+}
 
 /* MOBILE */
 @media (max-width:600px){
@@ -277,19 +280,19 @@ const neuroMapa = {
 const perfisNeuro = {
     fisico: {
         titulo: "Executor Motor",
-        descricao: "Você atua principalmente com ações físicas e respostas rápidas. Sua energia se concentra no corpo e na execução prática das tarefas."
+        descricao: "Como um perfil focado na ação, você atua principalmente com respostas rápidas e uma interação direta com o ambiente material. Sua energia vital se concentra na inteligência do corpo e na execução prática de tarefas que exigem presença e movimento. Para você, a concretização de objetivos é uma prioridade, utilizando o córtex motor para transformar ideias abstratas em resultados visíveis. Você possui uma resiliência biológica que facilita a superação de obstáculos físicos, mantendo o foco na eficiência e na resolução imediata de problemas do cotidiano."
     },
     mental: {
         titulo: "Analítico Mental",
-        descricao: "Sua força está na análise lógica e na resolução de problemas complexos. O pensamento racional domina suas decisões."
+        descricao: "Sua principal força reside na arquitetura do pensamento lógico e na decomposição de problemas complexos em partes compreensíveis. Para você, o processamento de dados e a organização de estratégias são naturais, permitindo que o pensamento racional domine suas decisões mais importantes. Através de um córtex pré-frontal altamente ativo, você consegue antecipar cenários e planejar com precisão cirúrgica. É essencial que você cultive momentos de clareza mental, pois sua mente é uma ferramenta poderosa que busca constantemente a verdade, a ordem e a coerência em todas as áreas da vida."
     },
     emocional: {
         titulo: "Sensível Emocional",
-        descricao: "Você processa o mundo através das emoções e da empatia. Conecta-se profundamente com sentimentos próprios e alheios."
+        descricao: "A forma como você processa o mundo é profundamente filtrada pelas emoções e por uma percepção empática aguçada. Você se conecta de maneira genuína com os sentimentos próprios e alheios, utilizando o sistema límbico como uma bússola para navegar em suas relações. Para você, a harmonia interpessoal e o significado afetivo das experiências são a base da felicidade. Essa inteligência emocional permite que você identifique nuances nas interações sociais que outros ignoram, transformando sua sensibilidade em uma poderosa força de coesão e compreensão humana no seu círculo social."
     },
     intuitivo: {
         titulo: "Intuitivo Estratégico",
-        descricao: "Sua percepção vai além do óbvio. Você capta padrões sutis e conecta ideias de forma criativa e estratégica."
+        descricao: "Sua percepção cognitiva opera em uma frequência que vai muito além do óbvio ou do meramente visível. Você consegue captar padrões sutis e conexões invisíveis, unindo ideias aparentemente distantes de forma criativa e estratégica. Para você, a intuição não é um acaso, mas um processamento veloz da Rede de Modo Padrão do cérebro. Você confia em seus pressentimentos porque eles são baseados em uma síntese profunda de experiências arquivadas. Quando você se permite silenciar o ruído externo, sua visão estratégica se expande, revelando caminhos inovadores e soluções originais."
     }
 };
 
@@ -298,277 +301,46 @@ const perfisNeuro = {
 // ============================================
 
 const mapaNeuro = {
-
-fisico:{
-regiao:"Córtex Motor e Cerebelo",
-funcao:"execução de ações, coordenação motora e resposta prática ao ambiente",
-forte:`Predominância de circuitos motores e pragmáticos. A tendência é agir rapidamente e transformar ideias em ação concreta.
-
-Esta região do cérebro está ligada à execução das ações físicas, coordenação motora, equilíbrio e capacidade de transformar pensamento em ação prática. 
-O córtex motor envia comandos para os músculos enquanto o cerebelo ajusta precisão, ritmo e estabilidade dos movimentos.
-
-Quando esse sistema funciona bem, a pessoa apresenta boa coordenação, agilidade e facilidade para realizar tarefas físicas ou práticas.
-
-ALIMENTOS QUE FAVORECEM O FUNCIONAMENTO
-
-• Ovos – ricos em colina, importante para neurotransmissores.
-• Sardinha e salmão – fontes de ômega-3 que fortalecem conexões neurais.
-• Banana – rica em potássio e suporte neuromuscular.
-• Aveia – fornece energia estável para o cérebro.
-• Castanhas e nozes – magnésio e gorduras boas para atividade neural.
-
-HÁBITOS QUE ESTIMULAM ESSA REGIÃO
-
-• Exercícios físicos regulares
-• Caminhadas
-• Alongamentos
-• Atividades que exigem coordenação manual
-• Dança ou esportes`,
-
-    
-medio:`Boa integração entre planejamento mental e execução prática.
-Esta região do cérebro está ligada à execução das ações físicas, coordenação motora, equilíbrio e capacidade de transformar pensamento em ação prática. 
-O córtex motor envia comandos para os músculos enquanto o cerebelo ajusta precisão, ritmo e estabilidade dos movimentos.
-
-Quando esse sistema funciona bem, a pessoa apresenta boa coordenação, agilidade e facilidade para realizar tarefas físicas ou práticas.
-
-ALIMENTOS QUE FAVORECEM O FUNCIONAMENTO
-
-• Ovos – ricos em colina, importante para neurotransmissores.
-• Sardinha e salmão – fontes de ômega-3 que fortalecem conexões neurais.
-• Banana – rica em potássio e suporte neuromuscular.
-• Aveia – fornece energia estável para o cérebro.
-• Castanhas e nozes – magnésio e gorduras boas para atividade neural.
-
-HÁBITOS QUE ESTIMULAM ESSA REGIÃO
-
-• Exercícios físicos regulares
-• Caminhadas
-• Alongamentos
-• Atividades que exigem coordenação manual
-• Dança ou esportes`,
-    
-fraco:`Pode haver dificuldade em transformar ideias em ação ou manter constância comportamental
-Esta região do cérebro está ligada à execução das ações físicas, coordenação motora, equilíbrio e capacidade de transformar pensamento em ação prática. 
-O córtex motor envia comandos para os músculos enquanto o cerebelo ajusta precisão, ritmo e estabilidade dos movimentos.
-
-Quando esse sistema funciona bem, a pessoa apresenta boa coordenação, agilidade e facilidade para realizar tarefas físicas ou práticas.
-
-ALIMENTOS QUE FAVORECEM O FUNCIONAMENTO
-
-• Ovos – ricos em colina, importante para neurotransmissores.
-• Sardinha e salmão – fontes de ômega-3 que fortalecem conexões neurais.
-• Banana – rica em potássio e suporte neuromuscular.
-• Aveia – fornece energia estável para o cérebro.
-• Castanhas e nozes – magnésio e gorduras boas para atividade neural.
-
-HÁBITOS QUE ESTIMULAM ESSA REGIÃO
-
-• Exercícios físicos regulares
-• Caminhadas
-• Alongamentos
-• Atividades que exigem coordenação manual
-• Dança ou esportes.
-    `
-},
-
-mental:{
-regiao:"Córtex Pré-frontal",
-funcao:"planejamento, raciocínio lógico e tomada de decisão",
-forte:`Predominância de circuitos executivos ligados à análise, estratégia e visão de longo prazo.
-O córtex pré-frontal é o centro das funções executivas do cérebro: raciocínio lógico, planejamento, tomada de decisões, estratégia e controle da atenção.
-
-Quando bem nutrido e estimulado, o pensamento se torna mais claro, analítico e estratégico.
-
-ALIMENTOS QUE FORTALECEM O CÓRTEX PRÉ-FRONTAL
-
-• Chocolate amargo (70% ou mais cacau) – melhora circulação cerebral.
-• Mirtilo e frutas vermelhas – antioxidantes neurais.
-• Abacate – gorduras saudáveis para os neurônios.
-• Chá verde – melhora foco e atenção.
-• Peixes ricos em ômega-3.
-
-HÁBITOS QUE ESTIMULAM ESSA REGIÃO
-
-• Leitura e estudo
-• Planejamento de metas
-• Jogos de estratégia
-• Aprender novas habilidades
-• Resolver problemas complexos`,
-    
-medio:`Equilíbrio entre reflexão racional e adaptação emocional.
-O córtex pré-frontal é o centro das funções executivas do cérebro: raciocínio lógico, planejamento, tomada de decisões, estratégia e controle da atenção.
-
-Quando bem nutrido e estimulado, o pensamento se torna mais claro, analítico e estratégico.
-
-ALIMENTOS QUE FORTALECEM O CÓRTEX PRÉ-FRONTAL
-
-• Chocolate amargo (70% ou mais cacau) – melhora circulação cerebral.
-• Mirtilo e frutas vermelhas – antioxidantes neurais.
-• Abacate – gorduras saudáveis para os neurônios.
-• Chá verde – melhora foco e atenção.
-• Peixes ricos em ômega-3.
-
-HÁBITOS QUE ESTIMULAM ESSA REGIÃO
-
-• Leitura e estudo
-• Planejamento de metas
-• Jogos de estratégia
-• Aprender novas habilidades
-• Resolver problemas complexos`,
-    
-fraco:`Pode existir tendência a agir mais pela emoção ou impulso do que pela análise.
-O córtex pré-frontal é o centro das funções executivas do cérebro: raciocínio lógico, planejamento, tomada de decisões, estratégia e controle da atenção.
-
-Quando bem nutrido e estimulado, o pensamento se torna mais claro, analítico e estratégico.
-
-ALIMENTOS QUE FORTALECEM O CÓRTEX PRÉ-FRONTAL
-
-• Chocolate amargo (70% ou mais cacau) – melhora circulação cerebral.
-• Mirtilo e frutas vermelhas – antioxidantes neurais.
-• Abacate – gorduras saudáveis para os neurônios.
-• Chá verde – melhora foco e atenção.
-• Peixes ricos em ômega-3.
-
-HÁBITOS QUE ESTIMULAM ESSA REGIÃO
-
-• Leitura e estudo
-• Planejamento de metas
-• Jogos de estratégia
-• Aprender novas habilidades
-• Resolver problemas complexos`
-},
-
-emocional:{
-regiao:"Sistema Límbico",
-funcao:"processamento emocional, empatia e vínculos sociais",
-forte:`Alta sensibilidade emocional e forte capacidade de conexão afetiva.
-O sistema límbico é o centro do processamento emocional, da empatia e da motivação.
-
-Quando equilibrado, ajuda a lidar com emoções, desenvolver vínculos e manter estabilidade psicológica.
-
-ALIMENTOS QUE AJUDAM A REGULAR O SISTEMA LÍMBICO
-
-• Banana – auxilia produção de serotonina.
-• Cacau natural – estimula neurotransmissores do bem-estar.
-• Aveia – ajuda na estabilidade energética do cérebro.
-• Iogurte natural e alimentos fermentados – fortalecem o eixo intestino-cérebro.
-• Castanhas e sementes – magnésio e triptofano.
-
-HÁBITOS QUE EQUILIBRAM O SISTEMA EMOCIONAL
-
-• Sono de qualidade
-• Meditação ou respiração profunda
-• Convívio social saudável
-• Atividades relaxantes
-• Contato com a natureza`,
-    
-medio:`Regulação emocional equilibrada entre razão e sentimento.
-O sistema límbico é o centro do processamento emocional, da empatia e da motivação.
-
-Quando equilibrado, ajuda a lidar com emoções, desenvolver vínculos e manter estabilidade psicológica.
-
-ALIMENTOS QUE AJUDAM A REGULAR O SISTEMA LÍMBICO
-
-• Banana – auxilia produção de serotonina.
-• Cacau natural – estimula neurotransmissores do bem-estar.
-• Aveia – ajuda na estabilidade energética do cérebro.
-• Iogurte natural e alimentos fermentados – fortalecem o eixo intestino-cérebro.
-• Castanhas e sementes – magnésio e triptofano.
-
-HÁBITOS QUE EQUILIBRAM O SISTEMA EMOCIONAL
-
-• Sono de qualidade
-• Meditação ou respiração profunda
-• Convívio social saudável
-• Atividades relaxantes
-• Contato com a natureza`,
-    
-fraco:`Tendência a reprimir emoções ou ter dificuldade em expressar sentimentos.
-O sistema límbico é o centro do processamento emocional, da empatia e da motivação.
-
-Quando equilibrado, ajuda a lidar com emoções, desenvolver vínculos e manter estabilidade psicológica.
-
-ALIMENTOS QUE AJUDAM A REGULAR O SISTEMA LÍMBICO
-
-• Banana – auxilia produção de serotonina.
-• Cacau natural – estimula neurotransmissores do bem-estar.
-• Aveia – ajuda na estabilidade energética do cérebro.
-• Iogurte natural e alimentos fermentados – fortalecem o eixo intestino-cérebro.
-• Castanhas e sementes – magnésio e triptofano.
-
-HÁBITOS QUE EQUILIBRAM O SISTEMA EMOCIONAL
-
-• Sono de qualidade
-• Meditação ou respiração profunda
-• Convívio social saudável
-• Atividades relaxantes
-• Contato com a natureza`
-},
-
-intuitivo:{
-regiao:"Rede de Modo Padrão",
-funcao:"introspecção, imaginação e percepção simbólica",
-forte:`Grande capacidade introspectiva, criatividade simbólica e percepção de padrões profundos.
-Esta rede cerebral está relacionada à introspecção, criatividade, imaginação e percepção intuitiva, ativando-se em momentos de reflexão profunda.
-
-ALIMENTOS QUE FAVORECEM CLAREZA MENTAL
-
-• Nozes e amêndoas – nutrientes para atividade cerebral.
-• Peixes ricos em ômega-3 – fortalecem conexões neurais.
-• Frutas frescas – antioxidantes naturais.
-• Chá de ervas – relaxamento mental.
-• Água – hidratação adequada do cérebro.
-
-HÁBITOS QUE ESTIMULAM ESSA REDE
-
-• Momentos de silêncio
-• Escrita reflexiva
-• Contemplação
-• Contato com a natureza
-• Práticas de introspecção`,
-    
-medio:`Boa integração entre reflexão interior e interação com o mundo externo.
-Esta rede cerebral está relacionada à introspecção, criatividade, imaginação e percepção intuitiva, ativando-se em momentos de reflexão profunda.
-
-ALIMENTOS QUE FAVORECEM CLAREZA MENTAL
-
-• Nozes e amêndoas – nutrientes para atividade cerebral.
-• Peixes ricos em ômega-3 – fortalecem conexões neurais.
-• Frutas frescas – antioxidantes naturais.
-• Chá de ervas – relaxamento mental.
-• Água – hidratação adequada do cérebro.
-
-HÁBITOS QUE ESTIMULAM ESSA REDE
-
-• Momentos de silêncio
-• Escrita reflexiva
-• Contemplação
-• Contato com a natureza
-• Práticas de introspecção`,
-    
-fraco:`Pouca tendência a reflexão profunda ou busca de significado interno.
-Esta rede cerebral está relacionada à introspecção, criatividade, imaginação e percepção intuitiva, ativando-se em momentos de reflexão profunda.
-
-ALIMENTOS QUE FAVORECEM CLAREZA MENTAL
-
-• Nozes e amêndoas – nutrientes para atividade cerebral.
-• Peixes ricos em ômega-3 – fortalecem conexões neurais.
-• Frutas frescas – antioxidantes naturais.
-• Chá de ervas – relaxamento mental.
-• Água – hidratação adequada do cérebro.
-
-HÁBITOS QUE ESTIMULAM ESSA REDE
-
-• Momentos de silêncio
-• Escrita reflexiva
-• Contemplação
-• Contato com a natureza
-• Práticas de introspecção`
-}
-
+    fisico: {
+        regiao: "Córtex Motor e Cerebelo",
+        funcao: "execução de ações, coordenação motora e resposta prática ao ambiente",
+        forte: `Você apresenta uma predominância de circuitos motores e pragmáticos altamente eficientes. Para você, a tendência biológica é agir com rapidez, transformando impulsos mentais em ações concretas sem hesitação. Esta configuração neural indica que seu córtex motor e cerebelo trabalham em harmonia para garantir precisão e estabilidade. Quando você utiliza essa força, sua capacidade de execução se torna um diferencial, permitindo que você manifeste seus projetos no mundo físico com agilidade e vigor.`,
+        
+        medio: `Você possui uma integração equilibrada entre o planejamento cognitivo e a execução motora. Para você, existe uma moderação natural: você não age por impulso, mas também não fica paralisado pela análise. Essa estabilidade permite que você mantenha a constância em suas tarefas diárias. Quando você se propõe a realizar algo, seu cérebro coordena o ritmo e a precisão de forma sustentável, garantindo que você tenha energia física suficiente para concluir o que começou sem desgaste excessivo.`,
+        
+        fraco: `Neste momento, você pode sentir certa dificuldade em tirar as ideias do papel ou manter a constância física em seus projetos. Para você, o desafio neurocientífico reside em fortalecer a via que conecta a intenção à ação prática. É importante que você estimule essa região com tarefas manuais ou movimentos repetitivos, pois isso ajudará seu cérebro a criar novas rotas de execução. Quando você começa a agir, mesmo que em pequenos passos, você treina seu cerebelo para automatizar o sucesso e a fluidez motora.`
+    },
+
+    mental: {
+        regiao: "Córtex Pré-frontal",
+        funcao: "planejamento, raciocínio lógico e tomada de decisão",
+        forte: `Sua atividade neural é marcada pela dominância de circuitos executivos focados em estratégia e visão de longo prazo. Para você, o córtex pré-frontal atua como um filtro potente, permitindo que você analise dados complexos e tome decisões assertivas sob pressão. Quando você mergulha em processos analíticos, sua clareza de pensamento se destaca, dando a você o controle total sobre a atenção e a capacidade de ignorar distrações externas em favor da lógica.`,
+        
+        medio: `Você apresenta um equilíbrio funcional entre a reflexão racional e a adaptação às circunstâncias. Para você, a lógica é uma ferramenta importante, mas você também sabe quando ceder à intuição ou ao contexto emocional. Essa flexibilidade indica que seu córtex pré-frontal está bem integrado às outras áreas cerebrais. Quando você enfrenta um problema, sua mente busca uma solução que seja estrategicamente viável, mas que também respeite o equilíbrio da sua rotina atual.`,
+        
+        fraco: `Existe uma tendência atual para que você tome decisões baseadas mais no impulso ou no cansaço mental do que na análise criteriosa. Para você, é essencial recuperar o foco nas funções executivas para evitar a sobrecarga cognitiva. Quando você reserva um tempo para organizar suas metas de forma escrita ou lógica, você ajuda seu cérebro a retomar o comando estratégico, permitindo que você visualize o futuro com mais segurança e menos ansiedade.`
+    },
+
+    emocional: {
+        regiao: "Sistema Límbico",
+        funcao: "processamento emocional, empatia e vínculos sociais",
+        forte: `Você possui uma sensibilidade límbica elevada, o que confere a você uma capacidade extraordinária de conexão afetiva e leitura de ambiente. Para você, as emoções não são apenas reações, mas bússolas precisas que guiam suas escolhas e fortalecem seus vínculos sociais. Quando você abraça essa inteligência emocional, você se torna capaz de liderar e colaborar através da empatia, criando uma atmosfera de confiança onde quer que você esteja.`,
+        
+        medio: `Sua regulação emocional é equilibrada, permitindo que você transite entre a razão e o sentimento sem perder o centro. Para você, a estabilidade psicológica é uma construção diária que evita picos de estresse. Essa homeostase emocional garante que você consiga lidar com pressões externas sem comprometer sua saúde mental. Quando você se comunica, sua expressão é clara e ponderada, refletindo um sistema límbico que trabalha em total parceria com sua mente racional.`,
+        
+        fraco: `Você pode estar vivenciando um período de repressão emocional ou dificuldade em processar o que sente. Para você, o sistema límbico pode estar sobrecarregado, gerando uma sensação de desconexão ou apatia. É vital que você busque atividades que promovam o bem-estar e a liberação de neurotransmissores positivos. Quando você se permite expressar suas vulnerabilidades, você reinicia seus circuitos de motivação, permitindo que a alegria e o entusiasmo voltem a fluir em sua vida.`
+    },
+
+    intuitivo: {
+        regiao: "Rede de Modo Padrão",
+        funcao: "introspecção, imaginação e percepção simbólica",
+        forte: `Sua rede de modo padrão é altamente ativa, conferindo a você uma percepção interna profunda e uma criatividade quase ilimitada. Para você, as respostas para dilemas complexos costumam surgir em momentos de quietude, através de insights poderosos. Quando você confia em sua visão interior, você acessa um reservatório de sabedoria que ultrapassa a lógica comum, permitindo que você antecipe tendências e compreenda o significado oculto por trás dos fatos.`,
+        
+        medio: `Você mantém uma integração saudável entre sua vida interior e as demandas do mundo externo. Para você, a introspecção é uma ferramenta de recarga: você sabe quando silenciar para ouvir sua intuição, mas não se perde em devaneios. Essa harmonia permite que você aplique sua criatividade de forma prática. Quando você se dedica a refletir sobre sua jornada, seu cérebro organiza as experiências passadas para projetar soluções inovadoras para o seu presente.`,
+        
+        fraco: `Sua mente pode estar excessivamente voltada para o ruído externo, dificultando o acesso à sua percepção intuitiva. Para você, a falta de momentos de silêncio pode estar bloqueando a imaginação e a clareza simbólica. É fundamental que você cultive espaços de pausa e contemplação. Quando você se desconecta das demandas tecnológicas e sociais por alguns instantes, você permite que sua rede neural de reflexão profunda volte a brilhar, revelando o propósito que você procura.`
+    }
 };
-
 // ============================================
 // MAPA DE EDUCAÇÃO NEURO (TEXTOS GRANDES PRONTOS)
 // ============================================
