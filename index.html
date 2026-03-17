@@ -662,7 +662,7 @@ function gerarTextoPlano(tipo, dados) {
     planosOrdenados.forEach((plano, index) => {
         let posicao = index + 1;
         let nomePlano = nomesAmigaveis[plano.chave];
-        textoFinal += `${posicao}ºIntensidade - ${nomePlano} \n`;
+       textoFinal += `<strong>${posicao}ºIntensidade - ${nomePlano}</strong> \n`;
         if (typeof explicacoesPosicao !== 'undefined') textoFinal += (explicacoesPosicao[posicao] || "") + "\n\n";
         if (typeof textosPlanos !== 'undefined' && textosPlanos[plano.chave]) {
             let txt = textosPlanos[plano.chave][plano.nivel][plano.num];
@@ -703,10 +703,10 @@ function gerarTextoPlano(tipo, dados) {
         conclusaoDinamica = `Seu perfil mostra uma dinâmica entre ${nomesAmigaveis[p1.chave]} e ${nomesAmigaveis[p4.chave]}.`;
     }
 
-    let textoVeredito = `--- \n SÍNTESE DO PERFIL \n\n`;
-    textoVeredito += `Sua Força Principal (${nomesAmigaveis[p1.chave]}): \n${baseTextos[p1.chave][p1.nivel]} \n\n`;
-    textoVeredito += `Seu dasafio Atual (${nomesAmigaveis[p4.chave]}): \n${baseTextos[p4.chave][p4.nivel]} \n\n`;
-    textoVeredito += `A CONEXÃO FINAL: \n${conclusaoDinamica}`;
+let textoVeredito = `--- \n <strong>SÍNTESE DO PERFIL</strong> \n\n`;
+textoVeredito += `<strong>Sua Força Principal (${nomesAmigaveis[p1.chave]}):</strong> \n${baseTextos[p1.chave][p1.nivel]} \n\n`;
+textoVeredito += `<strong>Seu Desafio Atual (${nomesAmigaveis[p4.chave]}):</strong> \n${baseTextos[p4.chave][p4.nivel]} \n\n`;
+textoVeredito += `<strong>A CONEXÃO FINAL:</strong> \n${conclusaoDinamica}`;
     
    let textoComParagrafos = (textoFinal + "\n" + textoVeredito).replace(/\n/g, '<br><br>');
 return aplicarFiltroTexto(textoComParagrafos);
