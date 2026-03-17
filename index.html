@@ -761,11 +761,11 @@ let resultadoNeuro = gerarDominanciaNeuro(dados);
 document.getElementById("resumoNatural").innerHTML =
 textoPlano +
 "<br><br>" +
-aplicarNome(resultadoNeuro) +
+aplicarFiltroTexto(resultadoNeuro) +
 "<br><br>" +
-aplicarNome(textoNeuro) +
+aplicarFiltroTexto(textoNeuro) +
 "<br><br>" +
-aplicarNome(textoEducacao);
+aplicarFiltroTexto(textoEducacao);
 
     for(let p in soma) atualizarBarraNatural(p.charAt(0).toUpperCase() + p.slice(1) + "Nat", soma[p], maior, dados[p].numero);
     atualizarTabela3(nome.split(""), "Nat");
