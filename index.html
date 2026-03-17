@@ -573,7 +573,26 @@ HÁBITOS QUE ESTIMULAM ESSA REDE
 // MAPA DE EDUCAÇÃO NEURO (TEXTOS GRANDES PRONTOS)
 // ============================================
 
-const mapaEducacaoNeuro = {
+
+
+// ============================================
+// FUNÇÃO PARA GERAR O CONTEÚDO NA DIV DO HTML
+// ============================================
+
+function gerarEducacaoNeuroRetorno() {
+    let html = "<h3>Educação Neurocognitiva</h3>";
+    for (let plano in mapaEducacaoNeuro) {
+        html += `<h4>${plano.toUpperCase()}</h4>`;
+        html += `<p>${mapaEducacaoNeuro[plano]}</p>`;
+    }
+    return html;
+}
+
+// ============================================
+
+  
+
+const educacaoNeuro = {
 
 fisico: `
 FÍSICO — Córtex Motor e Cerebelo
@@ -598,14 +617,17 @@ HÁBITOS QUE ESTIMULAM ESSA REGIÃO
 • Alongamentos
 • Atividades que exigem coordenação manual
 • Dança ou esportes
+
+Essas práticas ajudam o cérebro a manter forte a conexão entre mente e corpo.
 `,
 
 mental: `
 MENTAL — Córtex Pré-frontal
 
-O córtex pré-frontal é o centro das funções executivas do cérebro: raciocínio lógico, planejamento, tomada de decisões, estratégia e controle da atenção.
+O córtex pré-frontal é considerado o centro das funções executivas do cérebro. 
+Ele participa do raciocínio lógico, planejamento, tomada de decisões, estratégia e controle da atenção.
 
-Quando bem nutrido e estimulado, o pensamento se torna mais claro, analítico e estratégico.
+Quando essa área está bem nutrida e estimulada, a mente tende a apresentar maior clareza de pensamento, capacidade analítica e visão de longo prazo.
 
 ALIMENTOS QUE FORTALECEM O CÓRTEX PRÉ-FRONTAL
 
@@ -622,14 +644,17 @@ HÁBITOS QUE ESTIMULAM ESSA REGIÃO
 • Jogos de estratégia
 • Aprender novas habilidades
 • Resolver problemas complexos
+
+Essas atividades mantêm o cérebro ativo e fortalecem a capacidade intelectual.
 `,
 
 emocional: `
 EMOCIONAL — Sistema Límbico
 
-O sistema límbico é o centro do processamento emocional, da empatia e da motivação.
+O sistema límbico é o centro de processamento das emoções. 
+Ele participa da formação de memórias afetivas, da empatia, da motivação e da estabilidade emocional.
 
-Quando equilibrado, ajuda a lidar com emoções, desenvolver vínculos e manter estabilidade psicológica.
+Quando essa região está equilibrada, a pessoa apresenta maior capacidade de lidar com sentimentos, desenvolver vínculos e manter equilíbrio psicológico.
 
 ALIMENTOS QUE AJUDAM A REGULAR O SISTEMA LÍMBICO
 
@@ -645,13 +670,17 @@ HÁBITOS QUE EQUILIBRAM O SISTEMA EMOCIONAL
 • Meditação ou respiração profunda
 • Convívio social saudável
 • Atividades relaxantes
-• Contato com a natureza
+• Contato com natureza
+
+Essas práticas ajudam a estabilizar o humor e reduzir estresse mental.
 `,
 
 intuitivo: `
-INTUITIVO — Rede de Reflexão Interna (Default Mode)
+INTUITIVO — Rede de Reflexão Interna
 
-Esta rede cerebral está relacionada à introspecção, criatividade, imaginação e percepção intuitiva, ativando-se em momentos de reflexão profunda.
+Essa rede cerebral, conhecida na neurociência como "Default Mode Network", está relacionada à introspecção, criatividade, imaginação e percepção intuitiva.
+
+Ela se ativa principalmente quando a mente entra em estado de reflexão, contemplação ou pensamento profundo.
 
 ALIMENTOS QUE FAVORECEM CLAREZA MENTAL
 
@@ -666,29 +695,12 @@ HÁBITOS QUE ESTIMULAM ESSA REDE
 • Momentos de silêncio
 • Escrita reflexiva
 • Contemplação
-• Contato com a natureza
+• Contato com natureza
 • Práticas de introspecção
+
+Essas atividades fortalecem a capacidade de percepção interna e criatividade.
 `
 };
-
-// ============================================
-// FUNÇÃO PARA GERAR O CONTEÚDO NA DIV DO HTML
-// ============================================
-
-function gerarEducacaoNeuroRetorno() {
-    let html = "<h3>Educação Neurocognitiva</h3>";
-    for (let plano in mapaEducacaoNeuro) {
-        html += `<h4>${plano.toUpperCase()}</h4>`;
-        html += `<p>${mapaEducacaoNeuro[plano]}</p>`;
-    }
-    return html;
-}
-
-// ============================================
-
-  
-
-
 
 
 
