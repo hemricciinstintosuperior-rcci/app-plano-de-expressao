@@ -369,21 +369,18 @@ A Intuição, do ponto de vista neurocientífico, está fortemente ligada à **D
 // ============================================
 
 function gerarEducacaoNeuroRetorno() {
-    let html = "<h3 style='margin-top:30px; color:#06b6d4;'>Educação Neurocognitiva</h3>";
+    let html = "<h3 style='margin-top:35px; color:#06b6d4;'>Educação Neurocognitiva</h3>";
+    const cores = { fisico: "#ff4d4d", mental: "#4da6ff", emocional: "#33cc66", intuitivo: "#ffd633" };
+
     for (let plano in mapaEducacaoNeuro) {
-        // 1. Primeiro pegamos o texto original
-        let textoOriginal = mapaEducacaoNeuro[plano];
+        let corAtual = cores[plano];
+        let textoFinal = aplicarFiltroTexto(mapaEducacaoNeuro[plano]).replace(/\n/g, '<br>');
         
-        // 2. Aplicamos o filtro que troca "você" pelo Nome em negrito
-        let textoComNome = aplicarFiltroTexto(textoOriginal);
-        
-        // 3. Trocamos as quebras de linha por <br> para ficar separadinho
-        let textoFinal = textoComNome.replace(/\n/g, '<br>');
-        
-        html += `<div style="margin-bottom:20px;">
-                    <h4 style="color:#3b82f6; margin-bottom:8px;">${plano.toUpperCase()}</h4>
-                    <p style="line-height:1.6; text-align:justify;">${textoFinal}</p>
-                 </div>`;
+        html += `
+        <div style="margin-bottom:25px; background: rgba(31, 41, 55, 0.4); padding: 15px; border-radius: 8px;">
+            <h4 style="color:${corAtual}; margin-bottom:10px; border-bottom: 1px solid ${corAtual}33;">${plano.toUpperCase()}</h4>
+            <p style="line-height:1.6; text-align:justify; font-size: 0.95em;">${textoFinal}</p>
+        </div>`;
     }
     return html;
 }
@@ -534,21 +531,28 @@ function gerarDominanciaNeuro(dados) {
 }
    
 function gerarInterpretacaoNeuro(dados) {
-    let html = "<h3 style='color:#06b6d4;'>Análise Neurocognitiva</h3>";
+    let html = "<h3 style='color:#06b6d4; margin-top:25px;'>Análise Neurocognitiva</h3>";
+
+    // Mapeamento interno de cores baseado no seu CSS original
+    const cores = {
+        fisico: "#ff4d4d",
+        mental: "#4da6ff",
+        emocional: "#33cc66",
+        intuitivo: "#ffd633"
+    };
 
     for (let plano in dados) {
         let nivel = dados[plano].nivel;
         let info = mapaNeuro[plano];
-        let textoNivel = info[nivel] || "";
+        let corAtual = cores[plano]; // Pega a cor correta
 
-        // Aplicamos o filtro no texto do nível (Forte/Médio/Fraco)
-        // E usamos o .replace para garantir que as quebras de linha funcionem
-        let textoFiltrado = aplicarFiltroTexto(textoNivel).replace(/\n/g, '<br>');
+        let textoFiltrado = aplicarFiltroTexto(info[nivel] || "").replace(/\n/g, '<br>');
 
         html += `
-        <div style="margin-bottom: 15px; border-bottom: 1px solid #1f2937; padding-bottom: 10px;">
-            <strong style="color:#3b82f6;">${plano.toUpperCase()}</strong> — <span style="font-size: 0.9em; color: #94a3b8;">${info.regiao}</span><br>
-            <p style="margin-top: 8px; text-align: justify;">${textoFiltrado}</p>
+        <div style="margin-bottom: 20px; border-left: 4px solid ${corAtual}; padding-left: 15px;">
+            <strong style="color:${corAtual}; font-size: 1.1em;">${plano.toUpperCase()}</strong> 
+            <span style="color: #94a3b8; font-size: 0.85em;"> — ${info.regiao}</span><br>
+            <p style="margin-top: 8px; text-align: justify; line-height: 1.5;">${textoFiltrado}</p>
         </div>
         `;
     }
