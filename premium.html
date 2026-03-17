@@ -489,7 +489,14 @@ alert("Nenhum relatório encontrado.");
 /* CAPA */
 
 document.getElementById("nomePessoa").innerText = dados.nome;
-document.getElementById("dataPessoa").innerText = dados.data;
+// FORMATAR DATA (De AAAA-MM-DD para DD/MM/AAAA)
+if (dados.data && dados.data.includes("-")) {
+    const partes = dados.data.split("-");
+    // Se a data vier como 2026-03-17, vira 17/03/2026
+    document.getElementById("dataPessoa").innerText = `${partes[2]}/${partes[1]}/${partes[0]}`;
+} else {
+    document.getElementById("dataPessoa").innerText = dados.data;
+}
 
 /* MOMENTO */
 
