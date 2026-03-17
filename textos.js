@@ -615,7 +615,7 @@ Você possui um lado sedutor e provocante, mas que pode ser interpretado como in
 O fortalecimento do seu caráter ocorre ao descobrir sua verdadeira identidade, trocando a busca por reconhecimento por desejos internos.
 Negativamente, você pode se tornar inconstante, manipuladora e impulsiva quando é dominada por seus receios e emoções intensas.`,
 
-    neutro: ` "voçê possui equilibrio nas decisões" 
+    neutro: ` "você possui equilibrio nas decisões" 
     
 Você é alguém equilibrado e observador, que prefere analisar todos os pontos de vista antes de tomar partido em qualquer conflito.
 Age movido por interesses próprios e raramente sai da zona de conforto, sendo você excessivamente cauteloso para evitar riscos inúteis.
