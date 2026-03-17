@@ -588,9 +588,11 @@ function gerarDominanciaNeuro(dados){
         </div>
         <h3>Dominância Neurocognitiva</h3>
         <p><strong>${perfil.titulo}</strong><br><br>${perfil.descricao}</p>
+        
     `;
-     return aplicarFiltroTexto(textoFinal + "\n" + textoVeredito);
+     
 }
+    return aplicarFiltroTexto(textoFinal + "\n" + textoVeredito); 
 function gerarInterpretacaoNeuro(dados){
 
 let html = "<h3>Análise Neurocognitiva</h3>";
@@ -608,9 +610,9 @@ html += `
 ${textoNivel}
 </p>
 `;
- return aplicarFiltroTexto(textoFinal + "\n" + textoVeredito);
-}
 
+}
+ return aplicarFiltroTexto(textoFinal + "\n" + textoVeredito);
 return html;
 
 }
