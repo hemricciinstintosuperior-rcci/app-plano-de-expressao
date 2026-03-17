@@ -410,7 +410,7 @@ function gerarEducacaoNeuroRetorno() {
 
     for (let plano in mapaEducacaoNeuro) {
         let corAtual = cores[plano];
-        let textoFinal = aplicarFiltroTexto(mapaEducacaoNeuro[plano]).replace(/\n/g, '<br>');
+        let textoFinal = aplicarFiltroTexto(mapaEducacaoNeuro[plano]).split('\n').map(l => `<p style='margin-bottom:10px'>${l}</p>`).join('');
         
         // MUDEI O BACKGROUND ABAIXO DE CINZA ESCURO PARA BRANCO (#FFFFFF)
         html += `
