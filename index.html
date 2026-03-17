@@ -387,17 +387,18 @@ A Intuição, do ponto de vista neurocientífico, está fortemente ligada à **D
 // ============================================
 
 function gerarEducacaoNeuroRetorno() {
-    let html = "<h3 style='margin-top:35px; color:#06b6d4;'>Educação Neurocognitiva</h3>";
+    let html = "<h3 style='margin-top:35px; color:#06b6d4; text-align:center;'>EDUCAÇÃO NEUROCOGNITIVA</h3>";
     const cores = { fisico: "#ff4d4d", mental: "#4da6ff", emocional: "#33cc66", intuitivo: "#ffd633" };
 
     for (let plano in mapaEducacaoNeuro) {
         let corAtual = cores[plano];
         let textoFinal = aplicarFiltroTexto(mapaEducacaoNeuro[plano]).replace(/\n/g, '<br>');
         
+        // MUDEI O BACKGROUND ABAIXO DE CINZA ESCURO PARA BRANCO (#FFFFFF)
         html += `
-        <div style="margin-bottom:25px; background: rgba(31, 41, 55, 0.4); padding: 15px; border-radius: 8px;">
-            <h4 style="color:${corAtual}; margin-bottom:10px; border-bottom: 1px solid ${corAtual}33;">${plano.toUpperCase()}</h4>
-            <p style="line-height:1.6; text-align:justify; font-size: 0.95em;">${textoFinal}</p>
+        <div style="margin-bottom:25px; background: #ffffff; padding: 20px; border-radius: 12px; border: 1px solid #e5e7eb; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+            <h4 style="color:${corAtual}; margin-bottom:12px; border-bottom: 2px solid ${corAtual}33; text-align:center; font-weight:bold;">${plano.toUpperCase()}</h4>
+            <p style="line-height:1.7; text-align:justify; font-size: 1rem; color:#333;">${textoFinal}</p>
         </div>`;
     }
     return html;
