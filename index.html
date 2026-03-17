@@ -708,7 +708,8 @@ function gerarTextoPlano(tipo, dados) {
     textoVeredito += `Seu dasafio Atual (${nomesAmigaveis[p4.chave]}): \n${baseTextos[p4.chave][p4.nivel]} \n\n`;
     textoVeredito += `A CONEXÃO FINAL: \n${conclusaoDinamica}`;
     
-    return aplicarFiltroTexto(textoFinal + "\n" + textoVeredito);
+   let textoComParagrafos = (textoFinal + "\n" + textoVeredito).replace(/\n/g, '<br><br>');
+return aplicarFiltroTexto(textoComParagrafos);
 }
 
 function planoNatural(nome) {
