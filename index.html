@@ -597,10 +597,21 @@ A Intuição, do ponto de vista neurocientífico, está fortemente ligada à **D
 // ============================================
 
 function gerarEducacaoNeuroRetorno() {
-    let html = "<h3>Educação Neurocognitiva</h3>";
+    let html = "<h3 style='margin-top:30px; color:#06b6d4;'>Educação Neurocognitiva</h3>";
     for (let plano in mapaEducacaoNeuro) {
-        html += `<h4>${plano.toUpperCase()}</h4>`;
-        html += `<p>${mapaEducacaoNeuro[plano]}</p>`;
+        // 1. Primeiro pegamos o texto original
+        let textoOriginal = mapaEducacaoNeuro[plano];
+        
+        // 2. Aplicamos o filtro que troca "você" pelo Nome em negrito
+        let textoComNome = aplicarFiltroTexto(textoOriginal);
+        
+        // 3. Trocamos as quebras de linha por <br> para ficar separadinho
+        let textoFinal = textoComNome.replace(/\n/g, '<br>');
+        
+        html += `<div style="margin-bottom:20px;">
+                    <h4 style="color:#3b82f6; margin-bottom:8px;">${plano.toUpperCase()}</h4>
+                    <p style="line-height:1.6; text-align:justify;">${textoFinal}</p>
+                 </div>`;
     }
     return html;
 }
@@ -732,46 +743,44 @@ const imagensPerfil = {
 
 // Função para gerar dominância neurocognitiva
 // Apenas retorna o HTML da dominância
-function gerarDominanciaNeuro(dados){
-    // Determina qual plano tem o maior valorReal
-    let dominante = Object.keys(dados).sort((a,b) => dados[b].valorReal - dados[a].valorReal)[0];
+function gerarDominanciaNeuro(dados) {
+    let dominante = Object.keys(dados).sort((a, b) => dados[b].valorReal - dados[a].valorReal)[0];
     let perfil = perfisNeuro[dominante];
-    let urlImagem = imagensPerfil[dominante]; // Puxa o link do seu repositório
+    let urlImagem = imagensPerfil[dominante];
 
-    // Retorna o HTML incluindo a imagem centralizada
+    // Aplicamos o filtro no título e na descrição do perfil
+    let tituloPersonalizado = aplicarFiltroTexto(perfil.titulo);
+    let descricaoPersonalizada = aplicarFiltroTexto(perfil.descricao);
+
     return `
         <div style="text-align: center; margin-bottom: 20px;">
             <img src="${urlImagem}" alt="${perfil.titulo}" style="width: 150px; height: auto; border-radius: 10px;">
         </div>
-        <h3>Dominância Neurocognitiva</h3>
-        <p><strong>${perfil.titulo}</strong><br><br>${perfil.descricao}</p>
-        
+        <h3 style="color:#06b6d4;">Dominância Neurocognitiva</h3>
+        <p><strong>${tituloPersonalizado}</strong><br><br>${descricaoPersonalizada}</p>
     `;
-     
 }
    
-function gerarInterpretacaoNeuro(dados){
+function gerarInterpretacaoNeuro(dados) {
+    let html = "<h3 style='color:#06b6d4;'>Análise Neurocognitiva</h3>";
 
-let html = "<h3>Análise Neurocognitiva</h3>";
+    for (let plano in dados) {
+        let nivel = dados[plano].nivel;
+        let info = mapaNeuro[plano];
+        let textoNivel = info[nivel] || "";
 
-for(let plano in dados){
+        // Aplicamos o filtro no texto do nível (Forte/Médio/Fraco)
+        // E usamos o .replace para garantir que as quebras de linha funcionem
+        let textoFiltrado = aplicarFiltroTexto(textoNivel).replace(/\n/g, '<br>');
 
-let nivel = dados[plano].nivel;
-let info = mapaNeuro[plano];
-
-let textoNivel = info[nivel] || "";
-
-html += `
-<p>
-<strong>${plano.toUpperCase()}</strong> — ${info.regiao}<br>
-${textoNivel}
-</p>
-`;
-
-}
- 
-return html;
-
+        html += `
+        <div style="margin-bottom: 15px; border-bottom: 1px solid #1f2937; padding-bottom: 10px;">
+            <strong style="color:#3b82f6;">${plano.toUpperCase()}</strong> — <span style="font-size: 0.9em; color: #94a3b8;">${info.regiao}</span><br>
+            <p style="margin-top: 8px; text-align: justify;">${textoFiltrado}</p>
+        </div>
+        `;
+    }
+    return html;
 }
   
 
