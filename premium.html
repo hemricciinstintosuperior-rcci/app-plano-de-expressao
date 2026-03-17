@@ -522,7 +522,8 @@ document.getElementById("textoNatural").innerHTML = formatarTexto(dados.textoNat
 document.getElementById("textoMomento").innerHTML = formatarTexto(dados.textoMomento);
 document.getElementById("textoExpressaoNat").innerHTML = formatarTexto(dados.textoExpressaoNat);
 document.getElementById("textoExpressaoMom").innerHTML = formatarTexto(dados.textoExpressaoMom);
-
+// ADICIONE ESTA LINHA ABAIXO PARA O TEXTO APARECER:
+document.getElementById("textoEducativoPDF").innerHTML = dados.textoEducacao || "Conteúdo não disponível.";
 document.getElementById("transito").innerHTML = dados.transitoHTML;
           
 
