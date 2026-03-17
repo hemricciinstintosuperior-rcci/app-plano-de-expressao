@@ -216,7 +216,10 @@ Neutro: <span id="numNeutroMom"></span><div class="bar-bg"><div id="barNeutroMom
     <h3 style="color: #ffd633;">VIBRAÇÃO DE TRÂNSITO DO ANO</h3>
     <div id="resultadoTrânsito"></div>
 </div>
-
+<div id="secaoEducacaoFinal" class="resumoMomento" style="margin-top:20px; border-top: 4px solid #06b6d4; display:none;">
+    <h3 style="color: #06b6d4; text-align: center;">EDUCAÇÃO NEUROCOGNITIVA</h3>
+    <div id="areaTextoEducativo"></div>
+</div>
   
 </section>
 
@@ -342,6 +345,7 @@ const mapaNeuro = {
     }
 };
 // ============================================
+
 // MAPA DE EDUCAÇÃO NEURO (TEXTOS GRANDES PRONTOS)
 // ============================================
 const mapaEducacaoNeuro = {
@@ -368,6 +372,9 @@ A Intuição, do ponto de vista neurocientífico, está fortemente ligada à **D
 // FUNÇÃO PARA GERAR O CONTEÚDO NA DIV DO HTML
 // ============================================
 
+// FUNÇÃO PARA GERAR O CONTEÚDO NA DIV DO HTML
+// ============================================
+
 function gerarEducacaoNeuroRetorno() {
     let html = "<h3 style='margin-top:35px; color:#06b6d4;'>Educação Neurocognitiva</h3>";
     const cores = { fisico: "#ff4d4d", mental: "#4da6ff", emocional: "#33cc66", intuitivo: "#ffd633" };
@@ -384,7 +391,6 @@ function gerarEducacaoNeuroRetorno() {
     }
     return html;
 }
-
 // ============================================
 
   
@@ -708,9 +714,7 @@ textoPlano +
 "<br><br>" +
 aplicarFiltroTexto(resultadoNeuro) +
 "<br><br>" +
-aplicarFiltroTexto(textoNeuro) +
-"<br><br>" +
-aplicarFiltroTexto(textoEducacao);
+aplicarFiltroTexto(textoNeuro);
 
     for(let p in soma) atualizarBarraNatural(p.charAt(0).toUpperCase() + p.slice(1) + "Nat", soma[p], maior, dados[p].numero);
     atualizarTabela3(nome.split(""), "Nat");
@@ -749,9 +753,16 @@ function gerarStatusMomento() {
     const ano = document.getElementById("anoSelect").value;
     const d = bancoMomentos.find(a => a.ano == ano);
     if (!d) return;
-    const maior = Math.max(d.fisico, d.mental, d.emocional, d.intuitivo);
-    const red = { fisico: reduzirNumero(d.fisico), mental: reduzirNumero(d.mental), emocional: reduzirNumero(d.emocional), intuitivo: reduzirNumero(d.intuitivo) };
 
+    const maior = Math.max(d.fisico, d.mental, d.emocional, d.intuitivo);
+    const red = { 
+        fisico: reduzirNumero(d.fisico), 
+        mental: reduzirNumero(d.mental), 
+        emocional: reduzirNumero(d.emocional), 
+        intuitivo: reduzirNumero(d.intuitivo) 
+    };
+
+    // Atualiza as barras de progresso do Momento
     for(let p in d) {
         if(p !== "ano" && p !== "letras" && p !== "intervalo") {
             atualizarBarraNatural(p.charAt(0).toUpperCase() + p.slice(1), d[p], maior, reduzirNumero(d[p]));
@@ -765,30 +776,37 @@ function gerarStatusMomento() {
         emocional: { nivel: classificarIntensidade(d.emocional, maior), numero: red.emocional, valorReal: d.emocional },
         intuitivo: { nivel: classificarIntensidade(d.intuitivo, maior), numero: red.intuitivo, valorReal: d.intuitivo }
     };
-  
 
-document.getElementById("resumoMomento").innerHTML =
-"No ano de " + ano + " (" + d.intervalo + "):\n\n" +
-gerarTextoPlano("momento", dadosTxt) +
-"<br><br>" +
-  
-gerarDominanciaNeuro(dadosTxt) + "<br><br>" +  
-  
-gerarInterpretacaoNeuro(dadosTxt);
+    // Preenche o texto do Momento (Análise dos Planos)
+    document.getElementById("resumoMomento").innerHTML =
+        "No ano de " + ano + " (" + d.intervalo + "):\n\n" +
+        gerarTextoPlano("momento", dadosTxt) +
+        "<br><br>" +
+        gerarDominanciaNeuro(dadosTxt) + "<br><br>" +  
+        gerarInterpretacaoNeuro(dadosTxt);
 
-
+    // Cálculos da Vibração de Trânsito
     const somaTransito = d.fisico + d.mental + d.emocional + d.intuitivo;
     const numTransito = reduzirNumero(somaTransito);
     let txtTransito = (typeof textosTrânsito !== 'undefined' && textosTrânsito[numTransito]) ? aplicarFiltroTexto(textosTrânsito[numTransito]) : "A vibração deste ciclo é " + numTransito;
     
+    // Exibe a Vibração do Ano
     document.getElementById("resultadoTrânsito").innerHTML = `
         <div style="display:flex; align-items:left; gap:10px; margin-bottom:10px;">
             <span style="background:#FFFFFF; color:#000; padding:5px 12px; border-radius:50%; font-weight:bold; font-size:1.4rem;">${numTransito}</span>
-        </div>
+        </div>                
         <p>${txtTransito}</p>
     `;
 
- 
+    // --- PARTE DA EDUCAÇÃO (O AJUSTE QUE VOCÊ QUERIA) ---
+    // Pega o conteúdo da função lá de baixo e joga na div correta do HTML
+    const areaEdu = document.getElementById("areaTextoEducativo");
+    const secaoEdu = document.getElementById("secaoEducacaoFinal");
+
+    if (areaEdu) {
+        areaEdu.innerHTML = gerarEducacaoNeuroRetorno(); 
+        secaoEdu.style.display = "block"; // Faz a seção aparecer abaixo da vibração
+    }
 }
 
 function atualizarBarraNatural(tipo, val, maior, red) {
@@ -806,10 +824,20 @@ function gerarTudo() {
     const n = document.getElementById("nome").value;
     const d = document.getElementById("dataNascimento").value;
     if(!n || !d) return alert("Preencha nome e data.");
+
+    // Faz os cálculos
     planoNatural(n);
     planoMomento(n, d);
     gerarStatusMomento();
-    gerarEducacaoNeuro(); // <-- insere os textos grandes na div
+
+    // Manda o texto para a div que você colou abaixo do trânsito
+    const areaEdu = document.getElementById("areaTextoEducativo");
+    const secaoEdu = document.getElementById("secaoEducacaoFinal");
+
+    if (areaEdu) {
+        areaEdu.innerHTML = gerarEducacaoNeuroRetorno(); 
+        secaoEdu.style.display = "block";
+    }
 }
 
 function exportarRelatorio() {
