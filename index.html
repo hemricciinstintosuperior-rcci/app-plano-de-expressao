@@ -26,15 +26,20 @@ min-height:100vh;
 .emocional{background:#33cc66;}
 .intuitivo{background:#ffd633;}
 .criativo { background: #a855f7; } 
-.indeciso { background: #f97316; } 
-.neutro { background: #94a3b8; }  
+.indeciso { background: #EB8500; } 
+.neutro { background: #C400EB; }  
 .resumoMomento{margin-top:25px;padding:20px;background:#1f2937;border-radius:8px;}
 /* Esconde o texto que fica abaixo das barras */
 #txtFisicoNat, #txtMentalNat, #txtEmocionalNat, #txtIntuitivoNat,
 #txtFisico, #txtMental, #txtEmocional, #txtIntuitivo {
     display: none;
 }
-
+.introGeral {
+    background: transparent; /* Tira a cor cinza */
+    border-left: none;       /* Tira a barra lateral se quiser */
+    padding: 0;              /* Remove o preenchimento interno */
+    margin-top: 20px;
+}
 .barra{
 height:18px;
 border-radius:12px;
@@ -47,7 +52,7 @@ overflow:hidden;
 content:"";
 display:block;
 height:100%;
-background:linear-gradient(90deg,#06b6d4,#3b82f6);
+background:linear-gradient(90deg,#000000,#000000);
 width:0;
 transition:width 0.8s ease;
 }
