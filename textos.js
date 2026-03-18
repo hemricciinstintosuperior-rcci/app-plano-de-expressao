@@ -722,7 +722,7 @@ intuitivo : {
 <p>Para otimizar essa vibração, recomenda-se o contato com causas que exijam desprendimento e visão de longo alcance, saindo da bolha das necessidades pessoais por um momento. Ao agir com ética universal, você descobre que o universo passa a conspirar a seu favor, trazendo sincronicidades e oportunidades que a mente egoica jamais conseguiria atrair sozinha. O sucesso virá da transformação da visão limitada em uma sabedoria generosa e iluminada, consolidando uma trajetória marcada pelo perdão, pela sabedoria e por um legado de luz que traz paz para o coração e evolução para todos ao redor.</p>`
   }
    }
-},
+};
 
 const textosExpressao = {
     criativo: ` "você possui mais Criatividade" 
