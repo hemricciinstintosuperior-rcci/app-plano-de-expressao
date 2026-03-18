@@ -219,6 +219,7 @@ Neutro: <span id="numNeutroMom"></span><div class="bar-bg"><div id="barNeutroMom
 
 <div id="blocoTrânsitoAnual" class="resumoMomento" style="margin-top:20px; border-top: 4px solid #ffd633;">
     <h3 style="color: #ffd633;">VIBRAÇÃO DE TRÂNSITO DO ANO</h3>
+       <p id="dataCicloTransito" style="font-size: 0.9rem; color: #94a3b8; margin-top: -10px; margin-bottom: 15px;"></p>
     <div id="resultadoTrânsito"></div>
 </div>
 <div id="secaoEducacaoFinal" class="resumoMomento" style="margin-top:20px; border-top: 4px solid #06b6d4; display:none;">
@@ -779,7 +780,9 @@ function gerarStatusMomento() {
     const ano = document.getElementById("anoSelect").value;
     const d = bancoMomentos.find(a => a.ano == ano);
     if (!d) return;
-
+    // --- ADICIONE ESTA LINHA ABAIXO ---
+    document.getElementById("dataCicloTransito").innerText = d.intervalo; 
+    // ---------------------------------
     const maior = Math.max(d.fisico, d.mental, d.emocional, d.intuitivo);
     const red = { 
         fisico: reduzirNumero(d.fisico), 
