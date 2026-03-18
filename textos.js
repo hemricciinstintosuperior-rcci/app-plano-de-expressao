@@ -119,8 +119,7 @@ const textosPlanos = {
  }, 
 
 
-const textosPlanosFraco = {
-  fisico: {
+
     fraco: {
       0: `<p>Neste plano, observa-se uma ausência de manifestação consistente da energia física no cotidiano, o que pode dificultar a concretização de metas imediatas. A ação prática não costuma surgir de forma espontânea, dependendo frequentemente de estímulos externos muito fortes ou de cobranças de terceiros para que algo saia do papel. Sem esses motivadores, existe uma tendência natural a permanecer muito mais no campo das ideias e das suposições do que na execução real dos projetos planejados. É um momento que pede um olhar mais atento para a forma como a vontade pessoal está sendo canalizada na matéria.</p>
 
