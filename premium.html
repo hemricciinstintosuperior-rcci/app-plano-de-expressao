@@ -47,11 +47,18 @@ text-align:center;
 margin-bottom:10px;
 font-size:32px;
 }
-
+/* Estilo para o risco de término de seção */
+hr.divisor-secao {
+    border: 0;
+    height: 2px; /* Espessura do risco */
+    background-image: linear-gradient(to right, #ccc, #333, #ccc); /* Risco que escurece no meio */
+    margin-top: 80px; /* Espaço generoso após o texto anterior */
+    margin-bottom: 20px; /* Espaço antes do próximo título */
+    opacity: 0.6;
+}
 h2{
 margin-top:45px;
 border-left: none; /* Remove aquela barra preta da esquerda */
-border-bottom: 1px solid #e2e8f0; /* Adiciona um risco fino e elegante embaixo */
 padding-left:12px;
 font-size:22px;
 }
@@ -349,6 +356,7 @@ Essa abordagem amplia a interpretação tradicional ao incorporar uma perspectiv
 </p>
 
 </div>
+<hr class="divisor-secao">          
 <h2>Plano de Expressão Natural</h2>
 
 <div class="grid">
@@ -394,7 +402,7 @@ Neutro
 
 <div class="texto" id="textoExpressaoNat"></div>
 <div class="texto" id="textoNatural"></div>
-
+<hr class="divisor-secao">
 <h2>Plano de Expressão do Momento</h2>
 
 <p><strong>Ano analisado:</strong> <span id="anoMomento"></span></p>
@@ -443,7 +451,7 @@ Neutro
 
 <div class="texto" id="textoExpressaoMom"></div>
 <div class="texto" id="textoMomento"></div>
-
+<hr class="divisor-secao">
 <h2>Vibração de Trânsito do Ano</h2>
 <p class="intro">
  <p style="text-align:center; color: #64748b; font-weight: bold;">Ciclo: <span id="cicloTransitoPDF"></span></p>         
@@ -451,7 +459,7 @@ A Vibração de Trânsito Anual representa o campo vibracional que influencia o 
 </p>
   
 <div id="transito"></div>
-          
+ <hr class="divisor-secao">         
 <h2>Educação Neurocognitiva  </h2>
 <p class="intro">
     <p>A <strong>Educação Neurocognitiva</strong> baseia-se nos princípios fundamentais da neurociência aplicada para otimizar o potencial humano através da compreensão profunda das nossas redes neurais. Cada pilar identificado no seu Mapa — <strong>Físico, Mental, Emocional e Intuitivo</strong> — possui uma correlação direta com áreas específicas do encéfalo, como o córtex pré-frontal, o sistema límbico e a sofisticada rede de modo padrão.</p>
@@ -464,7 +472,7 @@ A Vibração de Trânsito Anual representa o campo vibracional que influencia o 
 
 <p>Compreender a sua dominância neurocognitiva é a chave para acessar o estado de <strong>Flow (Fluxo)</strong>, onde o esforço diminui e a produtividade aumenta significativamente. Este relatório serve como um guia técnico para que você aprenda a gerenciar sua biologia interna, utilizando a inteligência neurocientífica para sustentar sua evolução pessoal e profissional de forma estratégica e duradoura.</p>      
    <div id="textoEducativoPDF"> </div>
-
+<hr class="divisor-secao">
 <div class="secao" style="text-align: center; page-break-before: always; padding: 40px;">
     <h2 style="color: #1e293b; margin-bottom: 30px;">🏆 PARABÉNS, <strong id="nomeConclusao"></strong>!</h2>
     
