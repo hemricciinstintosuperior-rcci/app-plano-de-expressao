@@ -549,12 +549,12 @@ function gerarDominanciaNeuro(dados) {
     let urlImagem = imagensPerfil[dominante];
 
     // Aplicamos o filtro no título e na descrição do perfil
-    let tituloPersonalizado = aplicarFiltroTexto(perfil.titulo);
+    let tituloPersonalizado = aplicarFiltroTexto(perfil.titulo);   
     let descricaoPersonalizada = aplicarFiltroTexto(perfil.descricao);
 
     return `
         <div style="text-align: center; margin-bottom: 20px;">
-            <img src="${urlImagem}" alt="${perfil.titulo}" style="width: 150px; height: auto; border-radius: 10px;">
+            <img src="${perfil.titulo}" alt="${urlImagem}" style="width: 150px; height: auto; border-radius: 10px;">
         </div>
         <h3 style="color:#0C3138;">Dominância Neurocognitiva</h3>
         <p><strong>${tituloPersonalizado}</strong><br><br>${descricaoPersonalizada}</p>
@@ -819,7 +819,7 @@ function gerarStatusMomento() {
     // Exibe a Vibração do Ano
     document.getElementById("resultadoTrânsito").innerHTML = `
         <div style="display:flex; align-items:left; gap:10px; margin-bottom:10px;">
-            <span style="background:#fff; color:#000; padding:5px 12px; border-radius:50%; font-weight:bold; font-size:1.4rem;">N°  ${numTransito}</span>
+            <span style="background:#fff; color:#000; padding:5px 12px; border-radius:50%; font-weight:bold; font-size:1.4rem;">TRANSITO N°  ${numTransito}</span>
         </div>                
         <p>${txtTransito}</p>
     `;
