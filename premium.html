@@ -444,8 +444,10 @@ Neutro
 
 <h2>Vibração de Trânsito do Ano</h2>
 <p class="intro">
+ <p style="text-align:center; color: #64748b; font-weight: bold;">Ciclo: <span id="cicloTransitoPDF"></span></p>         
 A Vibração de Trânsito Anual representa o campo vibracional que influencia o período atual da vida. Ela indica tendências de movimento, mudanças e oportunidades que podem se manifestar ao longo do ciclo anual, funcionando como um direcionamento energético para experiências e aprendizados.
 </p>
+  
 <div id="transito"></div>
           
 <h2>Educação Neurocognitiva  </h2>
@@ -516,6 +518,9 @@ if (dados.data && dados.data.includes("-")) {
 
 document.getElementById("anoMomento").innerText = dados.anoMomento;
 document.getElementById("intervaloMomento").innerText = dados.inicioFimMomento;
+// --- ADICIONE ESTA LINHA AQUI ---
+document.getElementById("cicloTransitoPDF").innerText = dados.inicioFimMomento;
+// -------------------------------          
 
 /* TEXTOS */
 
