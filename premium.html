@@ -6,7 +6,6 @@
 <title>Relatório Premium - Instinto Superior</title>
 
 <style>
-/* DESIGN PREMIUM (MESCLADO) */
 body {
     font-family: 'Segoe UI', Arial, sans-serif;
     background: #f1f5f9;
@@ -14,24 +13,24 @@ body {
     color: #1e293b;
 }
 
+/* O segredo para não vazar: box-sizing e largura fixa */
 .relatorio {
-    max-width: 950px;
+    max-width: 900px; /* Largura ideal para PDF A4 */
     margin: 40px auto;
     background: white;
-    padding: 70px;
+    padding: 60px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    height: auto !important;
+    box-sizing: border-box; /* Garante que o padding não empurre o conteúdo para fora */
+    overflow: hidden; /* Trava qualquer vazamento */
 }
 
-.capa { text-align: center; page-break-after: always; }
+.capa { text-align: center; page-break-after: always; width: 100%; }
 .logoRelatorio { max-width: 100%; height: auto; margin-bottom: 25px; }
 
-h1 { font-size: 32px; text-transform: uppercase; text-align: center; }
-h2 { font-size: 24px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-top: 50px; color: #334155; text-align: center; }
-h3 { font-size: 20px; color: #475569; margin-top: 35px; text-align: center; }
-h4 { text-align: center; margin-top: 25px; }
+h1, h2, h3, h4 { text-align: center; width: 100%; }
+h2 { font-size: 24px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-top: 50px; color: #334155; }
 
-/* DIVISOR DA FOTO - LINHA QUE TERMINA NA DIREITA */
+/* LINHA QUE TERMINA NA DIREITA (IGUAL A FOTO) */
 .divisor-categoria {
     display: flex;
     align-items: center;
@@ -41,6 +40,7 @@ h4 { text-align: center; margin-top: 25px; }
     font-weight: 800;
     letter-spacing: 1.5px;
     text-transform: uppercase;
+    width: 100%;
 }
 .divisor-categoria::after {
     content: "";
@@ -49,15 +49,19 @@ h4 { text-align: center; margin-top: 25px; }
     border-bottom: 1px solid #e2e8f0;
 }
 
+/* TEXTO TRAVADO DENTRO DA FOLHA */
 .texto {
     text-align: justify;
     line-height: 1.8;
     font-size: 16px;
     color: #334155;
     margin: 20px 0;
+    width: 100%;
+    word-wrap: break-word; /* Força quebra de palavras longas */
+    overflow-wrap: break-word;
 }
 
-.barra-container { margin-bottom: 15px; }
+.barra-container { margin-bottom: 15px; width: 100%; }
 .barra {
     height: 14px;
     background: #e5e7eb;
@@ -65,9 +69,9 @@ h4 { text-align: center; margin-top: 25px; }
     overflow: hidden;
     width: 100%;
 }
-.barra span { display: block; height: 100%; width: 0%; background-color: currentColor; transition: width 1s ease-in-out; }
+.barra span { display: block; height: 100%; width: 0%; background-color: currentColor; transition: width 1s; }
 
-/* CORES ORIGINAIS PRESERVADAS */
+/* CORES ORIGINAIS */
 #barFisicoNat, #barFisicoMom { color: #ef4444; }
 #barMentalNat, #barMentalMom { color: #3b82f6; }
 #barEmocionalNat, #barEmocionalMom { color: #22c55e; }
@@ -76,15 +80,13 @@ h4 { text-align: center; margin-top: 25px; }
 #barIndecisoNat, #barIndecisoMom { color: #fb923c; }
 #barNeutroNat, #barNeutroMom { color: #4A4A4A; }
 
-.sumario ul { list-style: none; padding: 0; }
+.sumario ul { list-style: none; padding: 0; width: 100%; }
 .sumario li { padding: 8px 0; border-bottom: 1px dotted #c9c9c9; }
 
 @media print {
     .btn-container { display: none; }
     body { background: white; }
-    .relatorio { box-shadow: none; margin: 0; padding: 20px; width: 100%; }
-    h2 { page-break-before: always; }
-    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .relatorio { box-shadow: none; margin: 0; padding: 40px; width: 100% !important; max-width: 100% !important; }
 }
 </style>
 </head>
@@ -101,8 +103,6 @@ h4 { text-align: center; margin-top: 25px; }
         <h3 id="nomePessoa"></h3>
         <p id="dataPessoa"></p>
     </div>
-
-    <hr style="opacity:0.2; margin:40px 0;">
 
     <div class="sumario">
         <h2>Sumário</h2>
@@ -122,25 +122,21 @@ h4 { text-align: center; margin-top: 25px; }
 
     <h2>1. Introdução</h2>
     <div class="texto">
-        <p>Este relatório integra princípios da numerologia analítica com fundamentos da neurociência cognitiva...</p>
+        <p>Este relatório integra princípios da numerologia analítica com fundamentos da neurociência cognitiva, estabelecendo uma leitura estruturada dos padrões mentais e comportamentais.</p>
     </div>
 
     <h2>2. Plano Natural</h2>
-    <p class="texto">O Plano Natural representa a base estrutural do seu funcionamento...</p>
-
-    <div class="divisor-categoria">Plano de Energia Natural</div>
+    <div class="divisor-categoria">Energias Naturais</div>
     Físico <div class="barra"><span id="barFisicoNat"></span></div>
     Mental <div class="barra"><span id="barMentalNat"></span></div>
     Emocional <div class="barra"><span id="barEmocionalNat"></span></div>
     Intuitivo <div class="barra"><span id="barIntuitivoNat"></span></div>
-    <h4>Resultado da Energia Natural</h4>
     <div class="texto" id="textoNatural"></div>
 
-    <div class="divisor-categoria">Expressão Natural</div>
+    <div class="divisor-categoria">Perfil de Expressão Natural</div>
     Criativo <div class="barra"><span id="barCriativoNat"></span></div>
     Indeciso <div class="barra"><span id="barIndecisoNat"></span></div>
     Neutro <div class="barra"><span id="barNeutroNat"></span></div>
-    <h4>Resultado da Expressão Natural</h4>
     <div class="texto" id="textoExpressaoNat"></div>
 
     <div class="divisor-categoria">Análise Neurocognitiva Natural</div>
@@ -148,67 +144,58 @@ h4 { text-align: center; margin-top: 25px; }
     <div class="texto" id="neuroAnaliseNat"></div>
 
     <h2>3. Plano do Momento</h2>
-    <p class="texto"><strong>Ano analisado:</strong> <span id="anoMomento"></span> | <strong>Ciclo:</strong> <span id="intervaloMomento"></span></p>
+    <p style="text-align:center">Ano: <span id="anoMomento"></span> | Ciclo: <span id="intervaloMomento"></span></p>
 
-    <div class="divisor-categoria">Energia do Momento</div>
+    <div class="divisor-categoria">Energia Atual</div>
     Físico <div class="barra"><span id="barFisicoMom"></span></div>
     Mental <div class="barra"><span id="barMentalMom"></span></div>
     Emocional <div class="barra"><span id="barEmocionalMom"></span></div>
     Intuitivo <div class="barra"><span id="barIntuitivoMom"></span></div>
-    <h4>Resultado de Energia do Momento</h4>
     <div class="texto" id="textoMomento"></div>
 
-    <div class="divisor-categoria">Expressão do Momento</div>
+    <div class="divisor-categoria">Expressão Atual</div>
     Criativo <div class="barra"><span id="barCriativoMom"></span></div>
     Indeciso <div class="barra"><span id="barIndecisoMom"></span></div>
     Neutro <div class="barra"><span id="barNeutroMom"></span></div>
-    <h4>Resultado da Expressão do Momento</h4>
     <div class="texto" id="textoExpressaoMom"></div>
 
-    <div class="divisor-categoria">Análise Neurocognitiva do Momento</div>
-    <p style="text-align:center; color:#64748b;">Ciclo: <span id="dataNeuroMomento"></span></p>
+    <div class="divisor-categoria">Neurociência do Momento</div>
     <div class="texto" id="neuroDominanciaMom"></div>
     <div class="texto" id="neuroAnaliseMom"></div>
 
-    <h2>4. Orientações Gerais</h2>
-    <div class="divisor-categoria">Vibração de Trânsito Anual</div>
-    <p style="text-align:center; color:#64748b;">Ciclo: <span id="cicloTransitoPDF"></span></p>
+    <h2>4. Orientações</h2>
+    <div class="divisor-categoria">Vibração de Trânsito</div>
     <div id="transito" class="texto"></div>
 
     <div class="divisor-categoria">Educação Neurocognitiva</div>
     <div id="textoEducativoPDF" class="texto"></div>
 
-    <div style="page-break-before: always; padding-top: 40px; text-align: center;">
+    <div style="page-break-before: always; text-align: center; padding-top: 50px;">
         <h2>🏆 PARABÉNS, <strong id="nomeConclusao"></strong>!</h2>
-        <img src="https://hemricciinstintosuperior-rcci.github.io/Matriz_quantica_da_vida/ícone-512.jpg" style="max-width: 200px; border-radius: 10px; margin: 20px 0;">
+        <img src="https://hemricciinstintosuperior-rcci.github.io/Matriz_quantica_da_vida/ícone-512.jpg" style="max-width: 200px; border-radius: 10px;">
         <div class="texto">
-            <p>Você detém em mãos um mapa estratégico de sua própria arquitetura interna...</p>
+            <p>Sua jornada rumo ao Instinto Superior continua através do autoconhecimento.</p>
         </div>
     </div>
 </div>
 
 <script>
 const dados = JSON.parse(localStorage.getItem("relatorioMapa"));
-if(!dados) alert("Nenhum relatório encontrado.");
+if(!dados) alert("Erro nos dados!");
 
-// PRESERVAÇÃO DA LÓGICA DE DADOS ORIGINAL
 document.getElementById("nomePessoa").innerText = dados.nome;
 document.getElementById("nomeConclusao").innerText = dados.nome;
 
-// CORREÇÃO DA DATA (Lógica de inversão que você tinha)
+// DATA CORRIGIDA
 if (dados.data && dados.data.includes("-")) {
-    const partes = dados.data.split("-");
-    document.getElementById("dataPessoa").innerText = `${partes[2]}/${partes[1]}/${partes[0]}`;
+    const p = dados.data.split("-");
+    document.getElementById("dataPessoa").innerText = `${p[2]}/${p[1]}/${p[0]}`;
 } else {
     document.getElementById("dataPessoa").innerText = dados.data;
 }
 
 document.getElementById("anoMomento").innerText = dados.anoMomento;
 document.getElementById("intervaloMomento").innerText = dados.inicioFimMomento;
-document.getElementById("cicloTransitoPDF").innerText = dados.inicioFimMomento;
-document.getElementById("dataNeuroMomento").innerText = dados.inicioFimMomento;
-
-// INSERÇÃO DOS TEXTOS SEM FORMATAÇÃO EXTRA (Preservando o que vem do Gerador)
 document.getElementById("textoNatural").innerHTML = dados.textoNatural;
 document.getElementById("textoMomento").innerHTML = dados.textoMomento;
 document.getElementById("textoExpressaoNat").innerHTML = dados.textoExpressaoNat;
@@ -220,34 +207,31 @@ document.getElementById("neuroAnaliseMom").innerHTML = dados.analiseNeuroMom;
 document.getElementById("textoEducativoPDF").innerHTML = dados.textoEducacao || "";
 document.getElementById("transito").innerHTML = dados.transitoHTML;
 
-// FUNÇÃO DAS BARRAS
-function barra(id, valor, max){
-    let perc = (valor/max)*100;
-    document.getElementById(id).style.width = perc + "%";
+function barra(id, v, m){
+    document.getElementById(id).style.width = (v/m)*100 + "%";
 }
 
-let maxNat = Math.max(dados.fisico, dados.mental, dados.emocional, dados.intuitivo);
-barra("barFisicoNat", dados.fisico, maxNat);
-barra("barMentalNat", dados.mental, maxNat);
-barra("barEmocionalNat", dados.emocional, maxNat);
-barra("barIntuitivoNat", dados.intuitivo, maxNat);
+let mNat = Math.max(dados.fisico, dados.mental, dados.emocional, dados.intuitivo);
+barra("barFisicoNat", dados.fisico, mNat);
+barra("barMentalNat", dados.mental, mNat);
+barra("barEmocionalNat", dados.emocional, mNat);
+barra("barIntuitivoNat", dados.intuitivo, mNat);
 
-let maxExpNat = Math.max(dados.criativoNat, dados.indecisoNat, dados.neutroNat);
-barra("barCriativoNat", dados.criativoNat, maxExpNat);
-barra("barIndecisoNat", dados.indecisoNat, maxExpNat);
-barra("barNeutroNat", dados.neutroNat, maxExpNat);
+let mExpNat = Math.max(dados.criativoNat, dados.indecisoNat, dados.neutroNat);
+barra("barCriativoNat", dados.criativoNat, mExpNat);
+barra("barIndecisoNat", dados.indecisoNat, mExpNat);
+barra("barNeutroNat", dados.neutroNat, mExpNat);
 
-let maxMom = Math.max(dados.fisicoMomento, dados.mentalMomento, dados.emocionalMomento, dados.intuitivoMomento);
-barra("barFisicoMom", dados.fisicoMomento, maxMom);
-barra("barMentalMom", dados.mentalMomento, maxMom);
-barra("barEmocionalMom", dados.emocionalMomento, maxMom);
-barra("barIntuitivoMom", dados.intuitivoMomento, maxMom);
+let mMom = Math.max(dados.fisicoMomento, dados.mentalMomento, dados.emocionalMomento, dados.intuitivoMomento);
+barra("barFisicoMom", dados.fisicoMomento, mMom);
+barra("barMentalMom", dados.mentalMomento, mMom);
+barra("barEmocionalMom", dados.emocionalMomento, mMom);
+barra("barIntuitivoMom", dados.intuitivoMomento, mMom);
 
-let maxExpMom = Math.max(dados.criativoMom, dados.indecisoMom, dados.neutroMom);
-barra("barCriativoMom", dados.criativoMom, maxExpMom);
-barra("barIndecisoMom", dados.indecisoMom, maxExpMom);
-barra("barNeutroMom", dados.neutroMom, maxExpMom);
+let mExpMom = Math.max(dados.criativoMom, dados.indecisoMom, dados.neutroMom);
+barra("barCriativoMom", dados.criativoMom, mExpMom);
+barra("barIndecisoMom", dados.indecisoMom, mExpMom);
+barra("barNeutroMom", dados.neutroMom, mExpMom);
 </script>
-
 </body>
 </html>
