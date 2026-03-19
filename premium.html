@@ -206,7 +206,10 @@ Essa abordagem amplia a interpretação tradicional ao incorporar uma perspectiv
 
 </div>
 <hr class="divisor-secao">          
-<h2>Plano de Expressão Natural</h2>
+<h2>Plano Natural</h2>
+<p class="intro">
+O Plano Natural representa a base estrutural do seu funcionamento, integrando os aspectos físico, mental, emocional e intuitivo, além de abranger seu perfil natural (criativo, indeciso e neutro) e sua análise neurocognitiva natural (dominância e análise).
+Essa configuração acompanha você ao longo de toda a vida, influenciando sua forma de perceber, reagir e se expressar no mundo, como uma assinatura permanente da sua essência. </p>    
 <h3>Plano de Energia Natural</h3>
 <p class="intro">
 O Plano de Expressão Natural revela como as energias cognitivas e comportamentais da pessoa se organizam de forma estrutural ao longo da vida. Ele demonstra a predominância dos planos físico, mental, emocional e intuitivo, indicando como a consciência tende a perceber, interpretar e reagir ao mundo ao redor.
@@ -253,9 +256,12 @@ Neutro
           
 <hr class="divisor-secao">
 <h2>Plano de Expressão do Momento</h2>
+ <p class="intro">
+O Plano de Expressão do momento representa a forma como suas energias se manifestam no ciclo atual, integrando os aspectos físico, mental, emocional e intuitivo, além de abranger seu perfil de expressão do momento (criativo, indeciso e neutro) e sua análise neurocognitiva do momento (dominância e análise).
+Essa configuração é transitória e acompanha a fase que você está vivendo, influenciando sua forma de perceber, reagir e se expressar no mundo conforme o ciclo atual. </p>     
 <p><strong>Ano analisado:</strong> <span id="anoMomento"></span></p>
 <p><strong>Ciclo:</strong> <span id="intervaloMomento"></span></p>
-<h3>Plano de Enegia so Momento</h3>
+<h3>Plano de Enegia do Momento</h3>
 <p class="intro">
 O Plano de Energia do Momento representa o estado energético atual da consciência dentro do ciclo de vida analisado. Diferente do plano natural, ele mostra como os planos cognitivos estão operando no período presente, revelando tendências temporárias de comportamento, percepção e tomada de decisão.
 </p>
@@ -274,9 +280,9 @@ Intuitivo
 <h4>Resultado de Energia do Momento</h4> 
 <div class="texto" id="textoMomento"></div>          
 
-<div class="bloco">
+
 <hr class="divisor-secao">
-<h3>Expressão atual</h3>
+<h3>Expressão do Momento</h3>
 <p class="intro">
 O Perfil de Expressão do Momento demonstra como a mente está estruturando suas respostas no ciclo atual. Ele revela se o período favorece manifestações criativas, estados de indecisão ou equilíbrio neutro entre as possibilidades de ação.
 </p>
@@ -394,9 +400,9 @@ return texto
 }
 
 document.getElementById("textoNatural").innerHTML = (dados.textoNatural);
-document.getElementById("textoMomento").innerHTML = (dados.textoMomento);
+document.getElementById("textoMomento").innerHTML = formatarTexto(dados.textoMomento);
 document.getElementById("textoExpressaoNat").innerHTML = (dados.textoExpressaoNat);
-document.getElementById("textoExpressaoMom").innerHTML = (dados.textoExpressaoMom);
+document.getElementById("textoExpressaoMom").innerHTML = formatarTexto(dados.textoExpressaoMom);
 /* Preenchimento das novas seções separadas */
 document.getElementById("neuroDominanciaNat").innerHTML = dados.dominanciaNat;
 document.getElementById("neuroAnaliseNat").innerHTML = dados.analiseNeuroNat;
