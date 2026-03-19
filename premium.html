@@ -383,7 +383,7 @@ Intuitivo
 <div class="bloco">          
 <div class="texto" id="textoNatural"></div>
 
- </div>         
+      
 <hr class="divisor-secao">   
 <h3>Expressão Natural</h3>
 <p class="intro">
@@ -556,10 +556,10 @@ return texto
 
 }
 
-document.getElementById("textoNatural").innerHTML = formatarTexto(dados.textoNatural);
-document.getElementById("textoMomento").innerHTML = formatarTexto(dados.textoMomento);
-document.getElementById("textoExpressaoNat").innerHTML = formatarTexto(dados.textoExpressaoNat);
-document.getElementById("textoExpressaoMom").innerHTML = formatarTexto(dados.textoExpressaoMom);
+document.getElementById("textoNatural").innerHTML = (dados.textoNatural);
+document.getElementById("textoMomento").innerHTML = (dados.textoMomento);
+document.getElementById("textoExpressaoNat").innerHTML = (dados.textoExpressaoNat);
+document.getElementById("textoExpressaoMom").innerHTML = (dados.textoExpressaoMom);
 /* Preenchimento das novas seções separadas */
 document.getElementById("neuroDominanciaNat").innerHTML = dados.dominanciaNat;
 document.getElementById("neuroAnaliseNat").innerHTML = dados.analiseNeuroNat;
