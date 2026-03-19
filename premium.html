@@ -110,21 +110,63 @@ h2 { font-size: 26px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; ma
         <p id="dataPessoa" style="font-weight: bold;"></p>
     </div>
 
-    <div class="sumario">
-        <h2>Sumário Executivo</h2>
-        <ul style="list-style: none; padding: 0;">
-            <li style="padding: 8px 0; border-bottom: 1px solid #f1f5f9;">1. Introdução e Metodologia</li>
-            <li style="padding: 8px 0; border-bottom: 1px solid #f1f5f9;">2. Análise do Plano Natural (Estrutural)</li>
-            <li style="padding: 8px 0; border-bottom: 1px solid #f1f5f9;">3. Análise da Expressão Natural (Estrutural)</li>
-            <li style="padding: 8px 0; border-bottom: 1px solid #f1f5f9;">4. Análise do Plano Neurocognitivo Natural (Estrutural)</li>
-            <li style="padding: 8px 0; border-bottom: 1px solid #f1f5f9;">5. Análise do Plano (Ciclo e Vigente)</li>
-             <li style="padding: 8px 0; border-bottom: 1px solid #f1f5f9;">6. Análise da Expressão do Momento</li>
-            <li style="padding: 8px 0; border-bottom: 1px solid #f1f5f9;">7. Análise do Plano Neurocognitivo (Ciclo e Vigente)</li>
-            <li style="padding: 8px 0; border-bottom: 1px solid #f1f5f9;">8. Análise de Trânsito (Ciclo e Vigente)</li>
-            <li style="padding: 8px 0; border-bottom: 1px solid #f1f5f9;">9. Educação e Protocolos Neurocognitivos</li>
-            <li style="padding: 8px 0; border-bottom: 1px solid #f1f5f9;">10. Conclusão</li>
-        </ul>
+<div class="sumario-container">
+    <div class="sumario-header">
+        <h2>SUMÁRIO EXECUTIVO</h2>
     </div>
+    
+    <ul class="sumario-lista">
+        <li class="sumario-item">
+            <span class="num-topico">01</span>
+            <span class="titulo-topico">Introdução e Metodologia</span>
+        </li>
+        <li class="sumario-item">
+            <span class="num-topico">02</span>
+            <span class="titulo-topico">Análise do Plano Natural</span>
+            <span class="sub-vigencia">Estrutural</span>
+        </li>
+        <li class="sumario-item">
+            <span class="num-topico">03</span>
+            <span class="titulo-topico">Análise da Expressão Natural</span>
+            <span class="sub-vigencia">Estrutural</span>
+        </li>
+        <li class="sumario-item">
+            <span class="num-topico">04</span>
+            <span class="titulo-topico">Plano Neurocognitivo Natural</span>
+            <span class="sub-vigencia">Estrutural</span>
+        </li>
+        <li class="sumario-item">
+            <span class="num-topico">05</span>
+            <span class="titulo-topico">Análise do Plano Atual</span>
+            <span class="sub-vigencia">Ciclo Vigente</span>
+        </li>
+        <li class="sumario-item">
+            <span class="num-topico">06</span>
+            <span class="titulo-topico">Expressão do Momento</span>
+            <span class="sub-vigencia">Ciclo Vigente</span>
+        </li>
+        <li class="sumario-item">
+            <span class="num-topico">07</span>
+            <span class="titulo-topico">Plano Neurocognitivo</span>
+            <span class="sub-vigencia">Ciclo Vigente</span>
+        </li>
+        <li class="sumario-item">
+            <span class="num-topico">08</span>
+            <span class="titulo-topico">Análise de Trânsito</span>
+            <span class="sub-vigencia">Ciclo Vigente</span>
+        </li>
+        <li class="sumario-item">
+            <span class="num-topico">09</span>
+            <span class="titulo-topico">Educação e Protocolos</span>
+            <span class="sub-vigencia">Neurociência</span>
+        </li>
+        <li class="sumario-item">
+            <span class="num-topico">10</span>
+            <span class="titulo-topico">Conclusão</span>
+            <span class="sub-vigencia">Direcionamento</span>
+        </li>
+    </ul>
+</div>
 
     <h2>1. Introdução</h2>          
     <div class="texto">
@@ -183,8 +225,8 @@ O Perfil de Expressão Natural demonstra a forma como a mente organiza decisões
     <h2>5.  Análise de Energias do Momento</h2>
       <p class="vigencia-info">Ciclo Vigente: <span id="intervaloMomento"></span> (Ano <span id="anoMomento"></span>)</p>
          <p class="intro">
-O Plano de Energias do Momento representa a forma como suas energias se manifestam no ciclo atual, integrando os aspectos físico, mental, emocional e intuitivo, além de abranger seu perfil de expressão do momento (criativo, indeciso e neutro) e sua análise neurocognitiva do momento (dominância e análise).
-Essa configuração é transitória e acompanha a fase que você está vivendo, influenciando sua forma de perceber, reagir e se expressar no mundo conforme o ciclo atual. </p>   
+O Plano de Energias do Momento representa o estado energético atual da consciência dentro do ciclo de vida analisado. Diferente do plano natural, ele mostra como os planos cognitivos estão operando no período presente, revelando tendências temporárias de comportamento, percepção e tomada de decisão.
+</p>
        
     Físico <div class="barra-container"><div class="barra"><span id="barFisicoMom"></span></div></div>
     Mental <div class="barra-container"><div class="barra"><span id="barMentalMom"></span></div></div>
@@ -195,7 +237,7 @@ Essa configuração é transitória e acompanha a fase que você está vivendo, 
     
            <h2>6. Ánalise de Expressão do Momento</h2>
             <p class="texto">
-O Plano de Expressão do Momento representa o estado energético atual da consciência dentro do ciclo de vida analisado. Diferente do plano natural, ele mostra como os planos cognitivos estão operando no período presente, revelando tendências temporárias de comportamento, percepção e tomada de decisão.
+O Plano de Expressão do Momento demonstra como a mente está estruturando suas respostas no ciclo atual. Ele revela se o período favorece manifestações criativas, estados de indecisão ou equilíbrio neutro entre as possibilidades de ação.
 </p>
         Criativo <div class="barra-container"><div class="barra"><span id="barCriativoMom"></span></div></div>
     Indeciso <div class="barra-container"><div class="barra"><span id="barIndecisoMom"></span></div></div>
