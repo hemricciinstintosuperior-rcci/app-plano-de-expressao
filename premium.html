@@ -239,13 +239,12 @@ Essa configuração é transitória e acompanha a fase que você está vivendo, 
     <div class="texto" id="textoExpressaoMom"></div>
 
     <div class="divisor-categoria">Análise Neurocognitiva do Momento</div>
-    
+    <p class="vigencia-info">Ciclo: <span id="vigenciaNeuroMom"></span></p>
     <div id="neuroDominanciaMom" style="font-weight: bold; margin-bottom: 10px;"></div>
     <div class="texto" id="neuroAnaliseMom"></div>
 
     <h2>4. Orientações e Trânsito</h2>
-    <span class="vigencia-tag" style="margin-top:-10px">Ciclo Ativo: <span id="vigenciaTransito"></span></span>
-    <p class="intro">
+        <p class="intro">
  <p style="text-align:center; color: #64748b; font-weight: bold;">Ciclo: <span id="cicloTransitoPDF"></span></p>         
 A Vibração de Trânsito Anual representa o campo vibracional que influencia o período atual da vida. Ela indica tendências de movimento, mudanças e oportunidades que podem se manifestar ao longo do ciclo anual, funcionando como um direcionamento energético para experiências e aprendizados.
 </p>
@@ -303,10 +302,17 @@ if(!dados) alert("Erro: Dados não encontrados.");
 
 document.getElementById("nomePessoa").innerText = dados.nome;
 document.getElementById("nomeConclusao").innerText = dados.nome;
-document.getElementById("dataPessoa").innerText = dados.data;
+// Ajuste da Data de Nascimento (Formato Brasil)
+if (dados.data && dados.data.includes("-")) {
+    const p = dados.data.split("-");
+    document.getElementById("dataPessoa").innerText = ${p[2]}/${p[1]}/${p[0]};
+} else {
+    document.getElementById("dataPessoa").innerText = dados.data;
+}
 
 document.getElementById("anoMomento").innerText = dados.anoMomento;
 document.getElementById("intervaloMomento").innerText = dados.inicioFimMomento;
+document.getElementById("vigenciaNeuroMom").innerText = vigencia; // Novo campo    
 document.getElementById("vigenciaTransito").innerText = dados.inicioFimMomento;
 document.getElementById("cicloTransitoPDF").innerText = dados.inicioFimMomento;    
 
