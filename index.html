@@ -872,42 +872,54 @@ function gerarTudo() {
 function exportarRelatorio() {
     if(!resultadoPlanosNatural) return alert("Gere o mapa primeiro.");
     
-    // Captura os valores das barras do Natural
     const valNat = valoresBrutosNatural;
-    const expNat = document.getElementById("resumoExpressaoNat").innerHTML;
-    
-    // Captura os valores do Momento selecionado
     const ano = document.getElementById("anoSelect").value;
     const d = bancoMomentos.find(a => a.ano == ano);
+
+    // Gerando as partes separadas para o Natural
+    const dadosNat = {
+        fisico: { nivel: classificarIntensidade(valNat.fisico, Math.max(valNat.fisico, valNat.mental, valNat.emocional, valNat.intuitivo)), valorReal: valNat.fisico },
+        mental: { nivel: classificarIntensidade(valNat.mental, Math.max(valNat.fisico, valNat.mental, valNat.emocional, valNat.intuitivo)), valorReal: valNat.mental },
+        emocional: { nivel: classificarIntensidade(valNat.emocional, Math.max(valNat.fisico, valNat.mental, valNat.emocional, valNat.intuitivo)), valorReal: valNat.emocional },
+        intuitivo: { nivel: classificarIntensidade(valNat.intuitivo, Math.max(valNat.fisico, valNat.mental, valNat.emocional, valNat.intuitivo)), valorReal: valNat.intuitivo }
+    };
+
+    // Gerando as partes separadas para o Momento
+    const maiorMom = Math.max(d.fisico, d.mental, d.emocional, d.intuitivo);
+    const dadosMom = {
+        fisico: { nivel: classificarIntensidade(d.fisico, maiorMom), valorReal: d.fisico },
+        mental: { nivel: classificarIntensidade(d.mental, maiorMom), valorReal: d.mental },
+        emocional: { nivel: classificarIntensidade(d.emocional, maiorMom), valorReal: d.emocional },
+        intuitivo: { nivel: classificarIntensidade(d.intuitivo, maiorMom), valorReal: d.intuitivo }
+    };
 
     const pacote = {
         nome: document.getElementById("nome").value,
         data: document.getElementById("dataNascimento").value,
         anoMomento: ano,
         inicioFimMomento: d.intervalo, 
-        // Textos
-        textoNatural: document.getElementById("resumoNatural").innerHTML,
-        textoMomento: document.getElementById("resumoMomento").innerHTML,
-        textoExpressaoNat: expNat,
+        
+        // Textos de Planos
+        textoNatural: gerarTextoPlano("natural", dadosNat),
+        textoMomento: gerarTextoPlano("momento", dadosMom),
+        
+        // Textos Neuro SEPARADOS
+        dominanciaNat: gerarDominanciaNeuro(dadosNat),
+        analiseNeuroNat: gerarInterpretacaoNeuro(dadosNat),
+        dominanciaMom: gerarDominanciaNeuro(dadosMom),
+        analiseNeuroMom: gerarInterpretacaoNeuro(dadosMom),
+
+        textoExpressaoNat: document.getElementById("resumoExpressaoNat").innerHTML,
         textoExpressaoMom: document.getElementById("resumoExpressaoMom").innerHTML,
         transitoHTML: document.getElementById("resultadoTrânsito").innerHTML,
-        // ADICIONE ESTA LINHA ABAIXO:
         textoEducacao: document.getElementById("areaTextoEducativo").innerHTML,
         
-        
-        // Valores para os Gráficos Natural
-        fisico: valNat.fisico,
-        mental: valNat.mental,
-        emocional: valNat.emocional,
-        intuitivo: valNat.intuitivo,
+        // Valores das Barras
+        fisico: valNat.fisico, mental: valNat.mental, emocional: valNat.emocional, intuitivo: valNat.intuitivo,
         criativoNat: parseInt(document.getElementById("numCriativoNat").innerText),
         indecisoNat: parseInt(document.getElementById("numIndecisoNat").innerText),
         neutroNat: parseInt(document.getElementById("numNeutroNat").innerText),
-        // Valores para os Gráficos Momento
-        fisicoMomento: d.fisico,
-        mentalMomento: d.mental,
-        emocionalMomento: d.emocional,
-        intuitivoMomento: d.intuitivo,
+        fisicoMomento: d.fisico, mentalMomento: d.mental, emocionalMomento: d.emocional, intuitivoMomento: d.intuitivo,
         criativoMom: parseInt(document.getElementById("numCriativoMom").innerText),
         indecisoMom: parseInt(document.getElementById("numIndecisoMom").innerText),
         neutroMom: parseInt(document.getElementById("numNeutroMom").innerText)
@@ -915,9 +927,6 @@ function exportarRelatorio() {
     
     localStorage.setItem("relatorioMapa", JSON.stringify(pacote));
     window.open("premium.html", "_blank");
-
-
-   
 }
 
   
