@@ -873,24 +873,25 @@ function exportarRelatorio() {
     if(!resultadoPlanosNatural) return alert("Gere o mapa primeiro.");
     
     const valNat = valoresBrutosNatural;
+    const maiorNat = Math.max(valNat.fisico, valNat.mental, valNat.emocional, valNat.intuitivo);
     const ano = document.getElementById("anoSelect").value;
     const d = bancoMomentos.find(a => a.ano == ano);
+    const maiorMom = Math.max(d.fisico, d.mental, d.emocional, d.intuitivo);
 
-    // Gerando as partes separadas para o Natural
+    // DADOS NATURAIS COMPLETOS (Com Nível e Número para o Neuro e Planos)
     const dadosNat = {
-        fisico: { nivel: classificarIntensidade(valNat.fisico, Math.max(valNat.fisico, valNat.mental, valNat.emocional, valNat.intuitivo)), valorReal: valNat.fisico },
-        mental: { nivel: classificarIntensidade(valNat.mental, Math.max(valNat.fisico, valNat.mental, valNat.emocional, valNat.intuitivo)), valorReal: valNat.mental },
-        emocional: { nivel: classificarIntensidade(valNat.emocional, Math.max(valNat.fisico, valNat.mental, valNat.emocional, valNat.intuitivo)), valorReal: valNat.emocional },
-        intuitivo: { nivel: classificarIntensidade(valNat.intuitivo, Math.max(valNat.fisico, valNat.mental, valNat.emocional, valNat.intuitivo)), valorReal: valNat.intuitivo }
+        fisico: { nivel: classificarIntensidade(valNat.fisico, maiorNat), numero: reduzirNumero(valNat.fisico), valorReal: valNat.fisico },
+        mental: { nivel: classificarIntensidade(valNat.mental, maiorNat), numero: reduzirNumero(valNat.mental), valorReal: valNat.mental },
+        emocional: { nivel: classificarIntensidade(valNat.emocional, maiorNat), numero: reduzirNumero(valNat.emocional), valorReal: valNat.emocional },
+        intuitivo: { nivel: classificarIntensidade(valNat.intuitivo, maiorNat), numero: reduzirNumero(valNat.intuitivo), valorReal: valNat.intuitivo }
     };
 
-    // Gerando as partes separadas para o Momento
-    const maiorMom = Math.max(d.fisico, d.mental, d.emocional, d.intuitivo);
+    // DADOS MOMENTO COMPLETOS
     const dadosMom = {
-        fisico: { nivel: classificarIntensidade(d.fisico, maiorMom), valorReal: d.fisico },
-        mental: { nivel: classificarIntensidade(d.mental, maiorMom), valorReal: d.mental },
-        emocional: { nivel: classificarIntensidade(d.emocional, maiorMom), valorReal: d.emocional },
-        intuitivo: { nivel: classificarIntensidade(d.intuitivo, maiorMom), valorReal: d.intuitivo }
+        fisico: { nivel: classificarIntensidade(d.fisico, maiorMom), numero: reduzirNumero(d.fisico), valorReal: d.fisico },
+        mental: { nivel: classificarIntensidade(d.mental, maiorMom), numero: reduzirNumero(d.mental), valorReal: d.mental },
+        emocional: { nivel: classificarIntensidade(d.emocional, maiorMom), numero: reduzirNumero(d.emocional), valorReal: d.emocional },
+        intuitivo: { nivel: classificarIntensidade(d.intuitivo, maiorMom), numero: reduzirNumero(d.intuitivo), valorReal: d.intuitivo }
     };
 
     const pacote = {
@@ -899,11 +900,11 @@ function exportarRelatorio() {
         anoMomento: ano,
         inicioFimMomento: d.intervalo, 
         
-        // Textos de Planos
+        // Agora o gerarTextoPlano vai achar o [numero] correto!
         textoNatural: gerarTextoPlano("natural", dadosNat),
         textoMomento: gerarTextoPlano("momento", dadosMom),
         
-        // Textos Neuro SEPARADOS
+        // Gerando o HTML do Neuro já mastigado para o PDF
         dominanciaNat: gerarDominanciaNeuro(dadosNat),
         analiseNeuroNat: gerarInterpretacaoNeuro(dadosNat),
         dominanciaMom: gerarDominanciaNeuro(dadosMom),
@@ -914,7 +915,7 @@ function exportarRelatorio() {
         transitoHTML: document.getElementById("resultadoTrânsito").innerHTML,
         textoEducacao: document.getElementById("areaTextoEducativo").innerHTML,
         
-        // Valores das Barras
+        // Valores das Barras e Números
         fisico: valNat.fisico, mental: valNat.mental, emocional: valNat.emocional, intuitivo: valNat.intuitivo,
         criativoNat: parseInt(document.getElementById("numCriativoNat").innerText),
         indecisoNat: parseInt(document.getElementById("numIndecisoNat").innerText),
