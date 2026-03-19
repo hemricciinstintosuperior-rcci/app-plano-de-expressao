@@ -302,6 +302,7 @@ if(!dados) alert("Erro: Dados não encontrados.");
 
 document.getElementById("nomePessoa").innerText = dados.nome;
 document.getElementById("nomeConclusao").innerText = dados.nome;
+
 // Ajuste da Data de Nascimento (Formato Brasil)
 if (dados.data && dados.data.includes("-")) {
     const p = dados.data.split("-");
@@ -310,11 +311,12 @@ if (dados.data && dados.data.includes("-")) {
     document.getElementById("dataPessoa").innerText = dados.data;
 }
 
+// Preenchimento das Vigências em todos os campos
+const vigencia = dados.inicioFimMomento;
 document.getElementById("anoMomento").innerText = dados.anoMomento;
-document.getElementById("intervaloMomento").innerText = dados.inicioFimMomento;
-document.getElementById("vigenciaNeuroMom").innerText = vigencia; // Novo campo    
-document.getElementById("vigenciaTransito").innerText = dados.inicioFimMomento;
-document.getElementById("cicloTransitoPDF").innerText = dados.inicioFimMomento;    
+document.getElementById("intervaloMomento").innerText = vigencia;
+document.getElementById("vigenciaNeuroMom").innerText = vigencia; // Novo campo
+document.getElementById("cicloTransitoPDF").innerText = vigencia;  
 
 // PREENCHIMENTO DOS TEXTOS (VINDOS DO GERADOR)
 document.getElementById("textoNatural").innerHTML = dados.textoNatural;
