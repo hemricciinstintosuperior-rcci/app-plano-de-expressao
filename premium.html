@@ -6,31 +6,43 @@
 <title>Relatório Premium - Instinto Superior</title>
 
 <style>
+/* FONTES E CORES GERAIS */
 body {
-    font-family: 'Segoe UI', Arial, sans-serif;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     background: #f1f5f9;
     margin: 0;
     color: #1e293b;
+    line-height: 1.6;
 }
 
-/* O segredo para não vazar: box-sizing e largura fixa */
+/* CONTAINER TIPO FOLHA A4 */
 .relatorio {
-    max-width: 900px; /* Largura ideal para PDF A4 */
+    max-width: 950px;
     margin: 40px auto;
     background: white;
-    padding: 60px;
+    padding: 80px 70px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    box-sizing: border-box; /* Garante que o padding não empurre o conteúdo para fora */
-    overflow: hidden; /* Trava qualquer vazamento */
+    min-height: 100vh;
 }
 
-.capa { text-align: center; page-break-after: always; width: 100%; }
-.logoRelatorio { max-width: 100%; height: auto; margin-bottom: 25px; }
+/* LOGO E CAPA */
+.capa {
+    text-align: center;
+    page-break-after: always;
+    margin-bottom: 50px;
+}
+.logoRelatorio {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 30px;
+}
 
-h1, h2, h3, h4 { text-align: center; width: 100%; }
-h2 { font-size: 24px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-top: 50px; color: #334155; }
+/* TITULOS PROFISSIONAIS */
+h1 { font-size: 34px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; color: #0f172a; }
+h2 { font-size: 26px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; margin-top: 60px; color: #334155; }
+h3 { font-size: 20px; color: #475569; margin-top: 35px; }
 
-/* LINHA QUE TERMINA NA DIREITA (IGUAL A FOTO) */
+/* O DIVISOR DA FOTO (LINHA QUE TERMINA NA DIREITA) */
 .divisor-categoria {
     display: flex;
     align-items: center;
@@ -40,7 +52,6 @@ h2 { font-size: 24px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; mar
     font-weight: 800;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    width: 100%;
 }
 .divisor-categoria::after {
     content: "";
@@ -49,44 +60,53 @@ h2 { font-size: 24px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; mar
     border-bottom: 1px solid #e2e8f0;
 }
 
-/* TEXTO TRAVADO DENTRO DA FOLHA */
+/* TEXTOS E PARÁGRAFOS */
 .texto {
     text-align: justify;
     line-height: 1.8;
-    font-size: 16px;
+    font-size: 16.5px;
     color: #334155;
     margin: 20px 0;
-    width: 100%;
-    word-wrap: break-word; /* Força quebra de palavras longas */
-    overflow-wrap: break-word;
 }
 
-.barra-container { margin-bottom: 15px; width: 100%; }
+/* BARRAS MODERNAS (FINAS) */
+.label-barra { font-weight: 600; font-size: 13px; margin-bottom: 6px; display: block; text-transform: uppercase; color: #64748b; }
+.barra-container { margin-bottom: 18px; }
 .barra {
-    height: 14px;
-    background: #e5e7eb;
-    border-radius: 10px;
+    height: 10px;
+    background: #f1f5f9;
+    border-radius: 5px;
     overflow: hidden;
     width: 100%;
 }
-.barra span { display: block; height: 100%; width: 0%; background-color: currentColor; transition: width 1s; }
+.barra span { display: block; height: 100%; background-color: currentColor; transition: width 1s; }
 
-/* CORES ORIGINAIS */
+/* CORES DAS BARRAS */
 #barFisicoNat, #barFisicoMom { color: #ef4444; }
 #barMentalNat, #barMentalMom { color: #3b82f6; }
 #barEmocionalNat, #barEmocionalMom { color: #22c55e; }
-#barIntuitivoNat, #barIntuitivoMom { color: #facc15; }
+#barIntuitivoNat, #barIntuitivoMom { color: #eab308; }
 #barCriativoNat, #barCriativoMom { color: #9333ea; }
 #barIndecisoNat, #barIndecisoMom { color: #fb923c; }
-#barNeutroNat, #barNeutroMom { color: #4A4A4A; }
+#barNeutroNat, #barNeutroMom { color: #4b5563; }
 
-.sumario ul { list-style: none; padding: 0; width: 100%; }
-.sumario li { padding: 8px 0; border-bottom: 1px dotted #c9c9c9; }
+/* SUMÁRIO */
+.sumario ul { list-style: none; padding: 0; }
+.sumario li { padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: #475569; }
+
+/* BOTÃO */
+.btn-container { text-align: center; margin-bottom: 40px; }
+.btn-container button {
+    background: #0f172a; color: white; border: none; padding: 15px 40px;
+    font-size: 16px; font-weight: 600; border-radius: 8px; cursor: pointer;
+}
 
 @media print {
     .btn-container { display: none; }
     body { background: white; }
-    .relatorio { box-shadow: none; margin: 0; padding: 40px; width: 100% !important; max-width: 100% !important; }
+    .relatorio { box-shadow: none; margin: 0; padding: 0; width: 100%; }
+    h2 { page-break-before: always; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
 }
 </style>
 </head>
@@ -94,108 +114,152 @@ h2 { font-size: 24px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; mar
 <body>
 
 <div class="relatorio">
-    <div class="btn-container" style="text-align:center; margin-bottom:30px;">
-        <button onclick="window.print()" style="padding:12px 25px; cursor:pointer;">📄 Baixar Relatório em PDF</button>
+    <div class="btn-container">
+        <button onclick="window.print()">📄 Gerar Documento PDF</button>
     </div>
 
     <div class="capa">
         <img src="https://hemricciinstintosuperior-rcci.github.io/Trabalho_venda_Numerologia/plano.png" class="logoRelatorio">
-        <h3 id="nomePessoa"></h3>
-        <p id="dataPessoa"></p>
+        <h1 id="nomePessoa"></h1>
+        <p style="font-size: 1.2rem; color: #64748b;">Mapa de Expressão Quântica e Neurocognitiva</p>
+        <p id="dataPessoa" style="font-weight: bold;"></p>
     </div>
 
     <div class="sumario">
-        <h2>Sumário</h2>
+        <h2>Sumário Executivo</h2>
         <ul>
-            <li>1. Introdução do método</li>          
-            <li>2. Plano de Energia Natural</li>
-            <li>3. Perfil de Expressão Natural</li>
-            <li>4. Dominância e análise Neurocognitiva Natural</li>          
-            <li>5. Plano de Expressão do Momento</li>
-            <li>6. Perfil de Expressão do Momento</li>
-            <li>7. Dominância e análise Neurocognitiva do Momento</li>         
-            <li>8. Vibração de Trânsito Anual</li>
-            <li>9. Educação Neurocognitiva</li> 
-            <li>10. Conclusão</li>            
+            <li>1. Introdução e Metodologia</li>          
+            <li>2. Análise do Plano Natural (Estrutural)</li>
+            <li>3. Perfil de Expressão e Tomada de Decisão</li>
+            <li>4. Dominância Neurocognitiva</li>          
+            <li>5. O Momento Atual: Ciclo e Energias</li>
+            <li>6. Educação e Protocolos Neurocognitivos</li> 
+            <li>7. Conclusão e Direcionamento</li>            
         </ul>
     </div>
 
-    <h2>1. Introdução</h2>
+    <h2>1. Introdução</h2>          
     <div class="texto">
         <p>Este relatório integra princípios da numerologia analítica com fundamentos da neurociência cognitiva, estabelecendo uma leitura estruturada dos padrões mentais e comportamentais.</p>
+        <p>A análise dos Planos de Expressão permite observar como diferentes áreas cognitivas se manifestam na organização da consciência, representadas pelos planos físico, mental, emocional e intuitivo.</p>
     </div>
 
-    <h2>2. Plano Natural</h2>
-    <div class="divisor-categoria">Energias Naturais</div>
-    Físico <div class="barra"><span id="barFisicoNat"></span></div>
-    Mental <div class="barra"><span id="barMentalNat"></span></div>
-    Emocional <div class="barra"><span id="barEmocionalNat"></span></div>
-    Intuitivo <div class="barra"><span id="barIntuitivoNat"></span></div>
+    <h2>2. Análise do Plano Natural</h2>
+    <p class="texto">Este é o seu "DNA" comportamental, a base que sustenta suas reações ao longo da vida.</p>
+
+    <div class="divisor-categoria">Energias Cognitivas</div>
+    <div class="barra-container">
+        <span class="label-barra">Físico</span>
+        <div class="barra"><span id="barFisicoNat"></span></div>
+    </div>
+    <div class="barra-container">
+        <span class="label-barra">Mental</span>
+        <div class="barra"><span id="barMentalNat"></span></div>
+    </div>
+    <div class="barra-container">
+        <span class="label-barra">Emocional</span>
+        <div class="barra"><span id="barEmocionalNat"></span></div>
+    </div>
+    <div class="barra-container">
+        <span class="label-barra">Intuitivo</span>
+        <div class="barra"><span id="barIntuitivoNat"></span></div>
+    </div>
     <div class="texto" id="textoNatural"></div>
 
-    <div class="divisor-categoria">Perfil de Expressão Natural</div>
-    Criativo <div class="barra"><span id="barCriativoNat"></span></div>
-    Indeciso <div class="barra"><span id="barIndecisoNat"></span></div>
-    Neutro <div class="barra"><span id="barNeutroNat"></span></div>
+    <div class="divisor-categoria">Perfil de Expressão</div>
+    <div class="barra-container">
+        <span class="label-barra">Criativo</span>
+        <div class="barra"><span id="barCriativoNat"></span></div>
+    </div>
+    <div class="barra-container">
+        <span class="label-barra">Indeciso</span>
+        <div class="barra"><span id="barIndecisoNat"></span></div>
+    </div>
+    <div class="barra-container">
+        <span class="label-barra">Neutro</span>
+        <div class="barra"><span id="barNeutroNat"></span></div>
+    </div>
     <div class="texto" id="textoExpressaoNat"></div>
 
-    <div class="divisor-categoria">Análise Neurocognitiva Natural</div>
-    <div class="texto" id="neuroDominanciaNat"></div>
+    <div class="divisor-categoria">Análise Neurocognitiva</div>
+    <div id="neuroDominanciaNat" style="font-weight: bold; margin-bottom: 10px;"></div>
     <div class="texto" id="neuroAnaliseNat"></div>
 
-    <h2>3. Plano do Momento</h2>
-    <p style="text-align:center">Ano: <span id="anoMomento"></span> | Ciclo: <span id="intervaloMomento"></span></p>
+    <h2>3. O Momento Atual</h2>
+    <p class="texto">Análise do ciclo vigente: <strong><span id="anoMomento"></span></strong> | Período: <strong><span id="intervaloMomento"></span></strong></p>
 
-    <div class="divisor-categoria">Energia Atual</div>
-    Físico <div class="barra"><span id="barFisicoMom"></span></div>
-    Mental <div class="barra"><span id="barMentalMom"></span></div>
-    Emocional <div class="barra"><span id="barEmocionalMom"></span></div>
-    Intuitivo <div class="barra"><span id="barIntuitivoMom"></span></div>
+    <div class="divisor-categoria">Energia do Ciclo</div>
+    <div class="barra-container">
+        <span class="label-barra">Físico</span>
+        <div class="barra"><span id="barFisicoMom"></span></div>
+    </div>
+    <div class="barra-container">
+        <span class="label-barra">Mental</span>
+        <div class="barra"><span id="barMentalMom"></span></div>
+    </div>
+    <div class="barra-container">
+        <span class="label-barra">Emocional</span>
+        <div class="barra"><span id="barEmocionalMom"></span></div>
+    </div>
+    <div class="barra-container">
+        <span class="label-barra">Intuitivo</span>
+        <div class="barra"><span id="barIntuitivoMom"></span></div>
+    </div>
     <div class="texto" id="textoMomento"></div>
 
-    <div class="divisor-categoria">Expressão Atual</div>
-    Criativo <div class="barra"><span id="barCriativoMom"></span></div>
-    Indeciso <div class="barra"><span id="barIndecisoMom"></span></div>
-    Neutro <div class="barra"><span id="barNeutroMom"></span></div>
+    <div class="divisor-categoria">Expressão no Ciclo</div>
+    <div class="barra-container">
+        <span class="label-barra">Criativo</span>
+        <div class="barra"><span id="barCriativoMom"></span></div>
+    </div>
+    <div class="barra-container">
+        <span class="label-barra">Indeciso</span>
+        <div class="barra"><span id="barIndecisoMom"></span></div>
+    </div>
+    <div class="barra-container">
+        <span class="label-barra">Neutro</span>
+        <div class="barra"><span id="barNeutroMom"></span></div>
+    </div>
     <div class="texto" id="textoExpressaoMom"></div>
 
     <div class="divisor-categoria">Neurociência do Momento</div>
-    <div class="texto" id="neuroDominanciaMom"></div>
+    <div id="neuroDominanciaMom" style="font-weight: bold; margin-bottom: 10px;"></div>
     <div class="texto" id="neuroAnaliseMom"></div>
 
-    <h2>4. Orientações</h2>
-    <div class="divisor-categoria">Vibração de Trânsito</div>
+    <h2>4. Orientações e Trânsito</h2>
+    <div class="divisor-categoria">Vibração de Trânsito Anual</div>
     <div id="transito" class="texto"></div>
 
     <div class="divisor-categoria">Educação Neurocognitiva</div>
-    <div id="textoEducativoPDF" class="texto"></div>
+    <div class="texto">
+        <p>A bioenergética do seu cérebro depende da oferta de precursores neuroquímicos específicos...</p>
+        <div id="textoEducativoPDF"></div>
+    </div>
 
-    <div style="page-break-before: always; text-align: center; padding-top: 50px;">
-        <h2>🏆 PARABÉNS, <strong id="nomeConclusao"></strong>!</h2>
-        <img src="https://hemricciinstintosuperior-rcci.github.io/Matriz_quantica_da_vida/ícone-512.jpg" style="max-width: 200px; border-radius: 10px;">
+    <div style="page-break-before: always; padding-top: 50px;">
+        <h2 style="text-align: center;">🏆 Conclusão do Mapa</h2>
+        <div style="text-align: center; margin: 30px 0;">
+             <img src="https://hemricciinstintosuperior-rcci.github.io/Matriz_quantica_da_vida/ícone-512.jpg" style="max-width: 250px; border-radius: 50%;">
+        </div>
         <div class="texto">
-            <p>Sua jornada rumo ao Instinto Superior continua através do autoconhecimento.</p>
+            <p>Parabéns, <strong id="nomeConclusao"></strong>! Você agora possui um mapa estratégico de sua própria arquitetura interna.</p>
+            <p>Lembre-se de que a neurociência prova que o cérebro é plástico. Utilize as informações deste relatório para calibrar sua biologia e sustentar suas mais altas aspirações rumo ao <strong>Instinto Superior</strong>.</p>
         </div>
     </div>
 </div>
 
 <script>
 const dados = JSON.parse(localStorage.getItem("relatorioMapa"));
-if(!dados) alert("Erro nos dados!");
+if(!dados) alert("Erro: Dados não encontrados.");
 
 document.getElementById("nomePessoa").innerText = dados.nome;
 document.getElementById("nomeConclusao").innerText = dados.nome;
-
-// DATA CORRIGIDA
-if (dados.data && dados.data.includes("-")) {
-    const p = dados.data.split("-");
-    document.getElementById("dataPessoa").innerText = `${p[2]}/${p[1]}/${p[0]}`;
-} else {
-    document.getElementById("dataPessoa").innerText = dados.data;
-}
+document.getElementById("dataPessoa").innerText = dados.data;
 
 document.getElementById("anoMomento").innerText = dados.anoMomento;
 document.getElementById("intervaloMomento").innerText = dados.inicioFimMomento;
+
+// PREENCHIMENTO DOS TEXTOS (VINDOS DO GERADOR)
 document.getElementById("textoNatural").innerHTML = dados.textoNatural;
 document.getElementById("textoMomento").innerHTML = dados.textoMomento;
 document.getElementById("textoExpressaoNat").innerHTML = dados.textoExpressaoNat;
@@ -207,31 +271,33 @@ document.getElementById("neuroAnaliseMom").innerHTML = dados.analiseNeuroMom;
 document.getElementById("textoEducativoPDF").innerHTML = dados.textoEducacao || "";
 document.getElementById("transito").innerHTML = dados.transitoHTML;
 
-function barra(id, v, m){
-    document.getElementById(id).style.width = (v/m)*100 + "%";
+function barra(id, valor, max){
+    let perc = (valor/max)*100;
+    document.getElementById(id).style.width = perc + "%";
 }
 
-let mNat = Math.max(dados.fisico, dados.mental, dados.emocional, dados.intuitivo);
-barra("barFisicoNat", dados.fisico, mNat);
-barra("barMentalNat", dados.mental, mNat);
-barra("barEmocionalNat", dados.emocional, mNat);
-barra("barIntuitivoNat", dados.intuitivo, mNat);
+// CÁLCULO DAS BARRAS
+let maxNat = Math.max(dados.fisico, dados.mental, dados.emocional, dados.intuitivo);
+barra("barFisicoNat", dados.fisico, maxNat);
+barra("barMentalNat", dados.mental, maxNat);
+barra("barEmocionalNat", dados.emocional, maxNat);
+barra("barIntuitivoNat", dados.intuitivo, maxNat);
 
-let mExpNat = Math.max(dados.criativoNat, dados.indecisoNat, dados.neutroNat);
-barra("barCriativoNat", dados.criativoNat, mExpNat);
-barra("barIndecisoNat", dados.indecisoNat, mExpNat);
-barra("barNeutroNat", dados.neutroNat, mExpNat);
+let maxExpNat = Math.max(dados.criativoNat, dados.indecisoNat, dados.neutroNat);
+barra("barCriativoNat", dados.criativoNat, maxExpNat);
+barra("barIndecisoNat", dados.indecisoNat, maxExpNat);
+barra("barNeutroNat", dados.neutroNat, maxExpNat);
 
-let mMom = Math.max(dados.fisicoMomento, dados.mentalMomento, dados.emocionalMomento, dados.intuitivoMomento);
-barra("barFisicoMom", dados.fisicoMomento, mMom);
-barra("barMentalMom", dados.mentalMomento, mMom);
-barra("barEmocionalMom", dados.emocionalMomento, mMom);
-barra("barIntuitivoMom", dados.intuitivoMomento, mMom);
+let maxMom = Math.max(dados.fisicoMomento, dados.mentalMomento, dados.emocionalMomento, dados.intuitivoMomento);
+barra("barFisicoMom", dados.fisicoMomento, maxMom);
+barra("barMentalMom", dados.mentalMomento, maxMom);
+barra("barEmocionalMom", dados.emocionalMomento, maxMom);
+barra("barIntuitivoMom", dados.intuitivoMomento, maxMom);
 
-let mExpMom = Math.max(dados.criativoMom, dados.indecisoMom, dados.neutroMom);
-barra("barCriativoMom", dados.criativoMom, mExpMom);
-barra("barIndecisoMom", dados.indecisoMom, mExpMom);
-barra("barNeutroMom", dados.neutroMom, mExpMom);
+let maxExpMom = Math.max(dados.criativoMom, dados.indecisoMom, dados.neutroMom);
+barra("barCriativoMom", dados.criativoMom, maxExpMom);
+barra("barIndecisoMom", dados.indecisoMom, maxExpMom);
+barra("barNeutroMom", dados.neutroMom, maxExpMom);
 </script>
 </body>
 </html>
