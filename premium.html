@@ -380,10 +380,10 @@ Emocional
 Intuitivo
 <div class="barra"><span id="barIntuitivoNat"></span></div>
 <h4>Resultado da Energia Natural</h4>  
+<div class="bloco">          
 <div class="texto" id="textoNatural"></div>
-</div>
 
-<div class="bloco">
+ </div>         
 <hr class="divisor-secao">   
 <h3>Expressão Natural</h3>
 <p class="intro">
@@ -397,15 +397,16 @@ Indeciso
 
 Neutro
 <div class="barra barraExpressao"><span id="barNeutroNat"></span></div>
+          
 <h4>Resultado da Expressão Natural</h4>  
 <div class="texto" id="textoExpressaoNat"></div>
-</div>
+
           
 <hr class="divisor-secao">
 <h2>Análise Neurocognitiva Natural</h2>
 <div class="texto" id="neuroDominanciaNat"></div>
 <div class="texto" id="neuroAnaliseNat"></div>
-</div> 
+
           
 <hr class="divisor-secao">
 <h2>Plano de Expressão do Momento</h2>
@@ -559,6 +560,17 @@ document.getElementById("textoNatural").innerHTML = formatarTexto(dados.textoNat
 document.getElementById("textoMomento").innerHTML = formatarTexto(dados.textoMomento);
 document.getElementById("textoExpressaoNat").innerHTML = formatarTexto(dados.textoExpressaoNat);
 document.getElementById("textoExpressaoMom").innerHTML = formatarTexto(dados.textoExpressaoMom);
+/* Preenchimento das novas seções separadas */
+document.getElementById("neuroDominanciaNat").innerHTML = dados.dominanciaNat;
+document.getElementById("neuroAnaliseNat").innerHTML = dados.analiseNeuroNat;
+
+document.getElementById("neuroDominanciaMom").innerHTML = dados.dominanciaMom;
+document.getElementById("neuroAnaliseMom").innerHTML = dados.analiseNeuroMom;
+
+// Colocando a data no Neuro do Momento
+document.getElementById("dataNeuroMomento").innerText = dados.inicioFimMomento;
+
+/* O restante dos seus comandos (barra, textoNatural, etc) permanecem iguais */          
 // ADICIONE ESTA LINHA ABAIXO PARA O TEXTO APARECER:
 document.getElementById("textoEducativoPDF").innerHTML = dados.textoEducacao || "Conteúdo não disponível.";
 document.getElementById("transito").innerHTML = dados.transitoHTML;
