@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
 <title>Relatório Premium</title>
 
 <style>
@@ -11,44 +10,33 @@ body {
     font-family: 'Segoe UI', Arial, sans-serif;
     background: #eef1f5;
     margin: 0;
-    height: auto !important; /* Garante que o corpo cresça com o conteúdo */
+    height: auto !important;
 }
 
 .logoRelatorio {
     display: block;
     margin: 0 auto 25px auto;
     max-width: 100%;
-    height: auto; /* Ajustado para não fixar altura e esmagar a imagem */
+    height: auto;
 }
 
 .capa {
-    page-break-after: always; /* Força a capa a ser uma página isolada */
+    page-break-after: always;
     text-align: center;
 }
 
-/* CONTAINER PRINCIPAL */
 .relatorio {
     max-width: 1050px;
     margin: auto;
     background: white;
     padding: 60px;
     box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-    height: auto !important; /* Fundamental para não encolher */
+    height: auto !important;
 }
 
-/* TITULOS */
-h1, h2, h3, h4 {
-    text-align: center;
-}
-
+h1, h2, h3, h4 { text-align: center; color: #1e293b; }
 h1 { font-size: 32px; margin-bottom: 10px; }
-
-h2 {
-    margin-top: 45px;
-    padding-left: 12px;
-    font-size: 24px;
-    page-break-before: auto; /* Permite que o título mude de página se necessário */
-}
+h2 { margin-top: 45px; font-size: 24px; }
 
 hr.divisor-secao {
     border: 0;
@@ -58,38 +46,29 @@ hr.divisor-secao {
     opacity: 0.6;
 }
 
-/* SUMÁRIO */
 .sumario ul { list-style: none; padding: 0; }
 .sumario li { padding: 7px 0; border-bottom: 1px dotted #c9c9c9; }
 
-/* GRID CORRIGIDO - Aqui estava o erro de "esmagar" */
-.grid {
-    display: block; /* Mudamos de grid para block para o texto descer livremente */
-    width: 100%;
-}
-
-/* BLOCOS */
 .bloco {
     background: #fff;
-    padding: 20px;
+    padding: 25px;
     border-radius: 12px;
     border: 1px solid #f1f5f9;
-    text-align: left;   
     margin-bottom: 30px; 
-    height: auto !important; /* Impede o encolhimento vertical */
-    page-break-inside: avoid; /* Tenta manter o bloco inteiro na mesma página */
+    height: auto !important;
+    page-break-inside: avoid;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .texto {
     text-align: justify;
-    max-width: 100%;
-    margin: 20px auto;
+    width: 100%;
+    margin: 20px 0;
     line-height: 1.7;
     font-size: 16px;
-    display: block !important;
 }
 
-/* BARRAS */
 .barra {
     height: 18px;
     background: #e5e7eb;
@@ -104,10 +83,8 @@ hr.divisor-secao {
     height: 100%;
     width: 0%;
     background-color: currentColor;
-    transition: width 1s ease-in-out;
 }
 
-/* CORES PLANOS E EXPRESSÃO */
 #barFisicoNat, #barFisicoMom { color: #ef4444; }
 #barMentalNat, #barMentalMom { color: #3b82f6; }
 #barEmocionalNat, #barEmocionalMom { color: #22c55e; }
@@ -116,7 +93,6 @@ hr.divisor-secao {
 #barIndecisoNat, #barIndecisoMom { color: #fb923c; }
 #barNeutroNat, #barNeutroMom { color: #4A4A4A; }
 
-/* BOTÃO PDF */
 .btn-container { text-align: center; margin: 35px 0; }
 .btn-container button {
     background: #7c3aed;
@@ -124,360 +100,196 @@ hr.divisor-secao {
     border: none;
     padding: 14px 38px;
     font-size: 18px;
-    font-weight: 600;
     border-radius: 10px;
     cursor: pointer;
 }
 
-/* CONFIGURAÇÃO DE IMPRESSÃO - RESOLVE O ENCOLHIMENTO */
 @media print {
     .btn-container { display: none; }
-    body { background: white; height: auto !important; }
-    .relatorio {
-        box-shadow: none;
-        margin: 0;
-        padding: 20px;
-        width: 100%;
-        max-width: 100%;
-    }
-    * {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-    .bloco {
-        border: 1px solid #eee;
-        page-break-inside: avoid;
-    }
+    body { background: white; }
+    .relatorio { box-shadow: none; margin: 0; padding: 20px; width: 100%; }
+    .bloco { page-break-inside: avoid; border: 1px solid #eee; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
 }
 </style>
-
 </head>
 
 <body>
 
 <div class="relatorio">
-  <div class="btn-container">
+    <div class="btn-container">
         <button onclick="window.print()">📄 Baixar Relatório em PDF</button>
     </div>
-<div class="capa">
-          <div class="capa">
-            <img src="https://hemricciinstintosuperior-rcci.github.io/Trabalho_venda_Numerologia/plano.png"class="logoRelatorio">
 
-<h3 id="nomePessoa"></h3>
-<p id="dataPessoa"></p>
-</div>
-
-
-   <hr class="divisor-secao">            
-<div class="sumario">
-
-<h2>Sumário</h2>
-
-<ul>
-<li>1. Introdução do método</li>          
-<li>2. Plano de Energia Natural</li>
-<li>3. Perfil de Expressão Natural</li>
-<li>4. Dominancia e analise Neurocognitiva Natural</li>          
-<li>5. Plano de Expressão do Momento</li>
-<li>6. Perfil de Expressão do Momento</li>
-<li>7. Dominancia e analise Neurocognitiva do Momento</li>         
-<li>8. Vibração de Trânsito Anual</li>
-<li>9. Educação Neurocognitiva</li> 
-<li>10. Conclusão</li>            
-</ul>
-
-</div>
- <hr class="divisor-secao">              
- <h1>Plano de Expressão Quântico</h1>         
-<h2>Introdução</h2>          
-<div class="introGeral">
-
-<p>
-Este relatório integra princípios da numerologia analítica com fundamentos da neurociência cognitiva, estabelecendo uma leitura estruturada dos padrões mentais e comportamentais que influenciam a forma como cada indivíduo percebe, interpreta e reage à realidade. A análise dos Planos de Expressão permite observar como diferentes áreas cognitivas se manifestam na organização da consciência, representadas simbolicamente pelos planos físico, mental, emocional e intuitivo.
-</p>
-
-<p>
-A partir dessa integração, cada plano pode ser associado a funções neurocognitivas relacionadas aos modos de processamento do cérebro humano, permitindo compreender tendências de ação, pensamento e sensibilidade emocional. Os Perfis de Expressão, por sua vez, demonstram como essas estruturas cognitivas se organizam na tomada de decisão, na criatividade e na forma como a consciência se posiciona diante das experiências da vida.
-</p>
-
-<p>
-Essa abordagem amplia a interpretação tradicional ao incorporar uma perspectiva neuroanalítica, tornando a leitura mais prática e aplicável ao desenvolvimento pessoal. Ao compreender quais áreas cognitivas apresentam maior predominância ou menor ativação, torna-se possível direcionar a atenção para o equilíbrio dessas funções, favorecendo maior clareza mental, organização emocional e expansão da consciência.
-</p>
-
-</div>
-<hr class="divisor-secao">          
-<h2>Plano Natural</h2>
-<p class="intro">
-O Plano Natural representa a base estrutural do seu funcionamento, integrando os aspectos físico, mental, emocional e intuitivo, além de abranger seu perfil natural (criativo, indeciso e neutro) e sua análise neurocognitiva natural (dominância e análise).
-Essa configuração acompanha você ao longo de toda a vida, influenciando sua forma de perceber, reagir e se expressar no mundo, como uma assinatura permanente da sua essência. </p>    
-<h3>Plano de Energia Natural</h3>
-<p class="intro">
-O Plano de Expressão Natural revela como as energias cognitivas e comportamentais da pessoa se organizam de forma estrutural ao longo da vida. Ele demonstra a predominância dos planos físico, mental, emocional e intuitivo, indicando como a consciência tende a perceber, interpretar e reagir ao mundo ao redor.
-</p>
-Físico
-<div class="barra"><span id="barFisicoNat"></span></div>
-
-Mental
-<div class="barra"><span id="barMentalNat"></span></div>
-
-Emocional
-<div class="barra"><span id="barEmocionalNat"></span></div>
-
-Intuitivo
-<div class="barra"><span id="barIntuitivoNat"></span></div>
-     
-<h4>Resultado da Energia Natural</h4>  
-<div class="texto" id="textoNatural"></div>
-
-  </div>    
-<hr class="divisor-secao">   
-<h3>Expressão Natural</h3>
-<p class="intro">
-O Perfil de Expressão Natural demonstra a forma como a mente organiza decisões, criatividade e posicionamento diante das situações da vida. Ele indica se a tendência predominante é criativa, neutra ou indecisa, revelando padrões estruturais de manifestação da consciência.
-</p>
-Criativo
-<div class="barra barraExpressao"><span id="barCriativoNat"></span></div>
-
-Indeciso
-<div class="barra barraExpressao"><span id="barIndecisoNat"></span></div>
-
-Neutro
-<div class="barra barraExpressao"><span id="barNeutroNat"></span></div>
-          
-<h4>Resultado da Expressão Natural</h4>  
-<div class="texto" id="textoExpressaoNat"></div>
-
-          
-<hr class="divisor-secao">
-<h2>Análise Neurocognitiva Natural</h2>
-<div class="texto" id="neuroDominanciaNat"></div>
-<div class="texto" id="neuroAnaliseNat"></div>
-
-          
-<hr class="divisor-secao">
-<h2>Plano de Expressão do Momento</h2>
- <p class="intro">
-O Plano de Expressão do momento representa a forma como suas energias se manifestam no ciclo atual, integrando os aspectos físico, mental, emocional e intuitivo, além de abranger seu perfil de expressão do momento (criativo, indeciso e neutro) e sua análise neurocognitiva do momento (dominância e análise).
-Essa configuração é transitória e acompanha a fase que você está vivendo, influenciando sua forma de perceber, reagir e se expressar no mundo conforme o ciclo atual. </p>     
-<p><strong>Ano analisado:</strong> <span id="anoMomento"></span></p>
-<p><strong>Ciclo:</strong> <span id="intervaloMomento"></span></p>
-<h3>Plano de Enegia do Momento</h3>
-<p class="intro">
-O Plano de Energia do Momento representa o estado energético atual da consciência dentro do ciclo de vida analisado. Diferente do plano natural, ele mostra como os planos cognitivos estão operando no período presente, revelando tendências temporárias de comportamento, percepção e tomada de decisão.
-</p>
-Físico
-<div class="barra"><span id="barFisicoMom"></span></div>
-
-Mental
-<div class="barra"><span id="barMentalMom"></span></div>
-
-Emocional
-<div class="barra"><span id="barEmocionalMom"></span></div>
-
-Intuitivo
-<div class="barra"><span id="barIntuitivoMom"></span></div>
-
-<h4>Resultado de Energia do Momento</h4> 
-<div class="texto" id="textoMomento"></div>          
-
-
-<hr class="divisor-secao">
-<h3>Expressão do Momento</h3>
-<p class="intro">
-O Perfil de Expressão do Momento demonstra como a mente está estruturando suas respostas no ciclo atual. Ele revela se o período favorece manifestações criativas, estados de indecisão ou equilíbrio neutro entre as possibilidades de ação.
-</p>
-Criativo
-<div class="barra barraExpressao"><span id="barCriativoMom"></span></div>
-
-Indeciso
-<div class="barra barraExpressao"><span id="barIndecisoMom"></span></div>
-
-Neutro
-<div class="barra barraExpressao"><span id="barNeutroMom"></span></div>
-
-<h4>Resultado da Expressão do Momento</h4> 
-<div class="texto" id="textoExpressaoMom"></div>
-</div>
-
-<hr class="divisor-secao">
-<h2>Análise Neurocognitiva do Momento</h2>
-<p style="text-align:center; color: #64748b; font-weight: bold;">Ciclo analisado: <span id="dataNeuroMomento"></span></p>
-<div class="texto" id="neuroDominanciaMom"></div>
-<div class="texto" id="neuroAnaliseMom"></div>
-
-<hr class="divisor-secao">
-<h2>Vibração de Trânsito do Ano</h2>
-<p class="intro">
- <p style="text-align:center; color: #64748b; font-weight: bold;">Ciclo: <span id="cicloTransitoPDF"></span></p>         
-A Vibração de Trânsito Anual representa o campo vibracional que influencia o período atual da vida. Ela indica tendências de movimento, mudanças e oportunidades que podem se manifestar ao longo do ciclo anual, funcionando como um direcionamento energético para experiências e aprendizados.
-</p>
-  
-<div id="transito"></div>
- <hr class="divisor-secao">         
-<h2>Educação Neurocognitiva  </h2>
-<p class="intro">
-    <p>A <strong>Educação Neurocognitiva</strong> baseia-se nos princípios fundamentais da neurociência aplicada para otimizar o potencial humano através da compreensão profunda das nossas redes neurais. Cada pilar identificado no seu Mapa — <strong>Físico, Mental, Emocional e Intuitivo</strong> — possui uma correlação direta com áreas específicas do encéfalo, como o córtex pré-frontal, o sistema límbico e a sofisticada rede de modo padrão.</p>
-
-<p>Ao integrar esses conhecimentos, o objetivo é promover a <strong>neuroplasticidade</strong>, que é a capacidade biológica do cérebro de reorganizar suas conexões sinápticas, fortalecendo circuitos que favorecem a alta performance e o equilíbrio psíquico. Esta abordagem permite que você saia do modo de reação automática e passe a operar em um estado de comando consciente sobre suas funções cognitivas e biológicas.</p>
-
-<p>A bioenergética do seu cérebro depende diretamente da oferta de precursores neuroquímicos específicos. Nutrientes como a <strong>colina</strong>, o <strong>triptofano</strong> e os ácidos graxos essenciais não são apenas alimentos, mas combustíveis críticos para a produção de neurotransmissores como dopamina e serotonina, que regulam desde o seu foco atencional até a sua resiliência diante do estresse cotidiano.</p>
-
-<p>Esta análise busca reduzir a sua <strong>carga alostática</strong> — o desgaste físico e mental causado pelo desequilíbrio entre as demandas do ambiente e a sua capacidade de resposta. Ao aplicar os protocolos de nutrição e exercícios cerebrais sugeridos para cada plano, você estará realizando um verdadeiro <em>biohacking</em> no seu sistema nervoso, favorecendo a homeostase e o bem-estar integral.</p>
-
-<p>Compreender a sua dominância neurocognitiva é a chave para acessar o estado de <strong>Flow (Fluxo)</strong>, onde o esforço diminui e a produtividade aumenta significativamente. Este relatório serve como um guia técnico para que você aprenda a gerenciar sua biologia interna, utilizando a inteligência neurocientífica para sustentar sua evolução pessoal e profissional de forma estratégica e duradoura.</p>      
-   <div id="textoEducativoPDF"> </div>
-
-<div class="secao" style="text-align: center; page-break-before: always; padding: 40px;">
-    <h2 style="color: #1e293b; margin-bottom: 30px;">🏆 PARABÉNS, <strong id="nomeConclusao"></strong>!</h2>
-    
-   <img src="https://hemricciinstintosuperior-rcci.github.io/Matriz_quantica_da_vida/ícone-512.jpg" style="max-width: 100%; border-radius: 10px; margin-bottom: 20px;">
-
-    <div style="max-width: 800px; margin: auto; text-align: justify; line-height: 1.8; color: #334155; font-size: 1.1rem;">
-        <p>
-            Ao finalizar este relatório, você detém em mãos não apenas dados, mas um mapa estratégico de sua própria arquitetura interna. O equilíbrio entre os planos físico, mental, emocional e intuitivo é o que define a maestria sobre a vida.
-        </p>
-
-        <p>
-            Assim como a <strong>Águia</strong>, que possui a visão binocular necessária para focar no detalhe sem perder a percepção do todo, este estudo foi desenhado para elevar sua consciência acima das névoas do cotidiano. A verdadeira clareza surge quando conseguimos observar nossos padrões de uma altura segura, permitindo decisões mais assertivas e alinhadas ao nosso propósito real.
-        </p>
-
-        <p>
-            Lembre-se de que a <strong>Justiça e o Equilíbrio</strong> (simbolizados pela balança) não são estados estáticos, mas um processo contínuo de ajuste. A neurociência nos ensina que o cérebro é plástico e capaz de evoluir a cada nova escolha consciente. Ao aplicar os protocolos de educação neurocognitiva e respeitar seus ritmos naturais, você calibra sua biologia para sustentar suas mais altas aspirações.
-        </p>
-
-        <p style="text-align: center; font-style: italic; margin-top: 30px; font-size: 1.2rem; color: #1e293b;">
-            "Que sua jornada seja guiada pelo equilíbrio perfeito entre o céu da intuição e a terra da realização. Que a clareza aqui encontrada seja a luz que ilumina seus próximos passos rumo ao <strong>Instinto Superior</strong>."
-        </p>
+    <div class="capa">
+        <img src="https://hemricciinstintosuperior-rcci.github.io/Trabalho_venda_Numerologia/plano.png" class="logoRelatorio">
+        <h3 id="nomePessoa"></h3>
+        <p id="dataPessoa"></p>
     </div>
-</div>
-    
-    <div class="rodape">Relatório Confidencial • www.instintosuperior.com</div>
+
+    <hr class="divisor-secao">            
+    <div class="sumario">
+        <h2>Sumário</h2>
+        <ul>
+            <li>1. Introdução do método</li>          
+            <li>2. Plano de Energia Natural</li>
+            <li>3. Perfil de Expressão Natural</li>
+            <li>4. Dominância e análise Neurocognitiva Natural</li>          
+            <li>5. Plano de Expressão do Momento</li>
+            <li>6. Perfil de Expressão do Momento</li>
+            <li>7. Dominância e análise Neurocognitiva do Momento</li>         
+            <li>8. Vibração de Trânsito Anual</li>
+            <li>9. Educação Neurocognitiva</li> 
+            <li>10. Conclusão</li>            
+        </ul>
     </div>
-    
+
+    <hr class="divisor-secao">              
+    <h1>Plano de Expressão Quântico</h1>         
+    <h2>Introdução</h2>          
+    <div class="texto">
+        <p>Este relatório integra princípios da numerologia analítica com fundamentos da neurociência cognitiva...</p>
+        <p>A partir dessa integração, cada plano pode ser associado a funções neurocognitivas...</p>
+        <p>Essa abordagem amplia a interpretação tradicional ao incorporar uma perspectiva neuroanalítica...</p>
+    </div>
+
+    <hr class="divisor-secao">          
+    <h2>Plano Natural</h2>
+    <p class="texto">O Plano Natural representa a base estrutural do seu funcionamento...</p>    
+
+    <div class="bloco">
+        <h3>Plano de Energia Natural</h3>
+        Físico <div class="barra"><span id="barFisicoNat"></span></div>
+        Mental <div class="barra"><span id="barMentalNat"></span></div>
+        Emocional <div class="barra"><span id="barEmocionalNat"></span></div>
+        Intuitivo <div class="barra"><span id="barIntuitivoNat"></span></div>
+        <h4>Resultado da Energia Natural</h4>  
+        <div class="texto" id="textoNatural"></div>
+    </div>
+
+    <div class="bloco">
+        <h3>Expressão Natural</h3>
+        Criativo <div class="barra"><span id="barCriativoNat"></span></div>
+        Indeciso <div class="barra"><span id="barIndecisoNat"></span></div>
+        Neutro <div class="barra"><span id="barNeutroNat"></span></div>
+        <h4>Resultado da Expressão Natural</h4>  
+        <div class="texto" id="textoExpressaoNat"></div>
+    </div>
+
+    <div class="bloco">
+        <h2>Análise Neurocognitiva Natural</h2>
+        <div class="texto" id="neuroDominanciaNat"></div>
+        <div class="texto" id="neuroAnaliseNat"></div>
+    </div>
+
+    <hr class="divisor-secao">
+    <h2>Plano de Expressão do Momento</h2>
+    <p class="texto"><strong>Ano analisado:</strong> <span id="anoMomento"></span> | <strong>Ciclo:</strong> <span id="intervaloMomento"></span></p>
+
+    <div class="bloco">
+        <h3>Plano de Energia do Momento</h3>
+        Físico <div class="barra"><span id="barFisicoMom"></span></div>
+        Mental <div class="barra"><span id="barMentalMom"></span></div>
+        Emocional <div class="barra"><span id="barEmocionalMom"></span></div>
+        Intuitivo <div class="barra"><span id="barIntuitivoMom"></span></div>
+        <h4>Resultado de Energia do Momento</h4> 
+        <div class="texto" id="textoMomento"></div>          
+    </div>
+
+    <div class="bloco">
+        <h3>Expressão do Momento</h3>
+        Criativo <div class="barra"><span id="barCriativoMom"></span></div>
+        Indeciso <div class="barra"><span id="barIndecisoMom"></span></div>
+        Neutro <div class="barra"><span id="barNeutroMom"></span></div>
+        <h4>Resultado da Expressão do Momento</h4> 
+        <div class="texto" id="textoExpressaoMom"></div>
+    </div>
+
+    <div class="bloco">
+        <h2>Análise Neurocognitiva do Momento</h2>
+        <p style="text-align:center; color: #64748b; font-weight: bold;">Ciclo analisado: <span id="dataNeuroMomento"></span></p>
+        <div class="texto" id="neuroDominanciaMom"></div>
+        <div class="texto" id="neuroAnaliseMom"></div>
+    </div>
+
+    <hr class="divisor-secao">
+    <h2>Vibração de Trânsito do Ano</h2>
+    <p style="text-align:center; color: #64748b; font-weight: bold;">Ciclo: <span id="cicloTransitoPDF"></span></p>         
+    <div id="transito" class="texto"></div>
+
+    <hr class="divisor-secao">         
+    <h2>Educação Neurocognitiva</h2>
+    <div class="texto">
+        <p>A <strong>Educação Neurocognitiva</strong> baseia-se nos princípios fundamentais da neurociência aplicada...</p>
+        <div id="textoEducativoPDF"></div>
+    </div>
+
+    <div class="secao" style="text-align: center; page-break-before: always; padding: 40px;">
+        <h2>🏆 PARABÉNS, <strong id="nomeConclusao"></strong>!</h2>
+        <img src="https://hemricciinstintosuperior-rcci.github.io/Matriz_quantica_da_vida/ícone-512.jpg" style="max-width: 300px; border-radius: 10px; margin-bottom: 20px;">
+        <div class="texto">
+            <p>Ao finalizar este relatório, você detém em mãos não apenas dados, mas um mapa estratégico...</p>
+            <p style="text-align: center; font-style: italic; margin-top: 30px; font-size: 1.2rem;">"Que sua jornada seja guiada pelo equilíbrio perfeito..."</p>
+        </div>
+    </div>
 </div>
 
 <script>
-
 const dados = JSON.parse(localStorage.getItem("relatorioMapa"));
-
-if(!dados){
-alert("Nenhum relatório encontrado.");
-}
-
-/* CAPA */
+if(!dados) alert("Nenhum relatório encontrado.");
 
 document.getElementById("nomePessoa").innerText = dados.nome;
- // ADICIONE ESTA LINHA AQUI ABAIXO PARA PREENCHER A CONCLUSÃO:
-document.getElementById("nomeConclusao").innerText = dados.nome;         
-// FORMATAR DATA (De AAAA-MM-DD para DD/MM/AAAA)
+document.getElementById("nomeConclusao").innerText = dados.nome;
+
 if (dados.data && dados.data.includes("-")) {
     const partes = dados.data.split("-");
-    // Se a data vier como 2026-03-17, vira 17/03/2026
     document.getElementById("dataPessoa").innerText = `${partes[2]}/${partes[1]}/${partes[0]}`;
 } else {
     document.getElementById("dataPessoa").innerText = dados.data;
 }
 
-/* MOMENTO */
-
 document.getElementById("anoMomento").innerText = dados.anoMomento;
 document.getElementById("intervaloMomento").innerText = dados.inicioFimMomento;
-// --- ADICIONE ESTA LINHA AQUI ---
 document.getElementById("cicloTransitoPDF").innerText = dados.inicioFimMomento;
-// -------------------------------          
-
-/* TEXTOS */
-
-function formatarTexto(texto){
-
-return texto
-.split("\n")
-.map(linha => linha.trim())
-.filter(linha => linha.length > 0)
-.map(linha => `<p>${linha}</p>`)
-.join("");
-
-}
-
-document.getElementById("textoNatural").innerHTML = (dados.textoNatural);
-document.getElementById("textoMomento").innerHTML = (dados.textoMomento);
-document.getElementById("textoExpressaoNat").innerHTML = (dados.textoExpressaoNat);
-document.getElementById("textoExpressaoMom").innerHTML = (dados.textoExpressaoMom);
-/* Preenchimento das novas seções separadas */
-document.getElementById("neuroDominanciaNat").innerHTML = dados.dominanciaNat;
-document.getElementById("neuroAnaliseNat").innerHTML = dados.analiseNeuroNat;
-
-document.getElementById("neuroDominanciaMom").innerHTML = dados.dominanciaMom;
-document.getElementById("neuroAnaliseMom").innerHTML = dados.analiseNeuroMom;
-
-// Colocando a data no Neuro do Momento
 document.getElementById("dataNeuroMomento").innerText = dados.inicioFimMomento;
 
-/* O restante dos seus comandos (barra, textoNatural, etc) permanecem iguais */          
-// ADICIONE ESTA LINHA ABAIXO PARA O TEXTO APARECER:
+document.getElementById("textoNatural").innerHTML = dados.textoNatural;
+document.getElementById("textoMomento").innerHTML = dados.textoMomento;
+document.getElementById("textoExpressaoNat").innerHTML = dados.textoExpressaoNat;
+document.getElementById("textoExpressaoMom").innerHTML = dados.textoExpressaoMom;
+document.getElementById("neuroDominanciaNat").innerHTML = dados.dominanciaNat;
+document.getElementById("neuroAnaliseNat").innerHTML = dados.analiseNeuroNat;
+document.getElementById("neuroDominanciaMom").innerHTML = dados.dominanciaMom;
+document.getElementById("neuroAnaliseMom").innerHTML = dados.analiseNeuroMom;
 document.getElementById("textoEducativoPDF").innerHTML = dados.textoEducacao || "Conteúdo não disponível.";
 document.getElementById("transito").innerHTML = dados.transitoHTML;
-          
-
-/* FUNÇÃO PARA BARRAS */
 
 function barra(id, valor, max){
-
-let perc = (valor/max)*100;
-
-document.getElementById(id).style.width = perc + "%";
-
+    let perc = (valor/max)*100;
+    document.getElementById(id).style.width = perc + "%";
 }
 
-/* NATURAL */
+let maxNat = Math.max(dados.fisico, dados.mental, dados.emocional, dados.intuitivo);
+barra("barFisicoNat", dados.fisico, maxNat);
+barra("barMentalNat", dados.mental, maxNat);
+barra("barEmocionalNat", dados.emocional, maxNat);
+barra("barIntuitivoNat", dados.intuitivo, maxNat);
 
-let maxNat = Math.max(
-dados.fisico,
-dados.mental,
-dados.emocional,
-dados.intuitivo
-);
+let maxExpNat = Math.max(dados.criativoNat, dados.indecisoNat, dados.neutroNat);
+barra("barCriativoNat", dados.criativoNat, maxExpNat);
+barra("barIndecisoNat", dados.indecisoNat, maxExpNat);
+barra("barNeutroNat", dados.neutroNat, maxExpNat);
 
-barra("barFisicoNat",dados.fisico,maxNat);
-barra("barMentalNat",dados.mental,maxNat);
-barra("barEmocionalNat",dados.emocional,maxNat);
-barra("barIntuitivoNat",dados.intuitivo,maxNat);
+let maxMom = Math.max(dados.fisicoMomento, dados.mentalMomento, dados.emocionalMomento, dados.intuitivoMomento);
+barra("barFisicoMom", dados.fisicoMomento, maxMom);
+barra("barMentalMom", dados.mentalMomento, maxMom);
+barra("barEmocionalMom", dados.emocionalMomento, maxMom);
+barra("barIntuitivoMom", dados.intuitivoMomento, maxMom);
 
-let maxExpNat = Math.max(
-dados.criativoNat,
-dados.indecisoNat,
-dados.neutroNat
-);
-
-barra("barCriativoNat",dados.criativoNat,maxExpNat);
-barra("barIndecisoNat",dados.indecisoNat,maxExpNat);
-barra("barNeutroNat",dados.neutroNat,maxExpNat);
-
-/* MOMENTO */
-
-let maxMom = Math.max(
-dados.fisicoMomento,
-dados.mentalMomento,
-dados.emocionalMomento,
-dados.intuitivoMomento
-);
-
-barra("barFisicoMom",dados.fisicoMomento,maxMom);
-barra("barMentalMom",dados.mentalMomento,maxMom);
-barra("barEmocionalMom",dados.emocionalMomento,maxMom);
-barra("barIntuitivoMom",dados.intuitivoMomento,maxMom);
-
-let maxExpMom = Math.max(
-dados.criativoMom,
-dados.indecisoMom,
-dados.neutroMom
-);
-
-barra("barCriativoMom",dados.criativoMom,maxExpMom);
-barra("barIndecisoMom",dados.indecisoMom,maxExpMom);
-barra("barNeutroMom",dados.neutroMom,maxExpMom);
-
+let maxExpMom = Math.max(dados.criativoMom, dados.indecisoMom, dados.neutroMom);
+barra("barCriativoMom", dados.criativoMom, maxExpMom);
+barra("barIndecisoMom", dados.indecisoMom, maxExpMom);
+barra("barNeutroMom", dados.neutroMom, maxExpMom);
 </script>
-
 </body>
 </html>
