@@ -754,8 +754,8 @@ No aspecto negativo, **você** pode demonstrar certa omissão ou medo de decidir
 };
 
 const introducoes = {
-  natural: "O seu Plano de Expressão Natural representa a sua 'assinatura energética' fundamental. Ele descreve o conjunto de ferramentas que sua alma trouxe para esta existência, revelando como sua inteligência, emoção e instinto operam de forma estrutural e permanente em você.",
-  momento: "O Plano de Expressão do Momento atua como uma lente temporal sobre a sua essência. Ele indica como as circunstâncias atuais estão moldando sua forma de agir e sentir, destacando quais habilidades estão sendo mais exigidas ou despertadas em você neste ciclo."
+  natural: "O seu Plano de Energia Natural representa a sua 'assinatura energética' fundamental. Ele descreve o conjunto de ferramentas que sua alma trouxe para esta existência, revelando como sua inteligência, emoção e instinto operam de forma estrutural e permanente em você.",
+  momento: "O Plano de Energia do Momento atua como uma lente temporal sobre a sua essência. Ele indica como as circunstâncias atuais estão moldando sua forma de agir e sentir, destacando quais habilidades estão sendo mais exigidas ou despertadas em você neste ciclo."
 };
 
 const textosTrânsito = {
