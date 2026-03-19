@@ -6,7 +6,7 @@
 <title>Relatório Premium - Instinto Superior</title>
 
 <style>
-/* PRESERVANDO O VISUAL QUE VOCÊ GOSTOU */
+/* FONTES E CORES GERAIS */
 body {
     font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     background: #f1f5f9;
@@ -15,6 +15,7 @@ body {
     line-height: 1.6;
 }
 
+/* CONTAINER TIPO FOLHA A4 */
 .relatorio {
     max-width: 950px;
     margin: 40px auto;
@@ -22,15 +23,26 @@ body {
     padding: 80px 70px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     min-height: 100vh;
-    box-sizing: border-box;
 }
 
-.capa { text-align: center; page-break-after: always; margin-bottom: 50px; }
-.logoRelatorio { max-width: 100%; height: auto; margin-bottom: 30px; }
+/* LOGO E CAPA */
+.capa {
+    text-align: center;
+    page-break-after: always;
+    margin-bottom: 50px;
+}
+.logoRelatorio {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 30px;
+}
 
-h1 { font-size: 34px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; color: #0f172a; text-align: center; }
+/* TITULOS PROFISSIONAIS */
+h1 { font-size: 34px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; color: #0f172a; }
 h2 { font-size: 26px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; margin-top: 60px; color: #334155; }
+h3 { font-size: 20px; color: #475569; margin-top: 35px; }
 
+/* O DIVISOR DA FOTO (LINHA QUE TERMINA NA DIREITA) */
 .divisor-categoria {
     display: flex;
     align-items: center;
@@ -48,6 +60,7 @@ h2 { font-size: 26px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; ma
     border-bottom: 1px solid #e2e8f0;
 }
 
+/* TEXTOS E PARÁGRAFOS */
 .texto {
     text-align: justify;
     line-height: 1.8;
@@ -56,16 +69,8 @@ h2 { font-size: 26px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; ma
     margin: 20px 0;
 }
 
-.vigencia-tag {
-    font-size: 14px;
-    color: #64748b;
-    font-weight: bold;
-    text-align: center;
-    display: block;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-}
-
+/* BARRAS MODERNAS (FINAS) */
+.label-barra { font-weight: 600; font-size: 13px; margin-bottom: 6px; display: block; text-transform: uppercase; color: #64748b; }
 .barra-container { margin-bottom: 18px; }
 .barra {
     height: 10px;
@@ -85,11 +90,23 @@ h2 { font-size: 26px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; ma
 #barIndecisoNat, #barIndecisoMom { color: #fb923c; }
 #barNeutroNat, #barNeutroMom { color: #4b5563; }
 
+/* SUMÁRIO */
+.sumario ul { list-style: none; padding: 0; }
+.sumario li { padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: #475569; }
+
+/* BOTÃO */
+.btn-container { text-align: center; margin-bottom: 40px; }
+.btn-container button {
+    background: #0f172a; color: white; border: none; padding: 15px 40px;
+    font-size: 16px; font-weight: 600; border-radius: 8px; cursor: pointer;
+}
+
 @media print {
     .btn-container { display: none; }
     body { background: white; }
-    .relatorio { box-shadow: none; margin: 0; padding: 40px; width: 100%; }
+    .relatorio { box-shadow: none; margin: 0; padding: 0; width: 100%; }
     h2 { page-break-before: always; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
 }
 </style>
 </head>
@@ -97,8 +114,8 @@ h2 { font-size: 26px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; ma
 <body>
 
 <div class="relatorio">
-    <div class="btn-container" style="text-align: center; margin-bottom: 40px;">
-        <button onclick="window.print()" style="padding: 15px 30px; cursor: pointer; background: #0f172a; color: white; border: none; border-radius: 8px;">📄 Gerar Documento PDF</button>
+    <div class="btn-container">
+        <button onclick="window.print()">📄 Gerar Documento PDF</button>
     </div>
 
     <div class="capa">
@@ -110,81 +127,144 @@ h2 { font-size: 26px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; ma
 
     <div class="sumario">
         <h2>Sumário Executivo</h2>
-        <ul style="list-style: none; padding: 0;">
-            <li style="padding: 8px 0; border-bottom: 1px solid #f1f5f9;">1. Introdução e Metodologia</li>
-            <li style="padding: 8px 0; border-bottom: 1px solid #f1f5f9;">2. Análise do Plano Natural (Vigência Vitalícia)</li>
-            <li style="padding: 8px 0; border-bottom: 1px solid #f1f5f9;">3. O Momento Atual (Ciclo Vigente)</li>
-            <li style="padding: 8px 0; border-bottom: 1px solid #f1f5f9;">4. Educação e Protocolos Neurocognitivos</li>
-            <li style="padding: 8px 0; border-bottom: 1px solid #f1f5f9;">5. Conclusão</li>
+        <ul>
+            <li>1. Introdução e Metodologia</li>          
+            <li>2. Análise do Plano Natural (Estrutural)</li>
+            <li>3. Perfil de Expressão e Tomada de Decisão</li>
+            <li>4. Dominância Neurocognitiva</li>          
+            <li>5. O Momento Atual: Ciclo e Energias</li>
+            <li>6. Educação e Protocolos Neurocognitivos</li> 
+            <li>7. Conclusão e Direcionamento</li>            
         </ul>
     </div>
 
-    <h2>1. Introdução</h2>
+    <h2>1. Introdução</h2>          
     <div class="texto">
-        <p>Este relatório integra princípios da numerologia analítica com fundamentos da neurociência cognitiva, estabelecendo uma leitura estruturada dos padrões mentais e comportamentais.</p>
-        <p>A análise dos Planos de Expressão permite observar como diferentes áreas cognitivas se manifestam na organização da consciência, divididas entre o que é estrutural (Natural) e o que é cíclico (Momento).</p>
+   <p>
+Este relatório integra princípios da numerologia analítica com fundamentos da neurociência cognitiva, estabelecendo uma leitura estruturada dos padrões mentais e comportamentais que influenciam a forma como cada indivíduo percebe, interpreta e reage à realidade. A análise dos Planos de Expressão permite observar como diferentes áreas cognitivas se manifestam na organização da consciência, representadas simbolicamente pelos planos físico, mental, emocional e intuitivo.
+</p>
+
+<p>
+A partir dessa integração, cada plano pode ser associado a funções neurocognitivas relacionadas aos modos de processamento do cérebro humano, permitindo compreender tendências de ação, pensamento e sensibilidade emocional. Os Perfis de Expressão, por sua vez, demonstram como essas estruturas cognitivas se organizam na tomada de decisão, na criatividade e na forma como a consciência se posiciona diante das experiências da vida.
+</p>
+
+<p>
+Essa abordagem amplia a interpretação tradicional ao incorporar uma perspectiva neuroanalítica, tornando a leitura mais prática e aplicável ao desenvolvimento pessoal. Ao compreender quais áreas cognitivas apresentam maior predominância ou menor ativação, torna-se possível direcionar a atenção para o equilíbrio dessas funções, favorecendo maior clareza mental, organização emocional e expansão da consciência.
+</p>
     </div>
 
     <h2>2. Análise do Plano Natural</h2>
-    <span class="vigencia-tag">Vigência: Vitalícia (Base Estrutural)</span>
-    <p class="texto">Este é o seu "DNA" comportamental, a base que sustenta suas reações ao longo da vida.</p>
+    <p class="texto">O Plano Natural representa a base estrutural do seu funcionamento, integrando os aspectos físico, mental, emocional e intuitivo, além de abranger seu perfil natural (criativo, indeciso e neutro) e sua análise neurocognitiva natural (dominância e análise).
+Essa configuração acompanha você ao longo de toda a vida, influenciando sua forma de perceber, reagir e se expressar no mundo, como uma assinatura permanente da sua essência. </p>
 
     <div class="divisor-categoria">Energias Cognitivas</div>
-    Físico <div class="barra-container"><div class="barra"><span id="barFisicoNat"></span></div></div>
-    Mental <div class="barra-container"><div class="barra"><span id="barMentalNat"></span></div></div>
-    Emocional <div class="barra-container"><div class="barra"><span id="barEmocionalNat"></span></div></div>
-    Intuitivo <div class="barra-container"><div class="barra"><span id="barIntuitivoNat"></span></div></div>
+    <div class="barra-container">
+        <span class="label-barra">Físico</span>
+        <div class="barra"><span id="barFisicoNat"></span></div>
+    </div>
+    <div class="barra-container">
+        <span class="label-barra">Mental</span>
+        <div class="barra"><span id="barMentalNat"></span></div>
+    </div>
+    <div class="barra-container">
+        <span class="label-barra">Emocional</span>
+        <div class="barra"><span id="barEmocionalNat"></span></div>
+    </div>
+    <div class="barra-container">
+        <span class="label-barra">Intuitivo</span>
+        <div class="barra"><span id="barIntuitivoNat"></span></div>
+    </div>
     <div class="texto" id="textoNatural"></div>
 
     <div class="divisor-categoria">Perfil de Expressão</div>
-    Criativo <div class="barra-container"><div class="barra"><span id="barCriativoNat"></span></div></div>
-    Indeciso <div class="barra-container"><div class="barra"><span id="barIndecisoNat"></span></div></div>
-    Neutro <div class="barra-container"><div class="barra"><span id="barNeutroNat"></span></div></div>
+    <p class="intro">
+O Perfil de Expressão Natural demonstra a forma como a mente organiza decisões, criatividade e posicionamento diante das situações da vida. Ele indica se a tendência predominante é criativa, neutra ou indecisa, revelando padrões estruturais de manifestação da consciência.
+</p>
+    <div class="barra-container">
+        <span class="label-barra">Criativo</span>
+        <div class="barra"><span id="barCriativoNat"></span></div>
+    </div>
+    <div class="barra-container">
+        <span class="label-barra">Indeciso</span>
+        <div class="barra"><span id="barIndecisoNat"></span></div>
+    </div>
+    <div class="barra-container">
+        <span class="label-barra">Neutro</span>
+        <div class="barra"><span id="barNeutroNat"></span></div>
+    </div>
     <div class="texto" id="textoExpressaoNat"></div>
 
     <div class="divisor-categoria">Análise Neurocognitiva</div>
-    <div id="neuroDominanciaNat" style="font-weight: bold; margin-bottom: 10px; text-align: center;"></div>
+    <div id="neuroDominanciaNat" style="font-weight: bold; margin-bottom: 10px;"></div>
     <div class="texto" id="neuroAnaliseNat"></div>
 
     <h2>3. O Momento Atual</h2>
-    <span class="vigencia-tag">Vigência: <span id="intervaloMomento"></span> (Ano <span id="anoMomento"></span>)</span>
-    
+     <p class="intro">
+O Plano de Expressão do momento representa a forma como suas energias se manifestam no ciclo atual, integrando os aspectos físico, mental, emocional e intuitivo, além de abranger seu perfil de expressão do momento (criativo, indeciso e neutro) e sua análise neurocognitiva do momento (dominância e análise).
+Essa configuração é transitória e acompanha a fase que você está vivendo, influenciando sua forma de perceber, reagir e se expressar no mundo conforme o ciclo atual. </p>   
+    <p class="texto">Análise do ciclo vigente: <strong><span id="anoMomento"></span></strong> | Período: <strong><span id="intervaloMomento"></span></strong></p>
+
     <div class="divisor-categoria">Energia do Ciclo</div>
-    Físico <div class="barra-container"><div class="barra"><span id="barFisicoMom"></span></div></div>
-    Mental <div class="barra-container"><div class="barra"><span id="barMentalMom"></span></div></div>
-    Emocional <div class="barra-container"><div class="barra"><span id="barEmocionalMom"></span></div></div>
-    Intuitivo <div class="barra-container"><div class="barra"><span id="barIntuitivoMom"></span></div></div>
+    <div class="barra-container">
+        <span class="label-barra">Físico</span>
+        <div class="barra"><span id="barFisicoMom"></span></div>
+    </div>
+    <div class="barra-container">
+        <span class="label-barra">Mental</span>
+        <div class="barra"><span id="barMentalMom"></span></div>
+    </div>
+    <div class="barra-container">
+        <span class="label-barra">Emocional</span>
+        <div class="barra"><span id="barEmocionalMom"></span></div>
+    </div>
+    <div class="barra-container">
+        <span class="label-barra">Intuitivo</span>
+        <div class="barra"><span id="barIntuitivoMom"></span></div>
+    </div>
     <div class="texto" id="textoMomento"></div>
 
     <div class="divisor-categoria">Expressão no Ciclo</div>
-    Criativo <div class="barra-container"><div class="barra"><span id="barCriativoMom"></span></div></div>
-    Indeciso <div class="barra-container"><div class="barra"><span id="barIndecisoMom"></span></div></div>
-    Neutro <div class="barra-container"><div class="barra"><span id="barNeutroMom"></span></div></div>
+    <div class="barra-container">
+        <span class="label-barra">Criativo</span>
+        <div class="barra"><span id="barCriativoMom"></span></div>
+    </div>
+    <div class="barra-container">
+        <span class="label-barra">Indeciso</span>
+        <div class="barra"><span id="barIndecisoMom"></span></div>
+    </div>
+    <div class="barra-container">
+        <span class="label-barra">Neutro</span>
+        <div class="barra"><span id="barNeutroMom"></span></div>
+    </div>
     <div class="texto" id="textoExpressaoMom"></div>
 
     <div class="divisor-categoria">Neurociência do Momento</div>
-    <div id="neuroDominanciaMom" style="font-weight: bold; margin-bottom: 10px; text-align: center;"></div>
+    
+    <div id="neuroDominanciaMom" style="font-weight: bold; margin-bottom: 10px;"></div>
     <div class="texto" id="neuroAnaliseMom"></div>
 
-    <h2>4. Orientações e Educação</h2>
-    
+    <h2>4. Orientações e Trânsito</h2>
+    <p class="intro">
+ <p style="text-align:center; color: #64748b; font-weight: bold;">Ciclo: <span id="cicloTransitoPDF"></span></p>         
+A Vibração de Trânsito Anual representa o campo vibracional que influencia o período atual da vida. Ela indica tendências de movimento, mudanças e oportunidades que podem se manifestar ao longo do ciclo anual, funcionando como um direcionamento energético para experiências e aprendizados.
+</p>
     <div class="divisor-categoria">Vibração de Trânsito Anual</div>
-    <span class="vigencia-tag" style="margin-top:-10px">Ciclo Ativo: <span id="vigenciaTransito"></span></span>
     <div id="transito" class="texto"></div>
 
     <div class="divisor-categoria">Educação Neurocognitiva</div>
     <div class="texto">
-        <p>A educação neurocognitiva foca no equilíbrio físico, mental, emocional e intuitivo através da plasticidade cerebral.</p>
+        <p>A bioenergética do seu cérebro depende da oferta de precursores neuroquímicos específicos...</p>
         <div id="textoEducativoPDF"></div>
     </div>
 
     <div style="page-break-before: always; padding-top: 50px;">
-        <h2 style="text-align: center;">🏆 Conclusão</h2>
+        <h2 style="text-align: center;">🏆 Conclusão do Mapa</h2>
         <div style="text-align: center; margin: 30px 0;">
-             <img src="https://hemricciinstintosuperior-rcci.github.io/Matriz_quantica_da_vida/ícone-512.jpg" style="max-width: 200px; border-radius: 50%;">
+             <img src="https://hemricciinstintosuperior-rcci.github.io/Matriz_quantica_da_vida/ícone-512.jpg" style="max-width: 250px; border-radius: 50%;">
         </div>
         <div class="texto">
-            <p>Parabéns, <strong id="nomeConclusao"></strong>! Este mapa é sua ferramenta de navegação para o Instinto Superior.</p>
+            <p>Parabéns, <strong id="nomeConclusao"></strong>! Você agora possui um mapa estratégico de sua própria arquitetura interna.</p>
+            <p>Lembre-se de que a neurociência prova que o cérebro é plástico. Utilize as informações deste relatório para calibrar sua biologia e sustentar suas mais altas aspirações rumo ao <strong>Instinto Superior</strong>.</p>
         </div>
     </div>
 </div>
@@ -195,21 +275,12 @@ if(!dados) alert("Erro: Dados não encontrados.");
 
 document.getElementById("nomePessoa").innerText = dados.nome;
 document.getElementById("nomeConclusao").innerText = dados.nome;
+document.getElementById("dataPessoa").innerText = dados.data;
 
-// Ajuste da Data de Nascimento (Brasil)
-if (dados.data && dados.data.includes("-")) {
-    const partes = dados.data.split("-");
-    document.getElementById("dataPessoa").innerText = `${partes[2]}/${partes[1]}/${partes[0]}`;
-} else {
-    document.getElementById("dataPessoa").innerText = dados.data;
-}
-
-// Datas de Vigência
 document.getElementById("anoMomento").innerText = dados.anoMomento;
 document.getElementById("intervaloMomento").innerText = dados.inicioFimMomento;
-document.getElementById("vigenciaTransito").innerText = dados.inicioFimMomento;
 
-// Conteúdo de Texto
+// PREENCHIMENTO DOS TEXTOS (VINDOS DO GERADOR)
 document.getElementById("textoNatural").innerHTML = dados.textoNatural;
 document.getElementById("textoMomento").innerHTML = dados.textoMomento;
 document.getElementById("textoExpressaoNat").innerHTML = dados.textoExpressaoNat;
@@ -226,7 +297,7 @@ function barra(id, valor, max){
     document.getElementById(id).style.width = perc + "%";
 }
 
-// BARRAS
+// CÁLCULO DAS BARRAS
 let maxNat = Math.max(dados.fisico, dados.mental, dados.emocional, dados.intuitivo);
 barra("barFisicoNat", dados.fisico, maxNat);
 barra("barMentalNat", dados.mental, maxNat);
