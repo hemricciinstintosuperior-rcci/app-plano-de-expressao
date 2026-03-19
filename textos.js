@@ -725,32 +725,32 @@ intuitivo : {
 };
 
 const textosExpressao = {
-    criativo: ` "você possui mais Criatividade" 
+    criativo: ` <p>"Sua mente possui mais Criatividade"</p>
     
-Você possui ideias originais, enxerga a realidade de forma diferenciada e encara imprevistos com otimismo e espontaneidade.
-Analisa problemas complexos dividindo-os em partes menores, focando em soluções eficazes e na adaptação rápida a novas situações.
+<p>Naturalmente **você** apresenta ideias originais, enxerga a realidade de forma diferenciada e encara imprevistos com otimismo e espontaneidade. 
+Ao analisar problemas complexos, **você** divide-os em partes menores, focando em soluções eficazes e na adaptação rápida a novas situações.</p>
 
-Você é movido por estímulos internos e grande motivação pessoal, ignorando rotinas estabelecidas para explorar diversas alternativas.
-Pelo lado negativo, você pode manifestar arrogância, rebeldia contra regras e sofrer com grandes flutuações de humor e desconfiança.
-Sua busca constante pelo novo pode levar você a perder a noção de tempo e espaço ou a se deixar envolver por ilusões.`,
+<p>Movido por estímulos internos, **você** demonstra grande motivação pessoal, ignorando rotinas estabelecidas para explorar diversas alternativas. 
+Pelo lado desafiador, **você** pode manifestar certa arrogância ou rebeldia contra regras, sofrendo com flutuações de humor e desconfiança. 
+Nessa busca constante pelo novo, **você** corre o risco de perder a noção de tempo ou se deixar envolver por ilusões temporárias.</p>`,
 
-    indeciso: ` "A indecisão toma conta de você" 
+    indeciso: ` <p>"A indecisão toma conta da sua expressão"</p>
     
-Você apresenta grande sensibilidade e necessidade de atenção, podendo agir de forma dramática ou precipitada sob pressão emocional.
-Suas reações são influenciáveis pelo ambiente, o que gera em você mudanças frequentes de opinião e certa dificuldade em agir sozinho.
+<p>Com grande sensibilidade, **você** demonstra necessidade de atenção, podendo agir de forma dramática ou precipitada sob pressão emocional. 
+Sendo influenciável pelo ambiente, **você** muda de opinião com frequência e encontra certa dificuldade em agir de forma solitária.</p>
 
-Você possui um lado sedutor e provocante, mas que pode ser interpretado como inconveniência devido ao seu excesso de dramatização.
-O fortalecimento do seu caráter ocorre ao descobrir sua verdadeira identidade, trocando a busca por reconhecimento por desejos internos.
-Negativamente, você pode se tornar inconstante, manipuladora e impulsiva quando é dominada por seus receios e emoções intensas.`,
+<p>Revelando um lado sedutor, **você** pode ser interpretado com inconveniência devido ao excesso de dramatização em suas falas. 
+Ao fortalecer seu caráter, **você** descobre sua verdadeira identidade, trocando a busca por aprovação externa por seus desejos internos. 
+Em momentos de desequilíbrio, **você** torna-se inconstante ou impulsiva, especialmente quando é dominada por receios e emoções intensas.</p>`,
 
-    neutro: ` "você possui equilibrio nas decisões" 
+    neutro: ` <p>"Sua essência possui equilíbrio nas decisões"</p> 
     
-Você é alguém equilibrado e observador, que prefere analisar todos os pontos de vista antes de tomar partido em qualquer conflito.
-Age movido por interesses próprios e raramente sai da zona de conforto, sendo você excessivamente cauteloso para evitar riscos inúteis.
-Relaciona-se bem com todos, mas constrói barreiras emocionais intencionais para evitar sofrimento, raramente expondo o que você sente.
+<p>Sendo alguém observador, **você** prefere analisar todos os pontos de vista antes de tomar partido em qualquer tipo de conflito. 
+Agindo por interesses próprios, **você** raramente sai da zona de conforto, mantendo-se excessivamente cauteloso para evitar riscos inúteis.</p>
 
-Você possui facilidade de adaptação e mantém o autocontrole em situações difíceis, preferindo rotinas pacíficas e a ausência de polêmicas.
-No aspecto negativo, você pode demonstrar preguiça, omissão e medo de decidir, mantendo-se "em cima do muro" e sendo pouco criativo.`
+<p>Relacionando-se bem com todos, **você** constrói barreiras emocionais intencionais para evitar sofrimento, raramente expondo o que realmente sente. 
+Com facilidade de adaptação, **você** mantém o autocontrole em situações difíceis, preferindo rotinas pacíficas. 
+No aspecto negativo, **você** pode demonstrar certa omissão ou medo de decidir, mantendo-se neutro e com baixa inclinação criativa.</p>`
 };
 
 const introducoes = {
