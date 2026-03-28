@@ -880,8 +880,17 @@ function exportarRelatorio() {
         mental: { nivel: classificarIntensidade(valNat.mental, maiorNat), numero: reduzirNumero(valNat.mental), valorReal: valNat.mental },
         emocional: { nivel: classificarIntensidade(valNat.emocional, maiorNat), numero: reduzirNumero(valNat.emocional), valorReal: valNat.emocional },
         intuitivo: { nivel: classificarIntensidade(valNat.intuitivo, maiorNat), numero: reduzirNumero(valNat.intuitivo), valorReal: valNat.intuitivo }
-    };
 
+        
+    };
+// Cálculo dos valores de Expressão Natural para o gráfico
+    let contExpNat = { criativo: 0, indeciso: 0, neutro: 0 };
+    const nomeLimpo = document.getElementById("nome").value.toUpperCase().split("");
+    nomeLimpo.forEach(l => {
+        let letra = l.normalize("NFD")[0];
+        if (tabelaExpressao[letra]) contExpNat[tabelaExpressao[letra]]++;
+    });
+    const maiorExpNat = Math.max(contExpNat.criativo, contExpNat.indeciso, contExpNat.neutro);
     // LOOP DE 100 ANOS
 // LOOP DE 100 ANOS (CORRIGIDO)
     const lista100Anos = bancoMomentos.map(d => {
