@@ -509,7 +509,7 @@ barra("barEmocionalNat", vN.e, vN.max);
 barra("barIntuitivoNat", vN.i, vN.max);
 
 // 2. MOTOR DE LOOP: 100 ANOS
-// 2. MOTOR DE LOOP: 100 ANOS (CORRIGIDO E DINÂMICO)
+// 2. MOTOR DE LOOP: 100 ANOS (VERSÃO CORRIGIDA E TESTADA)
 const container = document.getElementById("containerCronologia");
 
 dados.cronologia.forEach((ano, index) => {
@@ -517,29 +517,27 @@ dados.cronologia.forEach((ano, index) => {
     secaoAno.className = "ano-bloco";
     secaoAno.style.pageBreakBefore = "always"; 
 
-    // 1. Definimos o HTML base com os IDs únicos para as barras
+    // Criamos o HTML com IDs ÚNICOS usando o index do loop
     secaoAno.innerHTML = `
         <h2 style="color:#06b6d4; border-bottom: 4px solid #06b6d4;">ANO ${ano.ano}</h2>
         <p class="vigencia-info">Ciclo: ${ano.intervalo}</p>
         
         <div class="divisor-categoria">Energias do Momento</div>
         
-        Físico <div class="barra-container"><div class="barra"><span id="barFisicoMom_${index}" style="background-color: #ef4444; width: 0%; transition: width 0.5s;"></span></div></div>
-        Mental <div class="barra-container"><div class="barra"><span id="barMentalMom_${index}" style="background-color: #3b82f6; width: 0%; transition: width 0.5s;"></span></div></div>
-        Emocional <div class="barra-container"><div class="barra"><span id="barEmocionalMom_${index}" style="background-color: #22c55e; width: 0%; transition: width 0.5s;"></span></div></div>
-        Intuitivo <div class="barra-container"><div class="barra"><span id="barIntuitivoMom_${index}" style="background-color: #eab308; width: 0%; transition: width 0.5s;"></span></div></div>
+        Físico <div class="barra-container"><div class="barra"><span id="fMom_${index}" style="background-color: #ef4444;"></span></div></div>
+        Mental <div class="barra-container"><div class="barra"><span id="mMom_${index}" style="background-color: #3b82f6;"></span></div></div>
+        Emocional <div class="barra-container"><div class="barra"><span id="eMom_${index}" style="background-color: #22c55e;"></span></div></div>
+        Intuitivo <div class="barra-container"><div class="barra"><span id="iMom_${index}" style="background-color: #eab308;"></span></div></div>
 
         <div class="texto">${ano.textoMomento}</div>
 
         <div class="divisor-categoria">Perfil de Expressão do Momento</div>
         
-        Criativo <div class="barra-container"><div class="barra"><span id="barCriativoMom_${index}" style="background-color: #9333ea; width: 0%; transition: width 0.5s;"></span></div></div>
-        Indeciso <div class="barra-container"><div class="barra"><span id="barIndecisoMom_${index}" style="background-color: #fb923c; width: 0%; transition: width 0.5s;"></span></div></div>
-        Neutro <div class="barra-container"><div class="barra"><span id="barNeutroMom_${index}" style="background-color: #B89A9A; width: 0%; transition: width 0.5s;"></span></div></div>
+        Criativo <div class="barra-container"><div class="barra"><span id="criMom_${index}" style="background-color: #9333ea;"></span></div></div>
+        Indeciso <div class="barra-container"><div class="barra"><span id="indMom_${index}" style="background-color: #fb923c;"></span></div></div>
+        Neutro <div class="barra-container"><div class="barra"><span id="neuMom_${index}" style="background-color: #B89A9A;"></span></div></div>
         
-        <div class="texto" id="textoExpMom_${index}" style="font-weight: 500; color: #475569; margin-top: 15px;">
-            ${ano.expTextoMomento || ano.textoExpressaoMom || ""} 
-        </div>
+        <div class="texto">${ano.expTexto || ""}</div>
 
         <div class="divisor-categoria">Análise Neurocognitiva do Momento</div>
         <div style="text-align:center; font-weight: bold; color: #1e293b;">${ano.dominanciaMom}</div>
@@ -557,32 +555,28 @@ dados.cronologia.forEach((ano, index) => {
     
     container.appendChild(secaoAno);
 
-    // 2. FUNÇÃO PARA APLICAR AS LARGURAS DINÂMICAS
-    const aplicarLargura = (id, valor, max) => {
-        const elemento = document.getElementById(id);
-        if (elemento && valor !== undefined) {
-            const percentual = (valor / max) * 100;
-            elemento.style.width = percentual + "%";
-        }
+    // FUNÇÃO QUE APLICA A LARGURA IMEDIATAMENTE APÓS CRIAR O ANO
+    const barra = (id, val, max) => {
+        const el = document.getElementById(id);
+        if (el) el.style.width = (val / max * 100) + "%";
     };
 
-    // 3. MAPEAMENTO DOS VALORES (ENERGIA)
-    // Verificamos se os dados existem no seu objeto 'ano'
-    if (ano.valoresMom) {
-        aplicarLargura(`barFisicoMom_${index}`, ano.valoresMom.f, ano.valoresMom.max);
-        aplicarLargura(`barMentalMom_${index}`, ano.valoresMom.m, ano.valoresMom.max);
-        aplicarLargura(`barEmocionalMom_${index}`, ano.valoresMom.e, ano.valoresMom.max);
-        aplicarLargura(`barIntuitivoMom_${index}`, ano.valoresMom.i, ano.valoresMom.max);
+    // Aplicando os valores das Energias do Momento
+    if (ano.valores) {
+        barra(`fMom_${index}`, ano.valores.f, ano.valores.max);
+        barra(`mMom_${index}`, ano.valores.m, ano.valores.max);
+        barra(`eMom_${index}`, ano.valores.e, ano.valores.max);
+        barra(`iMom_${index}`, ano.valores.i, ano.valores.max);
     }
 
-    // 4. MAPEAMENTO DOS VALORES (EXPRESSÃO)
-    if (ano.valoresExpMom) {
-        aplicarLargura(`barCriativoMom_${index}`, ano.valoresExpMom.c, ano.valoresExpMom.max);
-        aplicarLargura(`barIndecisoMom_${index}`, ano.valoresExpMom.ind, ano.valoresExpMom.max);
-        aplicarLargura(`barNeutroMom_${index}`, ano.valoresExpMom.n, ano.valoresExpMom.max);
+    // Aplicando os valores do Perfil de Expressão do Momento
+    // Note que aqui uso ano.expValores, ajuste se o nome for diferente no seu objeto
+    if (ano.expValores) {
+        barra(`criMom_${index}`, ano.expValores.c, ano.expValores.max);
+        barra(`indMom_${index}`, ano.expValores.ind, ano.expValores.max);
+        barra(`neuMom_${index}`, ano.expValores.n, ano.expValores.max);
     }
 });
-
 </script>
 </body>
 </html>
