@@ -480,33 +480,7 @@ dados.cronologia.forEach((ano, index) => {
     container.appendChild(secaoAno);
 });
 
-function barra(id, valor, max){
-    let perc = (valor/max)*100;
-    document.getElementById(id).style.width = perc + "%";
-}
 
-// Cálculo das Barras
-let maxNat = Math.max(dados.fisico, dados.mental, dados.emocional, dados.intuitivo);
-barra("barFisicoNat", dados.fisico, maxNat);
-barra("barMentalNat", dados.mental, maxNat);
-barra("barEmocionalNat", dados.emocional, maxNat);
-barra("barIntuitivoNat", dados.intuitivo, maxNat);
-
-let maxExpNat = Math.max(dados.criativoNat, dados.indecisoNat, dados.neutroNat);
-barra("barCriativoNat", dados.criativoNat, maxExpNat);
-barra("barIndecisoNat", dados.indecisoNat, maxExpNat);
-barra("barNeutroNat", dados.neutroNat, maxExpNat);
-
-let maxMom = Math.max(dados.fisicoMomento, dados.mentalMomento, dados.emocionalMomento, dados.intuitivoMomento);
-barra("barFisicoMom", dados.fisicoMomento, maxMom);
-barra("barMentalMom", dados.mentalMomento, maxMom);
-barra("barEmocionalMom", dados.emocionalMomento, maxMom);
-barra("barIntuitivoMom", dados.intuitivoMomento, maxMom);
-
-let maxExpMom = Math.max(dados.criativoMom, dados.indecisoMom, dados.neutroMom);
-barra("barCriativoMom", dados.criativoMom, maxExpMom);
-barra("barIndecisoMom", dados.indecisoMom, maxExpMom);
-barra("barNeutroMom", dados.neutroMom, maxExpMom);
 </script>
 </body>
 </html>
