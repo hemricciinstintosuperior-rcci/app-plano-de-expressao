@@ -537,7 +537,7 @@ dados.cronologia.forEach((ano, index) => {
         Indeciso <div class="barra-container"><div class="barra"><span id="indMom_${index}" style="background-color: #fb923c;"></span></div></div>
         Neutro <div class="barra-container"><div class="barra"><span id="neuMom_${index}" style="background-color: #B89A9A;"></span></div></div>
         
-        <div class="texto">${ano.expTexto || ""}</div>
+       <div class="texto">${ano.expTexto || ano.textoExpressaoMom || ano.analiseExpMom || ""}</div>
 
         <div class="divisor-categoria">Análise Neurocognitiva do Momento</div>
         <div style="text-align:center; font-weight: bold; color: #1e293b;">${ano.dominanciaMom}</div>
