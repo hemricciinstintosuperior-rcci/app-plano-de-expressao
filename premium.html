@@ -440,66 +440,89 @@ O Plano de Energias do Momento representa o estado energético atual da consciê
 </div>
 
 <script>
-    // 1. BUSCA OS DADOS QUE VIERAM DO INDEX
     const dados = JSON.parse(localStorage.getItem("relatorioMapa"));
     if (!dados) { alert("Dados não encontrados!"); }
 
-    // --- SETOR A: PREENCHIMENTO DE DADOS FIXOS (CAPA E NATURAL) ---
+    // --- SETOR A: DADOS FIXOS ---
     document.getElementById("nomePessoa").innerText = dados.nome;
     document.getElementById("nomeConclusao").innerText = dados.nome;
-    
-    // Formata a data de nascimento
     if (dados.data && dados.data.includes("-")) {
         const p = dados.data.split("-");
         document.getElementById("dataPessoa").innerText = `${p[2]}/${p[1]}/${p[0]}`;
     }
-
-    // Preenche os textos do Plano Natural (O que não muda)
     document.getElementById("textoNatural").innerHTML = dados.textoNatural;
     document.getElementById("textoExpressaoNat").innerHTML = dados.textoExpressaoNat;
     document.getElementById("neuroDominanciaNat").innerHTML = dados.dominanciaNat;
     document.getElementById("neuroAnaliseNat").innerHTML = dados.analiseNeuroNat;
     document.getElementById("textoEducativoPDF").innerHTML = dados.textoEducacao || "";
 
-    // --- SETOR B: MOTOR DA CRONOLOGIA CENTENÁRIA (OS 100 ANOS) ---
+    // --- SETOR B: MOTOR DA CRONOLOGIA (LOOP 100 ANOS) ---
     const container = document.getElementById("containerCiclosVida");
 
-    if (dados.ciclos && dados.ciclos.length > 0) {
-        // Criamos a Introdução da Seção (O texto que você pediu)
+    if (container && dados.ciclos && dados.ciclos.length > 0) {
+        container.innerHTML = ""; 
+
         const intro = document.createElement("div");
         intro.style.pageBreakBefore = "always";
         intro.innerHTML = `
             <div style="text-align:center; padding: 40px 0;">
                 <h2 style="font-size: 28px; color: #0f172a;">V. CRONOLOGIA DE DESTINO</h2>
-                <p style="color:#06b6d4; font-weight:bold;">Mapeamento Centenário: 100 Anos de Evolução</p>
-                <div class="texto" style="max-width: 750px; margin: 20px auto; border-left: 4px solid #ffd633; padding-left: 20px; text-align:left;">
-                    <p>Esta seção apresenta sua <strong>Linha do Tempo Quântica</strong>. Mapeamos cada ano da sua jornada para identificar as janelas de oportunidade e os desafios de cada ciclo.</p>
-                </div>
+                <p style="color:#06b6d4; font-weight:bold;">Mapeamento Centenário</p>
             </div>
         `;
         container.appendChild(intro);
 
-        // O LOOP: Gera um card para cada um dos 100 anos
         dados.ciclos.forEach((ciclo) => {
             const bloco = document.createElement("div");
-            bloco.className = "secao-ciclo"; 
+            bloco.className = "secao-ciclo";
+            bloco.style.pageBreakInside = "avoid";
+            bloco.style.marginBottom = "50px";
+
+            // Cálculo das barras do ano específico
+            const maxVal = Math.max(ciclo.fisico, ciclo.mental, ciclo.emocional, ciclo.intuitivo) || 1;
+            const pFis = (ciclo.fisico / maxVal) * 100;
+            const pMen = (ciclo.mental / maxVal) * 100;
+            const pEmo = (ciclo.emocional / maxVal) * 100;
+            const pInt = (ciclo.intuitivo / maxVal) * 100;
+
             bloco.innerHTML = `
-                <div style="margin-bottom: 30px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px; background: #fff;">
-                    <div style="background: #0f172a; color: #ffd633; display:inline-block; padding: 2px 12px; border-radius: 4px; font-weight: bold; margin-bottom:10px;">
-                        ANO ${ciclo.ano}
+                <div style="padding: 25px; border: 2px solid #f1f5f9; border-radius: 15px; background: #fff;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <span style="background: #0f172a; color: #ffd633; padding: 5px 15px; border-radius: 5px; font-weight: bold;">ANO ${ciclo.ano}</span>
+                        <span style="font-size: 0.85rem; color: #94a3b8; font-weight: bold;">Vigência: ${ciclo.intervalo}</span>
                     </div>
-                    <span style="font-size: 0.8rem; color: #94a3b8; margin-left:10px;">Vigência: ${ciclo.intervalo}</span>
-                    
-                    <div class="texto" style="font-size: 0.9rem; margin-top:10px;">${ciclo.textoMomento}</div>
-                    
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; background: #f8fafc; padding: 10px; border-radius: 8px;">
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; background: #fcfcfc; padding: 15px; border-radius: 10px;">
                         <div>
-                            <strong style="font-size:11px; color:#64748b; text-transform:uppercase;">Neuro-Dominância</strong>
-                            <div style="font-size:0.85rem;">${ciclo.dominanciaMom}</div>
+                            <div style="font-size: 10px; text-transform: uppercase; color: #ef4444; font-weight: bold;">Físico</div>
+                            <div style="height: 6px; background: #eee; border-radius: 3px;"><div style="width: ${pFis}%; height: 100%; background: #ef4444; border-radius: 3px;"></div></div>
                         </div>
                         <div>
-                            <strong style="font-size:11px; color:#64748b; text-transform:uppercase;">Trânsito</strong>
-                            <div style="font-size:0.85rem;"><strong>Nº ${ciclo.transitoNum}</strong></div>
+                            <div style="font-size: 10px; text-transform: uppercase; color: #3b82f6; font-weight: bold;">Mental</div>
+                            <div style="height: 6px; background: #eee; border-radius: 3px;"><div style="width: ${pMen}%; height: 100%; background: #3b82f6; border-radius: 3px;"></div></div>
+                        </div>
+                        <div>
+                            <div style="font-size: 10px; text-transform: uppercase; color: #22c55e; font-weight: bold;">Emocional</div>
+                            <div style="height: 6px; background: #eee; border-radius: 3px;"><div style="width: ${pEmo}%; height: 100%; background: #22c55e; border-radius: 3px;"></div></div>
+                        </div>
+                        <div>
+                            <div style="font-size: 10px; text-transform: uppercase; color: #eab308; font-weight: bold;">Intuitivo</div>
+                            <div style="height: 6px; background: #eee; border-radius: 3px;"><div style="width: ${pInt}%; height: 100%; background: #eab308; border-radius: 3px;"></div></div>
+                        </div>
+                    </div>
+
+                    <div class="texto" style="font-size: 0.95rem; margin-bottom: 20px;">
+                        <strong>Análise do Período:</strong><br> ${ciclo.textoMomento}
+                    </div>
+
+                    <div style="border-top: 1px solid #f1f5f9; padding-top: 15px;">
+                        <div style="margin-bottom: 10px;">
+                            <span style="color: #06b6d4; font-weight: 800; font-size: 11px; text-transform: uppercase;">🧠 Neuro-Dominância:</span>
+                            <span style="font-size: 0.9rem; margin-left: 10px;">${ciclo.dominanciaMom}</span>
+                        </div>
+                        <div style="background: #f8fafc; padding: 15px; border-radius: 8px; border-left: 4px solid #eab308;">
+                            <span style="color: #eab308; font-weight: 800; font-size: 11px; text-transform: uppercase;">🔄 Trânsito Anual Nº ${ciclo.transitoNum}:</span>
+                            <p style="font-size: 0.85rem; margin: 5px 0 0 0; color: #475569;">${ciclo.transitoTexto}</p>
                         </div>
                     </div>
                 </div>
@@ -508,28 +531,26 @@ O Plano de Energias do Momento representa o estado energético atual da consciê
         });
     }
 
-    // --- SETOR C: LÓGICA DAS BARRAS GRÁFICAS (NATURAL) ---
+    // --- SETOR C: LÓGICA DAS BARRAS NATURAIS ---
     function barra(id, valor, max) {
         const el = document.getElementById(id);
         if (el) {
             const porc = max > 0 ? (valor / max) * 100 : 0;
             el.style.width = porc + "%";
+            el.style.height = "100%"; // Garante preenchimento
         }
     }
 
-    // Atualiza as barras do Plano Natural
-    let maxNat = Math.max(dados.fisico, dados.mental, dados.emocional, dados.intuitivo);
+    let maxNat = Math.max(dados.fisico, dados.mental, dados.emocional, dados.intuitivo) || 1;
     barra("barFisicoNat", dados.fisico, maxNat);
     barra("barMentalNat", dados.mental, maxNat);
     barra("barEmocionalNat", dados.emocional, maxNat);
     barra("barIntuitivoNat", dados.intuitivo, maxNat);
 
-    let maxExpNat = Math.max(dados.fisicoExpNat, dados.mentalExpNat, dados.emocionalExpNat, dados.intuitivoExpNat);
-    barra("barFisicoExpNat", dados.fisicoExpNat, maxExpNat);
-    barra("barMentalExpNat", dados.mentalExpNat, maxExpNat);
-    barra("barEmocionalExpNat", dados.emocionalExpNat, maxExpNat);
-    barra("barIntuitivoExpNat", dados.intuitivoExpNat, maxExpNat);
-
+    let maxExpNat = Math.max(dados.fisicoExpNat, dados.mentalExpNat, dados.emocionalExpNat, dados.intuitivoExpNat) || 1;
+    barra("barCriativoNat", dados.fisicoExpNat, maxExpNat); // Ajustado para os IDs que você usa no HTML
+    barra("barIndecisoNat", dados.mentalExpNat, maxExpNat);
+    barra("barNeutroNat", dados.emocionalExpNat, maxExpNat);
 </script>
 </body>
 </html>
