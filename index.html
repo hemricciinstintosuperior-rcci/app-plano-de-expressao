@@ -871,18 +871,14 @@ function gerarTudo() {
 function exportarRelatorio() {
     if(!resultadoPlanosNatural) return alert("Gere o mapa primeiro.");
     
-    const valNat = valoresBrutosNatural;
-    const maiorNat = Math.max(valNat.fisico, valNat.mental, valNat.emocional, valNat.intuitivo);
-
-    const dadosNat = {
-        fisico: { nivel: classificarIntensidade(valNat.fisico, maiorNat), numero: reduzirNumero(valNat.fisico), valorReal: valNat.fisico },
-        mental: { nivel: classificarIntensidade(valNat.mental, maiorNat), numero: reduzirNumero(valNat.mental), valorReal: valNat.mental },
-        emocional: { nivel: classificarIntensidade(valNat.emocional, maiorNat), numero: reduzirNumero(valNat.emocional), valorReal: valNat.emocional },
-        intuitivo: { nivel: classificarIntensidade(valNat.intuitivo, maiorNat), numero: reduzirNumero(valNat.intuitivo), valorReal: valNat.intuitivo }
-    };
-
-    // NOVIDADE: Mapear todos os 100 anos para um formato que o PDF entenda
-    const cicloCompleto100Anos = bancoMomentos.map(d => {
+    const anoSelecionado = document.getElementById("anoSelect").value;
+    
+    // Filtramos os ciclos para garantir que o ano que o usuário escolheu seja o primeiro do array
+    const ciclosOrdenados = [...bancoMomentos].sort((a, b) => {
+        if (a.ano == anoSelecionado) return -1;
+        if (b.ano == anoSelecionado) return 1;
+        return 0;
+    }).map(d => {
         const maiorMom = Math.max(d.fisico, d.mental, d.emocional, d.intuitivo);
         const dadosMom = {
             fisico: { nivel: classificarIntensidade(d.fisico, maiorMom), numero: reduzirNumero(d.fisico), valorReal: d.fisico },
@@ -892,30 +888,34 @@ function exportarRelatorio() {
         };
 
         const somaTransito = d.fisico + d.mental + d.emocional + d.intuitivo;
-        const numTransito = reduzirNumero(somaTransito);
-
         return {
             ano: d.ano,
             intervalo: d.intervalo,
             textoMomento: gerarTextoPlano("momento", dadosMom),
-            dominanciaMom: gerarDominanciaNeuro(dadosMom),
-            analiseNeuroMom: gerarInterpretacaoNeuro(dadosMom),
-            transitoNum: numTransito,
-            transitoTexto: (typeof textosTrânsito !== 'undefined') ? textosTrânsito[numTransito] : "",
-            // Valores para as barras
-            fisico: d.fisico, mental: d.mental, emocional: d.emocional, intuitivo: d.intuitivo, max: maiorMom
+            transitoNum: reduzirNumero(somaTransito),
+            transitoTexto: (typeof textosTrânsito !== 'undefined') ? textosTrânsito[reduzirNumero(somaTransito)] : "",
+            fisico: d.fisico, mental: d.mental, emocional: d.emocional, intuitivo: d.intuitivo
         };
     });
 
     const pacote = {
         nome: document.getElementById("nome").value,
         data: document.getElementById("dataNascimento").value,
-        textoNatural: gerarTextoPlano("natural", dadosNat),
-        dominanciaNat: gerarDominanciaNeuro(dadosNat),
-        analiseNeuroNat: gerarInterpretacaoNeuro(dadosNat),
+        // Naturais
+        fisico: valoresBrutosNatural.fisico,
+        mental: valoresBrutosNatural.mental,
+        emocional: valoresBrutosNatural.emocional,
+        intuitivo: valoresBrutosNatural.intuitivo,
+        textoNatural: document.getElementById("resumoNatural").innerHTML, // Pega o HTML pronto
+        dominanciaNat: "", // Já vai dentro do resumoNatural no seu index
+        analiseNeuroNat: "", // Já vai dentro do resumoNatural no seu index
+        // Expressão
+        criativoNat: parseInt(document.getElementById("numCriativoNat").innerText) || 0,
+        indecisoNat: parseInt(document.getElementById("numIndecisoNat").innerText) || 0,
+        neutroNat: parseInt(document.getElementById("numNeutroNat").innerText) || 0,
         textoExpressaoNat: document.getElementById("resumoExpressaoNat").innerHTML,
-        // O "PULO DO GATO": Enviamos o array de 100 anos
-        ciclos: cicloCompleto100Anos,
+        // Ciclos
+        ciclos: ciclosOrdenados,
         textoEducacao: gerarEducacaoNeuroRetorno()
     };
     
