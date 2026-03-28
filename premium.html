@@ -154,19 +154,23 @@ h2 { font-size: 26px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; ma
     font-weight: 700;
     text-transform: uppercase;
 }
-
 .capa-transicao {
-    min-height: 90vh; /* Garante que ocupe quase a página toda */
+    /* Mantém o flex para centralizar o texto horizontalmente */
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    background: #fff;
-    margin: 0; 
-    text-align: center;
-    page-break-before: always; /* FORÇA IR PARA O TOPO DA PRÓXIMA PÁGINA */
-    page-break-after: always;  /* FORÇA O CONTEÚDO SEGUINTE A IR PARA OUTRA PÁGINA */
+
+    /* A mágica está nestas 3 linhas: */
+    justify-content: flex-start; /* Alinha o conteúdo no topo da página */
+    padding-top: 15vh;           /* Cria um espaçamento elegante do topo */
+    page-break-before: always;   /* Força ir para o topo da próxima página */
+
+    /* Remove estilos que forçam o conteúdo para o meio da página ou muito espaçamento */
+    height: auto; 
+    min-height: auto;
+    margin: 0;
 }
+
 .capa-transicao h2 {
     font-size: 35px;
     color: var(--gold);
