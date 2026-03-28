@@ -228,6 +228,22 @@ h2 { font-size: 26px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; ma
     letter-spacing: 1px;
 }
 
+.barra {
+    height: 12px;
+    background: #f1f5f9; /* Cor do fundo da barra (cinza claro) */
+    border-radius: 6px;
+    overflow: hidden;
+    width: 100%;
+    display: block;
+    margin-top: 5px;
+}
+.barra span {
+    display: block;
+    height: 100%;
+    width: 0%; /* Começa em 0 */
+    transition: width 1s ease-in-out;
+}    
+
 @media print {
     .rodape-final-container {
         page-break-inside: avoid;
@@ -443,99 +459,97 @@ O Plano de Energias do Momento representa o estado energético atual da consciê
     const dados = JSON.parse(localStorage.getItem("relatorioMapa"));
     if (!dados) { alert("Dados não encontrados!"); }
 
-    // --- FUNÇÃO AUXILIAR PARA AS BARRAS (GARANTE COR E TAMANHO) ---
-    function ajustarBarra(id, valor, max, cor) {
+    // FUNÇÃO PARA PINTAR AS BARRAS E DEFINIR O TAMANHO
+    function renderizarBarra(id, valor, max, cor) {
         const el = document.getElementById(id);
         if (el) {
-            const porcentagem = max > 0 ? (valor / max) * 100 : 0;
-            el.style.width = porcentagem + "%";
-            el.style.backgroundColor = cor; // Força a cor aqui
-            el.style.display = "block";
-            el.style.height = "100%";
+            const perc = max > 0 ? (valor / max) * 100 : 0;
+            el.style.width = perc + "%";
+            el.style.backgroundColor = cor; 
         }
     }
 
-    // --- 1. DADOS FIXOS ---
+    // 1. PREENCHIMENTO BÁSICO
     document.getElementById("nomePessoa").innerText = dados.nome;
     document.getElementById("nomeConclusao").innerText = dados.nome;
-    if (dados.data && dados.data.includes("-")) {
+    if (dados.data) {
         const p = dados.data.split("-");
         document.getElementById("dataPessoa").innerText = `${p[2]}/${p[1]}/${p[0]}`;
     }
+
+    // 2. PLANO NATURAL (VITALÍCIO) - CORRIGINDO AS CORES BRANCAS
+    const maxNat = Math.max(dados.fisico, dados.mental, dados.emocional, dados.intuitivo, 1);
+    renderizarBarra("barFisicoNat", dados.fisico, maxNat, "#ef4444");
+    renderizarBarra("barMentalNat", dados.mental, maxNat, "#3b82f6");
+    renderizarBarra("barEmocionalNat", dados.emocional, maxNat, "#22c55e");
+    renderizarBarra("barIntuitivoNat", dados.intuitivo, maxNat, "#eab308");
     document.getElementById("textoNatural").innerHTML = dados.textoNatural;
+
+    // 3. EXPRESSÃO NATURAL
+    const maxExpNat = Math.max(dados.fisicoExpNat, dados.mentalExpNat, dados.emocionalExpNat, 1);
+    renderizarBarra("barCriativoNat", dados.fisicoExpNat, maxExpNat, "#9333ea");
+    renderizarBarra("barIndecisoNat", dados.mentalExpNat, maxExpNat, "#fb923c");
+    renderizarBarra("barNeutroNat", dados.emocionalExpNat, maxExpNat, "#b89a9a");
     document.getElementById("textoExpressaoNat").innerHTML = dados.textoExpressaoNat;
+
+    // 4. NEUROCOGNITIVO NATURAL
     document.getElementById("neuroDominanciaNat").innerHTML = dados.dominanciaNat;
     document.getElementById("neuroAnaliseNat").innerHTML = dados.analiseNeuroNat;
-    document.getElementById("textoEducativoPDF").innerHTML = dados.textoEducacao || "";
 
-    // --- 2. BARRAS DO PLANO NATURAL (VITALÍCIO) ---
-    const maxNat = Math.max(dados.fisico, dados.mental, dados.emocional, dados.intuitivo, 1);
-    ajustarBarra("barFisicoNat", dados.fisico, maxNat, "#ef4444");
-    ajustarBarra("barMentalNat", dados.mental, maxNat, "#3b82f6");
-    ajustarBarra("barEmocionalNat", dados.emocional, maxNat, "#22c55e");
-    ajustarBarra("barIntuitivoNat", dados.intuitivo, maxNat, "#eab308");
-
-    const maxExpNat = Math.max(dados.fisicoExpNat, dados.mentalExpNat, dados.emocionalExpNat, 1);
-    ajustarBarra("barCriativoNat", dados.fisicoExpNat, maxExpNat, "#9333ea");
-    ajustarBarra("barIndecisoNat", dados.mentalExpNat, maxExpNat, "#fb923c");
-    ajustarBarra("barNeutroNat", dados.emocionalExpNat, maxExpNat, "#b89a9a");
-
-    // --- 3. MOTOR DA CRONOLOGIA (100 ANOS) ---
+    // 5. MOTOR DA CRONOLOGIA (LOOP 100 ANOS)
     const container = document.getElementById("containerCiclosVida");
     if (container && dados.ciclos && dados.ciclos.length > 0) {
-        container.innerHTML = ""; 
-        
-        // Injeta a Introdução
-        const intro = document.createElement("div");
-        intro.style.pageBreakBefore = "always";
-        intro.innerHTML = `<h2 style="text-align:center; margin-top:60px;">V. CRONOLOGIA DE DESTINO</h2><p class="vigencia-info">Mapeamento Centenário</p>`;
-        container.appendChild(intro);
+        container.innerHTML = ""; // Limpa lixo
 
         dados.ciclos.forEach((ciclo) => {
-            const bloco = document.createElement("div");
-            bloco.className = "secao-ciclo";
-            bloco.style.pageBreakInside = "avoid";
-            
             const mVal = Math.max(ciclo.fisico, ciclo.mental, ciclo.emocional, ciclo.intuitivo, 1);
             const mExp = Math.max(ciclo.criativo, ciclo.indeciso, ciclo.neutro, 1);
 
-            bloco.innerHTML = `
-                <div style="padding: 25px; border: 1px solid #e2e8f0; border-radius: 15px; background: #fff; margin-bottom:40px;">
+            const divAno = document.createElement("div");
+            divAno.className = "secao-ciclo";
+            divAno.style.pageBreakInside = "avoid";
+            divAno.style.marginBottom = "50px";
+
+            divAno.innerHTML = `
+                <div style="padding: 25px; border: 1px solid #e2e8f0; border-radius: 15px; background: #fff;">
                     <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-                        <span style="background: #0f172a; color: #ffd633; padding: 4px 10px; border-radius: 5px; font-weight: bold;">ANO ${ciclo.ano}</span>
-                        <span style="color: #94a3b8; font-size: 0.8rem;">${ciclo.intervalo}</span>
+                        <span style="background: #0f172a; color: #ffd633; padding: 5px 12px; border-radius: 5px; font-weight: bold;">ANO ${ciclo.ano}</span>
+                        <span style="color: #64748b; font-size: 0.8rem;">${ciclo.intervalo}</span>
                     </div>
 
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
-                        <div><div style="font-size:9px; font-weight:bold; color:#ef4444;">FÍSICO</div><div style="height:6px; background:#eee; border-radius:3px;"><div style="width:${(ciclo.fisico/mVal)*100}%; height:100%; background:#ef4444; border-radius:3px;"></div></div></div>
-                        <div><div style="font-size:9px; font-weight:bold; color:#3b82f6;">MENTAL</div><div style="height:6px; background:#eee; border-radius:3px;"><div style="width:${(ciclo.mental/mVal)*100}%; height:100%; background:#3b82f6; border-radius:3px;"></div></div></div>
-                        <div><div style="font-size:9px; font-weight:bold; color:#22c55e;">EMOCIONAL</div><div style="height:6px; background:#eee; border-radius:3px;"><div style="width:${(ciclo.emocional/mVal)*100}%; height:100%; background:#22c55e; border-radius:3px;"></div></div></div>
-                        <div><div style="font-size:9px; font-weight:bold; color:#eab308;">INTUITIVO</div><div style="height:6px; background:#eee; border-radius:3px;"><div style="width:${(ciclo.intuitivo/mVal)*100}%; height:100%; background:#eab308; border-radius:3px;"></div></div></div>
+                        <div><div style="font-size:9px; font-weight:bold; color:#ef4444;">FÍSICO</div><div class="barra"><span style="width:${(ciclo.fisico/mVal)*100}%; background:#ef4444;"></span></div></div>
+                        <div><div style="font-size:9px; font-weight:bold; color:#3b82f6;">MENTAL</div><div class="barra"><span style="width:${(ciclo.mental/mVal)*100}%; background:#3b82f6;"></span></div></div>
+                        <div><div style="font-size:9px; font-weight:bold; color:#22c55e;">EMOCIONAL</div><div class="barra"><span style="width:${(ciclo.emocional/mVal)*100}%; background:#22c55e;"></span></div></div>
+                        <div><div style="font-size:9px; font-weight:bold; color:#eab308;">INTUITIVO</div><div class="barra"><span style="width:${(ciclo.intuitivo/mVal)*100}%; background:#eab308;"></span></div></div>
                     </div>
 
-                    <div style="background:#f8fafc; padding:10px; border-radius:8px; margin-bottom:15px;">
-                        <div style="font-size:10px; font-weight:bold; margin-bottom:5px;">PERFIL DE EXPRESSÃO DO CICLO</div>
-                        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px;">
-                            <div><div style="font-size:8px;">CRIATIVO</div><div style="height:4px; background:#ddd;"><div style="width:${(ciclo.criativo/mExp)*100}%; height:100%; background:#9333ea;"></div></div></div>
-                            <div><div style="font-size:8px;">INDECISO</div><div style="height:4px; background:#ddd;"><div style="width:${(ciclo.indeciso/mExp)*100}%; height:100%; background:#fb923c;"></div></div></div>
-                            <div><div style="font-size:8px;">NEUTRO</div><div style="height:4px; background:#ddd;"><div style="width:${(ciclo.neutro/mExp)*100}%; height:100%; background:#b89a9a;"></div></div></div>
+                    <div style="background:#f8fafc; padding:15px; border-radius:10px; margin-bottom:15px;">
+                        <div style="font-size:11px; font-weight:bold; margin-bottom:10px;">PERFIL DE EXPRESSÃO DO CICLO</div>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;">
+                            <div><div style="font-size:9px; color:#9333ea;">CRIATIVO</div><div class="barra"><span style="width:${(ciclo.criativo/mExp)*100}%; background:#9333ea;"></span></div></div>
+                            <div><div style="font-size:9px; color:#fb923c;">INDECISO</div><div class="barra"><span style="width:${(ciclo.indeciso/mExp)*100}%; background:#fb923c;"></span></div></div>
+                            <div><div style="font-size:9px; color:#b89a9a;">NEUTRO</div><div class="barra"><span style="width:${(ciclo.neutro/mExp)*100}%; background:#b89a9a;"></span></div></div>
+                        </div>
+                        <div style="margin-top:10px; font-size:0.85rem; font-style:italic; color:#475569; border-top:1px dashed #cbd5e1; padding-top:10px;">
+                            ${ciclo.textoExpressaoMom || "Análise de perfil em processamento..."}
                         </div>
                     </div>
 
-                    <div class="texto" style="font-size: 0.9rem;">${ciclo.textoMomento}</div>
+                    <div class="texto" style="font-size: 0.95rem;">${ciclo.textoMomento}</div>
                     
-                    <div style="margin-top:15px; padding:10px; border-left:3px solid #06b6d4; background:#f0f9ff;">
-                        <strong style="font-size:11px; color:#06b6d4;">NEURO-DOMINÂNCIA: ${ciclo.dominanciaMom}</strong>
-                        <p style="font-size:0.8rem; margin:5px 0;">${ciclo.analiseNeuroMom || ""}</p>
+                    <div style="margin-top:20px; padding:15px; background:#f0f9ff; border-radius:8px;">
+                        <strong style="color:#06b6d4; font-size:12px;">🧠 NEURO-ANÁLISE: ${ciclo.dominanciaMom}</strong>
+                        <p style="font-size:0.85rem; margin-top:5px;">${ciclo.analiseNeuroMom || ""}</p>
                     </div>
 
-                    <div style="margin-top:10px; padding:10px; border-left:3px solid #eab308; background:#fffdf2;">
-                        <strong style="font-size:11px; color:#a16207;">TRÂNSITO Nº ${ciclo.transitoNum}</strong>
-                        <p style="font-size:0.8rem; margin:5px 0;">${ciclo.transitoTexto || ""}</p>
+                    <div style="margin-top:10px; padding:15px; background:#fffdf2; border-radius:8px;">
+                        <strong style="color:#a16207; font-size:12px;">🔄 TRÂNSITO Nº ${ciclo.transitoNum}</strong>
+                        <p style="font-size:0.85rem; margin-top:5px;">${ciclo.transitoTexto || ""}</p>
                     </div>
                 </div>
             `;
-            container.appendChild(bloco);
+            container.appendChild(divAno);
         });
     }
 </script>
