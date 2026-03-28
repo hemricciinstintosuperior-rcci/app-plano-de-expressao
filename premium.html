@@ -5,143 +5,182 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Relatório Premium - Instinto Superior</title>
     <style>
-        body { font-family: 'Segoe UI', Roboto, sans-serif; background: #f1f5f9; margin: 0; color: #1e293b; line-height: 1.6; }
-        .relatorio { max-width: 950px; margin: 40px auto; background: white; padding: 70px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .capa { text-align: center; page-break-after: always; margin-bottom: 50px; }
-        .logoRelatorio { max-width: 300px; margin-bottom: 30px; }
-        h1 { font-size: 34px; text-transform: uppercase; color: #0f172a; text-align: center; margin-bottom: 5px; }
-        h2 { font-size: 24px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; margin-top: 50px; color: #334155; text-transform: uppercase; }
-        .texto { text-align: justify; font-size: 16px; color: #334155; margin: 20px 0; line-height: 1.8; }
-        
-        /* BARRAS */
-        .barra-container { margin-bottom: 12px; font-size: 14px; font-weight: bold; color: #64748b; }
-        .barra { height: 10px; background: #f1f5f9; border-radius: 5px; overflow: hidden; width: 100%; border: 1px solid #e2e8f0; margin-top: 4px; }
-        .barra span { display: block; height: 100%; transition: width 1s; }
-        
-        /* CORES */
-        .f-fisico { background-color: #ef4444; }
-        .f-mental { background-color: #3b82f6; }
-        .f-emocional { background-color: #22c55e; }
-        .f-intuitivo { background-color: #eab308; }
+        :root {
+            --gold: #c5a059;
+            --dark: #0f172a;
+            --light-bg: #f8fafc;
+            --border: #e2e8f0;
+            --fisico: #ef4444;
+            --mental: #3b82f6;
+            --emocional: #22c55e;
+            --intuitivo: #eab308;
+        }
 
-        /* TABELA DE 100 ANOS */
-        .tabela-ciclos { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 13px; }
-        .tabela-ciclos th { background: #0f172a; color: white; padding: 12px; text-align: left; text-transform: uppercase; }
-        .tabela-ciclos td { border-bottom: 1px solid #e2e8f0; padding: 10px; color: #475569; }
-        .tabela-ciclos tr:nth-child(even) { background: #f8fafc; }
-        .badge-transito { background: #ffd633; color: #000; padding: 2px 8px; border-radius: 12px; font-weight: bold; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f1f5f9; margin: 0; color: var(--dark); line-height: 1.6; }
+        
+        /* Container Principal */
+        .relatorio { max-width: 1000px; margin: 40px auto; background: white; padding: 60px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border-top: 8px solid var(--gold); }
 
-        @media print { .btn-container { display: none; } .relatorio { box-shadow: none; margin: 0; width: 100%; padding: 40px; } .page-break { page-break-before: always; } }
+        /* Capa */
+        .capa { text-align: center; padding: 100px 20px; page-break-after: always; }
+        .logo-premium { max-width: 350px; margin-bottom: 40px; }
+        .capa h1 { font-size: 42px; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 10px; color: var(--dark); }
+        .capa p { font-size: 1.2rem; color: #64748b; }
+
+        /* Títulos */
+        h2 { font-size: 24px; border-left: 5px solid var(--gold); padding-left: 15px; margin-top: 50px; color: var(--dark); text-transform: uppercase; background: var(--light-bg); padding-top: 10px; padding-bottom: 10px; }
+
+        /* Estilo dos Gráficos (Barras) */
+        .barra-container { margin-bottom: 15px; }
+        .label-barra { display: flex; justify-content: space-between; font-size: 13px; font-weight: bold; text-transform: uppercase; margin-bottom: 5px; color: #475569; }
+        .barra-fundo { height: 12px; background: #edf2f7; border-radius: 6px; overflow: hidden; border: 1px solid var(--border); }
+        .barra-progresso { height: 100%; border-radius: 6px; transition: width 1s ease-in-out; }
+
+        /* Card de Ciclo Anual (Os 100 anos) */
+        .card-ano { 
+            border: 1px solid var(--border); 
+            border-radius: 12px; 
+            padding: 25px; 
+            margin-bottom: 30px; 
+            background: #fff;
+            page-break-inside: avoid; /* Impede que o card quebre no meio da página */
+        }
+        .header-ano { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 2px solid var(--light-bg); 
+            padding-bottom: 15px; 
+            margin-bottom: 20px; 
+        }
+        .ano-titulo { font-size: 22px; font-weight: 800; color: var(--dark); }
+        .badge-vibracao { background: var(--dark); color: var(--gold); padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 14px; }
+        
+        .grid-ano { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .texto-ano { font-size: 15px; text-align: justify; color: #334155; line-height: 1.7; }
+
+        /* Botão de Impressão */
+        .no-print { text-align: center; margin-bottom: 30px; }
+        .btn-print { background: var(--dark); color: white; padding: 15px 40px; border: none; border-radius: 50px; font-weight: bold; cursor: pointer; font-size: 16px; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .btn-print:hover { background: var(--gold); }
+
+        @media print {
+            body { background: white; }
+            .relatorio { margin: 0; box-shadow: none; width: 100%; padding: 20px; }
+            .no-print { display: none; }
+            .page-break { page-break-before: always; }
+            .card-ano { border: 1px solid #eee; }
+        }
     </style>
 </head>
 <body>
 
 <div class="relatorio">
-    <div class="btn-container" style="text-align: center; margin-bottom: 40px;">
-        <button onclick="window.print()" style="padding: 15px 30px; cursor: pointer; background: #0f172a; color: white; border: none; border-radius: 8px; font-weight: bold; letter-spacing: 1px;">📄 IMPRIMIR RELATÓRIO COMPLETO</button>
+    <div class="no-print">
+        <button class="btn-print" onclick="window.print()">GERAR PDF / IMPRIMIR RELATÓRIO</button>
     </div>
 
     <div class="capa">
-        <img src="https://hemricciinstintosuperior-rcci.github.io/Trabalho_venda_Numerologia/plano.png" class="logoRelatorio">
-        <h1 id="nomePessoa"></h1>
-        <p style="font-size: 1.2rem; color: #64748b;">Estudo de Expressão Quântica e Neurociência</p>
-        <p>Data de Nascimento: <strong id="dataPessoa"></strong></p>
+        <img src="https://hemricciinstintosuperior-rcci.github.io/Trabalho_venda_Numerologia/plano.png" class="logo-premium" alt="Instinto Superior">
+        <h1 id="nomeUsuario">CARREGANDO...</h1>
+        <p>Análise de Ciclos Vitais Centenários</p>
+        <p>Nascimento: <strong id="dataNascimento"></strong></p>
     </div>
 
-    <h2>1. Análise Estrutural (Natural)</h2>
-    <div id="barrasNatural">
-        Físico <div class="barra"><span id="barFisicoNat" class="f-fisico"></span></div>
-        Mental <div class="barra"><span id="barMentalNat" class="f-mental"></span></div>
-        Emocional <div class="barra"><span id="barEmocionalNat" class="f-emocional"></span></div>
-        Intuitivo <div class="barra"><span id="barIntuitivoNat" class="f-intuitivo"></span></div>
+    <h2>1. Potencial de Origem (Configuração Natural)</h2>
+    <div class="grid-ano">
+        <div id="graficoNatural">
+            </div>
+        <div id="textoNatural" class="texto-ano"></div>
     </div>
-    <div id="textoNatural" class="texto"></div>
 
     <div class="page-break"></div>
 
-    <h2>2. O Momento Atual</h2>
-    <p style="font-weight: bold; color: #0f172a;">Ciclo Vigente: <span id="intervaloMomento"></span></p>
-    <div id="barrasMomento">
-        Físico <div class="barra"><span id="barFisicoMom" class="f-fisico"></span></div>
-        Mental <div class="barra"><span id="barMentalMom" class="f-mental"></span></div>
-        Emocional <div class="barra"><span id="barEmocionalMom" class="f-emocional"></span></div>
-        Intuitivo <div class="barra"><span id="barIntuitivoMom" class="f-intuitivo"></span></div>
-    </div>
-    <div id="textoMomento" class="texto"></div>
-
-    <div class="page-break"></div>
-
-    <h2>3. Linha do Tempo Estratégica (100 Anos)</h2>
-    <p class="texto">Abaixo, apresentamos a progressão vibracional para os próximos 100 anos. Este mapa permite antecipar as tendências de cada ciclo anual.</p>
+    <h2>2. Cronologia de Destino (Mapeamento de 100 Anos)</h2>
+    <p style="margin-bottom: 40px;">Este mapeamento detalha sua evolução ano a ano, cruzando as tendências físicas, mentais, emocionais e intuitivas para o próximo século.</p>
     
-    <table class="tabela-ciclos">
-        <thead>
-            <tr>
-                <th>Ano / Período</th>
-                <th>Vibração</th>
-                <th>Fis</th>
-                <th>Men</th>
-                <th>Emo</th>
-                <th>Int</th>
-            </tr>
-        </thead>
-        <tbody id="corpoTabela100">
-            </tbody>
-    </table>
+    <div id="containerCiclos">
+        </div>
 
     <div class="page-break"></div>
 
-    <h2>4. Educação Neurocognitiva</h2>
-    <div id="textoEducativoPDF" class="texto"></div>
-
-    <div style="text-align: center; margin-top: 100px;">
-        <h3 id="nomeConclusao"></h3>
-        <p>Instinto Superior © 2026 - Todos os direitos reservados.</p>
+    <div style="text-align: center; margin-top: 100px; padding: 40px; border-top: 1px solid var(--border);">
+        <img src="https://hemricciinstintosuperior-rcci.github.io/Trabalho_venda_Numerologia/plano.png" style="max-width: 150px; opacity: 0.5;">
+        <p style="color: #94a3b8; font-size: 12px;">© 2026 Instinto Superior - Tecnologia Numerológica Avançada</p>
     </div>
 </div>
 
 <script>
+    // Recupera os dados do localStorage
     const dados = JSON.parse(localStorage.getItem("relatorioMapa"));
-    if(!dados) alert("Erro ao carregar dados.");
 
-    document.getElementById("nomePessoa").innerText = dados.nome.toUpperCase();
-    document.getElementById("nomeConclusao").innerText = dados.nome.toUpperCase();
-    document.getElementById("dataPessoa").innerText = dados.data;
-    document.getElementById("textoNatural").innerHTML = dados.textoNatural;
-    document.getElementById("textoEducativoPDF").innerHTML = dados.textoEducacao;
+    if (!dados) {
+        alert("Dados não encontrados. Por favor, gere o mapa novamente.");
+    } else {
+        renderizarRelatorio();
+    }
 
-    // 1. Barras Naturais
-    const mN = Math.max(dados.fisico, dados.mental, dados.emocional, dados.intuitivo);
-    document.getElementById("barFisicoNat").style.width = (dados.fisico/mN*100) + "%";
-    document.getElementById("barMentalNat").style.width = (dados.mental/mN*100) + "%";
-    document.getElementById("barEmocionalNat").style.width = (dados.emocional/mN*100) + "%";
-    document.getElementById("barIntuitivoNat").style.width = (dados.intuitivo/mN*100) + "%";
+    function renderizarRelatorio() {
+        document.getElementById("nomeUsuario").innerText = dados.nome.toUpperCase();
+        document.getElementById("dataNascimento").innerText = dados.data;
+        document.getElementById("textoNatural").innerHTML = dados.textoNatural;
 
-    // 2. Momento Atual (Primeiro item do array de ciclos enviado)
-    const atual = dados.ciclos[0];
-    document.getElementById("intervaloMomento").innerText = atual.intervalo;
-    document.getElementById("textoMomento").innerHTML = atual.textoMomento;
-    
-    const mM = Math.max(atual.fisico, atual.mental, atual.emocional, atual.intuitivo);
-    document.getElementById("barFisicoMom").style.width = (atual.fisico/mM*100) + "%";
-    document.getElementById("barMentalMom").style.width = (atual.mental/mM*100) + "%";
-    document.getElementById("barEmocionalMom").style.width = (atual.emocional/mM*100) + "%";
-    document.getElementById("barIntuitivoMom").style.width = (atual.intuitivo/mM*100) + "%";
-
-    // 3. Tabela de 100 Anos
-    const tabela = document.getElementById("corpoTabela100");
-    dados.ciclos.forEach(c => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-            <td><strong>${c.ano}</strong><br><small>${c.intervalo}</small></td>
-            <td><span class="badge-transito">${c.transitoNum}</span></td>
-            <td>${c.fisico}</td>
-            <td>${c.mental}</td>
-            <td>${c.emocional}</td>
-            <td>${c.intuitivo}</td>
+        // Renderiza Gráfico Natural
+        const maxNat = Math.max(dados.fisico, dados.mental, dados.emocional, dados.intuitivo);
+        document.getElementById("graficoNatural").innerHTML = `
+            ${criarBarra("Físico", dados.fisico, maxNat, "var(--fisico)")}
+            ${criarBarra("Mental", dados.mental, maxNat, "var(--mental)")}
+            ${criarBarra("Emocional", dados.emocional, maxNat, "var(--emocional)")}
+            ${criarBarra("Intuitivo", dados.intuitivo, maxNat, "var(--intuitivo)")}
         `;
-        tabela.appendChild(tr);
-    });
+
+        // Renderiza os 100 Anos
+        const container = document.getElementById("containerCiclos");
+        
+        dados.ciclos.forEach(ciclo => {
+            const maxCiclo = Math.max(ciclo.fisico, ciclo.mental, ciclo.emocional, ciclo.intuitivo);
+            
+            const card = document.createElement("div");
+            card.className = "card-ano";
+            card.innerHTML = `
+                <div class="header-ano">
+                    <div>
+                        <span class="ano-titulo">ANO ${ciclo.ano}</span>
+                        <div style="font-size: 12px; color: #64748b;">${ciclo.intervalo}</div>
+                    </div>
+                    <div class="badge-vibracao">VIBRAÇÃO: ${ciclo.transitoNum}</div>
+                </div>
+                <div class="grid-ano">
+                    <div class="graficos">
+                        ${criarBarra("Físico", ciclo.fisico, maxCiclo, "var(--fisico)")}
+                        ${criarBarra("Mental", ciclo.mental, maxCiclo, "var(--mental)")}
+                        ${criarBarra("Emocional", ciclo.emocional, maxCiclo, "var(--emocional)")}
+                        ${criarBarra("Intuitivo", ciclo.intuitivo, maxCiclo, "var(--intuitivo)")}
+                    </div>
+                    <div class="texto-ano">
+                        ${ciclo.textoMomento}
+                    </div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function criarBarra(label, valor, maximo, cor) {
+        const percentual = (valor / maximo) * 100;
+        return `
+            <div class="barra-container">
+                <div class="label-barra">
+                    <span>${label}</span>
+                    <span>${valor}</span>
+                </div>
+                <div class="barra-fundo">
+                    <div class="barra-progresso" style="width: ${percentual}%; background-color: ${cor};"></div>
+                </div>
+            </div>
+        `;
+    }
 </script>
+
 </body>
 </html>
