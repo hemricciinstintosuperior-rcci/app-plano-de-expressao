@@ -874,33 +874,28 @@ function exportarRelatorio() {
     const valNat = valoresBrutosNatural;
     const maiorNat = Math.max(valNat.fisico, valNat.mental, valNat.emocional, valNat.intuitivo);
     
-    // 1. PRIMEIRO: Fazemos o cálculo das letras (Movi para cima do objeto)
+    // 1. Cálculo das letras para o gráfico de Expressão Natural
     let contExpNat = { criativo: 0, indeciso: 0, neutro: 0 };
-    const nomeLimpo = document.getElementById("nome").value.toUpperCase().split("");
+    const nomeInput = document.getElementById("nome").value.toUpperCase();
+    const nomeLimpo = nomeInput.split("");
     nomeLimpo.forEach(l => {
         let letra = l.normalize("NFD")[0];
         if (tabelaExpressao[letra]) contExpNat[tabelaExpressao[letra]]++;
     });
     const maiorExpNat = Math.max(contExpNat.criativo, contExpNat.indeciso, contExpNat.neutro);
 
-    // 2. SEGUNDO: Montamos o objeto dadosNat com TUDO dentro dele
-    const dadosNat = {
+    // 2. Montagem do objeto de dados com a estrutura correta para as funções
+    const dadosNatParaFuncoes = {
         fisico: { nivel: classificarIntensidade(valNat.fisico, maiorNat), numero: reduzirNumero(valNat.fisico), valorReal: valNat.fisico },
         mental: { nivel: classificarIntensidade(valNat.mental, maiorNat), numero: reduzirNumero(valNat.mental), valorReal: valNat.mental },
         emocional: { nivel: classificarIntensidade(valNat.emocional, maiorNat), numero: reduzirNumero(valNat.emocional), valorReal: valNat.emocional },
-        intuitivo: { nivel: classificarIntensidade(valNat.intuitivo, maiorNat), numero: reduzirNumero(valNat.intuitivo), valorReal: valNat.intuitivo }, // <-- Coloquei a vírgula aqui
-        
-        // Agora o expValores está DENTRO do objeto dadosNat
-        expValores: { c: contExpNat.criativo, ind: contExpNat.indeciso, n: contExpNat.neutro, max: maiorExpNat }
+        intuitivo: { nivel: classificarIntensidade(valNat.intuitivo, maiorNat), numero: reduzirNumero(valNat.intuitivo), valorReal: valNat.intuitivo }
     };
 
-    // ... Daqui para baixo segue o seu loop de 100 anos normalmente ...
-    // LOOP DE 100 ANOS
-// LOOP DE 100 ANOS (CORRIGIDO)
+    // 3. Gerando os 100 anos
     const lista100Anos = bancoMomentos.map(d => {
         const maiorMom = Math.max(d.fisico, d.mental, d.emocional, d.intuitivo);
         
-        // --- ADICIONADO: Lógica para pegar o texto de expressão de cada ano ---
         let contExp = { criativo: 0, indeciso: 0, neutro: 0 };
         d.letras.forEach(l => {
             if(!l) return;
@@ -909,9 +904,8 @@ function exportarRelatorio() {
         });
         let domExp = Object.keys(contExp).reduce((a, b) => contExp[a] >= contExp[b] ? a : b);
         let textoExpMomento = (typeof textosExpressao !== 'undefined') ? aplicarFiltroTexto(textosExpressao[domExp] || "") : "";
-        // --------------------------------------------------------------------
 
-        const dadosMom = {
+        const dadosMomParaFuncoes = {
             fisico: { nivel: classificarIntensidade(d.fisico, maiorMom), numero: reduzirNumero(d.fisico), valorReal: d.fisico },
             mental: { nivel: classificarIntensidade(d.mental, maiorMom), numero: reduzirNumero(d.mental), valorReal: d.mental },
             emocional: { nivel: classificarIntensidade(d.emocional, maiorMom), numero: reduzirNumero(d.emocional), valorReal: d.emocional },
@@ -919,41 +913,39 @@ function exportarRelatorio() {
         };
 
         const somaTransito = d.fisico + d.mental + d.emocional + d.intuitivo;
-        const numTransito = reduzirNumero(somaTransito);
-
         return {
             ano: d.ano,
             intervalo: d.intervalo,
-            textoMomento: gerarTextoPlano("momento", dadosMom),
-            dominanciaMom: gerarDominanciaNeuro(dadosMom),
-            analiseNeuroMom: gerarInterpretacaoNeuro(dadosMom),
-            expTexto: textoExpMomento, // AGORA O TEXTO VAI SER ENVIADO!
-            transitoNum: numTransito,
-            transitoTexto: (typeof textosTrânsito !== 'undefined' && textosTrânsito[numTransito]) ? aplicarFiltroTexto(textosTrânsito[numTransito]) : "Vibração " + numTransito,
+            textoMomento: gerarTextoPlano("momento", dadosMomParaFuncoes),
+            dominanciaMom: gerarDominanciaNeuro(dadosMomParaFuncoes),
+            analiseNeuroMom: gerarInterpretacaoNeuro(dadosMomParaFuncoes),
+            expTexto: textoExpMomento,
+            transitoNum: reduzirNumero(somaTransito),
+            transitoTexto: (typeof textosTrânsito !== 'undefined') ? aplicarFiltroTexto(textosTrânsito[reduzirNumero(somaTransito)]) : "",
             valores: { f: d.fisico, m: d.mental, e: d.emocional, i: d.intuitivo, max: maiorMom },
-            // Enviando também os valores das barrinhas de expressão
             expValores: { c: contExp.criativo, ind: contExp.indeciso, n: contExp.neutro, max: Math.max(contExp.criativo, contExp.indeciso, contExp.neutro) }
         };
     });
 
+    // 4. Montando o pacote final para o LocalStorage
     const pacote = {
-        nome: document.getElementById("nome").value,
+        nome: nomeInput,
         data: document.getElementById("dataNascimento").value,
         dadosNaturais: {
-            texto: gerarTextoPlano("natural", dadosNat),
-            dominancia: gerarDominanciaNeuro(dadosNat),
-            analise: gerarInterpretacaoNeuro(dadosNat),
+            texto: gerarTextoPlano("natural", dadosNatParaFuncoes),
+            dominancia: gerarDominanciaNeuro(dadosNatParaFuncoes),
+            analise: gerarInterpretacaoNeuro(dadosNatParaFuncoes),
             expTexto: document.getElementById("resumoExpressaoNat").innerHTML,
-            valores: { f: valNat.fisico, m: valNat.mental, e: valNat.emocional, i: valNat.intuitivo, max: maiorNat }
+            valores: { f: valNat.fisico, m: valNat.mental, e: valNat.emocional, i: valNat.intuitivo, max: maiorNat },
+            expValores: { c: contExpNat.criativo, ind: contExpNat.indeciso, n: contExpNat.neutro, max: maiorExpNat }
         },
-        cronologia: lista100Anos, // Aqui estão os 100 anos
+        cronologia: lista100Anos,
         textoEducacao: document.getElementById("areaTextoEducativo").innerHTML
     };
 
     localStorage.setItem("relatorioMapa", JSON.stringify(pacote));
     window.open("premium.html", "_blank");
 }
-
   
   document.oncontextmenu=()=>false;
 document.onselectstart=()=>false; 
