@@ -891,6 +891,9 @@ function exportarRelatorio() {
         if (tabelaExpressao[letra]) contExpNat[tabelaExpressao[letra]]++;
     });
     const maiorExpNat = Math.max(contExpNat.criativo, contExpNat.indeciso, contExpNat.neutro);
+
+        expValores: { c: contExpNat.criativo, ind: contExpNat.indeciso, n: contExpNat.neutro, max: maiorExpNat }
+};
     // LOOP DE 100 ANOS
 // LOOP DE 100 ANOS (CORRIGIDO)
     const lista100Anos = bancoMomentos.map(d => {
