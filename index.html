@@ -874,16 +874,7 @@ function exportarRelatorio() {
     const valNat = valoresBrutosNatural;
     const maiorNat = Math.max(valNat.fisico, valNat.mental, valNat.emocional, valNat.intuitivo);
     
-    // Dados Naturais (Fixos)
-    const dadosNat = {
-        fisico: { nivel: classificarIntensidade(valNat.fisico, maiorNat), numero: reduzirNumero(valNat.fisico), valorReal: valNat.fisico },
-        mental: { nivel: classificarIntensidade(valNat.mental, maiorNat), numero: reduzirNumero(valNat.mental), valorReal: valNat.mental },
-        emocional: { nivel: classificarIntensidade(valNat.emocional, maiorNat), numero: reduzirNumero(valNat.emocional), valorReal: valNat.emocional },
-        intuitivo: { nivel: classificarIntensidade(valNat.intuitivo, maiorNat), numero: reduzirNumero(valNat.intuitivo), valorReal: valNat.intuitivo }
-
-        
-    };
-// Cálculo dos valores de Expressão Natural para o gráfico
+    // 1. PRIMEIRO: Fazemos o cálculo das letras (Movi para cima do objeto)
     let contExpNat = { criativo: 0, indeciso: 0, neutro: 0 };
     const nomeLimpo = document.getElementById("nome").value.toUpperCase().split("");
     nomeLimpo.forEach(l => {
@@ -892,8 +883,18 @@ function exportarRelatorio() {
     });
     const maiorExpNat = Math.max(contExpNat.criativo, contExpNat.indeciso, contExpNat.neutro);
 
+    // 2. SEGUNDO: Montamos o objeto dadosNat com TUDO dentro dele
+    const dadosNat = {
+        fisico: { nivel: classificarIntensidade(valNat.fisico, maiorNat), numero: reduzirNumero(valNat.fisico), valorReal: valNat.fisico },
+        mental: { nivel: classificarIntensidade(valNat.mental, maiorNat), numero: reduzirNumero(valNat.mental), valorReal: valNat.mental },
+        emocional: { nivel: classificarIntensidade(valNat.emocional, maiorNat), numero: reduzirNumero(valNat.emocional), valorReal: valNat.emocional },
+        intuitivo: { nivel: classificarIntensidade(valNat.intuitivo, maiorNat), numero: reduzirNumero(valNat.intuitivo), valorReal: valNat.intuitivo }, // <-- Coloquei a vírgula aqui
+        
+        // Agora o expValores está DENTRO do objeto dadosNat
         expValores: { c: contExpNat.criativo, ind: contExpNat.indeciso, n: contExpNat.neutro, max: maiorExpNat }
-};
+    };
+
+    // ... Daqui para baixo segue o seu loop de 100 anos normalmente ...
     // LOOP DE 100 ANOS
 // LOOP DE 100 ANOS (CORRIGIDO)
     const lista100Anos = bancoMomentos.map(d => {
