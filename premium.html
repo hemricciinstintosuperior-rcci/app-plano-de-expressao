@@ -387,35 +387,7 @@ O Plano de Energias do Momento representa o estado energético atual da consciê
     <div class="divisor-categoria">Resultado das Energias do Momento</div> 
     <div class="texto" id="textoMomento"></div>
     
-           <h2>6. Ánalise de Expressão do Momento</h2>
-            <p class="texto">
-O Plano de Expressão do Momento demonstra como a mente está estruturando suas respostas no ciclo atual. Ele revela se o período favorece manifestações criativas, estados de indecisão ou equilíbrio neutro entre as possibilidades de ação.
-</p>
-        Criativo <div class="barra-container"><div class="barra"><span id="barCriativoMom"></span></div></div>
-    Indeciso <div class="barra-container"><div class="barra"><span id="barIndecisoMom"></span></div></div>
-    Neutro <div class="barra-container"><div class="barra"><span id="barNeutroMom"></span></div></div>
-    <div class="divisor-categoria">Resultado de Expressão do Momento</div> 
-    <div class="texto" id="textoExpressaoMom"></div>
-    
-                      <h2>7. Análise Neurocognitiva do Momento</h2>
-       <p class="vigencia-info">Ciclo: <span id="vigenciaNeuroMom"></span></p>
-​        <div class="texto">A <strong>Análise Neurocognitiva do Momento</strong> baseia-se nos princípios fundamentais da neurociência aplicada para otimizar o potencial humano através da adaptação das suas redes neurais ao ciclo atual. Cada pilar identificado neste período — <strong>Físico, Mental, Emocional e Intuitivo</strong> — exige um ajuste específico em áreas como o córtex pré-frontal e a rede de modo padrão, respondendo às demandas energéticas que a fase vigente impõe ao seu sistema.</p>
-
-<p>Ao integrar esses conhecimentos temporários, o objetivo é direcionar a sua <strong>neuroplasticidade</strong> para os desafios imediatos, reorganizando sinapses para favorecer a alta performance dentro deste ciclo específico. Esta abordagem permite que você saia do modo de reação automática e utilize as janelas de oportunidade biológica do momento para calibrar suas respostas emocionais e expandir sua clareza de decisão estratégica.</p>
-
-<p>A bioenergética do seu cérebro no ciclo atual depende da oferta imediata de nutrientes que otimizem a produção de dopamina e serotonina conforme as necessidades do período. O foco no equilíbrio de ácidos graxos e aminoácidos atua como um verdadeiro <em>biohacking</em>, reduzindo a sua <strong>carga alostática</strong> e permitindo que você navegue pelas transições do momento com resiliência, foco e equilíbrio psíquico integral.</p>
-   <div class="divisor-categoria">Resultado Neurocognitivo do Momento </div> 
-    <div id="neuroDominanciaMom" style="font-weight: bold; margin-bottom: 10px; text-align: center;"></div>
-        <div class="texto" id="neuroAnaliseMom"></div>
-
-    <h2>8. Trânsito</h2>
-        <p class="intro">
- <p style="text-align:left; color: #64748b; font-weight: bold;">     
-A Vibração de Trânsito Anual representa o campo vibracional que influencia o período atual da vida. Ela indica tendências de movimento, mudanças e oportunidades que podem se manifestar ao longo do ciclo anual, funcionando como um direcionamento energético para experiências e aprendizados.
-</p>
-    <div class="divisor-categoria">Vibração de Trânsito Anual</div> 
-    <p class="vigencia-info">Ciclo: <span id="cicloTransitoPDF"></span></p>
-    <div id="transito" class="texto"></div>
+<div id="containerCiclosVida"></div>
     
                 <h2>9. Educação Neurocognitiva</h2>
     
@@ -468,66 +440,96 @@ A Vibração de Trânsito Anual representa o campo vibracional que influencia o 
 </div>
 
 <script>
-const dados = JSON.parse(localStorage.getItem("relatorioMapa"));
-if(!dados) alert("Erro: Dados não encontrados.");
+    // 1. BUSCA OS DADOS QUE VIERAM DO INDEX
+    const dados = JSON.parse(localStorage.getItem("relatorioMapa"));
+    if (!dados) { alert("Dados não encontrados!"); }
 
-document.getElementById("nomePessoa").innerText = dados.nome;
-document.getElementById("nomeConclusao").innerText = dados.nome;
+    // --- SETOR A: PREENCHIMENTO DE DADOS FIXOS (CAPA E NATURAL) ---
+    document.getElementById("nomePessoa").innerText = dados.nome;
+    document.getElementById("nomeConclusao").innerText = dados.nome;
+    
+    // Formata a data de nascimento
+    if (dados.data && dados.data.includes("-")) {
+        const p = dados.data.split("-");
+        document.getElementById("dataPessoa").innerText = `${p[2]}/${p[1]}/${p[0]}`;
+    }
 
-// Ajuste da Data de Nascimento (Formato Brasil)
-if (dados.data && dados.data.includes("-")) {
-    const p = dados.data.split("-");
-    document.getElementById("dataPessoa").innerText = `${p[2]}/${p[1]}/${p[0]}`;
-} else {
-    document.getElementById("dataPessoa").innerText = dados.data;
-}
+    // Preenche os textos do Plano Natural (O que não muda)
+    document.getElementById("textoNatural").innerHTML = dados.textoNatural;
+    document.getElementById("textoExpressaoNat").innerHTML = dados.textoExpressaoNat;
+    document.getElementById("neuroDominanciaNat").innerHTML = dados.dominanciaNat;
+    document.getElementById("neuroAnaliseNat").innerHTML = dados.analiseNeuroNat;
+    document.getElementById("textoEducativoPDF").innerHTML = dados.textoEducacao || "";
 
-// Preenchimento das Vigências em todos os campos
-const vigencia = dados.inicioFimMomento;
-document.getElementById("anoMomento").innerText = dados.anoMomento;
-document.getElementById("intervaloMomento").innerText = vigencia;
-document.getElementById("vigenciaNeuroMom").innerText = vigencia; // Novo campo
-document.getElementById("cicloTransitoPDF").innerText = vigencia;
+    // --- SETOR B: MOTOR DA CRONOLOGIA CENTENÁRIA (OS 100 ANOS) ---
+    const container = document.getElementById("containerCiclosVida");
 
-// Conteúdos de Texto
-document.getElementById("textoNatural").innerHTML = dados.textoNatural;
-document.getElementById("textoMomento").innerHTML = dados.textoMomento;
-document.getElementById("textoExpressaoNat").innerHTML = dados.textoExpressaoNat;
-document.getElementById("textoExpressaoMom").innerHTML = dados.textoExpressaoMom;
-document.getElementById("neuroDominanciaNat").innerHTML = dados.dominanciaNat;
-document.getElementById("neuroAnaliseNat").innerHTML = dados.analiseNeuroNat;
-document.getElementById("neuroDominanciaMom").innerHTML = dados.dominanciaMom;
-document.getElementById("neuroAnaliseMom").innerHTML = dados.analiseNeuroMom;
-document.getElementById("textoEducativoPDF").innerHTML = dados.textoEducacao || "";
-document.getElementById("transito").innerHTML = dados.transitoHTML;
+    if (dados.ciclos && dados.ciclos.length > 0) {
+        // Criamos a Introdução da Seção (O texto que você pediu)
+        const intro = document.createElement("div");
+        intro.style.pageBreakBefore = "always";
+        intro.innerHTML = `
+            <div style="text-align:center; padding: 40px 0;">
+                <h2 style="font-size: 28px; color: #0f172a;">V. CRONOLOGIA DE DESTINO</h2>
+                <p style="color:#06b6d4; font-weight:bold;">Mapeamento Centenário: 100 Anos de Evolução</p>
+                <div class="texto" style="max-width: 750px; margin: 20px auto; border-left: 4px solid #ffd633; padding-left: 20px; text-align:left;">
+                    <p>Esta seção apresenta sua <strong>Linha do Tempo Quântica</strong>. Mapeamos cada ano da sua jornada para identificar as janelas de oportunidade e os desafios de cada ciclo.</p>
+                </div>
+            </div>
+        `;
+        container.appendChild(intro);
 
-function barra(id, valor, max){
-    let perc = (valor/max)*100;
-    document.getElementById(id).style.width = perc + "%";
-}
+        // O LOOP: Gera um card para cada um dos 100 anos
+        dados.ciclos.forEach((ciclo) => {
+            const bloco = document.createElement("div");
+            bloco.className = "secao-ciclo"; 
+            bloco.innerHTML = `
+                <div style="margin-bottom: 30px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px; background: #fff;">
+                    <div style="background: #0f172a; color: #ffd633; display:inline-block; padding: 2px 12px; border-radius: 4px; font-weight: bold; margin-bottom:10px;">
+                        ANO ${ciclo.ano}
+                    </div>
+                    <span style="font-size: 0.8rem; color: #94a3b8; margin-left:10px;">Vigência: ${ciclo.intervalo}</span>
+                    
+                    <div class="texto" style="font-size: 0.9rem; margin-top:10px;">${ciclo.textoMomento}</div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; background: #f8fafc; padding: 10px; border-radius: 8px;">
+                        <div>
+                            <strong style="font-size:11px; color:#64748b; text-transform:uppercase;">Neuro-Dominância</strong>
+                            <div style="font-size:0.85rem;">${ciclo.dominanciaMom}</div>
+                        </div>
+                        <div>
+                            <strong style="font-size:11px; color:#64748b; text-transform:uppercase;">Trânsito</strong>
+                            <div style="font-size:0.85rem;"><strong>Nº ${ciclo.transitoNum}</strong></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(bloco);
+        });
+    }
 
-// Cálculo das Barras
-let maxNat = Math.max(dados.fisico, dados.mental, dados.emocional, dados.intuitivo);
-barra("barFisicoNat", dados.fisico, maxNat);
-barra("barMentalNat", dados.mental, maxNat);
-barra("barEmocionalNat", dados.emocional, maxNat);
-barra("barIntuitivoNat", dados.intuitivo, maxNat);
+    // --- SETOR C: LÓGICA DAS BARRAS GRÁFICAS (NATURAL) ---
+    function barra(id, valor, max) {
+        const el = document.getElementById(id);
+        if (el) {
+            const porc = max > 0 ? (valor / max) * 100 : 0;
+            el.style.width = porc + "%";
+        }
+    }
 
-let maxExpNat = Math.max(dados.criativoNat, dados.indecisoNat, dados.neutroNat);
-barra("barCriativoNat", dados.criativoNat, maxExpNat);
-barra("barIndecisoNat", dados.indecisoNat, maxExpNat);
-barra("barNeutroNat", dados.neutroNat, maxExpNat);
+    // Atualiza as barras do Plano Natural
+    let maxNat = Math.max(dados.fisico, dados.mental, dados.emocional, dados.intuitivo);
+    barra("barFisicoNat", dados.fisico, maxNat);
+    barra("barMentalNat", dados.mental, maxNat);
+    barra("barEmocionalNat", dados.emocional, maxNat);
+    barra("barIntuitivoNat", dados.intuitivo, maxNat);
 
-let maxMom = Math.max(dados.fisicoMomento, dados.mentalMomento, dados.emocionalMomento, dados.intuitivoMomento);
-barra("barFisicoMom", dados.fisicoMomento, maxMom);
-barra("barMentalMom", dados.mentalMomento, maxMom);
-barra("barEmocionalMom", dados.emocionalMomento, maxMom);
-barra("barIntuitivoMom", dados.intuitivoMomento, maxMom);
+    let maxExpNat = Math.max(dados.fisicoExpNat, dados.mentalExpNat, dados.emocionalExpNat, dados.intuitivoExpNat);
+    barra("barFisicoExpNat", dados.fisicoExpNat, maxExpNat);
+    barra("barMentalExpNat", dados.mentalExpNat, maxExpNat);
+    barra("barEmocionalExpNat", dados.emocionalExpNat, maxExpNat);
+    barra("barIntuitivoExpNat", dados.intuitivoExpNat, maxExpNat);
 
-let maxExpMom = Math.max(dados.criativoMom, dados.indecisoMom, dados.neutroMom);
-barra("barCriativoMom", dados.criativoMom, maxExpMom);
-barra("barIndecisoMom", dados.indecisoMom, maxExpMom);
-barra("barNeutroMom", dados.neutroMom, maxExpMom);
 </script>
 </body>
 </html>
