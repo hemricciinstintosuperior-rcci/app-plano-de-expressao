@@ -873,11 +873,7 @@ function exportarRelatorio() {
     
     const valNat = valoresBrutosNatural;
     const maiorNat = Math.max(valNat.fisico, valNat.mental, valNat.emocional, valNat.intuitivo);
-    const ano = document.getElementById("anoSelect").value;
-    const d = bancoMomentos.find(a => a.ano == ano);
-    const maiorMom = Math.max(d.fisico, d.mental, d.emocional, d.intuitivo);
 
-    // DADOS NATURAIS COMPLETOS (Com Nível e Número para o Neuro e Planos)
     const dadosNat = {
         fisico: { nivel: classificarIntensidade(valNat.fisico, maiorNat), numero: reduzirNumero(valNat.fisico), valorReal: valNat.fisico },
         mental: { nivel: classificarIntensidade(valNat.mental, maiorNat), numero: reduzirNumero(valNat.mental), valorReal: valNat.mental },
@@ -885,44 +881,42 @@ function exportarRelatorio() {
         intuitivo: { nivel: classificarIntensidade(valNat.intuitivo, maiorNat), numero: reduzirNumero(valNat.intuitivo), valorReal: valNat.intuitivo }
     };
 
-    // DADOS MOMENTO COMPLETOS
-    const dadosMom = {
-        fisico: { nivel: classificarIntensidade(d.fisico, maiorMom), numero: reduzirNumero(d.fisico), valorReal: d.fisico },
-        mental: { nivel: classificarIntensidade(d.mental, maiorMom), numero: reduzirNumero(d.mental), valorReal: d.mental },
-        emocional: { nivel: classificarIntensidade(d.emocional, maiorMom), numero: reduzirNumero(d.emocional), valorReal: d.emocional },
-        intuitivo: { nivel: classificarIntensidade(d.intuitivo, maiorMom), numero: reduzirNumero(d.intuitivo), valorReal: d.intuitivo }
-    };
+    // NOVIDADE: Mapear todos os 100 anos para um formato que o PDF entenda
+    const cicloCompleto100Anos = bancoMomentos.map(d => {
+        const maiorMom = Math.max(d.fisico, d.mental, d.emocional, d.intuitivo);
+        const dadosMom = {
+            fisico: { nivel: classificarIntensidade(d.fisico, maiorMom), numero: reduzirNumero(d.fisico), valorReal: d.fisico },
+            mental: { nivel: classificarIntensidade(d.mental, maiorMom), numero: reduzirNumero(d.mental), valorReal: d.mental },
+            emocional: { nivel: classificarIntensidade(d.emocional, maiorMom), numero: reduzirNumero(d.emocional), valorReal: d.emocional },
+            intuitivo: { nivel: classificarIntensidade(d.intuitivo, maiorMom), numero: reduzirNumero(d.intuitivo), valorReal: d.intuitivo }
+        };
+
+        const somaTransito = d.fisico + d.mental + d.emocional + d.intuitivo;
+        const numTransito = reduzirNumero(somaTransito);
+
+        return {
+            ano: d.ano,
+            intervalo: d.intervalo,
+            textoMomento: gerarTextoPlano("momento", dadosMom),
+            dominanciaMom: gerarDominanciaNeuro(dadosMom),
+            analiseNeuroMom: gerarInterpretacaoNeuro(dadosMom),
+            transitoNum: numTransito,
+            transitoTexto: (typeof textosTrânsito !== 'undefined') ? textosTrânsito[numTransito] : "",
+            // Valores para as barras
+            fisico: d.fisico, mental: d.mental, emocional: d.emocional, intuitivo: d.intuitivo, max: maiorMom
+        };
+    });
 
     const pacote = {
         nome: document.getElementById("nome").value,
         data: document.getElementById("dataNascimento").value,
-        anoMomento: ano,
-        inicioFimMomento: d.intervalo, 
-        
-        // Agora o gerarTextoPlano vai achar o [numero] correto!
         textoNatural: gerarTextoPlano("natural", dadosNat),
-        textoMomento: gerarTextoPlano("momento", dadosMom),
-        
-        // Gerando o HTML do Neuro já mastigado para o PDF
         dominanciaNat: gerarDominanciaNeuro(dadosNat),
         analiseNeuroNat: gerarInterpretacaoNeuro(dadosNat),
-        dominanciaMom: gerarDominanciaNeuro(dadosMom),
-        analiseNeuroMom: gerarInterpretacaoNeuro(dadosMom),
-
         textoExpressaoNat: document.getElementById("resumoExpressaoNat").innerHTML,
-        textoExpressaoMom: document.getElementById("resumoExpressaoMom").innerHTML,
-        transitoHTML: document.getElementById("resultadoTrânsito").innerHTML,
-        textoEducacao: document.getElementById("areaTextoEducativo").innerHTML,
-        
-        // Valores das Barras e Números
-        fisico: valNat.fisico, mental: valNat.mental, emocional: valNat.emocional, intuitivo: valNat.intuitivo,
-        criativoNat: parseInt(document.getElementById("numCriativoNat").innerText),
-        indecisoNat: parseInt(document.getElementById("numIndecisoNat").innerText),
-        neutroNat: parseInt(document.getElementById("numNeutroNat").innerText),
-        fisicoMomento: d.fisico, mentalMomento: d.mental, emocionalMomento: d.emocional, intuitivoMomento: d.intuitivo,
-        criativoMom: parseInt(document.getElementById("numCriativoMom").innerText),
-        indecisoMom: parseInt(document.getElementById("numIndecisoMom").innerText),
-        neutroMom: parseInt(document.getElementById("numNeutroMom").innerText)
+        // O "PULO DO GATO": Enviamos o array de 100 anos
+        ciclos: cicloCompleto100Anos,
+        textoEducacao: gerarEducacaoNeuroRetorno()
     };
     
     localStorage.setItem("relatorioMapa", JSON.stringify(pacote));
