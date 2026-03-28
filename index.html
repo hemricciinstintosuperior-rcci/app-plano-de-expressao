@@ -883,8 +883,21 @@ function exportarRelatorio() {
     };
 
     // LOOP DE 100 ANOS
+// LOOP DE 100 ANOS (CORRIGIDO)
     const lista100Anos = bancoMomentos.map(d => {
         const maiorMom = Math.max(d.fisico, d.mental, d.emocional, d.intuitivo);
+        
+        // --- ADICIONADO: Lógica para pegar o texto de expressão de cada ano ---
+        let contExp = { criativo: 0, indeciso: 0, neutro: 0 };
+        d.letras.forEach(l => {
+            if(!l) return;
+            let letra = l.normalize("NFD")[0].toUpperCase();
+            if (tabelaExpressao[letra]) contExp[tabelaExpressao[letra]]++;
+        });
+        let domExp = Object.keys(contExp).reduce((a, b) => contExp[a] >= contExp[b] ? a : b);
+        let textoExpMomento = (typeof textosExpressao !== 'undefined') ? aplicarFiltroTexto(textosExpressao[domExp] || "") : "";
+        // --------------------------------------------------------------------
+
         const dadosMom = {
             fisico: { nivel: classificarIntensidade(d.fisico, maiorMom), numero: reduzirNumero(d.fisico), valorReal: d.fisico },
             mental: { nivel: classificarIntensidade(d.mental, maiorMom), numero: reduzirNumero(d.mental), valorReal: d.mental },
@@ -901,10 +914,12 @@ function exportarRelatorio() {
             textoMomento: gerarTextoPlano("momento", dadosMom),
             dominanciaMom: gerarDominanciaNeuro(dadosMom),
             analiseNeuroMom: gerarInterpretacaoNeuro(dadosMom),
+            expTexto: textoExpMomento, // AGORA O TEXTO VAI SER ENVIADO!
             transitoNum: numTransito,
             transitoTexto: (typeof textosTrânsito !== 'undefined' && textosTrânsito[numTransito]) ? aplicarFiltroTexto(textosTrânsito[numTransito]) : "Vibração " + numTransito,
-            // Valores para as barras
-            valores: { f: d.fisico, m: d.mental, e: d.emocional, i: d.intuitivo, max: maiorMom }
+            valores: { f: d.fisico, m: d.mental, e: d.emocional, i: d.intuitivo, max: maiorMom },
+            // Enviando também os valores das barrinhas de expressão
+            expValores: { c: contExp.criativo, ind: contExp.indeciso, n: contExp.neutro, max: Math.max(contExp.criativo, contExp.indeciso, contExp.neutro) }
         };
     });
 
