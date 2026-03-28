@@ -1,134 +1,293 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Relatório Premium - Instinto Superior</title>
-    <style>
-        /* CSS REFINADO - CORES DO SEU GERADOR */
-        body { font-family: 'Segoe UI', Roboto, sans-serif; background: #f1f5f9; margin: 0; color: #1e293b; line-height: 1.6; }
-        .relatorio { max-width: 950px; margin: 40px auto; background: white; padding: 70px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        
-        .capa { text-align: center; page-break-after: always; margin-bottom: 50px; }
-        .logo { max-width: 320px; margin-bottom: 20px; }
-        
-        h1 { font-size: 32px; text-transform: uppercase; color: #0f172a; text-align: center; }
-        h2 { font-size: 24px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; margin-top: 50px; color: #334155; }
-        
-        .texto { text-align: justify; font-size: 16.5px; margin: 20px 0; }
-        
-        /* BARRAS */
-        .barra-item { margin-bottom: 15px; }
-        .barra-bg { background: #f1f5f9; height: 12px; border-radius: 6px; overflow: hidden; width: 100%; border: 1px solid #e2e8f0; }
-        .barra-fill { height: 100%; width: 0%; transition: width 1s ease-in-out; }
-        
-        .fisico { background: #ef4444; }
-        .mental { background: #3b82f6; }
-        .emocional { background: #22c55e; }
-        .intuitivo { background: #eab308; }
-        .criativo { background: #9333ea; }
-        .indeciso { background: #fb923c; }
-        .neutro { background: #B89A9A; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Relatório Premium - Instinto Superior</title>
 
-        .bloco-ano { border: 1px solid #e2e8f0; padding: 30px; border-radius: 12px; margin-bottom: 40px; page-break-inside: avoid; background: #fcfcfc; }
-        .transito-tag { background: #0f172a; color: #ffd633; padding: 8px 15px; border-radius: 5px; font-weight: bold; display: inline-block; margin: 10px 0; }
+<style>
+/* SEU CSS ORIGINAL MANTIDO */
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: #f1f5f9;
+    margin: 0;
+    color: #1e293b;
+    line-height: 1.6;
+}
 
-        @media print { .no-print { display: none; } .relatorio { box-shadow: none; margin: 0; width: 100%; padding: 40px; } }
-    </style>
+.relatorio {
+    max-width: 950px;
+    margin: 40px auto;
+    background: white;
+    padding: 80px 70px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.capa { text-align: center; page-break-after: always; margin-bottom: 50px; }
+.logoRelatorio { max-width: 100%; height: auto; margin-bottom: 30px; }
+
+h1 { font-size: 34px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; color: #0f172a; text-align: center; }
+h2 { font-size: 26px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; margin-top: 60px; color: #334155; }
+
+.divisor-categoria {
+    display: flex;
+    align-items: center;
+    margin: 40px 0 20px 0;
+    color: #94a3b8;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+.divisor-categoria::after {
+    content: "";
+    flex: 1;
+    margin-left: 20px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.texto {
+    text-align: justify;
+    line-height: 1.8;
+    font-size: 16.5px;
+    color: #334155;
+    margin: 20px 0;
+}
+
+.vigencia-info {
+    text-align: center;
+    color: #64748b;
+    font-weight: bold;
+    font-size: 0.95rem;
+    margin-top: -10px;
+    margin-bottom: 20px;
+    display: block;
+}
+
+/* CORREÇÃO DAS BARRAS: AGORA COM CORES FIXAS */
+.barra-container { margin-bottom: 18px; }
+.barra {
+    height: 12px;
+    background: #f1f5f9;
+    border-radius: 6px;
+    overflow: hidden;
+    width: 100%;
+    display: block;
+    border: 1px solid #e2e8f0;
+}
+.barra span { 
+    display: block; 
+    height: 100%; 
+    width: 0%; 
+    transition: width 1s; 
+}
+
+/* FORÇANDO AS CORES DIRETAMENTE */
+#barFisicoNat, #barFisicoMom { background-color: #ef4444 !important; }
+#barMentalNat, #barMentalMom { background-color: #3b82f6 !important; }
+#barEmocionalNat, #barEmocionalMom { background-color: #22c55e !important; }
+#barIntuitivoNat, #barIntuitivoMom { background-color: #eab308 !important; }
+#barCriativoNat, #barCriativoMom { background-color: #9333ea !important; }
+#barIndecisoNat, #barIndecisoMom { background-color: #fb923c !important; }
+#barNeutroNat, #barNeutroMom { background-color: #B89A9A !important; }
+
+/* SEU SUMÁRIO E RODAPÉ PRESERVADOS */
+.sumario-container { background: #fcfcfc; border: 1px solid #f1f5f9; padding: 40px; border-radius: 12px; margin: 40px 0; }
+.sumario-header { display: flex; align-items: center; justify-content: center; margin-bottom: 30px; }
+.sumario-header h2 { margin: 0; border: none; font-size: 22px; letter-spacing: 3px; color: #1e293b; }
+.sumario-lista { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr; gap: 12px; }
+.sumario-item { display: flex; align-items: baseline; padding: 10px 0; border-bottom: 1px dashed #e2e8f0; }
+.num-topico { font-family: 'Georgia', serif; font-style: italic; font-weight: bold; color: #94a3b8; margin-right: 15px; font-size: 18px; min-width: 25px; }
+.titulo-topico { font-size: 15px; font-weight: 500; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; }
+.sub-vigencia { margin-left: auto; font-size: 11px; color: #94a3b8; font-weight: 700; text-transform: uppercase; }
+
+.rodape-final-container { margin-top: 100px; padding-top: 40px; border-top: 1px solid #e2e8f0; text-align: center; position: relative; }
+.marca-footer { font-size: 18px; font-weight: 800; letter-spacing: 4px; color: #0f172a; text-transform: uppercase; display: block; }
+.tagline-footer { font-size: 12px; color: #94a3b8; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 25px; display: block; }
+.info-links { display: flex; justify-content: center; gap: 30px; font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase; }
+
+@media print {
+    .btn-container { display: none; }
+    body { background: white; }
+    .relatorio { box-shadow: none; margin: 0; padding: 40px; width: 100%; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}
+</style>
 </head>
+
 <body>
-
 <div class="relatorio">
-    <div class="no-print" style="text-align: right;"><button onclick="window.print()">GERAR PDF</button></div>
-
-    <div class="capa">
-        <img src="https://hemricciinstintosuperior-rcci.github.io/Trabalho_venda_Numerologia/plano.png" class="logo">
-        <h1 id="nomePessoa"></h1>
-        <p>Data de Nascimento: <strong id="dataPessoa"></strong></p>
+    <div class="btn-container" style="text-align: center; margin-bottom: 40px;">
+        <button onclick="window.print()" style="padding: 15px 30px; cursor: pointer; background: #0f172a; color: white; border: none; border-radius: 8px;">📄 Gerar Documento PDF</button>
     </div>
 
-    <h2>1. Plano Natural (Estrutural)</h2>
-    <div class="barra-item">Físico <div class="barra-bg"><div id="barFisicoNat" class="barra-fill fisico"></div></div></div>
-    <div class="barra-item">Mental <div class="barra-bg"><div id="barMentalNat" class="barra-fill mental"></div></div></div>
-    <div class="barra-item">Emocional <div class="barra-bg"><div id="barEmocionalNat" class="barra-fill emocional"></div></div></div>
-    <div class="barra-item">Intuitivo <div class="barra-bg"><div id="barIntuitivoNat" class="barra-fill intuitivo"></div></div></div>
-    <div id="textoNatural" class="texto"></div>
+    <div class="capa">
+        <img src="https://hemricciinstintosuperior-rcci.github.io/Trabalho_venda_Numerologia/plano.png" class="logoRelatorio">
+        <h3 id="nomePessoa"></h3> Nasceu em <h3 id="dataPessoa" style="display:inline; font-weight: bold;"></h3>
+        <p style="font-size: 1.5rem; color: #64748b;">Estudo de Expressão Quântica com adição Neurocognitiva</p>
+    </div>
 
-    <h2>2. Perfil de Expressão Natural</h2>
-    <div class="barra-item">Criativo <div class="barra-bg"><div id="barCriativoNat" class="barra-fill criativo"></div></div></div>
-    <div class="barra-item">Indeciso <div class="barra-bg"><div id="barIndecisoNat" class="barra-fill indeciso"></div></div></div>
-    <div class="barra-item">Neutro <div class="barra-bg"><div id="barNeutroNat" class="barra-fill neutro"></div></div></div>
-    <div id="textoExpressaoNat" class="texto"></div>
+    <div class="sumario-container">
+        <div class="sumario-header"><h2>SUMÁRIO EXECUTIVO</h2></div>
+        <ul class="sumario-lista">
+            <li class="sumario-item"><span class="num-topico">01</span><span class="titulo-topico">Introdução e Metodologia</span></li>
+            <li class="sumario-item"><span class="num-topico">02</span><span class="titulo-topico">Análise do Plano Natural</span><span class="sub-vigencia">Estrutural</span></li>
+            <li class="sumario-item"><span class="num-topico">03</span><span class="titulo-topico">Análise da Expressão Natural</span><span class="sub-vigencia">Estrutural</span></li>
+            <li class="sumario-item"><span class="num-topico">04</span><span class="titulo-topico">Plano Neurocognitivo Natural</span><span class="sub-vigencia">Estrutural</span></li>
+            <li class="sumario-item"><span class="num-topico">05</span><span class="titulo-topico">Análise do Plano Atual (100 ANOS)</span><span class="sub-vigencia">Ciclo Vigente</span></li>
+        </ul>
+    </div>
 
-    <h2>3. Análise Neurocognitiva Natural</h2>
-    <div id="dominanciaNat" style="text-align: center; font-weight: bold; font-size: 20px; margin-bottom: 15px;"></div>
-    <div id="analiseNeuroNat" class="texto"></div>
+    <h2>1. Introdução</h2>          
+    <div class="texto">
+        <p>Este relatório integra princípios da numerologia analítica com fundamentos da neurociência cognitiva...</p>
+        <p>Essa abordagem amplia a interpretação tradicional ao incorporar uma perspectiva neuroanalítica...</p>
+    </div>
 
-    <h2 style="margin-top: 100px;">4. Cronologia de Destino (100 Anos)</h2>
-    <div id="cronologiaCont"></div>
+    <h2>2. Análise do Plano Natural</h2>
+    <p class="vigencia-info">Vigência: Vitalícia</p>
+    <p class="texto">O Plano de Energia Natural revela como as energias cognitivas e comportamentais se organizam...</p>
+    
+    Físico <div class="barra-container"><div class="barra"><span id="barFisicoNat"></span></div></div>
+    Mental <div class="barra-container"><div class="barra"><span id="barMentalNat"></span></div></div>
+    Emocional <div class="barra-container"><div class="barra"><span id="barEmocionalNat"></span></div></div>
+    Intuitivo <div class="barra-container"><div class="barra"><span id="barIntuitivoNat"></span></div></div>
+    
+    <div class="divisor-categoria">Resultado dos Planos</div> 
+    <div class="texto" id="textoNatural"></div>
 
-    <div style="text-align: center; margin-top: 80px; border-top: 1px solid #eee; padding-top: 40px;">
-        <img src="https://hemricciinstintosuperior-rcci.github.io/Matriz_quantica_da_vida/ícone-512.jpg" style="width:70px;">
-        <p><strong>Instinto Superior</strong><br>© 2026</p>
+    <h2>3. Análise de Expressão Natural</h2>
+    <p class="vigencia-info">Vigência: Vitalícia</p>
+    <p class="texto">O Perfil de Expressão Natural demonstra a forma como a mente organiza decisões...</p>
+    
+    Criativo <div class="barra-container"><div class="barra"><span id="barCriativoNat"></span></div></div>
+    Indeciso <div class="barra-container"><div class="barra"><span id="barIndecisoNat"></span></div></div>
+    Neutro <div class="barra-container"><div class="barra"><span id="barNeutroNat"></span></div></div>
+    
+    <div class="divisor-categoria">Resultado da Expressão Natural</div> 
+    <div class="texto" id="textoExpressaoNat"></div>
+
+    <h2>4. Análise Neurocognitiva Natural</h2>
+    <p class="vigencia-info">Vigência: Vitalícia</p>
+    <div class="texto">
+        <p>A Análise Neurocognitiva Natural baseia-se nos princípios da neurociência aplicada...</p>
+        <div class="divisor-categoria">Resultado Neurocognitivo Natural</div> 
+        <div id="neuroDominanciaNat" style="font-weight: bold; margin-bottom: 10px; text-align: center;"></div>
+        <div class="texto" id="neuroAnaliseNat"></div>
+    </div>
+
+    <div id="containerCiclosVida"></div>
+
+    <div style="page-break-before: always; padding-top: 50px; text-align: center;">
+        <h3>10. 🏆 PARABÉNS, <strong id="nomeConclusao"></strong>!</h3>
+        <div class="texto">
+            <p>Ao finalizar este relatório, você detém em mãos um mapa estratégico...</p>
+        </div>
+
+        <div class="rodape-final-container">
+            <span class="marca-footer">Instinto Superior</span>
+            <span class="tagline-footer">Alta Performance & Neurociência Aplicada</span>
+            <div class="info-links">
+                <span class="info-item">Relatório Oficial de Expressão Quântica</span>
+                <a href="https://www.instintosuperior.com" class="info-item">www.instintosuperior.com</a>
+            </div>
+            <img src="https://hemricciinstintosuperior-rcci.github.io/Matriz_quantica_da_vida/ícone-512.jpg" style="max-width: 200px; margin-top: 20px;">
+            <div class="copyright">© 2026 INSTINTO SUPERIOR • TODOS OS DIREITOS RESERVADOS</div>
+        </div>
     </div>
 </div>
 
 <script>
     const dados = JSON.parse(localStorage.getItem("relatorioMapa"));
+    if (!dados) { alert("Dados não encontrados no sistema!"); }
 
-    if(dados) {
-        // Cabeçalho
-        document.getElementById("nomePessoa").innerText = dados.nome.toUpperCase();
-        document.getElementById("dataPessoa").innerText = dados.data;
-
-        // Injeção de Texto (Usando nomes exatos do seu Index)
-        document.getElementById("textoNatural").innerHTML = dados.textoNatural;
-        document.getElementById("textoExpressaoNat").innerHTML = dados.textoExpressaoNat;
-        document.getElementById("dominanciaNat").innerHTML = dados.dominanciaNat;
-        document.getElementById("analiseNeuroNat").innerHTML = dados.analiseNeuroNat;
-
-        // Lógica das Barras Naturais (Puxando do pacote exportado)
-        function ajustarBarra(id, valor, max) {
-            let p = (valor / (max || 1)) * 100;
-            document.getElementById(id).style.width = p + "%";
+    function setBarra(id, valor, max) {
+        const el = document.getElementById(id);
+        if (el) {
+            const p = max > 0 ? (valor / max) * 100 : 0;
+            el.style.width = p + "%";
         }
+    }
 
-        // No seu Index, os valores naturais estão em fisicoNat, mentalNat...
-        let maxNat = Math.max(dados.fisicoNat, dados.mentalNat, dados.emocionalNat, dados.intuitivoNat) || 1;
-        ajustarBarra("barFisicoNat", dados.fisicoNat, maxNat);
-        ajustarBarra("barMentalNat", dados.mentalNat, maxNat);
-        ajustarBarra("barEmocionalNat", dados.emocionalNat, maxNat);
-        ajustarBarra("barIntuitivoNat", dados.intuitivoNat, maxNat);
+    // PREENCHIMENTO DOS DADOS VITALÍCIOS
+    document.getElementById("nomePessoa").innerText = dados.nome;
+    document.getElementById("nomeConclusao").innerText = dados.nome;
+    if(dados.data) {
+        const parts = dados.data.split("-");
+        document.getElementById("dataPessoa").innerText = `${parts[2]}/${parts[1]}/${parts[0]}`;
+    }
 
-        // Barras de Expressão Natural
-        let maxExp = Math.max(dados.criativoNat, dados.indecisoNat, dados.neutroNat) || 1;
-        ajustarBarra("barCriativoNat", dados.criativoNat, maxExp);
-        ajustarBarra("barIndecisoNat", dados.indecisoNat, maxExp);
-        ajustarBarra("barNeutroNat", dados.neutroNat, maxExp);
+    // BARRAS NATURAIS
+    const maxNat = Math.max(dados.fisico, dados.mental, dados.emocional, dados.intuitivo, 1);
+    setBarra("barFisicoNat", dados.fisico, maxNat);
+    setBarra("barMentalNat", dados.mental, maxNat);
+    setBarra("barEmocionalNat", dados.emocional, maxNat);
+    setBarra("barIntuitivoNat", dados.intuitivo, maxNat);
+    document.getElementById("textoNatural").innerHTML = dados.textoNatural;
 
-        // Renderização dos 100 Anos
-        const cont = document.getElementById("cronologiaCont");
-        dados.ciclos.forEach(ano => {
+    // EXPRESSÃO NATURAL
+    const maxExp = Math.max(dados.fisicoExpNat, dados.mentalExpNat, dados.emocionalExpNat, 1);
+    setBarra("barCriativoNat", dados.fisicoExpNat, maxExp);
+    setBarra("barIndecisoNat", dados.mentalExpNat, maxExp);
+    setBarra("barNeutroNat", dados.emocionalExpNat, maxExp);
+    document.getElementById("textoExpressaoNat").innerHTML = dados.textoExpressaoNat;
+
+    document.getElementById("neuroDominanciaNat").innerText = dados.dominanciaNat;
+    document.getElementById("neuroAnaliseNat").innerHTML = dados.analiseNeuroNat;
+
+    // MOTOR DA CRONOLOGIA (100 ANOS)
+    const container = document.getElementById("containerCiclosVida");
+    if (container && dados.ciclos) {
+        container.innerHTML = "<h2>5. Cronologia de Destino (100 Anos)</h2>";
+        
+        dados.ciclos.forEach(ciclo => {
             const div = document.createElement("div");
-            div.className = "bloco-ano";
-            
-            const maxAno = Math.max(ano.fisico, ano.mental, ano.emocional, ano.intuitivo) || 1;
-            
+            div.className = "secao-ciclo";
+            div.style.pageBreakInside = "avoid";
+            div.style.marginBottom = "40px";
+            div.style.padding = "25px";
+            div.style.border = "1px solid #e2e8f0";
+            div.style.borderRadius = "15px";
+
+            const mVal = Math.max(ciclo.fisico, ciclo.mental, ciclo.emocional, ciclo.intuitivo, 1);
+            const mXp = Math.max(ciclo.criativo, ciclo.indeciso, ciclo.neutro, 1);
+
             div.innerHTML = `
-                <h3 style="margin-top:0;">ANO ${ano.ano} (${ano.intervalo})</h3>
-                <div class="transito-tag">Vibração ${ano.transitoNum} - ${ano.transitoTexto}</div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                    <span style="background: #0f172a; color: #ffd633; padding: 5px 12px; border-radius: 5px; font-weight: bold;">ANO ${ciclo.ano}</span>
+                    <span style="color: #64748b; font-weight: bold;">${ciclo.intervalo}</span>
+                </div>
                 
-                <div class="barra-item"><small>Físico</small> <div class="barra-bg"><div class="barra-fill fisico" style="width:${(ano.fisico/maxAno)*100}%"></div></div></div>
-                <div class="barra-item"><small>Mental</small> <div class="barra-bg"><div class="barra-fill mental" style="width:${(ano.mental/maxAno)*100}%"></div></div></div>
-                <div class="barra-item"><small>Emocional</small> <div class="barra-bg"><div class="barra-fill emocional" style="width:${(ano.emocional/maxAno)*100}%"></div></div></div>
-                <div class="barra-item"><small>Intuitivo</small> <div class="barra-bg"><div class="barra-fill intuitivo" style="width:${(ano.intuitivo/maxAno)*100}%"></div></div></div>
-                
-                <div class="texto">${ano.textoMomento}</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div>FÍSICO <div class="barra"><span style="width:${(ciclo.fisico/mVal)*100}%; background:#ef4444;"></span></div></div>
+                    <div>MENTAL <div class="barra"><span style="width:${(ciclo.mental/mVal)*100}%; background:#3b82f6;"></span></div></div>
+                    <div>EMOCIONAL <div class="barra"><span style="width:${(ciclo.emocional/mVal)*100}%; background:#22c55e;"></span></div></div>
+                    <div>INTUITIVO <div class="barra"><span style="width:${(ciclo.intuitivo/mVal)*100}%; background:#eab308;"></span></div></div>
+                </div>
+
+                <div style="margin-top:20px; background:#f8fafc; padding:15px; border-radius:10px;">
+                    <strong style="font-size: 13px;">PERFIL DE EXPRESSÃO DO CICLO</strong>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; margin-top:10px;">
+                        <div>CRIATIVO <div class="barra"><span style="width:${(ciclo.criativo/mXp)*100}%; background:#9333ea;"></span></div></div>
+                        <div>INDECISO <div class="barra"><span style="width:${(ciclo.indeciso/mXp)*100}%; background:#fb923c;"></span></div></div>
+                        <div>NEUTRO <div class="barra"><span style="width:${(ciclo.neutro/mXp)*100}%; background:#b89a9a;"></span></div></div>
+                    </div>
+                    <p style="margin-top:10px; font-size: 0.9rem; color: #475569; font-style: italic;">
+                        ${ciclo.textoExpressaoMom || "Análise de perfil de ação para este período específico."}
+                    </p>
+                </div>
+
+                <div class="texto">${ciclo.textoMomento}</div>
+
+                <div style="margin-top:15px; padding:15px; background:#f0f9ff; border-radius:8px; border-left: 4px solid #06b6d4;">
+                    <strong style="color:#06b6d4;">🧠 NEURO-ANÁLISE: ${ciclo.dominanciaMom}</strong>
+                    <p style="font-size:0.85rem; margin-top:5px;">${ciclo.analiseNeuroMom || ""}</p>
+                </div>
             `;
-            cont.appendChild(div);
+            container.appendChild(div);
         });
-    } else {
-        alert("Erro: Dados não encontrados no sistema. Gere o mapa novamente.");
     }
 </script>
 </body>
