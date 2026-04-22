@@ -165,7 +165,7 @@ background:#16a34a;
 <input id="nome">
 
 <label>Data de Nascimento</label>
-<input type="date" id="dataNascimento">
+<input type="text" id="data" placeholder="DD/MM/AAAA" maxlength="10" onInput="this.value = this.value.replace(/\D/g, '').replace(/^(\d{2})(\d)/, '$1/$2').replace(/^(\d{2})\/(\d{2})(\d)/, '$1/$2/$3');">
 
 <div class="buttons">
 
