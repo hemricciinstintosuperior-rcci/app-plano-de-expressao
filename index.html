@@ -913,7 +913,7 @@ a, img, audio { border: none !important; outline: none !important; text-decorati
        <input type="text" id="data" placeholder="DD/MM/AAAA" maxlength="10" onInput="this.value = this.value.replace(/\D/g, '').replace(/^(\d{2})(\d)/, '$1/$2').replace(/^(\d{2})\/(\d{2})(\d)/, '$1/$2/$3');">  
      <input type="text" id="nomeSocial" placeholder="COMO PREFERE SER CHAMADO? (OPCIONAL)"> 
         
-        <input type="text" id="nomeCasado" placeholder="NOME COMPLETO DE CASADO(A) (SE HOUVER)">       
+       
     
         <button class="btn-gerar" onclick="gerarMapaCompleto()">GERAR O MAPA</button>
     </div>
@@ -3496,13 +3496,9 @@ html += `
         ${[
               { t: "Introdução", c: "Instinto Superior ✶ Resultado Numerológico ✶ Engenharia da Vida ✶ Nome Escolhido ✶ Cabala Ancestral ✶ Direcionamento de Jornada"},
             { t: "Parte 1: Performance Natural", c: "Planos de Expressão ✶ Gráficos de Potenciais"},
-            { t: "Parte 2: Essência e Identidade", c: "Dia de Nascimento ✶ Talento ou Habilidade Oculta ✶ Motivação ✶ Aparência ou Influência ✶ Personalidade ✶ Tendência de Comportamento ✶ Desejo Oculto ✶ Habilidades Especiais ✶  Inclinações Ocultas ✶  Pilar de Equilíbrio Emocional"},
-            { t: "Parte 3: Alinhamento e Desafios",   c: "Fraquezas e Inibições ✶ Mecanismo do Subconsciente ✶ Déficit de Comportamento ✶ Desafio Principal"},
-            { t: "Parte 4: Finalidade e Realização", c: " Caminho de Vida ✶ Propósito  ✶ Fase de Maturidade ✶ Direcionamento Profissional"},
-            { t: "Parte 5: Complementares", c: " Número de Relacionamento ✶ Cores Favoráveis ✶ Dias de Poder do Mês ✶ Números harmonicos"}, 
-            { t: "Parte 6: Ciclos", c: "Ciclos de Vida ✶ Momento de Decisão ✶ Desafios de Jornada"},
+
             { t: "Parte 7:  Tendências do Momento", c: "Status no Momento do Ciclo Atual ✶ Status no Momento do Segundo Ciclo ✶ Ciclos Trânsitórios ✶ Potenciais do Momento ✶ Ano Pessoal ✶ Mês Pessoal"},
-            { t: "Parte 8: A Grande Matriz", c: "Pirâmide Invertida ✶ Sequências Numéricas ✶ Potências até 100 anos de idade"},
+     
             { t: "Parte 9: Filosofia e Ciência", c: "Contexto Histórico ✶ Conclusão Evolutiva ✶ Agradecimento"}
         ].map(item => `
             <div style="text-align: center;">
@@ -3523,7 +3519,175 @@ html += `
 
 
     
+const listaItensSintese = [
+    { label: "Dia Natalicio", valor: res.dia },
+    
+    { label: "Essência", valor: res.essencia },
+    
+    { label: "Motivação", valor: res.motivacao },
+    
+    { label: "Desejo Oculto", valor: vDesejoFinal }, // <--- CONECTADO!
+    
+    { label: "Influência", valor: res.influencia },
+    
+    { label: "Personalidade", valor: res.Personalidade },
+    
+    { label: "Comportamento", valor: res.comportamento },
+    
+    { label: "Relacionamento", valor: res.Relacionamento },
+    
+    { label: "Talento Oculto", valor: res.talento },
+    
+     { label: "Equilíbrio", valor: res.equilibrio },
+    
+    { label: "Inclinações Ocultas", valor: res.inclinacoes },
+    
+    { label: "Subconsciente", valor: res.subconsciente },
+    
+    { label: "Déficit Comportamental", valor: vDeficitFinal }, // <--- CONECTADO!
+    
+    { label: "Habilidades / Deficiências", valor: vHabDefFinal }, // <--- CONECTADO!
+    
+    { label: "Fraquezas / Inibições", valor: (res.deficiencias && res.deficiencias.length > 0) ? res.deficiencias : "Livre" },
+    
+    { label: "Caminho de Vida", valor: res.CaminhodeVida },
+    
+    { label: "Propósito", valor: res.Propósito },
+    
+    { label: "Maturidade", valor: res.Maturidade },
 
+    { label: "Profissão", valor: formatarProfissoesSimples(res) },
+    
+    { label: "Ciclos da Vida", valor: res.ciclos },
+    
+    { label: "Desafios", valor: res.desafios },
+    
+    { label: "Momentos de Decisão", valor: res.momentos },
+        
+    { label: "Ano Pessoal", valor: res.anoPessoal },
+    
+    { label: "Trânsito", valor: vTrânsitoFinal },
+    
+    { label: "Números Harmônicos", valor: obterNumerosHarmonicos(res.dia) },
+    { label: "Cores Favoráveis", valor: obterCoresFavoraveis(res.Personalidade) },
+    { label: "Dias de Poder", valor: obterDiasFavoraveisRessonancia(res.dia).join(', ') },
+    { label: "Vibração Semanal", valor: obterDiaSemanaVibracional(res.dia) }
+    
+
+];
+
+
+
+    
+// 2. Agora montamos o HTML do Painel (Esta parte substitui a sua partir da linha html +=)
+html += `
+<div id="folha-resumo-premium" style="
+    width: 210mm; 
+    height: 297mm; 
+    page-break-after: always; 
+    page-break-before: always; 
+    page-break-inside: avoid; 
+    background: #ffffff; 
+    padding: 15mm; 
+    box-sizing: border-box; 
+    border: 4px double #fff; 
+    margin: 0 auto; 
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow: hidden;
+">
+    
+    <div style="text-align: center; margin-bottom: 10px; flex-shrink: 0;">
+        <h2 style="text-transform: uppercase; letter-spacing: 2px; color: #000000; margin: 0; border-bottom: 2px solid #d97a1e; display: inline-block; padding-bottom: 5px; font-size: 22px;">
+            Resultado  Numerológico
+        </h2>
+    </div>
+
+    <div id="grid-resumo" style="
+        display: grid; 
+        grid-template-columns: repeat(4, 1fr); 
+        gap: 8px; 
+        margin-top: 10px;
+        flex-grow: 1;
+    ">
+        ${listaItensSintese.map(item => {
+            let exibicaoValor = "--";
+            if (item.valor && typeof item.valor === 'object' && !Array.isArray(item.valor)) {
+                exibicaoValor = Object.values(item.valor).filter(v => v !== "").join(" · ");
+            } else if (Array.isArray(item.valor)) {
+                exibicaoValor = item.valor.join(" · ");
+            } else {
+                exibicaoValor = item.valor || "--";
+            }
+
+            // Ajuste dinâmico de fonte para valores longos não quebrarem o layout
+            let fontSize = "20px";
+            if (exibicaoValor.toString().length > 5) fontSize = "18px";
+            if (exibicaoValor.toString().length > 10) fontSize = "15px";
+
+            return `
+                <div style="
+                    border: 1px solid #eee; 
+                    border-top: 3px solid #d97a1e; 
+                    background: #ffffff; 
+                    padding: 8px 4px; 
+                    text-align: center; 
+                    border-radius: 4px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    min-height: 65px;
+                ">
+                    <div style="font-size: 12px; text-transform: uppercase; color: #000000; font-weight: bold; margin-bottom: 4px; line-height: 1.1;">
+                        ${item.label}
+                    </div>
+                    <div style="font-size: ${fontSize}; font-weight: bold; color: #d97a1e; word-break: break-word;">
+                        ${exibicaoValor}
+                    </div>
+                </div>
+            `;
+        }).join('')}
+    </div>
+
+<div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 15px; margin-top: 20px; flex-shrink: 0; width: 100%;">
+    
+    <div style="display: flex; align-items: center; gap: 12px; flex: 1; padding: 10px; background: #ffffff; border-radius: 8px;">
+        <div style="background: ${vCorDoPerfilAtivo}; color: #fff; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold; flex-shrink: 0;">
+            ${valorPerfilNativoTexto.charAt(0)}
+        </div>
+        <div style="text-align: left;">
+            <span style="font-size: 16px; text-transform: uppercase; color: #666; font-weight: bold; display: block; line-height: 1.1;">
+                Seu Perfil Dominante
+            </span>
+            <div style="font-size: 16px; font-weight: bold; color: ${vCorDoPerfilAtivo}; line-height: 1.2;">
+                ${valorPerfilNativoTexto}
+            </div>
+            <p style="font-size: 10px; color: #fff; margin: 4px 0 0 0; line-height: 1.3; max-width: 200px;">
+                
+            </p>
+        </div>
+    </div>
+
+    <div style="flex: 0.8; border: 2px solid #ffffff; padding: 12px; border-radius: 8px; text-align: center; background: #fff;">
+        <span style="text-transform: uppercase; font-weight: bold; font-size: 16px; color: #666; letter-spacing: 1px; display: block; margin-bottom: 5px;">
+           Sua Expressão Dominante
+        </span>
+        <div style="font-size: 16px; font-weight: bold; color: ${vCorPlanoDominante}; text-transform: uppercase; line-height: 1;">
+            ${vPlanoDominanteNome}
+        </div>
+    </div>
+
+</div>
+
+<div style="margin-top: 30px; background: #4a3728; padding: 15px; border-radius: 4px; text-align: center;">
+    <h3 style="color: #d97a1e; margin: 0; text-transform: uppercase; letter-spacing: 2px; font-size: 18px;">
+     ${nomeRaw}
+    </h3>
+</div>
+
+</div> `;
 
 
 
