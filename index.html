@@ -913,7 +913,7 @@ a, img, audio { border: none !important; outline: none !important; text-decorati
        <input type="text" id="data" placeholder="DD/MM/AAAA" maxlength="10" onInput="this.value = this.value.replace(/\D/g, '').replace(/^(\d{2})(\d)/, '$1/$2').replace(/^(\d{2})\/(\d{2})(\d)/, '$1/$2/$3');">  
      <input type="text" id="nomeSocial" placeholder="COMO PREFERE SER CHAMADO? (OPCIONAL)"> 
         
-        <input type="text" id="nomeCasado" placeholder="NOME COMPLETO DE CASADO(A) (SE HOUVER)">       
+          
     
         <button class="btn-gerar" onclick="gerarMapaCompleto()">GERAR O MAPA</button>
     </div>
@@ -2091,25 +2091,21 @@ const textoIndiv = (textosPlanos[p] && textosPlanos[p][int]) ? textosPlanos[p][i
 // ============================================
 // FUNÇÃO: PLANO DE EXPRESSÃO DO MOMENTO (AUTOMÁTICO)
 // ============================================
-// FUNÇÃO: PLANO DE EXPRESSÃO DO MOMENTO (CICLO ATUAL E PRÓXIMO)
-function montarHtmlPlanosMomento(nomeCompleto, dataNascimento, res, faltantes, d3, regenteMatriz, negativasMatriz) {
+// --- SUBSTITUA DAQUI (LINHA DA FUNÇÃO) ---
+function montarHtmlPlanosMomento(nomeCompleto, dataNascimento, res, faltantes, d3, regenteMatriz, negativasMatriz, idadeForcada = null) {
     const nomeParaCalculo = tratarNomeParaCalculo(nomeCompleto);
     const agora = new Date();
     const anoBase = agora.getFullYear();
     const partesData = dataNascimento.split("/");
     const dtNasci = new Date(partesData[2], partesData[1] - 1, partesData[0]);
 
-    // Função interna para processar cada ciclo separadamente
-   const processarUmCiclo = (anoReferencia, tituloSecao, travado = false) => {
+    const processarUmCiclo = (anoReferencia, tituloSecao, travado = false) => {
         let inicioCiclo = new Date(anoReferencia, dtNasci.getMonth(), dtNasci.getDate());
-        
-        // Ajuste para garantir que o "Atual" pegue o início correto do ano pessoal vigente
-        if (agora < inicioCiclo && anoReferencia === anoBase) { 
-            inicioCiclo.setFullYear(anoReferencia - 1); 
-        }
-        
-        let fimCiclo = new Date(inicioCiclo.getFullYear() + 1, dtNasci.getMonth(), dtNasci.getDate());
+        let fimCiclo = new Date(anoReferencia + 1, dtNasci.getMonth(), dtNasci.getDate());
         const periodoVigente = `${inicioCiclo.toLocaleDateString('pt-BR')} a ${fimCiclo.toLocaleDateString('pt-BR')}`;
+
+        // LÓGICA DE IDADE: Se estiver no loop, usa a idade do loop. Se não, calcula a atual.
+        const indiceAno = (idadeForcada !== null) ? idadeForcada : (inicioCiclo.getFullYear() - dtNasci.getFullYear());
 
         const partes = nomeParaCalculo.toUpperCase().trim().split(/\s+/);
         let timelines = partes.map(p => {
@@ -2121,8 +2117,6 @@ function montarHtmlPlanosMomento(nomeCompleto, dataNascimento, res, faltantes, d
             return t;
         });
 
-
-        const indiceAno = inicioCiclo.getFullYear() - dtNasci.getFullYear();
         let somaMomento = { fisico: 0, mental: 0, emocional: 0, intuitivo: 0 };
         let contPerfilMomento = { criativo: 0, indeciso: 0, neutro: 0 };
 
@@ -2152,195 +2146,59 @@ function montarHtmlPlanosMomento(nomeCompleto, dataNascimento, res, faltantes, d
             ((planosOrdenados[3].valor / ref > 0.75) ? "F" : (planosOrdenados[3].valor / ref >= 0.50) ? "M" : "f");
 
         const descricoesPerfilMomento = {
-            criativo: `<p>"Sua energia de ação este ano está em fase de expansão e Criatividade"</p><p>Neste ciclo, sua forma de agir está mais arrojada. Você sentirá uma facilidade maior para encontrar saídas rápidas e originais para problemas que antes pareciam travados.</p>`,
-            indeciso: `<p>"Sua forma de agir este ano está sob o filtro da sensibilidade e da Indecisão"</p><p>Este ciclo pede que você tenha mais cautela antes de tomar grandes decisões. É um ano para agir com diplomacia, evitando confrontos diretos.</p>`,
-            neutro: `<p>"Este ano sua ação prioriza o equilíbrio, a observação e a Neutralidade"</p><p>Sua postura atual é de 'esperar para ver'. Você prefere analisar o terreno antes de dar qualquer passo importante, agindo com máxima prudência.</p>`
+            criativo: `<p>"Sua energia de ação este ano está em fase de expansão e Criatividade"</p>`,
+            indeciso: `<p>"Sua forma de agir este ano está sob o filtro da sensibilidade e da Indecisão"</p>`,
+            neutro: `<p>"Este ano sua ação prioriza o equilíbrio, a observação e a Neutralidade"</p>`
         };
 
-
-        tituloBonito = tituloSecao;
-         let h = `
-<div class="separador-luxo">
-    <div class="caixa-interna">
-        <h2>${tituloBonito}</h2>
-    </div>
-</div>
-`;
-
-        h += `
-        <div class="secao-card quebra-pagina" style="width: 100%;"> 
-            <h2 class="titulo-topico" style="border-bottom: 2px solid var(--gold);">${tituloSecao}</h2>
-                        <h3 style="text-align:center; font-weight:bold; color:var(--gold); margin-top:-10px; margin-bottom:5px;">IDADE: ${indiceAno} ANOS</h3>
-            <h3 style="text-align:center; font-weight:bold; color:var(--gold); margin-top:-10px; margin-bottom:25px;"> PERÍODO: ${periodoVigente}</h3>
+        // MONTAGEM DO HTML SIMPLIFICADA PARA O LOOP (Evita duplicar textos longos)
+        let h = `
+        <div class="secao-card evitar-corte" style="width: 100%; border-left: 5px solid var(--gold); margin-bottom: 30px;"> 
+            <h2 class="titulo-topico">${tituloSecao}</h2>
+            <h3 style="text-align:center; color:var(--gold);">IDADE: ${indiceAno} ANOS | PERÍODO: ${periodoVigente}</h3>
             
-            <div class="intro-texto" style="margin-bottom: 25px; line-height: 1.6; color: #444;">
-                <p>O **Status de Expressão do Momento** revela como sua configuração de energia está operando *exatamente agora*. Diferente da sua natureza fixa, esta análise mostra quais planos (Físico, Mental, Emocional ou Intuitivo) estão recebendo mais carga vibracional neste ciclo de 12 meses e também classificando sua expressão em Criativa, Indecisa ou Neutra.. É o seu "clima interno" atual, indicando onde você tem mais facilidade de realizar e onde pode sentir sobrecarga ou lentidão.</p>
-            </div>
-   <div style="text-align: center; margin: 30px 0;">
-                <img src="https://hemricciinstintosuperior-rcci.github.io/Trabalho_venda_Numerologia/planoestudo.png" alt="Logo Plano de Expressão" style="max-width: 500px; height: auto; display: inline-block;">
+            <div style="display: flex; align-items: center; gap: 15px; background: #f9f9f9; padding: 15px; border-radius: 8px;">
+                <div style="background: var(--gold); color: white; padding: 10px; border-radius: 50%; font-weight: bold;">${dominanteMomento[0].toUpperCase()}</div>
+                <div><strong>Perfil de Ação:</strong> ${dominanteMomento.toUpperCase()}</div>
             </div>
 
-            
-           <div class="evitar-corte" style="margin-bottom: 25px; padding: 20px; border: 2px solid #827108; border-radius: 12px; background: #fff; display: flex; align-items: center; gap: 20px;">
-                <div style="background: #827108; color: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; text-transform: uppercase; flex-shrink: 0;">
-                    ${dominanteMomento[0]}
-                </div>
-                
-                ${travado ? '<div class="conteudo-travado">' : '<div>'}
-                    <h4 style="margin: 0; color: #827108; text-transform: uppercase;">Perfil de Ação Atual: ${dominanteMomento}</h4>
-                    <div style="margin: 5px 0 0 0; font-size: 14px; color: #555;">${aplicarFiltroTexto(descricoesPerfilMomento[dominanteMomento])}</div>
-                </div>  
-                 ${travado ? '<div class="aviso-trava">🔒 CONTEÚDO LIBERADO APÓS O PERÍODO DE GARANTIA</div>' : ''} 
-            </div>
-
-            <div style="margin: 25px 0; background: #fff; padding: 20px; border-radius: 8px;">`;
+            <div style="margin: 20px 0;">`;
         
-h += `<div class="evitar-corte">`; 
-   // Gráficos (ESTILO LUXO DEGRADÊ - MOMENTO)
-// Gráficos (TEXTO FIXO NO CENTRO - MOMENTO)
+        // Gráficos compactos
         for(let p in somaMomento) {
             let porcentagem = (somaMomento[p] / ref) * 100;
-           let valorReduzido = reduzirPuro(somaMomento[p]);
-
-            const degradês = {
-                fisico: 'linear-gradient(to right, #e74c3c, #7b241c)',
-                mental: 'linear-gradient(to right, #3498db, #1a5276)',
-                emocional: 'linear-gradient(to right, #2ecc71, #0a3d1d)',
-                intuitivo: 'linear-gradient(to right, #f1c40f, #b8860b)'
-            };
-
-            const fundoBarra = degradês[p] || 'linear-gradient(to right, #ffffff, #ffffff)';
-
+            let valorReduzido = reduzirPuro(somaMomento[p]);
             h += `
-                <div style="margin: 0 auto 20px auto; width: 85%;  height: 42px; position: relative;  display: flex; align-items: center; justify-content: center;break-inside: avoid; 
-page-break-inside: avoid;
-margin-top: 10px;">
-                    
-                    <div style="width:${porcentagem}%; height:100%; background: ${fundoBarra}; position: absolute; left: 0; top: 0; transition: width 1s ease; z-index: 1; border-radius: 8px;"></div>
-                    
-                    <span style="color: #fff; font-weight: bold; font-size: 18px; text-transform: uppercase; text-shadow: 1px 1px 4px rgba(0,0,0,0.8); letter-spacing: 1.5px; position: relative; z-index: 2; pointer-events: none;">
-                        ${nomesAmigaveis[p]} EXP ${valorReduzido}
-                    </span>
-
+                <div style="margin-bottom: 8px; width: 100%; height: 25px; background: #eee; position: relative; border-radius: 4px;">
+                    <div style="width:${porcentagem}%; height:100%; background: var(--gold); border-radius: 4px;"></div>
+                    <span style="position: absolute; left: 10px; top: 2px; font-size: 12px; font-weight: bold; color: #000;">${nomesAmigaveis[p]} (Vib: ${valorReduzido})</span>
                 </div>`;
         }
-        h += `</div>`;
-h += `</div>`; 
 
-
-       
-       // 1. LOOP DOS PLANOS INDIVIDUAIS (Físico, Mental, etc)
-        for(let p in somaMomento) {
-            let r = somaMomento[p] / ref;
-            let int = (r > 0.75) ? "forte" : (r >= 0.50) ? "medio" : "fraco";
-            let vFinal = reduzirPuro(somaMomento[p]);
-            const textoIndiv = (textosPlanosMomento[p] && textosPlanosMomento[p][int]) ? textosPlanosMomento[p][int][vFinal] : "";
-            
-            if(textoIndiv) {
-                h += `
-                    <div class="evitar-corte" style="margin-bottom: 20px; border-left: none; padding-left: 15px;">
-                        <h4 style="margin:0; color:${coresPlanos[p] || 'var(--dark)'}; text-transform:uppercase; font-size:18px;">${nomesAmigaveis[p]} <small>(${int})</small></h4>
-                        
-                        ${travado ? '<div class="conteudo-travado">' : '<div>'}
-                            <div class="texto-res">${aplicarFiltroTexto(textoIndiv)}</div>
-                        </div> ${travado ? '<div class="aviso-trava">🔒 CONTEÚDO LIBERADO APÓS O PERÍODO DE GARANTIA</div>' : ''} 
-                    </div>`; // FECHA O BLOCO DO PLANO (margin-bottom: 20px)
-            }
-        }
-
-        h += `</div>`; // FECHA O CARD PRINCIPAL DOS PLANOS (Aquele que abriu antes dos gráficos)
-
-        // 2. SEÇÃO DE SÍNTESE
-        h += ` 
-        <div class="secao-card quebra-pagina" style="width: 100%;"> 
-           <div class="evitar-corte" style="margin-top:40px; border:2px solid #ffffff; padding:25px; border-radius:12px; background:#fff;">
-                <div style="text-align:center; margin-bottom:20px;">
-                    <span style="background:var(--gold); color:white; padding:4px 12px; border-radius:20px; font-size:11px; font-weight:bold;">
-                        ${titulosEstrutura[siglaMomento] || "SÍNTESE"}
-                    </span>
-                    <h3 style="margin-top:10px; text-transform:uppercase;">Síntese de Expressão no Momento</h3>
-                </div>
-                <div class="texto-res">
-                    ${aplicarFiltroTexto(textosSinteseExpressao[siglaMomento] || textosSinteseExpressao["padrao"])}
-                </div>
-                <div style="margin-top:25px; background:var(--dark); color:var(--gold); padding:20px; border-radius:8px; text-align:center; border: 1px solid var(--gold);">
-                    <strong style="text-transform: uppercase; letter-spacing: 1px;"> Diretriz de Equilíbrio do momento: </strong><br>
-                    <span style="font-size: 15px; color: #fff; opacity: 0.9;">
-                        Utilize a Energia do plano <strong>${nomesAmigaveis[_p1.chave]}</strong> para sustentar o plano <strong>${nomesAmigaveis[_p4.chave]}</strong>.
-                    </span>
-                </div>
-            </div>
-        </div>`; // FECHA A SEÇÃO DE SÍNTESE
-
-        // 3. SEÇÃO DE TRÂNSITO
-        // 3. SEÇÃO DE TRÂNSITO (Alinhado com Letras de Passagem)
-let letrasAno = timelines.map(t => t[indiceAno % t.length]);
-let vTransitoCalculado = reduzirPuro(letrasAno.reduce((s, l) => s + calcularValorLetra(l), 0));
+        // Trânsito do Ano
+        let letrasAno = timelines.map(t => t[indiceAno % t.length]);
+        let vTransitoCalculado = reduzirPuro(letrasAno.reduce((s, l) => s + calcularValorLetra(l), 0));
 
         h += `
-        <div class="separador-luxo">
-            <div class="caixa-interna"><h2>CICLOS DE TRÂNSITO</h2></div>
-        </div>
-
-        <div class="secao-card" style="width: 100%; border-top: 1px solid #ffffff; margin-top: 30px;">
-            <h2 class="titulo-topico" style="border-bottom: 2px solid #ffffff;">Ciclos de Trânsito</h2>
-            <div class="intro-secao" style="margin-bottom: 20px; font-size: 18px; line-height: 1.6; color: #333;">
-            <p style="margin-bottom: 20px;">Os <b>Ciclos de Trânsito</b> representam a síntese das energias mais profundas que regem o seu momento atual, atuando como um barômetro da sua realidade imediata. Diferente do Ano Pessoal, que segue uma cronologia padrão, o Trânsito é uma força personalizada que emerge diretamente da estrutura da sua alma. Ele é o resultado matemático e vibracional da soma e redução dos quatro pilares fundamentais do seu <b>Plano de Expressão</b>: o Físico, o Mental, o Emocional e o Intuitivo. Esta correlação profunda indica como a integração de todas as suas facetas internas está se projetando e se manifestando no mundo externo agora.</p>
-
-    <p style="margin-bottom: 20px;">Ao unir essas quatro forças vitais, o Trânsito revela a frequência vibracional dominante para este período específico da sua vida, servindo como um mapa prático e altamente preciso para orientar suas ações e decisões. É através desta vibração que você compreende como seu corpo físico, sua lógica mental, suas reações emocionais e sua percepção intuitiva estão trabalhando em conjunto. Quando essas energias são sintetizadas em um único número de ciclo, você obtém uma visão clara de qual é o "clima" existencial que você deve navegar, permitindo um alinhamento muito mais assertivo com as oportunidades que surgem no seu caminho.</p>
-
-    <p style="margin-bottom: 20px;">Entender o Ciclo de Trânsito é compreender a engrenagem interna que move a sua expressão no mundo, pois ele não é uma influência externa passageira, mas sim o reflexo de como você está processando a vida em todos os níveis. Enquanto esta influência estiver vigente em sua jornada, ela ditará o tom das suas experiências e a melhor forma de aplicar seus talentos para obter resultados concretos. É um período de colheita e ajuste, onde a harmonia entre o sentir, o pensar e o agir se torna a chave para o sucesso. Ao respeitar essa frequência, você flui com as marés da vida em vez de lutar contra elas, utilizando cada pilar do seu ser para construir uma realidade mais sólida, consciente e alinhada com seu verdadeiro propósito.</p>
-
-   <p style="margin-bottom: 20px;">Este ciclo funciona como uma bússola de autoconhecimento aplicado, mostrando exatamente onde você deve focar sua energia para que o seu desenvolvimento não seja apenas teórico, mas manifestado na prática cotidiana. O domínio sobre esta vibração permite que você transforme potenciais abstratos em realizações tangíveis, aproveitando a força combinada dos seus planos de expressão. Portanto, encare este período como uma oportunidade única de observar como sua estrutura interna molda o seu destino, ajustando suas velas de acordo com a poderosa corrente energética que o Ciclo de Trânsito propicia para a sua evolução pessoal e material.</p>
+            <div style="margin-top: 15px; padding: 10px; background: var(--dark); color: var(--gold); text-align: center; border-radius: 5px;">
+                <strong>VIBRAÇÃO DE TRÂNSITO: ${vTransitoCalculado}</strong>
             </div>
-            
-<div class="grupo-respostas-bloco pula-pagina">
-             <div style="text-align:left; margin-bottom:15px;">
-                <div class="resultado-bloco">
-                    <h3>Seu Trânsito: <span style="color: var(--gold);">${vTransitoCalculado}</span></h3>
-                    <h3> IDADE: <span style="color: var(--gold);">${indiceAno} ANOS | PERÍODO: ${periodoVigente}</span></h3>
-                </div>
+        </div>`;
 
-                ${travado ? '<div class="conteudo-travado">' : '<div>'}
-                    <div class="texto-res">
-                        ${aplicarFiltroTexto(window.TextosTransito ? window.TextosTransito[vTransitoCalculado] : "")}
-                    </div> 
-                </div> ${travado ? '<div class="aviso-trava">🔒 CONTEÚDO LIBERADO APÓS O PERÍODO DE GARANTIA</div>' : ''} 
-            </div></div>
-        </div>`; // FECHA A SEÇÃO DE TRÂNSITO
-
-        // 4. GRÁFICOS FINAIS
-        const statusParaGrafico = {
-            status: {
-                "Físico": (somaMomento.fisico / ref > 0.75) ? "forte" : (somaMomento.fisico / ref >= 0.50) ? "medio" : "fraco",
-                "Mental": (somaMomento.mental / ref > 0.75) ? "forte" : (somaMomento.mental / ref >= 0.50) ? "medio" : "fraco",
-                "Emocional": (somaMomento.emocional / ref > 0.75) ? "forte" : (somaMomento.emocional / ref >= 0.50) ? "medio" : "fraco",
-                "Intuitivo": (somaMomento.intuitivo / ref > 0.75) ? "forte" : (somaMomento.intuitivo / ref >= 0.50) ? "medio" : "fraco"
-            },
-            vibracoes: {
-                "Físico": reduzirPuro(somaMomento.fisico), 
-                "Mental": reduzirPuro(somaMomento.mental), 
-                "Emocional": reduzirPuro(somaMomento.emocional), 
-                "Intuitivo": reduzirPuro(somaMomento.intuitivo)
-            },
-            perfil: dominanteMomento
-        };
-
-        h += gerarTodosOsGraficosMomento(res, faltantes, nomeCompleto, d3, regenteMatriz, negativasMatriz, statusParaGrafico, indiceAno, periodoVigente, travado);
-
-        return h; // RETORNO LIMPO
+        return h;
     };
-   
 
-    // Gera o Ciclo Atual
-    let htmlFinal = processarUmCiclo(anoBase, "Planos de Expressão do Momento", false);
-    
-    // Gera o Próximo Ciclo (AnoBase + 1)
-    htmlFinal += processarUmCiclo(anoBase + 1, "Próximo Ciclo dos Planos", false);
-
-    // Retorno para manter compatibilidade com o resto do seu script
-    return { html: htmlFinal, dados: {} }; 
+    // SE FOR CHAMADA MANUAL (Sem loop), gera apenas o atual e o próximo.
+    // SE FOR CHAMADA PELO LOOP, o loop lá na 'gerarMapaCompleto' cuidará da repetição.
+    if (idadeForcada !== null) {
+        return { html: processarUmCiclo(dtNasci.getFullYear() + idadeForcada, `Ciclo de Vida`), dados: {} };
+    } else {
+        let htmlFinal = processarUmCiclo(anoBase, "Plano de Expressão Atual", false);
+        htmlFinal += processarUmCiclo(anoBase + 1, "Próximo Ciclo", false);
+        return { html: htmlFinal, dados: {} };
+    }
 }
+// --- ATÉ ESTE ÚLTIMO FECHAMENTO ---
 
 const bancoProfissoes = {
     1: [
@@ -4509,22 +4367,41 @@ html += `
     </div>
 `;
 
-// Note que agora passamos res, res.deficiencias, etc., dentro dos parênteses
-const resultadoMomentoCompleto = montarHtmlPlanosMomento(
-    nomeRaw, 
-    dataRaw, 
-    res, 
-    res.deficiencias, 
-    res.desafios[3], 
-    regenteVida, 
-    dadosNegativas.nums
-);
-  
-    
-// 2. Como o gráfico já está embutido no HTML da função, basta somar o resultado
-html += resultadoMomentoCompleto.html;
+// --- INÍCIO DA GERAÇÃO DA LINHA DO TEMPO (0 A 100 ANOS) ---
+let htmlLinhaDoTempo = `
+    <div class="separador-luxo">
+        <div class="caixa-interna"><h2>LINHA DO TEMPO: O MAPA DOS 100 ANOS</h2></div>
+    </div>
+    <div class="intro-texto" style="padding: 20px; text-align: justify;">
+        <p>Abaixo, apresentamos a projeção completa da sua energia vital, ano a ano, do nascimento até os 100 anos. 
+        Este mapeamento revela como seus <b>Planos de Expressão</b> e seu <b>Ciclo de Trânsito</b> oscilam, 
+        permitindo que você identifique épocas de maior força física, clareza mental ou sensibilidade emocional.</p>
+    </div>
+`;
 
-// --- FIM DO BLOCO INTEGRADO ---
+// Pegamos o ano de nascimento original
+const anoNascimentoOriginal = dtNasci.getFullYear();
+
+for (let idade = 0; idade <= 100; idade++) {
+    const anoDoCiclo = anoNascimentoOriginal + idade;
+    
+    // Chamamos a função passando a idade fixa para o cálculo
+    const resultadoCicloIndividual = montarHtmlPlanosMomento(
+        nomeRaw, 
+        dataRaw, 
+        res, 
+        res.deficiencias, 
+        res.desafios[3], 
+        regenteVida, 
+        dadosNegativas.nums,
+        idade // <--- NOVO PARÂMETRO: Idade fixa
+    );
+    
+    htmlLinhaDoTempo += resultadoCicloIndividual.html;
+}
+
+html += htmlLinhaDoTempo;
+// --- FIM DA LINHA DO TEMPO ---
 
     
 // 1. CAPTURA SEGURA DA DATA (Evita o erro de 'null')
