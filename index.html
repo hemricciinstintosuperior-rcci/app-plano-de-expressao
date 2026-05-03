@@ -908,12 +908,12 @@ a, img, audio { border: none !important; outline: none !important; text-decorati
     </div>
 
     
-        <h1>Planos de Expressão</h1>
+        <h1>Estudo Numerológico</h1>
      <input type="text" id="nome" placeholder="NOME COMPLETO IGUAL CERTIDÃO" >
        <input type="text" id="data" placeholder="DD/MM/AAAA" maxlength="10" onInput="this.value = this.value.replace(/\D/g, '').replace(/^(\d{2})(\d)/, '$1/$2').replace(/^(\d{2})\/(\d{2})(\d)/, '$1/$2/$3');">  
      <input type="text" id="nomeSocial" placeholder="COMO PREFERE SER CHAMADO? (OPCIONAL)"> 
         
-       
+        <input type="text" id="nomeCasado" placeholder="NOME COMPLETO DE CASADO(A) (SE HOUVER)">       
     
         <button class="btn-gerar" onclick="gerarMapaCompleto()">GERAR O MAPA</button>
     </div>
@@ -966,7 +966,7 @@ function calcularValorLetra(letra) {
         if (c === "\u0301") soma += 2;          // Agudo (´)
         else if (c === "\u0302") soma += 7;     // Circunflexo (^)
         else if (c === "\u0303") soma += 3;     // Til (~)
-        else if (c === "\u0327") soma += 6;     // Cedilha (¸)
+        else if (c === "\u0327") soma += 3;     // Cedilha (¸)
         else if (c === "\u030a") soma += 7;     // Círculo/Grau superior (°)
         else if (c === "\u0300" || c === "\u0308") mult *= 2; // Grave/Trema
     }
@@ -990,7 +990,7 @@ function valorLetraMatriz(l){
     if (n.includes("\u0301")) s = 2;          // Agudo
     else if (n.includes("\u0302")) s = 7;     // Circunflexo
     else if (n.includes("\u0303")) s = 3;     // Til
-    else if (n.includes("\u0327")) s = 6;     // Cedilha
+    else if (n.includes("\u0327")) s = 3;     // Cedilha
     else if (n.includes("\u030a")) s = 7;     // Grau (°)
     else if (l.includes("'")) s = 2;          // Apóstrofo
 
@@ -1060,7 +1060,157 @@ function reduzirPuro(n) {
     return num;
 }
        
- 
+function gerarPiramide(nome){
+    let base = [];
+    for(let l of nome.toUpperCase()){ if(l !== " "){ let v = valorLetraMatriz(l); if(v) base.push(v); } }
+    let linhas = [base];
+    while(base.length > 1){
+        let nova = [];
+        for(let i=0; i<base.length-1; i++){
+            let soma = base[i] + base[i+1];
+            while(soma > 9) soma = soma.toString().split('').reduce((a,b)=>+a + +b, 0);
+            nova.push(soma);
+        }
+        linhas.push(nova);
+        base = nova;
+    }
+    return linhas;
+}
+
+   
+
+// Adicione esta função para o código saber agrupar os números de 2 em 2
+function topo(base) {
+    let arcanos = [];
+    for (let i = 0; i < base.length - 1; i++) {
+        arcanos.push(parseInt("" + base[i] + base[i + 1]));
+    }
+    return arcanos;
+}        
+
+function detectarNegativas(linhas) {
+    let detalhes = [];
+    let pos = [];
+    let numsSet = new Set();
+
+    linhas.forEach((linha, i) => {
+        let j = 0;
+        while (j < linha.length) {
+            let num = linha[j];
+            let cont = 1;
+            while (j + cont < linha.length && linha[j + cont] === num) { cont++; }
+
+            if (cont >= 3) {
+                numsSet.add(num);
+                // Calcula o deslocamento (offset) para alinhar com as colunas do topo
+                let offset = Math.floor(i / 2); 
+                detalhes.push({
+                    numero: num,
+                    colunaInicio: j + offset,
+                    repeticoes: cont,
+                    linha: i
+                });
+                for (let k = j; k < j + cont; k++) pos.push({ l: i, c: k });
+                j += cont;
+            } else { j++; }
+        }
+    });
+    return { pos, nums: [...numsSet], detalhes };
+}
+
+function calcularDatasVigenciaNegativa(dataNascStr, idadeInicio, duracaoTotal) {
+    let partes = dataNascStr.split("/");
+    // Assume formato DD/MM/AAAA do seu input atual
+    let dataBase = new Date(parseInt(partes[2]), parseInt(partes[1]) - 1, parseInt(partes[0]));
+
+    let dataIni = new Date(dataBase);
+    dataIni.setFullYear(dataIni.getFullYear() + idadeInicio);
+    
+    let dataFim = new Date(dataIni);
+    dataFim.setFullYear(dataFim.getFullYear() + duracaoTotal);
+
+    return {
+        ini: dataIni.toLocaleDateString('pt-BR'),
+        fim: dataFim.toLocaleDateString('pt-BR')
+    };
+}        
+
+ // Detecta cada triângulo de 9 individualmente (Financeiro)
+function detectarFinanceirasIndependentes(linhas) {
+    let encontrados = [];
+    // Percorre até a penúltima linha (porque o triângulo precisa de uma linha abaixo)
+    for (let i = 0; i < linhas.length - 1; i++) {
+        for (let j = 0; j < linhas[i].length - 1; j++) {
+            
+            // CONDIÇÃO REAL: Encontrou dois 99 lado a lado?
+            if (linhas[i][j] === 9 && linhas[i][j + 1] === 9) {
+                
+                // Agora verifica se EXATAMENTE abaixo do primeiro 9 existe outro 9
+                // Na pirâmide, o número abaixo de linhas[i][j] fica em linhas[i+1][j]
+                if (linhas[i + 1][j] === 9) {
+                    let offset = Math.floor(i / 2);
+                    encontrados.push({
+                        colunaInicio: j + offset,
+                        repeticoes: 2, 
+                        linha: i
+                    });
+                }
+            }
+        }
+    }
+    return encontrados;
+}
+// Detecta cada sequência especial de 3 dígitos individualmente
+function detectarEspeciaisIndependentes(linhas) {
+    let encontrados = [];
+    const bancoEsp = textos.SeqEspeciais || {};
+    linhas.forEach((linha, i) => {
+        for (let j = 0; j < linha.length - 2; j++) {
+            let seq = "" + linha[j] + linha[j + 1] + linha[j + 2];
+            if (bancoEsp[seq]) {
+                let offset = Math.floor(i / 2);
+                encontrados.push({
+                    numero: seq,
+                    colunaInicio: j + offset,
+                    repeticoes: 3,
+                    linha: i
+                });
+            }
+        }
+    });
+    return encontrados;
+}       
+        
+ function gerarBlocoPotenciasNumericas(baseNumerica) {
+    // A função topo() já existe no seu código e faz o parseInt(base[i] + base[i+1])
+    const potencias = topo(baseNumerica); 
+    
+    let html = `
+        <div class="secao-card" style="border-top: 2px solid #827108; margin-top: 20px; padding-top: 20px;">
+            <h2 class="titulo-topico" style="color: #827108; text-align: center;">⚡ Potências Numéricas</h2>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 20px;">
+                ${potencias.map(p => `<span style="background: #827108; color: white; padding: 5px 12px; border-radius: 20px; font-weight: bold;">${p}</span>`).join('')}
+            </div>
+            <div class="lista-textos-potencias">
+    `;
+
+    potencias.forEach(p => {
+        // Busca no seu textos.js a chave textosPotencias[p]
+        const interpretacao = (window.textosPotencias && window.textosPotencias[p]) 
+                              ? window.textosPotencias[p] 
+                              : `A vibração da Potência ${p} traz uma energia específica para sua matriz quântica.`;
+        
+        html += `
+            <div class="item-potencia" style="margin-bottom: 15px; text-align: left;">
+                <b style="color: #827108; font-size: 1.1em;">Potência ${p}:</b>
+                <div class="texto-res">${aplicarFiltroTexto(interpretacao)}</div>
+            </div>
+        `;
+    });
+
+    html += `</div></div>`;
+    return html;
+}       
 // DICIONÁRIO DE EXIBIÇÃO PREMIUM (Tradução da Lógica para o Relatório)
 const nomesExibicao = {
     "dia": "Vibração do Dia de Nascimento",
@@ -1195,6 +1345,30 @@ function aplicarFiltroNomeComposto(texto) {
     return texto.replace(/MASCULINO-FEMININO-NEUTRO/gi, `<strong>${pNome}</strong>`);
 }
         
+// Função para calcular o Desejo Oculto usando a SUA 'tabela' Cabalística
+function calcularDesejoOculto(nome) {
+    const contagem = {};
+    // Limpa o nome e deixa em maiúsculo para bater com a sua const tabela
+    const nomeLimpo = nome.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
+    
+    for (let letra of nomeLimpo) {
+        if (tabela[letra]) { // AQUI: Usando o nome exato da sua constante
+            const num = tabela[letra];
+            contagem[num] = (contagem[num] || 0) + 1;
+        }
+    }
+    
+    let maxRepeticoes = 0;
+    let numeroDesejo = 0;
+    for (const n in contagem) {
+        if (contagem[n] > maxRepeticoes) {
+            maxRepeticoes = contagem[n];
+            numeroDesejo = n;
+        }
+    }
+    return { numero: numeroDesejo, qtd: maxRepeticoes };
+}
+
 
 
         
@@ -2168,7 +2342,309 @@ let vTransitoCalculado = reduzirPuro(letrasAno.reduce((s, l) => s + calcularValo
     return { html: htmlFinal, dados: {} }; 
 }
 
+const bancoProfissoes = {
+    1: [
+        "Diretor Geral", "Gerente de Projetos", "Engenheiro de Automação", "Arquiteto Urbanista", "Administrador de Empresas", "Delegado de Polícia", "Cirurgião Geral", "Oficial das Forças Armadas", "Gestor de Startups", "Engenheiro de Software", "Diretor Comercial", "Coordenador Industrial", "Analista de Estratégia", "Piloto Comercial", "Advogado Sênior", "Líder de Produção", "Gestor de Inovação", "Empreendedor Digital", "Consultor de Gestão", "Arquiteto de Soluções", "Diretor de Marketing", "Gerente de Operações", "Comandante de Navio", "Engenheiro Aeroespacial", "Líder de Vendas B2B", "Supervisor de Logística", "Coordenador de Equipes", "Chefe de Departamento", "Gestor Público", "Juiz de Direito", "Engenheiro Civil", "Diretor de Arte", "Gerente de TI", "Estrategista de Negócios", "Líder de Unidade de Saúde", "Desenvolvedor Fullstack", "Gerente de Filial", "Supervisor de Obras", "Corretor de Imóveis de Luxo", "Produtor Executivo", "Técnico em Gestão Pública", "Engenheiro Mecatrônico", "Diretor Financeiro", "Analista de Fusões e Aquisições", "Especialista em Branding", "Mestre de Obras Especializado", "Gerente de Unidade Industrial", "Consultor Jurídico", "Coordenador de Vendas", "Diretor Tecnológico"
+    ],
+    2: [
+        "Psicólogo Clínico", "Analista de RH", "Enfermeiro", "Mediador Judicial", "Diplomata", "Bibliotecário", "Estatístico", "Historiador", "Secretário Executivo", "Assistente Social", "Terapeuta Ocupacional", "Farmacêutico", "Analista de Crédito", "Arquivista", "Concierge Hospitalar", "Analista de Dados", "Tradutor Técnico", "Geógrafo", "Pesquisador Científico", "Zootecnista", "Ecólogo", "Fonoaudiólogo", "Analista de Atendimento", "Suporte Técnico Especializado", "Técnico de Enfermagem", "Assistente Jurídico", "Secretário Bilíngue", "Nutricionista", "Analista de Compliance", "Auxiliar de Pesquisa Clínica", "Sociólogo", "Museólogo", "Curador de Arte", "Antropólogo", "Analista de Suporte ao Cliente", "Gestor de Parcerias", "Cerimonialista", "Analista de Qualidade", "Técnico em Documentação", "Relacionamento com Cliente", "Agente de Saúde", "Fisioterapeuta", "Biólogo", "Analista de Processos de RH", "Auxiliar de Biblioteca", "Pesquisador de Mercado", "Apoio Administrativo", "Secretário Escolar", "Avaliador de Imóveis", "Tradutor e Intérprete"
+    ],
+    3: [
+        "Publicitário", "Jornalista", "Relações Públicas", "Designer Gráfico", "Ator/Atriz", "Chef de Cozinha", "Fotógrafo Profissional", "Influenciador Digital", "Organizador de Eventos", "Professor de Artes", "Escritor", "Designer de Moda", "Copywriter", "Radialista", "Locutor de Rádio e TV", "Marketing de Conteúdo", "Cenógrafo", "Produtor de Vídeo", "Ilustrador Digital", "Compositor Musical", "Dançarino Profissional", "Maquiador Artístico", "Vitrinista", "Promotor de Eventos", "Vendedor Técnico", "Guia de Turismo", "Decorador de Festas", "Social Media", "Dublador", "Estilista", "Editor de Vídeo", "Personal Stylist", "Produtor de Moda", "Artesão Profissional", "Mestre de Cerimônias", "Relações Públicas de Eventos", "Designer de Joias", "Cartunista", "Pintor Artístico", "Educador Musical", "Sommelier", "Guia Cultural", "Animador Cultural", "Maquiador de Efeitos Especiais", "Coordenador de Marketing", "Assessor de Imprensa", "Hostess de Eventos", "Arquiteto de Interiores", "Digital Designer", "Designer de Experiência do Usuário (UX)"
+    ],
+    4: [
+        "Contador Auditor", "Administrador Financeiro", "Engenheiro Civil", "Técnico em Edificações", "Analista de Sistemas", "Gerente Industrial", "Bancário", "Fiscal de Tributos", "Militar de Carreira", "Controlador de Tráfego", "Engenheiro de Produção", "Agrônomo", "Técnico em Eletrotécnica", "Mecânico Industrial", "Almoxarife Sênior", "Zelador de Patrimônio", "Analista Fiscal", "Agrimensor", "Programador Backend", "Perito Criminal", "Estatístico de Produção", "Técnico Agrícola", "Fiscal de Obras", "Engenheiro de Segurança", "Gerente de Logística", "Técnico de Redes", "Analista de Infraestrutura de TI", "Controlador de Estoque", "Engenheiro de Estruturas", "Comprador Técnico", "Supervisor de Almoxarifado", "Escriturário", "Tesoureiro", "Técnico em TI", "Instalador de Sistemas de Segurança", "Técnico de Laboratório Industrial", "Geoprocessador", "Auditor de Processos", "Inspetor de Qualidade", "Técnico em Mecânica de Aeronaves", "Técnico de Telecomunicações", "Gestor de Manutenção", "Eletricista de Manutenção", "Analista de BI", "Analista de Custos", "Fiscal de Alfândega", "Gerente de Patrimônio", "Técnico em Saneamento", "Mecânico de Precisão", "Contador Gerencial"
+    ],
+    5: [
+        "Executivo de Vendas", "Agente de Viagens", "Piloto de Aeronave", "Guia de Expedição", "Especialista em E-commerce", "Promotor de Eventos", "Tráfego Pago", "Marketing Multinível", "Tradutor Simultâneo", "Marinheiro de Convés", "Comissário de Bordo", "Jornalista Investigativo", "Publicitário de Guerrilha", "Motorista de Caminhão (Pesados)", "Instrutor de Voo", "Guia de Turismo Internacional", "Consultor de Expansão", "Agente de Câmbio", "Importador/Exportador", "Intercambista Profissional", "Vendedor Externo", "Empresário de Transportes", "Geólogo", "Atleta Profissional", "Relações Internacionais", "Fotógrafo de Viagens", "Comissário de Marinha", "Guia de Mergulho", "Mestre de Obras Móveis", "Distribuidor Logístico", "Consultor de Mudanças", "Pesquisador de Campo", "Promotor de Marcas", "Gestor de Redes Sociais", "Estrategista de Vendas", "Correspondente Internacional", "Navegador", "Paraquedista Profissional", "Instrutor de Esportes Radicais", "Agente de Atletas", "Representante Comercial", "Despachante Aduaneiro", "Motorista de Ônibus Rodoviário", "Vendedor de Tecnologia", "Consultor de Franquias", "Promotor Turístico", "Nômade Digital", "Analista de Logística Internacional", "Tradutor de Documentos", "Especialista em Mercado Global"
+    ],
+    6: [
+        "Médico de Família", "Professor de Educação Básica", "Nutricionista Clínico", "Psicopedagogo", "Veterinário de Pequenos Animais", "Fisioterapeuta Hospitalar", "Odontologista", "Assistente Social", "Enfermeiro Obstetra", "Decorador de Interiores", "Conselheiro Tutelar", "Puericultor", "Florista Profissional", "Cozinheiro Industrial", "Artesão de Elite", "Orientador Educacional", "Psicanalista", "Doceiro Profissional", "Paisagista de Jardins", "Cuidador de Idosos (Técnico)", "Pedagogo", "Dono de Escola Infantil", "Consultor de Estilo", "Homeopata", "Costureiro de Alta Costura", "Gerente de Hospital", "Educador Físico", "Terapeuta de Casal", "Psicólogo Infantil", "Fonoaudiólogo", "Tutor Acadêmico", "Monitor Escolar", "Professor de Música", "Artesão Comunitário", "Assistente Social Hospitalar", "Coordenador de Projetos Sociais", "Educador Social", "Gestor de Creche", "Auxiliar de Dentista", "Técnico de Enfermagem do Trabalho", "Terapeuta de Família", "Designer de Interiores Residencial", "Consultor de Alimentação Saudável", "Agente Comunitário de Saúde", "Obstetra", "Pediatra", "Geriatra", "Especialista em Saúde da Mulher", "Gestor de ONGs", "Voluntário Profissional"
+    ],
+    7: [
+        "Cientista de Dados", "Pesquisador Acadêmico", "Analista de Cyber Security", "Programador de IA", "Estrategista de Dados", "Professor Universitário", "Analista de Sistemas Forense", "Neuropsicólogo", "Arqueólogo", "Astrônomo", "Teólogo", "Engenheiro de Software", "Bibliotecário Digital", "Engenheiro de Hardware", "Físico Quântico", "Matemático", "Microbiologista", "Analista Químico", "Radiologista", "Técnico de Laboratório de Pesquisa", "Ocultista Teórico", "Especialista em Nuvem (Cloud)", "Programador de Banco de Dados", "Escritor Investigativo", "Consultor de Inteligência", "Geofísico", "Bioinformata", "Paleontólogo", "Geneticista", "Engenheiro de Redes Neurais", "Analista de Vulnerabilidades", "Pesquisador de Mercado Técnico", "Perito Avaliador", "Arquivista Digital", "Analista de BI (Business Intelligence)", "Engenheiro de P&D", "Desenvolvedor Fullstack", "Criptógrafo", "Analista de Malware", "Técnico em Metrologia", "Especialista em Blockchain", "Pesquisador de Materiais", "Analista de Automação de Dados", "Historiador Pesquisador", "Técnico de TI Especializado", "Filósofo de Ética Tecnológica", "Analista Forense Digital", "Bioquímico", "Físico Médico", "Estrategista de Segurança da Informação"
+    ],
+    8: [
+        "Diretor Financeiro (CFO)", "Banqueiro de Investimentos", "Juiz Federal", "Advogado Tributarista", "Delegado de Polícia Civil", "Auditor Fiscal da Receita", "Engenheiro de Minas", "Corretor de Bolsa de Valores", "Gerente de Patrimônio", "Presidente de Empresa", "Gestor de Franquias", "Dono de Concessionária", "Comerciante Atacadista", "Engenheiro Mecânico", "Zootecnista Industrial", "Perito Avaliador Judicial", "Gestor de Capital de Risco", "Industrial Têxtil", "Diretor de Operações", "Governador de Estado", "Procurador da República", "Leiloeiro Oficial", "Administrador de Shoppings", "Político de Carreira", "Dono de Rede de Lojas", "Engenheiro Civil de Obras Públicas", "Promotor de Justiça", "Gestor de Ativos Imobiliários", "Industrial de Alimentos", "Executivo de Contas Senior", "Dono de Mineradora", "Comerciante de Commodities", "Gerente de Logística Portuária", "Engenheiro de Petróleo", "Contador Gerencial", "Gestor de Portfólio de Ações", "Consultor de Fusões", "Superintendente Bancário", "Analista de Investimentos", "Industrial de Metalurgia", "Gestor de Fundos de Pensão", "Vice-Presidente Executivo", "Secretário de Estado de Finanças", "Engenheiro de Produção Industrial", "Diretor de Compliance", "Presidente de Cooperativa", "Empresário do Agronegócio", "Dono de Empresa de Logística", "Sócio-Diretor de Auditoria", "Administrador de Fazendas e Usinas"
+    ],
+    9: [
+        "Médico Humanitário", "Filantropo Profissional", "Ativista Ambiental", "Professor de Direitos Humanos", "Líder Comunitário", "Diretor de Recursos Humanos", "Comunicador Social de Massa", "Ecologista", "Escritor Humanista", "Dramaturgo", "Terapeuta Holístico", "Veterinário de Reabilitação", "Conselheiro de Carreira", "Advogado de Direitos Internacionais", "Músico Compositor", "Trabalhador de Ajuda Humanitária", "Enfermeiro de Saúde Pública", "Professor de Idiomas", "Tradutor de Obras Clássicas", "Voluntário da ONU", "Sociólogo Humanitário", "Poeta", "Gestor de Institutos Culturais", "Guia de Ecoturismo", "Curador de Museus Sociais", "Cientista Social", "Missionário", "Terapeuta de Reabilitação Física", "Ativista Social", "Coordenador de ONG", "Educador para a Paz", "Assistente de Refugiados", "Ecopsicólogo", "Guia de Parques Nacionais", "Pesquisador de Culturas Étnicas", "Escritor de Viagens", "Mestre em Yoga", "Coordenador de Abrigos", "Educador Ambiental", "Biólogo da Conservação", "Terapeuta pelo Riso", "Agente de Cooperação Internacional", "Consultor de Sustentabilidade", "Professor de Filosofia", "Escritor de Documentários", "Produtor de Cinema Social", "Gestor de Projetos de Inclusão", "Terapeuta Ocupacional Social", "Político Filantropo", "Guardião de Herança Cultural"
+    ],
+    11: [
+        "Líder Inspirador", "Diplomata de Paz", "Escritor Visionário", "Psicólogo Transpessoal", "Cientista de Vanguarda", "Filósofo Moderno", "Artista Plástico de Conceito", "Estrategista de Vida", "Palestrante Motivacional", "Inventor Tecnológico", "Coach de Liderança", "Consultor Metafísico", "Analista Psíquico", "Idealizador de Políticas Públicas", "Reformador Social", "Mestre de Meditação", "Neurocientista", "Diretor de Projetos Futuristas", "Teórico de Sistemas Complexos", "Curador Holístico", "Bioengenheiro", "Consultor de Ética Global", "Escritor de Autoajuda", "Terapeuta Energético", "Professor de Esoterismo Acadêmico", "Pioneiro Tecnológico", "Guia de Expansão de Consciência", "Astrofísico", "Designer de Experiência Humana", "Embaixador Cultural", "Psicanalista Junguiano", "Médico Integrativo", "Pesquisador de IA Ética", "Estrategista de Inovação", "Mestre de Artes Marciais", "Consultor Espiritual", "Físico Teórico", "Diretor de Cinema Visionário", "Escritor de Ficção Científica", "Terapeuta Quântico", "Líder de Movimentos Ideológicos", "Mentor de Executivos", "Psicólogo Holístico", "Inovador de Métodos Educativos", "Pesquisador de Fenômenos Humanos", "Guia de Retiros", "Consultor de Cultura Organizacional", "Idealizador de Startups Sociais", "Líder de Pensamento", "Filósofo da Tecnologia"
+    ],
+    22: [
+        "Arquiteto de Grandes Obras", "Engenheiro Aeroespacial", "Embaixador", "Gestor Público de Grandes Cidades", "Líder de Multinacional", "Planejador Urbano Sustentável", "Diretor Logístico Global", "Filantropo Continental", "Reformador Educacional", "Engenheiro de Infraestrutura", "Coordenador Mundial de ONGs", "Criador de Métodos de Ensino", "Mestre em Engenharia de Energia", "Gestor de Cidades Inteligentes", "Diplomata Especial", "Estrategista Econômico Mundial", "Engenheiro Naval", "Diretor de Saneamento Global", "Construtor de Rodovias e Ferrovias", "Gestor de Ecossistemas", "Magnata da Infraestrutura", "Coordenador de Saúde Global", "Mestre de Projetos Governamentais", "Diretor de Parques Tecnológicos", "Idealizador de Sistemas Financeiros", "Gestor de Grandes Represas", "Administrador de Blocos Econômicos", "Diretor de Planejamento Nacional", "Engenheiro de Telecomunicações", "Gestor de Energia Nuclear", "Líder de Alianças Estratégicas", "Presidente de Banco Internacional", "Desenvolvedor Urbano", "Engenheiro de Minas e Energia", "Diretor de Organizações Internacionais", "Coordenador de Ajuda Mundial", "Estrategista de Defesa", "Engenheiro de Reconstrução", "Gestor de Recursos Naturais", "Diretor de Agência Espacial", "Líder de Transformação Digital", "Planejador de Saneamento", "Arquiteto de Sistemas Educacionais", "Consultor de Governança", "Engenheiro de Irrigação", "Gestor Industrial de Base", "Diretor de Fundos Estruturais", "Idealizador de Redes Logísticas", "Engenheiro de Transportes", "Construtor de Sistemas Globais"
+    ],
+    33: [
+        "Mestre Educador de Elite", "Líder Humanitário Mundial", "Conselheiro de Cúpulas Internacionais", "Diretor de Caridade Global", "Terapeuta de Cura Profunda", "Guia de Sustentabilidade", "Mestre Nutricionista Social", "Protetor das Artes Clássicas", "Mentor de Mentores", "Doutor em Teologia", "Guardião de Saberes Ancestrais", "Gestor de Centros de Reabilitação", "Professor de Moral e Ética", "Coordenador de Ajuda Humanitária", "Mestre de Cerimônias Religiosas", "Educador Especialista em Inclusão", "Psicólogo de Traumas Coletivos", "Artesão de Ícones Culturais", "Líder de Movimentos Sociais de Paz", "Escritor de Textos Inspiracionais", "Orientador de Pais e Mestres", "Médico de Cuidados Paliativos", "Consultor de Responsabilidade Social", "Mentor de Líderes Espirituais", "Gestor de Bancos de Alimentos", "Protetor da Fauna e Flora Mundial", "Educador Ambiental de Vanguarda", "Mestre de Terapia Familiar", "Harmonizador Social", "Líder de Reconciliação Nacional", "Coordenador de Abrigos Internacionais", "Mentor de Projetos de Vida", "Mestre em Artes de Cura", "Professor de Sabedoria Humana", "Diretor de Fundações Humanitárias", "Líder de Comunidades de Paz", "Coordenador de Educação para Refugiados", "Terapeuta Social", "Consultor de Ética", "Mestre em Humanidades", "Guia de Desenvolvimento Humano", "Harmonizador de Conflitos Étnicos", "Protetor da Herança Cultural", "Líder de Voluntariado", "Mentor de Jovens Talentos", "Mestre em Terapia Ocupacional", "Educador de Valores Humanos", "Diretor de Centros de Espiritualidade", "Conselheiro Humanitário", "Mestre Guia da Compaixão"
+    ]
+};
 
+const bancoEstudos = {
+    1: {
+        faculdades: ["Administração de Empresas", "Engenharia de Produção", "Direito", "Gestão Pública", "Engenharia de Software"],
+        cursosTecnicos: ["Liderança de Equipes", "Gestão de Startups (SEBRAE)", "MBA em Inovação", "Gestão Comercial", "Oratória e Influência"]
+    },
+    2: {
+        faculdades: ["Psicologia", "Recursos Humanos", "Enfermagem", "Serviço Social", "Pedagogia"],
+        cursosTecnicos: ["Mediação de Conflitos", "Auxiliar de Almoxarifado (SENAI)", "Atendimento ao Cliente (SENAC)", "Escrita Administrativa", "Secretariado"]
+    },
+    3: {
+        faculdades: ["Publicidade e Propaganda", "Jornalismo", "Artes Cênicas", "Marketing", "Design Gráfico"],
+        cursosTecnicos: ["Social Media Estratégico", "Fotografia Digital", "Vendas de Alto Impacto", "Edição de Vídeo", "Culinária Profissional (SENAC)"]
+    },
+    4: {
+        faculdades: ["Engenharia Civil", "Ciências Contábeis", "Arquitetura", "Logística", "Agronomia"],
+        cursosTecnicos: ["Técnico em Edificações", "Mecânica Industrial (SENAI)", "Segurança do Trabalho", "Excel Avançado", "Gestão de Processos"]
+    },
+    5: {
+        faculdades: ["Turismo", "Relações Internacionais", "Comércio Exterior", "Educação Física", "Geologia"],
+        cursosTecnicos: ["Marketing Digital", "Gestão de E-commerce", "Tráfego Pago", "Guia de Turismo", "Pilotagem de Drones"]
+    },
+    6: {
+        faculdades: ["Medicina", "Nutrição", "Veterinária", "Design de Interiores", "Psicopedagogia"],
+        cursosTecnicos: ["Cuidador de Idosos", "Confeitaria Profissional", "Decoração de Ambientes", "Primeiros Socorros", "Auxiliar de Creche"]
+    },
+    7: {
+        faculdades: ["Ciência da Computação", "Física", "Estatística", "Filosofia", "Análise de Sistemas"],
+        cursosTecnicos: ["Cyber Security", "Programação Python", "Data Analytics", "Manutenção de Hardware", "Investigação Digital"]
+    },
+    8: {
+        faculdades: ["Direito Tributário", "Economia", "Engenharia de Minas", "Gestão Financeira", "Ciências Políticas"],
+        cursosTecnicos: ["Gestão de Negócios (SEBRAE)", "Mercado de Capitais", "Imobiliário", "Auditoria Interna", "Estratégia de Vendas"]
+    },
+    9: {
+        faculdades: ["Direitos Humanos", "Ecologia", "Sociologia", "Letras", "Produção Cultural"],
+        cursosTecnicos: ["Gestão de ONGs", "Educação Ambiental", "Artesanato Sustentável", "Línguas Estrangeiras", "Primeiros Socorros Comunitários"]
+    },
+    11: {
+        faculdades: ["Neurociência", "Diplomacia", "Psicologia Transpessoal", "Astrofísica"],
+        cursosTecnicos: ["Master Coach", "Meditação e Mindfulness", "Liderança Inspiracional", "Bioética", "Inteligência Artificial"]
+    },
+    22: {
+        faculdades: ["Engenharia de Infraestrutura", "Planejamento Urbano", "Gestão Global"],
+        cursosTecnicos: ["Gestão de Grandes Projetos", "Cidades Inteligentes", "Logística Internacional", "Sustentabilidade Industrial"]
+    },
+    33: {
+        faculdades: ["Mestrado em Humanidades", "Saúde Coletiva", "Doutorado em Ética"],
+        cursosTecnicos: ["Mentoria de Líderes", "Terapia Familiar", "Responsabilidade Social", "Capacitação Humanitária"]
+    }
+};
+        
+
+const bancoAreasAtuacao = {
+    1: [
+        "Liderança Executiva", "Empreendedorismo Digital", "Gestão de Startups", "Inovação Tecnológica", "Engenharia de Automação", "Consultoria de Estratégia", "Vendas Corporativas", "Arquitetura e Urbanismo", "Design Industrial", "Direção de Arte", "Automobilismo de Competição", "Construção Civil Pesada", "Gestão Pública", "Marketing Político", "Desenvolvimento de Software", "Exploração Espacial", "Inteligência Militar", "Alta Gestão Hospitalar", "Segurança Cibernética", "Planejamento Estratégico", "Desenvolvimento de Novos Produtos", "Indústria Aeroespacial", "Energias Renováveis", "Banca de Investimentos", "Treinamento de Liderança", "Coaching Executivo", "Publicidade de Alto Impacto", "Engenharia de Produção", "Direito Constitucional", "Governança Corporativa", "Comércio Exterior", "Logística Avançada", "Gestão de Riscos", "Indústria de Defesa", "Administração de Propriedades", "Varejo de Luxo", "Franquias", "Inovação em Saúde", "Desenvolvimento de Jogos", "Produção Cinematográfica", "E-commerce Estratégico", "Telecomunicações", "Gestão de Talentos", "Sistemas de Inteligência", "Consultoria Financeira", "Metalurgia", "Mineração Geológica", "Agronegócio de Alta Tecnologia", "Engenharia Mecatrônica", "Gestão de Infraestrutura", "Gestão de Operações B2B", "Direito Corporativo", "Branding Corporativo", "Expansão de Mercados", "Finanças Corporativas", "Sistemas de ERP", "Gestão de Projetos Industriais", "Estratégia de Marketing", "Desenvolvimento de Marcas", "Auditoria de Gestão", "Liderança de Vendas", "Consultoria de Negócios", "Direção Comercial", "Headhunting", "Gestão de Crise Corporativa", "Arquitetura de Sistemas", "Desenvolvimento de Carreira", "Propriedade Intelectual", "Logística Internacional", "Gestão Industrial", "Infraestrutura de TI", "Estratégia de E-commerce", "Mercado de Ações", "Capital de Risco", "Direito de Patentes", "Gestão de Manutenção", "Engenharia de Estruturas", "Desenvolvimento de Hardware", "Segurança de Dados", "Inovação de Processos", "Comércio Internacional", "Vendas de Tecnologia", "Direção de Projetos", "Marketing de Performance", "Growth Hacking", "Consultoria de TI", "Liderança Militar", "Gestão de Ativos Financeiros", "Engenharia de Minas", "Arquitetura Digital", "Design de Estratégia", "Governança de Dados", "Fusões e Aquisições", "Estratégia Logística", "Gestão de Mudança", "Planejamento Financeiro", "Sistemas de Produção", "Varejo Estratégico", "Comercialização Digital"
+    ],
+    2: [
+        "Diplomacia", "Mediação de Conflitos", "Psicologia Clínica", "Recursos Humanos", "Secretariado de Alto Nível", "Biblioteconomia Digital", "Estatística Aplicada", "Contabilidade Gerencial", "Design de Interiores", "Ecologia e Preservação", "Enfermagem Especializada", "Gestão Hoteleira", "Serviços Sociais", "Terapias Holísticas", "Turismo Receptivo", "Suporte ao Cliente (UX)", "Antropologia Social", "História e Pesquisa", "Arquivologia", "Música e Composição", "Farmácia", "Nutrição", "Educação Especial", "Apoio Administrativo", "Assistência Jurídica", "Sociologia", "Tradução e Interpretação", "Artesanato de Luxo", "Gestão de Condomínios", "Relacionamento com Investidores", "Análise de Dados Sociais", "Paleontologia", "Geografia Humana", "Curadoria de Museus", "Psicopedagogia", "Terapia Ocupacional", "Serviços Públicos de Apoio", "Secretariado Escolar", "Apoio a Idosos", "Logística de Distribuição", "Gestão de ONGs", "Culinária e Gastronomia", "Puericultura", "Estética Social", "Museologia", "Documentação Técnica", "Aconselhamento Familiar", "Saúde Pública", "Análise de Crédito", "Sistemas de Suporte", "Arquivística", "Suporte em TI", "Assistência Hospitalar", "Atendimento ao Cliente", "Gestão de Bibliotecas", "Pesquisa Social", "Escritura de Biografias", "Consultoria de RH", "Administração de Benefícios", "Auxiliar Jurídico", "Tradução Simultânea", "Gestão de Atendimento", "Auxiliar Legislativo", "Técnico de Laboratório", "Secretariado Executivo", "Análise de Cobrança", "Apoio Psicológico", "Educação Infantil", "Enfermagem Comunitária", "Pesquisa Genealógica", "Moderação de Conteúdo", "Gestão de Documentos", "Assistência Técnica", "Acompanhamento Terapêutico", "Suporte de Redes", "Gestão de Parcerias", "Religião e Apoio", "Serviços de Concierge", "Planejamento de Viagens", "Controle de Estoque", "Administração Escolar", "Apoio à Maternidade", "Gestão de Clínicas", "Análise de Satisfação", "Trabalho Voluntário", "Mediação Familiar", "Recrutamento e Seleção", "Gestão de Museus", "Assistência Farmacêutica", "Arquitetura Residencial", "Decoração de Interiores", "Educação Ambiental", "Auxiliar de Pesquisa", "Documentação Digital", "Assistência a Refugiados", "Saúde da Família", "Orientação de Carreira", "Apoio Administrativo", "Gestão de Moradias"
+    ],
+    3: [
+        "Comunicação Social", "Artes Cênicas", "Publicidade e Propaganda", "Jornalismo Digital", "Design Gráfico", "Moda e Estilo", "Entretenimento de Massa", "Educação Infantil", "Gastronomia Autoral", "Relações Públicas", "Marketing Digital", "Eventos de Luxo", "Literatura e Escrita", "Estética e Beleza", "Telemarketing Estratégico", "Artesanato Premium", "Produção Musical", "Fotografia Profissional", "Cenografia", "Rádio e Podcast", "Copywriting", "Sommelieria", "Dublagem", "Animação 3D", "Design de Joias", "Decoração de Festas", "Maquiagem Artística", "Turismo Cultural", "Ilustração Digital", "Social Media", "Assessoria de Imprensa", "Composição Musical", "Dança e Coreografia", "Produção de Conteúdo", "Vendas Diretas", "Lojas Conceito", "Arquitetura Efêmera", "Educação Criativa", "Branding Pessoal", "E-sports", "Visual Merchandising", "Crítica de Arte", "Gestão Cultural", "Teatro Musical", "Floricultura de Eventos", "Joalheria", "Audiovisual", "Design de Games (Arte)", "Curadoria de Redes Sociais", "Artes Plásticas", "Marketing de Influência", "Assessoria de Imagem", "Design de Interiores", "Vitrinismo", "Roteirização de Vídeos", "Produção de Moda", "Organização de Casamentos", "Estilismo", "Marketing de Conteúdo", "Fotografia de Estúdio", "Escrita Criativa", "Locução Profissional", "Desenho Animado", "Edição de Imagem", "Personal Stylist", "Varejo de Moda", "Publicidade Criativa", "Humor e Comédia", "Dramaturgia", "Direção de Arte", "Ilustração Infantil", "Música Popular", "Produção de Festas", "Eventos Corporativos", "Jornalismo de Moda", "Comunicação Visual", "Artes Digitais", "Marketing de Entretenimento", "Produção Audiovisual", "Design de Embalagens", "UX Design (Visual)", "Criação de Personagens", "Maquiagem de Efeitos", "Atores de Teatro", "Cinema e TV", "Gestão de Ateliês", "Desenvolvimento Criativo", "Assessoria de Imprensa", "Comunicação Interna", "Estratégia de Redes Sociais", "Fotografia de Casamento", "Produção de Shows", "Cenografia para Eventos", "Joalheria Artesanal", "Desenho de Moda", "Marketing Sensorial", "Branding para Artistas", "Educação Musical", "Consultoria de Estilo"
+    ],
+    4: [
+        "Engenharia Civil", "Administração de Empresas", "Logística Integrada", "Segurança Patrimonial", "Direito Tributário", "Auditoria Contábil", "Operações Industriais", "Mecânica de Precisão", "Agricultura Mecanizada", "Eletricidade e Energia", "Mercado de Capitais", "Bancos e Finanças", "TI e Infraestrutura", "Indústria Gráfica", "Arquitetura Técnica", "Construção de Estradas", "Mineração", "Gestão de Estoque", "Engenharia de Estruturas", "Estatística de Produção", "Fiscalização e Controle", "Sistemas de Segurança", "Desenvolvimento Backend", "Mecânica Automotiva", "Metalurgia Pesada", "Controle de Qualidade", "Planejamento Urbano", "Hardware e Redes", "Manutenção Industrial", "Geoprocessamento", "Agrimensura", "Tesouraria Corporativa", "Gestão de Patrimônio", "Cartografia", "Instalações Elétricas", "Operações Ferroviárias", "Indústria Têxtil", "Controle de Tráfego", "Serviços Postais", "Limpeza Industrial", "Arquivística Digital", "Engenharia Química", "Processamento de Metais", "Zootecnia", "Administração Condominial", "Direito Civil", "Consultoria de Custos", "Engenharia Sanitária", "Suprimentos (Procurement)", "Normatização Técnica", "Engenharia Mecânica", "Gestão de Processos", "Sistemas de ERP", "Contabilidade Fiscal", "Técnico em Edificações", "Manutenção Predial", "Gestão de Dados", "Infraestrutura de Redes", "Agronomia", "Controle Industrial", "Faturamento", "Gestão de Suprimentos", "Segurança do Trabalho", "Analista de Métodos", "Engenharia de Produção", "Logística de Armazenagem", "Cálculo Estrutural", "Instalações Hidráulicas", "Engenharia Elétrica", "Técnico Agrícola", "Auditoria Interna", "Gestão de Frotas", "Controle de Ativos", "Administração Pública", "Fiscalização de Impostos", "Operação de Máquinas", "Gestão de Resíduos", "Manutenção de Aeronaves", "Técnico de TI", "Suporte de Hardware", "Desenvolvimento de Sistemas", "Analista de Processos", "Inspeção de Segurança", "Controle de Tráfego Aéreo", "Serviços de Zeladoria", "Gestão de Manutenção Preventiva", "Agronegócio Industrial", "Engenharia de Software (Base)", "Montagem Industrial", "Administração Hospitalar", "Logística de Transportes", "Técnico de Automação", "Gestão de Obras", "Desenho Industrial Técnico", "Auditoria de Sistemas", "Controle de Finanças", "Engenharia Metalúrgica", "Gestão de Escritórios"
+    ],
+    5: [
+        "Turismo Internacional", "Comércio Exterior", "Vendas Externas", "Piloto de Aeronaves", "Esportes Radicais", "Intercâmbio Cultural", "Jornalismo de Campo", "Publicidade de Guerrilha", "Geografia Exploratória", "Promoção de Eventos", "Transporte Terrestre", "Marketing Multinível", "Direito Internacional", "Gestão de Viagens", "Marinharia e Navegação", "Comissariado de Bordo", "Fotografia de Aventura", "Importação e Exportação", "Logística Móvel", "Educação Física", "Vendas de Imóveis", "Distribuição de Cargas", "Gestão de Frotas", "Marketing de Influência", "E-commerce Global", "Tráfego Pago", "Consultoria de Mudanças", "Jornalismo de Viagens", "Atividades de Lazer", "Entretenimento Noturno", "Indústria Automobilística", "Exploração de Petróleo", "Telecomunicações Móveis", "Gestão de Franquias", "Promoção Turística", "Inovação Disruptiva", "Vendas de Tecnologia", "Mecânica de Emergência", "Instrução de Voo", "Guia de Montanhismo", "Agenciamento de Atletas", "Desenvolvimento de Apps", "Mídia Externa", "Pesquisa Geológica", "Eventos Esportivos", "Transporte Aéreo", "Freelancing Internacional", "Comunicação Viral", "Expedições Científicas", "Gestão de Crises em Viagens", "Marketing Digital", "Vendas Diretas", "Transporte por Aplicativo", "Logística Expressa", "Treinamento de Vendas", "Agência de Intercâmbio", "Mídia Digital", "Estratégia de Expansão", "Comércio de Eletrônicos", "Vendas de Software (SaaS)", "Marketing de Afiliados", "E-commerce Estratégico", "Consultoria de Viagens", "Lazer e Hospitalidade", "Atividades Recreativas", "Gestão de Clubes", "Organização de Feiras", "Marketing de Eventos", "Vendas de Publicidade", "Assessoria de Imprensa", "Navegação Comercial", "Pilotagem de Drones", "Vendas de Automovéis", "Gestão de Representação", "Comunicação Dinâmica", "Marketing de Guerrilha", "Lançamentos Digitais", "Dropshipping", "Gestão de Mídias Sociais", "Vendas de Serviços", "Consultoria Comercial", "Desenvolvimento de Negócios", "Expansão de Franquias", "Mercado de Câmbio", "Importação de Luxo", "Logística de Distribuição", "Turismo de Aventura", "Gestão de Parques", "Eventos Corporativos Móveis", "Educação de Esportes", "Treinamento de Equipes Externas", "Comunicação de Massa", "Publicidade Digital", "Vendas High Ticket", "Consultoria de Mudança Organizacional", "E-commerce de Moda", "Vendas de Seguros", "Marketing de Vídeo"
+    ],
+    6: [
+        "Medicina Geral", "Nutrição e Saúde", "Pedagogia", "Psicopedagogia", "Medicina Veterinária", "Assistência Social", "Design de Interiores", "Artes Plásticas", "Floricultura", "Gastronomia Saudável", "Recursos Humanos", "Gestão de ONGs", "Odontologia", "Puericultura", "Cuidados Geriátricos", "Fisioterapia", "Obstetrícia", "Decoração Doméstica", "Psicanálise", "Culinária Artesanal", "Paisagismo", "Moda Sustentável", "Educação de Jovens", "Consultoria de Família", "Orientação Educacional", "Homeopatia", "Estética Facial", "Saúde Ocupacional", "Hospitais e Clínicas", "Cuidados com Animais", "Artesanato de Comunidade", "Dona de Escola", "Serviços Comunitários", "Terapia de Casal", "Voluntariado Corporativo", "Ginecologia", "Dermatologia", "Nutrição Esportiva", "Psicologia Infantil", "Gestão Escolar", "Serviços de Buffet", "Design de Móveis", "Costura Sob Medida", "Reabilitação Física", "Educação Especial", "Clínica Médica", "Farmácia Comunitária", "Higiene Pública", "Organização Doméstica (Personal Organizer)", "Terapia pela Arte", "Psicologia Social", "Fonoaudiologia", "Educação Fundamental", "Cuidados Paliativos", "Terapias Integrativas", "Gestão de Creches", "Medicina de Família", "Nutrição Clínica", "Consultoria de Amamentação", "Psicologia de Casal", "Pediatria", "Veterinária de Pequenos Animais", "Culinária Dietética", "Artesanato Terapêutico", "Gestão de Lares de Repouso", "Enfermagem Padrão", "Acompanhamento Terapêutico", "Educação Artística", "Serviços de Cuidador", "Design de Ambientes", "Arquitetura de Hospitais", "Gestão de Clínicas de Estética", "Terapia Familiar", "Assistência Social Judiciária", "Psicologia Escolar", "Educação em Saúde", "Saúde da Mulher", "Gastronomia para Eventos", "Decoração de Festas", "Paisagismo Residencial", "Moda Ética", "Consultoria de Estilo Pessoal", "Higiene Mental", "Terapias de Bem-Estar", "Gestão de Projetos Sociais", "Educador Social", "Saúde Coletiva", "Medicina Holística", "Nutrologia", "Fisiatria", "Aconselhamento Espiritual", "Floricultura Artística", "Cozinha Natural", "Artesanato Criativo", "Gestão de Escolas de Arte", "Cuidados com Bebês", "Terapia Ocupacional Infantil", "Consultoria Nutricional"
+    ],
+    7: [
+        "Pesquisa Científica", "Análise de Sistemas", "Filosofia Teórica", "Psicanálise Profunda", "Arqueologia", "Astronomia", "Perícia Criminal", "Escrita Técnica", "Educação Superior", "Biblioteconomia Especializada", "Informática e Redes", "Teologia", "Esoterismo Científico", "Eletrotécnica", "Processamento de Dados", "Física Quântica", "Matemática Aplicada", "Relojoaria de Luxo", "Microbiologia", "Bioquímica", "Radiologia", "Laboratórios de Análise", "Ocultismo Estruturado", "Cyber Security", "Engenharia de Software", "Big Data", "Inteligência Artificial", "Paleontologia", "Geofísica", "Sistemas Críticos", "Neurociência", "Bioética", "Estatística Avançada", "Investigação Particular", "Estudos Comparados", "Metodologia Científica", "Conservação de Documentos", "Hardware e Circuitos", "Software Livre", "Análise de Código", "Segurança da Informação", "Filatelia e Numismática", "Especialista em TI", "Física Médica", "Ecologia Científica", "Oceanografia", "Genética", "Antropologia Forense", "Sistemas Operacionais", "Consultoria de Dados", "Criptografia", "Arquitetura de Dados", "Engenharia de Pesquisa", "Desenvolvimento de Algoritmos", "Ciência da Computação", "Estudos Teológicos", "Pesquisa Histórica", "Análise Química", "Técnico de Radiologia", "Biotecnologia", "Análise de Malware", "Desenvolvimento de Software Backend", "Engenharia de Redes", "Sistemas Embarcados", "Geologia de Pesquisa", "Escrita Científica", "Análise Forense Digital", "Processamento de Linguagem Natural", "Visão Computacional", "Engenharia de Machine Learning", "Pesquisa de UX (User Experience)", "Gestão de Conhecimento", "Analista de Vulnerabilidades", "Segurança de Redes", "Peritagem Técnica", "Desenvolvimento de Firmware", "Sistemas de Informação", "Consultoria de Tecnologia", "Pesquisa Médica", "Engenharia de Controle", "Análise de Risco Tecnológico", "Ciência de Dados Aplicada", "Desenvolvimento Fullstack", "Arquitetura de Software", "Cloud Computing", "Infraestrutura de TI", "Análise de Requisitos", "Sistemas ERP", "Testes de Software (QA)", "Documentação Técnica", "Pesquisa Geofísica", "Física Nuclear", "Biologia Molecular", "Sistemas de Automação", "Engenharia de Hardware", "Matemática Financeira", "Análise de Crédito Complexa", "Estratégia de Dados", "Inteligência de Mercado"
+    ],
+    8: [
+        "Direito Empresarial", "Gestão Financeira", "Mercado Imobiliário", "Bancos de Investimento", "Alta Gestão Corporativa", "Indústria Pesada", "Mineração e Energia", "Governança e Compliance", "Política Institucional", "Magistratura", "Comércio Atacadista", "Segurança Pública", "Engenharia de Produção", "Fusões e Aquisições", "Leilões de Arte e Imóveis", "Gestão de Shoppings", "Concessionárias de Veículos", "Investimento em Startups", "Indústria Metalúrgica", "Controle Fiscal", "Administração de Capitais", "Desenvolvimento Econômico", "Logística Portuária", "Engenharia Mecânica", "Agronegócio de Exportação", "Consultoria de Investimentos", "Sistemas Bancários", "Zootecnia Industrial", "Gestão de Ativos", "Indústria Química", "Engenharia de Minas", "Direito Tributário", "Cargos de Chefia", "Comércio Internacional", "Construção de Infraestrutura", "Siderurgia", "Gestão de Riscos Financeiros", "Auditoria Externa", "Planejamento Tributário", "Corretagem de Commodities", "Exploração Mineral", "Indústria Farmacêutica", "Política Externa", "Gestão de Franquias", "Operações de Bolsa", "Direito Penal", "Administração de Estatais", "Seguradoras", "Alta Tecnologia Industrial", "Comércio de Bens de Capital", "Gestão de Portfólio", "Análise de Investimentos", "Administração de Fundos", "Direito Corporativo", "Estratégia de Negócios", "Gestão de Operações", "Finanças Corporativas", "Banca Comercial", "Mercado de Capitais", "Gerenciamento de Ativos", "Desenvolvimento Imobiliário", "Gestão de Propriedades", "Indústria Automotiva", "Engenharia de Petróleo", "Comércio de Atacado", "Logística de Suprimentos", "Direito de Patentes", "Gestão Industrial", "Engenharia de Manutenção", "Auditoria Fiscal", "Governança de Dados", "Gestão de Compliance", "Capital de Risco (VC)", "Private Equity", "Direito Constitucional", "Gestão de Riscos Operacionais", "Engenharia Civil de Grande Porte", "Planejamento Estratégico", "Gestão de Redes de Varejo", "Administração Financeira", "Tesouraria de Empresas", "Direito Administrativo", "Engenharia Química Industrial", "Gestão de Agronegócio", "Sistemas de Pagamento", "Corretagem de Imóveis de Luxo", "Gestão de Parques Industriais", "Planejamento de Carreira Executiva", "Gestão de Talentos em Alta Gestão", "Consultoria Tributária", "Direito de Família (Sucessões)", "Engenharia de Automação Industrial", "Gestão de Importação", "Direito Internacional de Negócios", "Marketing de Luxo", "Gestão de Facilities", "Engenharia Naval", "Direito de Seguros", "Consultoria de Gestão"
+    ],
+    9: [
+        "Filantropia Internacional", "Direito Humanitário", "Relações Internacionais", "Educação Transpessoal", "Ecologia Global", "Medicina Alternativa", "Escrita Criativa", "Comunicação de Massa", "Artes Literárias", "Ativista Ambiental", "Serviços Públicos Sociais", "Terapias Holísticas", "Cenografia Teatral", "Línguas e Tradução", "Ajuda Humanitária (ONU)", "Enfermagem Comunitária", "Poesia e Literatura", "Gestão de Fundações", "Diplomacia Cultural", "Sociologia Humanista", "Artesanato Étnico", "Música Terapêutica", "Preservação da Fauna", "Direito Ambiental", "Educação de Fronteira", "Missionários", "Terapias de Reabilitação", "Museologia Social", "Gestão de Museus", "Cinema Documentário", "Assistência a Refugiados", "Proteção de Minorias", "Projetos de Sustentabilidade", "Medicina Popular", "Aconselhamento de Vida", "Gestão de Voluntariado", "Educação para a Paz", "Estudos Metafísicos", "Cura Energética", "Artes Visuais", "Fotografia Humanitária", "Ensino de Idiomas", "Direitos da Criança", "Apoio a Idosos (ONGs)", "Reforma Social", "Desenvolvimento Comunitário", "Espiritualismo", "Ecopedagogia", "Direito Internacional Público", "Cultura e Patrimônio", "Gestão Cultural", "Serviços de Reabilitação", "Terapias de Arte", "Educação Inclusiva", "Saúde Pública Global", "Gestão de ONGs Internacionais", "Ativismo pelos Direitos dos Animais", "Artes Cênicas Sociais", "Literatura Humanista", "Medicina Integrativa", "Enfermagem Social", "Orientação Vocacional", "Psicologia de Crise", "Terapias Naturais", "Gestão de Projetos Sociais", "Filosofia Social", "Antropologia Cultural", "Estudos de Gênero", "Direito de Asilo", "Cooperação Internacional", "Gestão de Abrigos", "Proteção Ambiental", "Bioética", "Educação para Diversidade", "Pedagogia Social", "Tradução Literária", "Musicoterapia", "Dança Terapêutica", "Artesanato Sustentável", "Ecoturismo de Conservação", "Gestão de Reservas Naturais", "Direitos Humanos", "Conselho Comunitário", "Trabalho Social de Campo", "Medicina Comunitária", "Psicologia Humanista", "Cidadania e Ética", "Estudos de Religião Comparada", "Arqueologia de Conservação", "Educação em Zonas de Conflito", "Saúde de Refugiados", "Desenvolvimento Sustentável", "Direito de Família Social", "Gestão de Museus Étnicos", "Fotografia de Documentação", "Cenografia de Impacto Social", "Produção Audiovisual Humanitária"
+    ],
+    11: [
+        "Liderança Inspiracional", "Psicologia Transpessoal", "Astrofísica", "Diplomacia Global", "Medicina de Vanguarda", "Filosofia Moderna", "Invenção Tecnológica", "Arte Visionária", "Coaching de Alta Performance", "Ativismo Social", "Consultoria Metafísica", "Analista Psíquico", "Idealização Políticos", "Reforma Educacional", "Mestrado em Meditação", "Neurociência Cognitiva", "Projetos Futuristas", "Teoria de Sistemas", "Cura Holística Avançada", "Bioengenharia", "Ética Tecnológica", "Literatura de Autoajuda", "Terapia Vibracional", "Esoterismo Acadêmico", "Pioneirismo em Tech", "Expansão de Consciência", "Design Humano", "Embaixador Universal", "Pesquisa de Fenômenos", "Gestão de Mudança", "Liderança de Movimentos", "Teorias de Unificação", "Inovação em Saúde Mental", "Aconselhamento Espiritual", "Arte Conceitual", "Escritor de Filosofia", "Estrategista Ético", "Palestras Mundiais", "Educação Alternativa", "Desenvolvimento Humano", "Pesquisa em IA Ética", "Consultoria de Vida", "Arquitetura de Ideias", "Liderança Religiosa Progressista", "Engenharia de Consciência", "Astro-Psicologia", "Bioética Aplicada", "Inovação de Sistemas Sociais", "Mestre em Artes Marciais", "Estudos de Futuro (Futurologia)", "Psicanálise Espiritual", "Medicina Quântica", "Design de Experiência Humana", "Estrategista de Inovação Radical", "Liderança de Pensamento", "Filosofia da Ciência", "Pesquisa Metafísica", "Artes Visuais Visionárias", "Mestrado em Yoga", "Neuropsicologia", "Cura Energética", "Design de Futuros", "Consultoria de Propósito", "Gestão de Startups de Impacto", "Idealização de Comunidades", "Estudos de Consciência", "Terapias Alternativas de Elite", "Pesquisa em Biologia Sintética", "Direção Criativa Visionária", "Psicologia Junguiana", "Liderança de Carisma", "Educação para Evolução", "Pesquisa em Física Teórica", "Engenharia de Dados Éticos", "Design de Interfaces Humanas", "Liderança em Sustentabilidade", "Consultoria de Cultura de Paz", "Estudos de Religiões Mundiais", "Escrita de Ficção Especulativa", "Consultoria de Branding Pessoal", "Estrategista de Movimentos Sociais", "Desenvolvimento de Potencial Humano", "Gestão de Projetos Transpessoais", "Artesanato de Luxo Simbólico", "Mentoria de Alta Performance", "Pesquisa em Cibernética", "Engenharia de Redes Neurais", "Arquitetura de Sistemas de Crenças", "Liderança em Direitos Universais", "Gestão de Mudança de Paradigma", "Desenvolvimento de Tecnologias Sociais", "Estrategista de Bem-Estar Mental", "Inovação em Aprendizado", "Pesquisa de Intuição Aplicada", "Design de Ecossistemas Digitais", "Liderança em Ética de IA", "Mestre em Humanidades Modernas", "Curadoria de Saberes", "Consultoria de Carreira Visionária"
+    ],
+    22: [
+        "Grandes Obras de Engenharia", "Engenharia Aeroespacial", "Planejamento Urbano Sustentável", "Liderança Corporativa Global", "Gestão de Ecossistemas", "Filantropia de Alto Impacto", "Inovação Sistêmica", "Arquitetura Monumental", "Governança Internacional", "Direção de Multinacionais", "Presidente de Instituições", "Infraestrutura Energética", "Coordenação Global de ONGs", "Sistemas de Saúde Global", "Engenharia de Novos Materiais", "Cidades Inteligentes", "Estratégia Econômica Mundial", "Engenharia Naval", "Saneamento Global", "Construção de Pontes e Rodovias", "Logística Internacional", "Moedas Digitais e Blockchain", "Grandes Represas e Usinas", "Administração de Países/Blocos", "Reformas Estruturais Sociais", "Pioneirismo Industrial", "Gestão de Parques Tecnológicos", "Projetos Governamentais", "Engenharia Genética em Massa", "Telecomunicações Satelitais", "Gestão de Recursos Hídricos", "Liderança de Grandes Massas", "Desenvolvimento Regional", "Indústria Farmacêutica Global", "Exploração de Recursos Marinhos", "Planejamento de Educação Nacional", "Gestão de Crises Continentais", "Sistemas de Defesa Global", "Agronegócio Continental", "Mineração de Larga Escala", "Construção de Aeroportos", "Sistemas de Inteligência Nacional", "Gestão de Ferrovias", "Indústria de Transportes", "Direção de Portos", "Sistemas Judiciários", "Gestão de Propriedade Intelectual", "Direção de Organismos Mundiais", "Grandes Projetos Culturais", "Engenharia de Sustentabilidade", "Planejamento Estratégico Nacional", "Infraestrutura de Telecomunicações", "Gestão de Energia Renovável", "Sistemas de Transporte de Massa", "Arquitetura de Sistemas Globais", "Desenvolvimento de Smart Cities", "Indústria de Defesa Global", "Gestão de Resíduos em Larga Escala", "Projetos de Colonização Espacial", "Engenharia de Estruturas Gigantes", "Direção de Projetos Governamentais", "Liderança de Blocos Econômicos", "Gestão de Redes Elétricas Nacionais", "Infraestrutura Portuária", "Engenharia de Segurança Global", "Desenvolvimento de Agronegócio de Precisão", "Logística de Suprimentos Globais", "Gestão de Recursos Energéticos", "Sistemas de Justiça Internacional", "Planejamento de Saúde Pública Nacional", "Engenharia de Produção em Massa", "Gestão de Ecossistemas Naturais", "Direção de Institutos de Pesquisa", "Desenvolvimento de Moedas Mundiais", "Gestão de Bancos Centrais", "Infraestrutura de Redes de Dados", "Engenharia de Minas e Siderurgia", "Gestão de Refinarias de Petróleo", "Engenharia Genética Aplicada", "Projetos de Despoluição de Oceanos", "Gestão de Cadeias Produtivas Globais", "Engenharia Química de Grande Escala", "Arquitetura de Novos Sistemas Financeiros", "Liderança de Projetos de Inovação Nacional", "Gestão de Crises de Saúde Global", "Sistemas de Monitoramento Planetário", "Engenharia de Saneamento de Grandes Cidades", "Planejamento de Malhas Rodoviárias", "Direção de Parques de Inovação", "Gestão de Projetos de Energia Nuclear", "Desenvolvimento de Tecnologias de Base", "Liderança em Comércio Mundial", "Gestão de Investimentos Continentais", "Sistemas de Segurança Nacional", "Engenharia de Construção de Aeroportos", "Direção de Grandes Obras Públicas", "Gestão de Ativos de Infraestrutura", "Sistemas de Comunicação via Satélite"
+    ],
+    33: [
+        "Educação de Alta Performance", "Mestrado em Saúde Coletiva", "Direção de Caridade Mundial", "Arte Transformativa", "Aconselhamento de Mestres", "Nutrição Global", "Cura Energética Master", "Proteção da Cultura Universal", "Liderança em Ética", "Doutrinação Filosófica", "Gestão de Reabilitação", "Ensino de Moralidade", "Coordenação Humanitária", "Mestrado de Ritos", "Educação Inclusiva", "Traumatologia", "Arte Sacra Contemporânea", "Movimentos de Paz", "Escrita de Manuais Éticos", "Mentor de Pais e Educadores", "Medicina de Cuidados Paliativos", "Responsabilidade Social Corporativa", "Orientação de Líderes", "Bancos de Alimentos Globais", "Ecologia Profunda", "Educação de Elite", "Harmonização de Grupos", "Gestão de Centros de Luz", "Ensino de Saberes Ancestrais", "Projetos de Empatia Global", "Mentoria de Coaches", "Direção de Abrigos", "Desenvolvimento Espiritual", "Consultoria de Bem-Estar", "Arquitetura de Templos", "Gestão de Clínicas Gratuitas", "Proteção à Maternidade", "Pedagogia de Vanguarda", "Liderança Comunitária Exemplar", "Conselheiro de Chefes de Estado", "Gestão de Refúgios Naturais", "Arte que Cura", "Escrita Inspiracional", "Mestre em Humanidades", "Coordenação de Direitos Civis", "Gestão de Programas de Alfabetização", "Consultoria em Bioética", "Liderança de Voluntariado Mundial", "Enfermagem Humanitária", "Proteção ao Patrimônio da Humanidade", "Terapias de Cura Holística", "Mestre em Orientação de Carreira", "Liderança em Responsabilidade Ambiental", "Gestão de Hospitais de Caridade", "Pedagogia Social Avançada", "Consultoria em Direitos Humanos", "Liderança em Filantropia Global", "Mestrado em Espiritualidade Aplicada", "Educação para a Fraternidade", "Gestão de Centros de Reabilitação Social", "Medicina de Estilo de Vida", "Nutrição Social e Comunitária", "Harmonização de Relacionamentos", "Consultoria de Bem-Estar Coletivo", "Desenvolvimento de Lideranças Éticas", "Ensino de Artes Marciais Filosóficas", "Gestão de Bancos de Sementes", "Proteção de Culturas Indígenas", "Liderança em Movimentos de Tolerância", "Educação de Superação", "Mestrado em Bioética Global", "Coordenação de Equipes de Resgate", "Gestão de Projetos de Água Potável", "Liderança em Saúde Mental Coletiva", "Consultoria em Justiça Restaurativa", "Mestre em Sabedoria Perene", "Escrita de Obras de Sabedoria", "Orientação de Grupos de Apoio", "Gestão de Clínicas de Reabilitação", "Liderança em Projetos de Empatia", "Educação de Valores Universais", "Mentor de Jovens em Risco", "Harmonização de Conflitos Étnicos", "Proteção de Crianças e Idosos", "Gestão de Centros de Acolhimento", "Mestrado em Terapias Naturais", "Liderança em Inovação Social", "Consultoria de Impacto Positivo", "Mestre de Meditação e Mindfulness", "Gestão de Projetos de Erradicação da Fome", "Liderança em Comunidades Sustentáveis", "Educação Holística para Crianças", "Mentor de Organizações de Cura", "Projetos de Reabilitação de Ecossistemas", "Gestão de Museus de Humanidade", "Liderança em Ética Profissional", "Mestre em Filosofia da Paz", "Coordenação de Redes de Solidariedade"
+    ]
+};
+
+const bancoOcupacoesPraticas = {
+    1: [
+        "Operador de Máquina Solitário", "Entregador Autônomo", "Motorista de App", "Vigilante Noturno", "Líder de Turma", "Pedreiro de Acabamento", "Segurança Particular", "Operador de Trator", "Instalador de Internet", "Auxiliar de Manutenção Elétrica", "Encanador", "Montador de Móveis", "Pintor Residencial", "Marceneiro", "Serralheiro", "Eletricista Predial", "Soldador", "Mecânico de Motos", "Borrachante", "Taxista", "Vendedor Porta a Porta", "Segurança de Eventos", "Operador de Empilhadeira", "Armador de Ferragens", "Gesseiro"
+        // (O 1 gosta de autonomia e trabalhar sem ninguém dando ordem direta no ouvido)
+    ],
+    2: [
+        "Auxiliar de Escritório", "Atendente de Farmácia", "Recepcionista de Clínica", "Auxiliar de Almoxarifado", "Separador de Mercadorias", "Auxiliar de Biblioteca", "Atendente de Telemarketing", "Copeiro", "Auxiliar de Classe", "Ajudante de Cozinha", "Operador de Caixa", "Balconista de Padaria", "Auxiliar de Expedição", "Conferente", "Empacotador", "Auxiliar de Arquivo", "Porteiro de Condomínio", "Fiscal de Loja", "Auxiliar de Lavanderia", "Monitor de Transporte Escolar", "Garçom", "Auxiliar de RH", "Atendente de Pet Shop", "Frentista", "Auxiliar de Estética"
+        // (O 2 trabalha bem em dupla, dando suporte e organizando detalhes)
+    ],
+    3: [
+        "Vendedor de Loja", "Promotor de Vendas", "Locutor de Loja", "Animador de Festas", "Atendente de Fast Food", "Barbeiro/Cabeleireiro", "Manicure/Pedicure", "Garçom de Eventos", "Recreador Infantil", "Panfleteiro Estratégico", "Vendedor de Quiosque", "Operador de Telemarketing Ativo", "Recepcionista de Hotel", "Guia de Turismo Local", "Instrutor de Autoescola", "Cozinheiro de Restaurante", "Auxiliar de Marketing", "Decorador de Vitrines", "Agente de Viagens (Balcão)", "Modelista", "Promotor de Degustação", "Auxiliar de Eventos", "Fotógrafo de Festas", "Vendedor de Veículos", "Consultor de Beleza"
+        // (O 3 precisa falar, vender e estar com o público)
+    ],
+    4: [
+        "Auxiliar de Produção (Linha de Montagem)", "Servente de Pedreiro", "Zelador", "Faxineiro/Auxiliar de Limpeza", "Operador de Máquina Industrial", "Auxiliar de Estoque", "Conferente de Carga", "Almoxarife", "Segurança de Banco", "Apontador de Obras", "Técnico de Manutenção", "Auxiliar de Mecânico", "Calceteiro", "Lixador Industrial", "Operador de Prensa", "Auxiliar de Fundição", "Montador de Estruturas", "Vigilante Patrimonial", "Auxiliar de Marcenaria", "Pedreiro", "Carpinteiro", "Cimentador", "Auxiliar de Logística", "Jardineiro", "Pintor Industrial"
+        // (O 4 é o braço forte: rotina, esforço físico e disciplina)
+    ],
+    5: [
+        "Motorista de Caminhão", "Motoboy/Entregador", "Viajante Comercial", "Promotor de Vendas Externo", "Guia de Excursão", "Operador de Guindaste", "Instalador de Antenas", "Montador de Eventos", "Vendedor de Feira", "Agente de Campo", "Cobrador de Ônibus", "Motorista de Ônibus", "Operador de Draga", "Trabalhador Rural", "Pescador Profissional", "Guarda-Vidas", "Instrutor de Academia", "Auxiliar de Topografia", "Operador de Betoneira", "Mecânico de Campo", "Vendedor de Rota", "Auxiliar de Sondagem", "Limpador de Vidros (Altura)", "Eletricista de Rede", "Marinheiro de Convés"
+        // (O 5 odeia ficar preso: precisa de movimento e rua)
+    ],
+    6: [
+        "Cozinheiro de Escola", "Cuidador de Idosos", "Berçarista", "Auxiliar de Serviços Gerais", "Florista", "Dona de Casa Profissional", "Babá", "Auxiliar de Enfermagem (Home Care)", "Governanta", "Atendente de Creche", "Padeiro", "Confeiteiro", "Auxiliar de Veterinária", "Tratador de Animais", "Canteiro (Jardinagem)", "Lavadeiro", "Auxiliar de Limpeza Hospitalar", "Copeiro Hospitalar", "Costureiro de Reformas", "Alfaiate", "Sapateiro", "Artesão Comunitário", "Agente de Saúde Local", "Monitor de Abrigo", "Auxiliar de Cozinha Escolar"
+        // (O 6 cuida, serve e mantém o ambiente harmonioso)
+    ],
+    7: [
+        "Relojoeiro", "Técnico de Manutenção de Celular", "Operador de Painel (Monitoramento)", "Auxiliar de Laboratório", "Digitador", "Auxiliar de Farmácia de Manipulação", "Controlador de Acesso (Monitorado)", "Mecânico de Precisão", "Luthier (Conserto de Instrumentos)", "Auxiliar de TI", "Bibliotecário de Escola", "Auxiliar de Radiologia", "Instalador de Alarmes", "Testador de Equipamentos", "Auxiliar de Pesquisa de Campo", "Codificador de Dados", "Balanceador de Rodas", "Auxiliar de Ótica", "Operador de Raio-X Industrial", "Eletricista de Autos", "Ajustador Mecânico", "Ferramenteiro", "Apontador de Dados", "Auxiliar de Qualidade", "Inspetor de Risco"
+        // (O 7 é o detalhista: funções que exigem foco e silêncio)
+    ],
+    8: [
+        "Gerente de Pequena Loja", "Encarregado de Obra", "Supervisor de Limpeza", "Líder de Almoxarifado", "Chefe de Cozinha (Operacional)", "Mestre de Obras", "Dono de Pequeno Negócio", "Corretor de Imóveis (Popular)", "Comerciante de Bazar", "Gerente de Posto de Gasolina", "Supervisor de Vendas", "Líder de Produção", "Fiscal de Caixa", "Gestor de Equipe de Segurança", "Comprador de Sucata/Reciclagem", "Industrial de Fundo de Quintal", "Administrador de Pequena Fazenda", "Líder de Logística", "Encarregado de Manutenção", "Vendedor de Atacado", "Representante Comercial", "Gerente de Oficina", "Supervisor de Operações", "Líder de Equipe de Telemarketing", "Coordenador de Pátio"
+        // (O 8 é o comando: mesmo na base, ele quer ser o chefe da equipe)
+    ],
+    9: [
+        "Educador Social", "Auxiliar de Proteção Ambiental", "Trabalhador de Reciclagem", "Monitor de Projetos Sociais", "Auxiliar de Funerária", "Tratador de Cavalos/Animais Grandes", "Auxiliar de Creche Comunitária", "Orientador de Trânsito", "Trabalhador de ONG", "Auxiliar de Saneamento", "Agente de Zoonoses", "Limpador de Praças", "Coveiro", "Auxiliar de Terapia Alternativa", "Guarda Civil Municipal", "Instrutor de Artesanato", "Auxiliar de Reabilitação", "Agente de Defesa Civil", "Trabalhador de Refeitório Popular", "Guia de Museus Locais", "Auxiliar de Igreja/Templo", "Atendente de Posto de Saúde", "Voluntário Remunerado", "Auxiliar de Reflorestamento", "Cozinheiro de Hospital"
+        // (O 9 é o serviço ao próximo e ao coletivo)
+    ],
+    // Números Mestres (Geralmente atuam como referências técnicas ou mentores no que fazem)
+    11: [
+        "Mentor de Equipe", "Instrutor Técnico", "Consultor Operacional", "Líder Motivacional de Vendas", "Treinador de Pessoal", "Especialista em Segurança", "Técnico em Inovação de Processos", "Monitor de Ensino Técnico", "Inspirador de Metas", "Avaliador de Performance"
+    ],
+    22: [
+        "Planejador de Logística", "Mestre de Obras Complexas", "Organizador de Grandes Estoques", "Gestor de Projetos Comunitários", "Construtor de Estruturas Metálicas", "Estrategista Industrial", "Coordenador de Grandes Eventos", "Líder de Expansão", "Gestor de Infraestrutura", "Mentor de Grandes Equipes"
+    ],
+    33: [
+        "Guia de Saúde Comunitária", "Mestre em Ofícios Manuais", "Conselheiro de Equipe", "Coordenador de Assistência Social", "Professor de Cursos Livres", "Líder de Projetos de Cura", "Mentor de Jovens Aprendizes", "Gestor de Projetos Humanitários", "Educador de Valores", "Referência Ética na Empresa"
+    ]
+};
+        
+
+function calcularAptidaoProfissional(res) {
+    // 1. Definição do número principal (usamos o Dia para o lado prático)
+    const pilarPrincipal = reduzirPuro(res.dia);
+    const pilares = [
+        pilarPrincipal, 
+        res.CaminhodeVida, 
+        res.Propósito, 
+        res.Personalidade
+    ];
+    
+    let contagem = {};
+
+    // 2. Mapeia a frequência de cada área (Lógica das Áreas de Atuação)
+    pilares.forEach(num => {
+        const areas = bancoAreasAtuacao[num] || [];
+        areas.forEach(area => {
+            contagem[area] = (contagem[area] || 0) + 1;
+        });
+    });
+
+    let areasOrdenadas = Object.keys(contagem).map(area => {
+        return { nome: area, pontos: contagem[area] };
+    });
+
+    // Ordenação Decrescente
+    areasOrdenadas.sort((a, b) => b.pontos - a.pontos);
+
+    // 3. CRIAÇÃO DAS VARIÁVEIS (O que estava faltando)
+    let vocacaoMaster = areasOrdenadas.slice(0, 18).map(item => item.nome);
+    let afinidade = areasOrdenadas.slice(18, 48).map(item => item.nome);
+
+    // Busca ocupações CLT (Práticas)
+    let caminhosPraticos = bancoOcupacoesPraticas[pilarPrincipal] || [];
+    let listaCLT = caminhosPraticos.slice(0, 20).join(" • ");
+
+    // Busca Estudos (Faculdade e Técnico)
+    const estudos = bancoEstudos[pilarPrincipal] || { faculdades: [], cursosTecnicos: [] };
+    const listaFaculdades = estudos.faculdades.join(" • ");
+    const listaTecnicos = estudos.cursosTecnicos.join(" • ");
+
+    // 4. MONTAGEM DO HTML (Com todos os quadros)
+    return `
+         <div class="evitar-corte" style="margin-top: 10px; padding: 20px; background: #fffcf0; border: 1px solid #d97a1e; border-left: 8px solid #d97a1e; border-radius: 8px;">
+            <h4 style="color: #d97a1e; margin-bottom: 10px; text-transform: uppercase; font-size: 1rem; letter-spacing: 1px;">🚩 Zona de Sucesso Absoluto</h4>
+            <p style="font-size: 1.1rem; font-weight: bold; color: #1a1a1a; line-height: 1.5; text-align: justify;">
+                ${vocacaoMaster.length > 0 ? vocacaoMaster.join(" • ") : "Liderança Estratégica • Gestão de Negócios"}
+            </p>
+        </div>
+
+         <div class="evitar-corte" style="margin-top: 60px; padding: 40px; background: #fdf2f8; border: 1px solid #be185d; border-left: 8px solid #be185d; border-radius: 8px;">
+            <h4 style="color: #be185d; margin-bottom: 10px; text-transform: uppercase; font-size: 1rem; letter-spacing: 1px;">🎓 Guia de Formação Recomendada</h4>
+            <p style="margin-bottom: 30px; font-size: 0.95rem; color: #1a1a1a;">
+                <strong>Ensino Superior (Graduações):</strong><br>
+                <span style="color: #444;">${listaFaculdades}</span>
+            </p>
+            <p style="font-size: 0.95rem; color: #1a1a1a;">
+                <strong>Cursos Profissionalizantes e Técnicos:</strong><br>
+                <span style="color: #444;">${listaTecnicos}</span>
+            </p>
+        </div>
+
+         <div class="evitar-corte" style="margin-top: 80px; padding: 20px; background: #f0fdf4; border: 1px solid #16a34a; border-left: 8px solid #16a34a; border-radius: 8px;">
+            <h4 style="color: #16a34a; margin-bottom: 10px; text-transform: uppercase; font-size: 1rem; letter-spacing: 1px;">🚀 Entrada Imediata (Mercado CLT)</h4>
+            <p style="font-size: 1rem; font-weight: 600; color: #1a1a1a; line-height: 1.6;">
+                ${listaCLT}
+            </p>
+        </div>
+
+         <div class="evitar-corte" style="margin-top: 60px; padding: 20px; background: #f4f7f9; border: 1px solid #3498db; border-left: 8px solid #3498db; border-radius: 8px;">
+            <h4 style="color: #3498db; margin-bottom: 10px; text-transform: uppercase; font-size: 1rem; letter-spacing: 1px;">🔍 Campo de Afinidade</h4>
+            <p style="font-size: 0.95rem; font-weight: 500; color: #444; line-height: 1.6;">
+                ${afinidade.length > 0 ? afinidade.join(" • ") : "Desenvolvimento Profissional • Planejamento"}
+            </p>
+        </div>
+    `;
+}
+
+function analisarAptidaoPremium(res) {
+    const pilares = [
+        reduzirPuro(res.dia), 
+        res.CaminhodeVida, 
+        res.Propósito, 
+        res.Personalidade
+    ];
+
+    let contagemAreas = {};
+
+    pilares.forEach(num => {
+        const areas = bancoAreasAtuacao[num] || [];
+        areas.forEach(area => {
+            contagemAreas[area] = (contagemAreas[area] || 0) + 1;
+        });
+    });
+
+    // Filtramos áreas com 3+ (Vocação Master) e 2 (Afinidade)
+    let vocacaoMaster = Object.keys(contagemAreas).filter(a => contagemAreas[a] >= 3);
+    let afinidade = Object.keys(contagemAreas).filter(a => contagemAreas[a] === 2);
+
+    return { vocacaoMaster, afinidade };
+}
+
+
+function formatarProfissoesSimples(res) {
+    // Chamamos a análise que você já tem
+    const dados = analisarAptidaoPremium(res);
+    
+    // Tentamos pegar a Vocação Master (3+ pontos), 
+    // se estiver vazia, pegamos a Afinidade (2 pontos)
+    let listaParaExibir = dados.vocacaoMaster.length > 0 
+        ? dados.vocacaoMaster 
+        : dados.afinidade;
+
+    // Se ainda assim não tiver nada, pegamos as primeiras áreas do banco
+    if (listaParaExibir.length === 0) {
+        listaParaExibir = ["Consultoria", "Gestão"]; 
+    }
+
+    // Pegamos apenas as 2 primeiras para não espremer o layout
+    const textoFinal = listaParaExibir.slice(0, 2).join(" • ");
+
+    // Retornamos com um span para diminuir o tamanho da letra
+    return `<span style="font-size: 0.75rem; line-height: 1.1; display: block;">${textoFinal}</span>`;
+}
 
 const bancoMesPessoal = {
     1: {
@@ -2338,7 +2814,7 @@ function calcularNumerosSocial(nome) {
             if (/[ÁÉÍÓÚ]/.test(char)) valorLetra += 2;
             if (/[ÃÕ]/.test(char)) valorLetra += 3;
             if (/[ÂÊÎÔÛ]/.test(char)) valorLetra += 7;
-            if (char === "Ç") valorLetra += 6;
+            if (char === "Ç") valorLetra += 3;
             if (/[ÀÈÌÒÙÄËÏÖÜ]/.test(char)) valorLetra *= 2; // Multiplicador (dobra)
 
             // Separação para Motivação e Influência
@@ -2486,7 +2962,283 @@ function obterLegendaVibração(diaNascimento) {
 
 
 
+function gerarAbaNomeCasado(nomeCasado, expOriginal, negativasOriginal) {
+    if (!nomeCasado) return "";
 
+    const nomeCasadoProc = tratarNomeParaCalculo(nomeCasado);
+    let somaTotalCasado = 0;
+    for (let l of nomeCasadoProc.toUpperCase()) {
+        somaTotalCasado += calcularValorLetra(l);
+    }
+    const expCasado = calcularNumerologia(somaTotalCasado, true);
+    const piramideCasado = gerarPiramide(nomeCasado);
+    const negativasCasado = detectarNegativas(piramideCasado);
+    
+    // --- LÓGICA DE COMPARAÇÃO DE HARMONIA ---
+ // O importante é esta linha aqui abaixo bater com o seu objeto:
+    const qtdOriginal = negativasOriginal.detalhes ? negativasOriginal.detalhes.length : 0;
+    const qtdCasado = negativasCasado.detalhes.length;
+    
+    let diagnosticoHarmonia = "";
+    let estiloDiagnostico = "";
+
+    if (qtdCasado < qtdOriginal) {
+        estiloDiagnostico = "border-color: #27ae60; background: #ebf9f1; color: #1e8449;";
+        diagnosticoHarmonia = `
+            <strong>Melhora na Fluidez Energética:</strong> Este novo nome é mais harmônico que o original. 
+            A união eliminou bloqueios que existiam anteriormente, reduzindo de ${qtdOriginal} para ${qtdCasado} as sequências negativas.`;
+    } else if (qtdCasado > qtdOriginal) {
+        estiloDiagnostico = "border-color: #e74c3c; background: #fdf2f2; color: #c0392b;";
+        diagnosticoHarmonia = `
+            <strong>Atenção ao Desequilíbrio:</strong> O acréscimo deste sobrenome trouxe novos desafios. 
+            Houve um aumento de ${qtdOriginal} para ${qtdCasado} sequências de bloqueio.`;
+    } else {
+        estiloDiagnostico = "border-color: #f1c40f; background: #fef9e7; color: #9a7d0a;";
+        diagnosticoHarmonia = `
+            <strong>Estabilidade Vibracional:</strong> O novo nome manteve o mesmo nível de complexidade (total de ${qtdCasado} sequências).`;
+    }
+
+    const chave = `de_${expOriginal}_para_${expCasado}`;
+    let textoTransicao = textos.TransicoesCasamento[chave] || "Análise de transição em processamento para esta frequência.";
+
+    textoTransicao = textoTransicao
+        .replace(/\${expOriginal}/g, expOriginal)
+        .replace(/\${expCasado}/g, expCasado);
+    
+    // INÍCIO DO HTML
+    let html = `
+    <div class="page" style="page-break-before: always; padding: 20px;">
+        <div class="separador-luxo">
+            <div class="caixa-interna">
+                <h2>Análise do Nome de Casado(a)</h2>
+            </div>
+        </div>
+
+        <div class="intro-secao" style="margin-top: 20px; margin-bottom: 20px; text-align: justify; line-height: 1.4;">
+                        <p style="margin-bottom: 20px;">A inclusão de um sobrenome após o casamento é muito mais do que uma mudança civil; é uma profunda alteração na dinâmica vibracional que rege sua vida. Ao adotar um novo nome, você permite a entrada de novas frequências que podem preencher lacunas importantes em seu mapa natal. Por exemplo, a ausência de um número 7, que vibra a busca pelo conhecimento e a análise profunda, pode ser suprida pelo sobrenome do parceiro, conferindo-lhe uma nova percepção intelectual e maior capacidade de aprendizado que antes não eram naturais à sua personalidade original.</p>
+            <p style="margin-bottom: 20px;">Entretanto, essa expansão energética carrega consigo uma responsabilidade proporcional. O acréscimo de novas letras aumenta a carga numérica total, o que exige maior maturidade para lidar com as novas obrigações que surgem. É fundamental estar atento às sequências de bloqueios que podem ser formadas nessa nova configuração. Muitas vezes, um nome que antes era fluido pode passar a apresentar dificuldades de realização ou obstáculos repetitivos devido a conflitos entre as vibrações antigas e as novas, gerando desafios que antes não faziam parte da sua jornada.</p>
+            <p style="margin-bottom: 20px;">Sob a ótica da Pirâmide Numerológica, nomes compostos ou mais curtos tendem a apresentar uma estrutura mais equilibrada e menos propensa a sequências negativas persistentes. Por isso, a análise cautelosa é um aviso necessário: nem sempre o acréscimo de nomes resulta em facilidades. Embora exista a possibilidade jurídica de reversão desse nome em caso de separação, o ideal é que a escolha seja consciente desde o início. Quando bem ajustado, o nome de casado torna-se um aliado poderoso, trazendo o combustível que faltava para sua evolução pessoal e harmonia conjugal.</p>
+            
+        </div>
+
+              <div style="background: #fdfaf0; border-left: 5px solid #b8860b; padding: 20px; margin: 20px 0; border-radius: 4px;">
+            <h3 style="color: #827108; margin-top: 0;">A Transmutação da sua Expressão</h3>
+            <p style="line-height: 1.6; color: #333; font-size: 18px;">${aplicarFiltroTexto(textoTransicao)}</p>
+        </div>
+
+        <div style="padding: 15px; border-left: 6px solid; margin-bottom: 25px; border-radius: 4px; font-size: 16px; ${estiloDiagnostico}">
+            ${diagnosticoHarmonia}
+        </div>
+
+  `;
+
+    // CORREÇÃO AQUI: Adicionado o "html +=" que faltava para abrir a pirâmide
+    html += `
+        <div class="container-piramide" style="margin-top: 30px; width: 100%; display: flex; flex-direction: column; align-items: center;">
+            <div class="piramide" style="display: table; margin: 0 auto; border-collapse: collapse;">`;
+
+    // Letras
+    const letras = nomeCasado.toUpperCase().replace(/\s+/g, '').split('');
+    html += `<div class="linha" style="display: flex; justify-content: center;">`;
+    letras.forEach(l => { 
+        html += `<div class="num-letra" style="color: #000E52; font-weight: 900; width: 16px; text-align: center; font-size: 16px;">${l}</div>`; 
+    });
+    html += `</div>`;
+
+    // Linhas da Pirâmide
+    piramideCasado.forEach((linha, i) => {
+        html += `<div class="linha" style="display: flex; justify-content: center;">`;
+        linha.forEach((n, j) => {
+            let classe = "num";
+            if (negativasCasado.pos.some(p => p.l === i && p.c === j)) {
+                classe += " negativo"; 
+            }
+            html += `<div class="${classe}" style="width: 16px; text-align: center; font-size: 16px; display: inline-block;">${n}</div>`;
+        });
+        html += `</div>`;
+    });
+
+    html += `</div></div>`; // Fecha .piramide e .container-piramide
+
+    // Alertas de Bloqueio
+    if (negativasCasado.detalhes.length > 0) {
+        html += `
+        <div style="margin-top: 30px; padding: 15px; border: 1px solid #ffcccc; background: #fff5f5; border-radius: 8px;">
+            <h3 style="color: red; margin-bottom: 10px;">⚠️ Alerta de Bloqueios no Nome de Casado(a)</h3>
+            ${negativasCasado.detalhes.map(neg => `
+                <div class="evitar-corte" style="margin-top: 20px; border-left: 4px solid red; padding-left: 15px;">
+                    <div class="texto-res">${aplicarFiltroTexto(textos.SeqNegVida[neg.numero])}</div>
+                </div>
+            `).join('')}
+        </div>`;
+    }
+
+    html += `</div>`; // FECHA A PÁGINA
+    return html;
+}
+
+
+
+
+
+
+function calcularValorCabalisticoCompleto(letra) {
+    if (!letra) return 0;
+    const norm = letra.normalize("NFD");
+    const base = norm[0].toUpperCase();
+    const valorBase = tabela[base] || 0;
+    if (!valorBase) return 0;
+
+    let soma = 0, mult = 1;
+    for (let i = 1; i < norm.length; i++) {
+        const c = norm[i];
+        if (c === "\u0301") soma += 2;          
+        else if (c === "\u0302") soma += 7;     
+        else if (c === "\u0303") soma += 3;     
+        else if (c === "\u0327") soma += 3;     
+        else if (c === "\u030a") soma += 7;     
+        else if (c === "\u0300" || c === "\u0308") mult *= 2; 
+    }
+    if (letra.includes("'")) soma += 2;
+
+    let resultadoBruto = (valorBase + soma) * mult;
+
+    function reduzir(n) {
+        if (n <= 9 || n === 11 || n === 22) return n;
+        let s = n.toString().split('').reduce((acc, d) => acc + parseInt(d), 0);
+        return reduzir(s);
+    }
+    return reduzir(resultadoBruto);
+}
+
+function obterChaveMestra(letraOriginal) {
+    if (!letraOriginal) return "";
+    const numeroFinal = calcularValorCabalisticoCompleto(letraOriginal);
+    const letraBase = letraOriginal.normalize("NFD")[0].toUpperCase();
+    
+    let plano = "";
+    for (const p in gruposPlanos) {
+        if (gruposPlanos[p].includes(letraBase)) {
+            plano = p.toLowerCase().trim(); // Garante minúsculo
+            break;
+        }
+    }
+    const temperamento = (tabelaExpressao[letraBase] || "neutro").toLowerCase().trim(); // Garante minúsculo
+    
+    // Retorna a chave exatamente como está no banco: "1_mental_criativo"
+    return `${numeroFinal}_${plano}_${temperamento}`;
+} 
+
+
+
+
+function calcularHabilidadeEspecialCientifica(nomeCompleto) {
+    if (!nomeCompleto) return null;
+
+    const contagemLetras = {};
+    const nomeProcessado = nomeCompleto.toUpperCase();
+    
+    // 1. Contagem de frequência absoluta de cada letra/acento
+    for (let letra of nomeProcessado) {
+        if (letra.match(/[A-Z\u00C0-\u00FFÇ]/)) {
+            contagemLetras[letra] = (contagemLetras[letra] || 0) + 1;
+        }
+    }
+
+    // 2. Ordenar para identificar qual letra aparece MAIS vezes
+    const ordenado = Object.entries(contagemLetras).sort((a, b) => b[1] - a[1]);
+    
+    if (ordenado.length === 0) return null;
+
+    // A letra campeã é sempre a primeira da lista
+    const letraDominante = ordenado[0][0];
+    const maiorFreq = ordenado[0][1];
+
+    // 3. Extrair os valores científicos da letra campeã
+    const valorCabalistico = calcularValorLetra(letraDominante);
+    
+    // Redução para o índice do banco de textos (1-9)
+    const numeroFinal = (valorCabalistico > 9) ? (valorCabalistico % 9 || 9) : valorCabalistico;
+
+    // 4. Identificar Plano e Modo (Baseado na letra base)
+    const letraBase = letraDominante.normalize("NFD")[0].toUpperCase();
+    const modo = tabelaExpressao[letraBase] || 'neutro';
+    
+    let plano = "";
+    for (let p in gruposPlanos) {
+        if (gruposPlanos[p].includes(letraBase)) {
+            plano = p;
+            break;
+        }
+    }
+
+    return {
+        letraOriginal: letraDominante,
+        numero: numeroFinal,
+        plano: plano,
+        modo: modo,
+        frequencia: maiorFreq
+    };
+}
+
+
+function gerarHTMLHabilidadeEspecial(nomeCompleto) {
+    const dados = calcularHabilidadeEspecialCientifica(nomeCompleto);
+    if (!dados) return "";
+
+    // Buscamos os textos nos seus objetos
+    const textoTalento = textos.talentosEspeciais[dados.numero];
+    const textoPlano = textos.planosExpressao[dados.plano].forte; // Usamos a influência forte por ser a letra dominante
+    const textoModo = (dados.modo === "indeciso") ? textos.modosAcao.oscilantes : textos.modosAcao[dados.modo];
+
+    let html = `
+    <div class="separador-luxo">
+        <div class="caixa-interna">
+            <h2>Habilidade Especiai e Deficiência</h2>
+        </div>
+    </div>
+
+    <div class="page">
+        <div class="intro-texto">
+            <p>A análise científica do seu nome completo revelou uma dominância vibracional na letra <strong>"${dados.letraOriginal}"</strong>. Esta letra não apenas carrega um valor cabalístico específico, mas dita como suas habilidades se manifestam nos níveis prático e emocional.</p>
+        </div>
+
+        <div class="secao-resultado-cientifico">
+            <div class="bloco-talento-base">
+                ${textoTalento}
+            </div>
+
+            <div class="bloco-plano-expressao" style="border-left: 4px solid ${coresPlanos[dados.plano]}; padding-left: 20px; margin: 30px 0;">
+                <h3 style="color: ${coresPlanos[dados.plano]}">Campo de Atuação: Plano ${dados.plano.toUpperCase()}</h3>
+                ${textoPlano}
+            </div>
+
+            <div class="bloco-modo-acao" style="background: #f9f9f9; padding: 25px; border-radius: 12px; border: 1px solid #eee;">
+                <h3>Modo de Expressão: ${dados.modo.toUpperCase()}</h3>
+                ${textoModo}
+            </div>
+        </div>
+    </div>
+    `;
+
+    return aplicarFiltroTexto(html);
+}
+
+
+
+// Apague as referências antigas e use apenas esta lógica:
+function montarSecaoHabilidadeEspecial() {
+    // 1. Pega o nome completo que o usuário digitou
+    const nomeInput = document.getElementById('nome').value;
+
+    // 2. Chama a função de gerar o HTML (aquela que fizemos no passo anterior)
+    const secaoHTML = gerarHTMLHabilidadeEspecial(nomeInput);
+
+    // 3. Insere no seu container principal do mapa
+    document.getElementById('resultado-mapa').innerHTML += secaoHTML;
+}
+
+        
         
 function gerarMapaCompleto() {
     const nomeRaw = document.getElementById("nome").value.trim();
@@ -2602,26 +3354,35 @@ let resultadoAnoPessoal = reduzir(diaR + mesR + reduzir(anoReferencia));
  let vTransitoCalculado = "--";   
 
 
-// --- CÁLCULO DO EQUILÍBRIO (CORRIGIDO) ---
-let resultadoEquilibrioFinal = "";
-// 1. Declare as variáveis fora para o 'const res' conseguir ler depois
+// --- LÓGICA DE EXECUÇÃO: EQUILÍBRIO (Início e Conclusão) ---
+
+// --- DENTRO DA gerarMapaCompleto ---
 let numInicio = 0; 
 let numFim = 0;
+let txtFinalInic = "";
+let txtFinalConc = "";
 
-if (nomesArray && nomesArray[0]) {
-    const primeiroNome = nomesArray[0]; 
-    const primLetra = primeiroNome[0];
-    const ultLetra = primeiroNome.slice(-1);
+if (nomesArray && nomesArray.length > 0) {
+    const letraInicio = nomesArray[0][0]; 
+    const letraFim = nomesArray[nomesArray.length - 1].slice(-1); 
 
-    // 2. Atribua os valores (sem usar 'const' aqui dentro, use as que já declaramos)
-    numInicio = calcularNumerologia(tabela[primLetra], false);
-    numFim = calcularNumerologia(tabela[ultLetra], false);
+    // Pega as chaves completas: ex "3_intuitivo_neutro"
+    const chaveInic = obterChaveMestra(letraInicio);
+    const chaveConc = obterChaveMestra(letraFim);
 
-    const txtInicio = (bancoEquilibrio.inicio && bancoEquilibrio.inicio[numInicio]) ? bancoEquilibrio.inicio[numInicio] : "";
-    const txtFim = (bancoEquilibrio.conclusao && bancoEquilibrio.conclusao[numFim]) ? bancoEquilibrio.conclusao[numFim] : "";
-    
-    resultadoEquilibrioFinal = txtInicio + txtFim;
+    numInicio = calcularValorCabalisticoCompleto(letraInicio);
+    numFim = calcularValorCabalisticoCompleto(letraFim);
+
+    // BUSCA NO BANCO (Verifique se o nome é bancoEquilibrio ou bancoEquilibrioUnificado)
+    // Adicionei um console.log para você ver no F12 se a chave está certa
+    console.log("Buscando chaves:", chaveInic, chaveConc);
+
+    if(typeof bancoEquilibrioUnificado !== 'undefined'){
+        txtFinalInic = bancoEquilibrioUnificado.inicio[chaveInic] || "Texto não encontrado para: " + chaveInic;
+        txtFinalConc = bancoEquilibrioUnificado.conclusao[chaveConc] || "Texto não encontrado para: " + chaveConc;
+    }
 }
+
 
 
 const res = {
@@ -2637,7 +3398,7 @@ const res = {
     Relacionamento: calcularNumerologia(propCalculado, false), // Relacionamento SEMPRE reduz (1-9)
     essencia: calcularNumerologia(sE, true), // Essência aceita Mestre
     talento: calcularNumerologia(mot + exp, true), // Talento Oculto aceita Mestre
- equilibrio: { inicio: numInicio, fim: numFim }, 
+     equilibrio: {  inicio: numInicio,  fim: numFim,   txtFinalInic: txtFinalInic,   txtFinalConc: txtFinalConc  },
     
 
     deficiencias: faltantes.map(d => reduzirPuro(d)), 
@@ -2676,13 +3437,40 @@ desafios: {
  proximoAnoPessoal: reduzir(resultadoAnoPessoal + 1) 
 };
 
+
     // ADICIONE ESTAS DUAS LINHAS ABAIXO:
 res.numEquilibrioInicio = numInicio; 
 res.numEquilibrioFim = numFim;
 
 
+// --- 1. PRIMEIRO: Calcula a Habilidade/Deficiência Científica ---
+const dadosCientificos = calcularHabilidadeEspecialCientifica(nomeRaw);
 
+// Criamos a variável vHabDefFinal que a lista está pedindo
+let vHabDefFinal = "Equilibrado"; 
 
+if (dadosCientificos) {
+    // IMPORTANTE: Use crases (backticks) para que o ${} funcione corretamente
+    vHabDefFinal = `${dadosCientificos.letraOriginal} (${dadosCientificos.numero})`;
+}
+const introProfissionalTexto = `
+    <div style="margin-bottom: 15px; text-align: justify; line-height: 1.3;">
+​<p>A verdadeira realização profissional não acontece por acaso, mas através do alinhamento preciso entre sua <strong>Engenharia de Personalidade</strong> e as demandas concretas do mundo material. Muitas vezes, a sensação de estagnação, o cansaço excessivo ou a invisibilidade no mercado são apenas os resultados diretos de atuar em frequências que não pertencem ao seu código original. Para que a prosperidade se manifeste, é indispensável que a sua ocupação seja o reflexo externo da sua estrutura numérica interna, permitindo que o trabalho deixe de ser um esforço de resistência e se torne um fluxo natural de expansão.</p>
+​<p>Nesta seção, decodificamos os pontos de convergência do seu mapa para identificar o seu <strong>"Locus de Potência"</strong>. O cálculo realizado não é genérico; ele cruza a força da sua Motivação, o propósito do seu Caminho de Vida, a capacidade de entrega da sua Expressão e, fundamentalmente, a <strong>Vibração do seu Dia de Nascimento</strong>. Este último elemento atua como o seu talento inato, a ferramenta prática que você trouxe para manejar a realidade. Ao unificar esses pilares, revelamos as áreas de atuação onde você encontrará o caminho de menor resistência para atingir o reconhecimento e a estabilidade financeira.</p>
+​<p>Apresentamos a seguir um mapeamento estratégico dividido em quatro eixos fundamentais: a sua <strong>Zona de Sucesso Absoluto</strong>, com as 30 profissões de maior ressonância com seu gráfico; o <strong>Guia de Formação Recomendada</strong>, indicando os caminhos acadêmicos ou técnicos mais eficazes; as opções de <strong>Entrada Imediata via CLT</strong>, para quem busca segurança e inserção rápida; e o seu <strong>Campo de Afinidade Cotidiana</strong>, que descreve as atividades onde sua energia melhor se adapta no dia a dia. Cada sugestão foi filtrada para garantir que sua base concreta de talentos esteja a serviço de resultados palpáveis.</p>
+​<p style="font-style: italic; color: #666;">Utilize este diagnóstico como uma bússola técnica para suas próximas escolhas de carreira, novos empreendimentos ou transições estratégicas, garantindo que cada passo esteja fundamentado em sua real matriz de sucesso.</p>
+    </div>
+`;
+// --- LOGICA DAS PROFISSÕES (ADICIONE ISSO LOGO APÓS O OBJETO 'res') ---
+const aptidao = calcularAptidaoProfissional(res); // Aqui calculamos os números repetidos
+
+const blocoProfissionalHTML = calcularAptidaoProfissional(res);
+const htmlProfissao = calcularAptidaoProfissional(res);
+// --- 1. CÁLCULOS DE APOIO (RODANDO ANTES DO PAINEL) ---
+const dadosDesejoObj = calcularDesejoOculto(nomeRaw);
+const nomeParaTalento = nomeRaw.split(' ')[0];
+   
+// Exemplo de uso:
 
 // --- CÁLCULO DO PLANO DOMINANTE PARA O PAINEL ---
 // --- SEU BLOCO DE CÁLCULO ATUALIZADO COM CORES ---
@@ -2720,7 +3508,11 @@ partesDoNome.forEach(p => {
 });
 const vTrânsitoFinal = reduzirPuro(somaTransitoFisico); // Simplificado para o painel
 
+// --- 3. PREPARAÇÃO DE TEXTOS PARA O PAINEL ---
+let vDeficitFinal = [res.deficitRecorrente, ...(res.deficitsOcultos || [])].filter(x => x).join(" · ") || "--";
+let vDesejoFinal = (dadosDesejoObj && dadosDesejoObj.numero) ? dadosDesejoObj.numero : "--";
 
+// Executa o cálculo dos planos para obter o Perfil Nativo
 
 
 // 1. Cálculos do Plano e Perfil (Corrigido para não dar erro de 'not defined')
@@ -2781,7 +3573,9 @@ const datasFases = {
     }
 };
 // 1. PRIMEIRO: CALCULA TUDO DA PIRÂMIDE (PARA A LINHA 517 NÃO DAR ERRO)
-
+const piramideVida = gerarPiramide(nomeRaw);
+const regenteVida = piramideVida.at(-1)[0];
+const dadosNegativas = detectarNegativas(piramideVida);
 
 
 
@@ -2862,11 +3656,11 @@ html += `
 
     <div style="width: 100%; max-width: 800px; display: flex; flex-direction: column; gap: 25px;">
         ${[
-              { t: "Introdução", c: "Instinto Superior ✶ Resultado Numerológico ✶ Engenharia da Vida ✶ Nome Escolhido ✶ Cabala Ancestral ✶ Direcionamento de Jornada"},
+            { t: "Introdução", c: "Instinto Superior ✶ Resultado Numerológico ✶ Engenharia da Vida ✶ Nome Escolhido ✶ Origem e Numerologia Moderna ✶ Direcionamento de Jornada"},
             { t: "Parte 1: Performance Natural", c: "Planos de Expressão ✶ Gráficos de Potenciais"},
-
+       
             { t: "Parte 7:  Tendências do Momento", c: "Status no Momento do Ciclo Atual ✶ Status no Momento do Segundo Ciclo ✶ Ciclos Trânsitórios ✶ Potenciais do Momento ✶ Ano Pessoal ✶ Mês Pessoal"},
-     
+            
             { t: "Parte 9: Filosofia e Ciência", c: "Contexto Histórico ✶ Conclusão Evolutiva ✶ Agradecimento"}
         ].map(item => `
             <div style="text-align: center;">
@@ -2887,18 +3681,511 @@ html += `
 
 
     
-const listaItensSintese = [
 
- 
+html += `
+    <div class="capa-transicao" style="
+        height: 297mm; 
+        width: 100%; 
+        background-color: #0f2a36; 
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
+        text-align: center; 
+        position: relative; 
+        overflow: hidden; 
+        page-break-after: always;
+
+        /* OS DOIS COMANDOS MÁGICOS AQUI */
+        outline: 2px solid #0f2a36; 
+        outline-offset: -1px;       
+        
+        -webkit-print-color-adjust: exact;
+    ">
+        
+        <div style="margin-top: 60px; z-index: 10; width: 100%;">
+            <h2 style="font-family: 'Cinzel', serif; font-size: 28px; color: #fff; text-transform: uppercase; margin: 15px 20px;">
+               INTRODUÇÃO<br><br> Resultado, Nome social & Direcionamento
+            </h2>
+        </div>
+
+        <div style="margin: 100px 0 30px 0; width: 100%; display: flex; justify-content: center;">
+            <img src="https://hemricciinstintosuperior-rcci.github.io/Trabalho_venda_Numerologia/INSTINTOFOTOO.png" 
+                 style="width: 80%; max-width: 380px; height: auto; display: block; border: none; outline: none;">
+        </div>
+
+       <div class="player-relatorio" style="margin-top: 50px; z-index: 30; display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%;">
+            <span style="font-size: 10px; color: #d97a1e; text-transform: uppercase; letter-spacing: 2px;">O som do Nascimento</span>
+            <audio controls style="height: 35px; filter: sepia(100%) saturate(200%) brightness(100%) hue-rotate(330deg);">
+                <source src="https://hemricciinstintosuperior-rcci.github.io/estudo_numerologico/diadonasc.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+
+        <a href="https://hemricciinstintosuperior-rcci.github.io/estudo_numerologico/diadonasc.mp3" target="_blank" class="botao-pdf-link" style="text-decoration: none; z-index: 20; margin-top: 20px;">
+            <div style="background: rgba(0, 0, 0, 0.7); border: 1px solid #d97a1e; padding: 12px 25px; border-radius: 50px; display: flex; align-items: center; gap: 12px;">
+                <div style="width: 30px; height: 30px; background: #d97a1e; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #000; font-size: 14px;">▶</div>
+                <div style="text-align: left;">
+                    <span style="display: block; font-size: 8px; color: #d97a1e; text-transform: uppercase; letter-spacing: 2px;">O som do Nascimento</span>
+                    <span style="display: block; font-size: 13px; color: #fff; font-family: 'Cinzel', serif;">CLIQUE PARA OUVIR E BAIXAR NO CELULAR</span>
+                </div>
+            </div>
+        </a>
+
+
+       <div class="player-relatorio" style="margin-top: 55px; z-index: 30; display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%;">
+            <span style="font-size: 10px; color: #d97a1e; text-transform: uppercase; letter-spacing: 2px;">O Instinto Superior</span>
+            <audio controls style="height: 35px; filter: sepia(100%) saturate(200%) brightness(100%) hue-rotate(330deg);">
+                <source src="https://hemricciinstintosuperior-rcci.github.io/estudo_numerologico/instintosuperior.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+
+        <a href="https://hemricciinstintosuperior-rcci.github.io/estudo_numerologico/instintosuperior.mp3" target="_blank" class="botao-pdf-link" style="text-decoration: none; z-index: 20; margin-top: 25px;">
+            <div style="background: rgba(0, 0, 0, 0.7); border: 1px solid #d97a1e; padding: 12px 25px; border-radius: 50px; display: flex; align-items: center; gap: 12px;">
+                <div style="width: 30px; height: 30px; background: #d97a1e; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #000; font-size: 14px;">▶</div>
+                <div style="text-align: left;">
+                    <span style="display: block; font-size: 8px; color: #d97a1e; text-transform: uppercase; letter-spacing: 2px;">O Instinto Superior</span>
+                    <span style="display: block; font-size: 13px; color: #fff; font-family: 'Cinzel', serif;">CLIQUE PARA OUVIR E BAIXAR NO CELULAR</span>
+                </div>
+            </div>
+        </a>
+
+        
+
+        <p style="position: absolute; bottom: 50px; width: 100%; color: #fff; font-size: 14px; letter-spacing: 1px; opacity: 1.2; padding: 0 20px; box-sizing: border-box; margin: 0;">
+           Instinto Superior ✶ Resultado Numerológico ✶ Engenharia da Vida ✶ Nome Escolhido ✶ Origem e Numerologia Moderna  ✶ Direcionamento de Jornada 
+        </p>
+    </div>
+`;
+
+
+
+
+  tituloBonito = " A Engenharia da Vida";    
+html += `
+<div class="separador-luxo">
+    <div class="caixa-interna">
+        <h2>${tituloBonito}</h2>
+    </div>
+</div>`;
+    
+html += `
+<div class="estudo-numerologico-texto">
+    <h3 style="text-align: center; color: #2c3e50; margin-bottom: 45px;">O Equilíbrio entre a Máquina e a Essência</h3>
+
+    <p style="margin-bottom: 15px;">Para compreender a profundidade do meu trabalho com a numerologia, é preciso entender como enxergo o ser humano: a <strong>máquina orgânica</strong> mais sofisticada que existe. Se observarmos as máquinas modernas, notaremos que elas foram projetadas à nossa imagem. O que chamamos de tecnologia é, na verdade, um reflexo direto da nossa funcionalidade biológica e sistêmica.</p>
+
+    <p style="margin-bottom: 15px;">O grande regente dessa estrutura é o cérebro, o nosso <strong>processador central</strong>. Cada milímetro desse hardware possui uma função técnica e específica. No <strong>Córtex Frontal</strong>, temos o centro de comando, responsável pela lógica, planejamento e tomada de decisões. Logo ao lado, o <strong>Córtex Motor</strong> funciona como o driver de execução: é ali que o sinal elétrico nasce para que você consiga levantar o braço, fechar as mãos ou realizar movimentos precisos. Cada dedo que você mexe possui um ponto correspondente nessa área, provando que somos um projeto de engenharia milimétrico.</p>
+
+    <p style="margin-bottom: 15px;">Se você caminha, mantém a postura ou olha para os lados, é porque o seu <strong>Cerebelo</strong> e o <strong>Tronco Encefálico</strong> estão processando o equilíbrio e os sinais automáticos que mantêm seus pulmões inflando e seu coração batendo sem que você precise pensar nisso. Enquanto isso, o <strong>Sistema Límbico</strong> atua como o gestor de energia emocional, processando memórias e sentimentos que podem impulsionar ou travar o seu sistema operacional. Até mesmo a visão é processada no <strong>Lóbulo Occipital</strong>, na parte traseira, mostrando que a informação percorre todo o processador para se transformar em compreensão.</p>
+
+    <p style="margin-bottom: 15px;">Embora a ciência e a fé ofereçam narrativas distintas sobre nossa origem, o fato concreto é que somos um sistema complexo que exige manutenção constante. Sem um processador funcionando bem, o restante da estrutura entra em colapso. É aqui que a numerologia entra como o seu <strong>software de diagnóstico</strong>. Ela não é um conceito abstrato; ela é o manual que revela as "luzes e sombras" da sua configuração, indicando onde a intensidade deve ser ajustada para evitar o desgaste das peças e otimizar o desempenho.</p>
+
+    <p style="margin-bottom: 15px;">Meu objetivo é conduzir você ao que chamo de <strong>Instinto Superior</strong>. Para atingir esse estado de alta performance, trabalhamos a conexão absoluta entre os quatro planos: <strong>Mental, Intuitivo, Emocional e Físico</strong>. Quando o hardware (físico) e o software (emocional/mental) estão em sincronia, a vida flui de dentro para fora, com clareza e precisão cirúrgica.</p>
+
+    <p style="margin-bottom: 15px;">Ao entender que você é uma máquina magnífica, você para de agir por impulso e começa a operar com estratégia. A numerologia aponta os códigos e os melhores caminhos, mas é o conhecimento sobre sua própria anatomia — do sinal elétrico que move suas pernas à intuição que guia seus passos — que permite que você limpe as engrenagens, alimente o sistema e alcance o <strong>ápice da sua existência</strong>. É ciência, é lógica e é o seu projeto de vida funcionando em sua capacidade máxima.</p>
+</div>
+`;   
+
+// --- PÁGINA 2: NOME SOCIAL (SE EXISTIR) ---
+
+
+
+
+// --- SEÇÃO: ORIGEM E CODIFICAÇÃO ---
+tituloBonito = "Origem e a Codificação da Numerologia Moderna"; 
+
+// Separador Luxo
+html += `
+<div class="separador-luxo" style="width: 100%; margin: 40px 0;">
+    <div class="caixa-interna" style="text-align: center;">
+        <h2 style="margin: 0;">${tituloBonito}</h2>
+    </div>
+</div>
+`;    
+
+html += `
+<div class="secao-card quebra-pagina" style="width: 100%; max-width: 1000px; margin: 0 auto; text-align: center; padding: 20px;">
+    <div style="margin-bottom: 30px;">
+        <h2 class="titulo-topico mostrar-titulo" style="letter-spacing: 5px; color: #827108; margin-bottom: 30px; font-weight: 800;">
+            ${tituloBonito}
+        </h2>
+        <div style="width: 50px; height: 3px; background: #827108; margin: 0 auto;"></div>
+    </div>
+
+    <div class="evitar-corte texto-res" style="font-size: 20px; line-height: 1.8; color: #333; text-align: justify;">
+        ${aplicarFiltroTexto(textos.introducoes.historiaModerna)}
+    </div>
+</div>
+`; // Fechamento correto da seção
+
+
+
+
+tituloBonito = "Numerologia Moderna: O Tratado da Evolução Consciente";    
+html += `
+<div class="separador-luxo">
+    <div class="caixa-interna">
+        <h2>${tituloBonito}</h2>
+    </div>
+</div>`;
+
+html += `
+<div class="estudo-numerologico-texto" style="max-width: 850px; margin: 0 auto; padding: 20px; line-height: 1.8; color: #333; font-family: sans-serif;">
+    
+    <div style="text-align: center; margin-bottom: 45px; break-inside: avoid;">
+        <p style="font-size: 1.1em; color: #555; margin-top: 15px; font-weight: 300; letter-spacing: 1px; text-transform: uppercase;">A Ciência da Observação de Padrões</p>
+    </div>
+
+    <p style="margin-bottom: 25px; text-align: justify;">
+        A numerologia, no contexto deste estudo, é compreendida como uma <strong>pseudociência</strong>, uma vez que ainda não possui comprovação dentro dos critérios rigorosos da ciência moderna. No entanto, destaca-se por apresentar um elevado índice de acertos na análise de padrões comportamentais, ciclos de vida e tendências individuais, aproximando-se, em muitos aspectos, de uma <strong>lógica científica aplicada</strong>.
+    </p>
+
+    <div style="background: #f9f9f9; padding: 25px; border-radius: 15px; border-left: 5px solid #2c3e50; margin-bottom: 30px;">
+        <p style="margin: 0;">
+            Sua estrutura não é baseada em adivinhação, crença espiritual ou práticas místicas, mas sim na <strong>observação e interpretação de padrões numéricos</strong> que se manifestam na experiência humana. Diferente de sistemas como astrologia ou tarô, a numerologia aqui tratada é um <strong>estudo analítico</strong>, voltado à compreensão do indivíduo em sua totalidade.
+        </p>
+    </div>
+
+    <h3 style="color: #2980b9; border-left: 5px solid #2980b9; padding-left: 15px; margin-bottom: 25px;">DESENVOLVIMENTO E PROJEÇÃO FUTURA</h3>
+    <p style="margin-bottom: 25px;">
+        Trata-se de um campo que possui base, desenvolvimento e projeção — sendo este “fim” não como um encerramento, mas como uma <strong>possibilidade real de validação científica</strong>. Até que isso ocorra, o avanço da numerologia depende de:
+    </p>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 40px;">
+        <div style="background: #f0f7ff; padding: 20px; border-radius: 10px; border: 1px solid #d0e2f3;">
+            <strong>Aprofundamento:</strong><br>
+            <small>Investigação contínua das correlações numéricas na psique humana.</small>
+        </div>
+        <div style="background: #f0f7ff; padding: 20px; border-radius: 10px; border: 1px solid #d0e2f3;">
+            <strong>Refinamento:</strong><br>
+            <small>Melhoria constante do rigor metodológico nas interpretações.</small>
+        </div>
+    </div>
+
+    <h3 style="color: #e67e22; border-left: 5px solid #e67e22; padding-left: 15px; margin-bottom: 25px;">A TRANSFORMAÇÃO INDIVIDUAL COMO CHAVE SOCIAL</h3>
+    <p style="margin-bottom: 25px;">
+        O foco central está no indivíduo, não no coletivo. A transformação social é <strong>consequência direta</strong> da evolução individual. Ao compreender seus próprios padrões — mentais, emocionais, intuitivos e comportamentais — o indivíduo desenvolve o equilíbrio necessário para agir.
+    </p>
+
+    <div style="background: #101015; color: #fff; padding: 30px; border-radius: 15px; margin-bottom: 40px;">
+        <strong style="color: #d4af37; font-size: 1.2em;">A Transição do Instinto</strong>
+        <p style="margin-top: 15px; font-size: 1.05em; color: #eee;">
+            Este processo leva à transição do <strong>instinto animal</strong>, comum a todos os seres, para o chamado <strong>Instinto Superior</strong>, que representa um estado de domínio interno, lucidez e direção soberana.
+        </p>
+    </div>
+
+    <h3 style="color: #c0392b; border-left: 5px solid #c0392b; padding-left: 15px; margin-bottom: 25px;">CONCLUSÃO: O PROPÓSITO DA CONSCIÊNCIA</h3>
+    <div style="background: #fff5f5; padding: 25px; border-radius: 15px; border: 1px solid #fed7d7; text-align: justify;">
+        <p style="margin-bottom: 15px;">
+            A numerologia moderna propõe utilizar os números como ferramenta de <strong>consciência e autoconhecimento</strong>. Ao atingir um nível elevado de equilíbrio, o indivíduo torna-se capaz de liderar a si mesmo e, por consequência, influenciar positivamente o meio em que vive.
+        </p>
+        <p style="font-weight: bold; color: #1a1a1a; text-align: center; margin-top: 20px;">
+            A verdadeira mudança na sociedade não parte do coletivo abstrato, mas de indivíduos conscientes, equilibrados e alinhados com seu propósito.
+        </p>
+    </div>
+
+            <div style="margin-top: 50px; text-align: center;">
+            <div style="width: 80px; height: 1px; background: var(--gold); margin: 0 auto 25px;"></div>
+            <p style="font-style: italic; color: #666; font-size: 1.1rem; max-width: 600px; margin: 0 auto;">
+                "Os números são a linguagem em que o Universo foi escrito e a chave para a compreensão da alma humana."
+            </p>
+        </div>
+
+    <div style="margin-bottom: 50px;"></div>
+</div>
+`;
+
+
+
+
+
+tituloBonito = "O Instinto Superior: A Maestria do Equilíbrio";    
+html += `
+<div class="separador-luxo">
+    <div class="caixa-interna">
+        <h2>${tituloBonito}</h2>
+    </div>
+</div>`;
+
+html += `
+<div class="estudo-numerologico-texto" style="max-width: 850px; margin: 0 auto; padding: 20px; line-height: 1.8; color: #333; font-family: sans-serif;">
+    
+    <div style="text-align: center; margin-bottom: 45px; break-inside: avoid;">
+      
+        <p style="font-size: 1.1em; color: #555; margin-top: 15px; font-weight: 300; letter-spacing: 1px;">O Tratado da Engenharia Humana: Guia de Cruzamentos</p>
+    </div>
+
+    <p style="margin-bottom: 25px;">Este guia detalha como os seus quatro planos (Físico, Mental, Emocional e Intuitivo) interagem. Identifique os níveis que apareceram no seu mapa para entender sua dinâmica pessoal.</p>
+
+    <h3 style="color: #e67e22; border-left: 5px solid #e67e22; padding-left: 15px; margin-bottom: 25px;">1. DOMINÂNCIA E SUPORTE (FORTE vs MÉDIO)</h3>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px;">
+        <div style="background: #f9f9f9; padding: 15px; border-radius: 10px; border-left: 3px solid #2c3e50; break-inside: avoid;">
+            <strong>Físico Forte / Mental Médio:</strong><br>
+            <small>O Realizador Consciente. Muita energia de execução com filtro tático para não desperdiçar força.</small>
+        </div>
+        <div style="background: #f9f9f9; padding: 15px; border-radius: 10px; border-left: 3px solid #2c3e50; break-inside: avoid;">
+            <strong>Mental Forte / Físico Médio:</strong><br>
+            <small>O Estrategista Estável. A mente lidera a visão e o corpo mantém o ritmo necessário para realizar.</small>
+        </div>
+        <div style="background: #f9f9f9; padding: 15px; border-radius: 10px; border-left: 3px solid #2c3e50; break-inside: avoid;">
+            <strong>Emocional Forte / Mental Médio:</strong><br>
+            <small>O Comunicador Empático. Age pelo coração, mas possui lógica suficiente para não se perder em dramas.</small>
+        </div>
+        <div style="background: #f9f9f9; padding: 15px; border-radius: 10px; border-left: 3px solid #2c3e50; break-inside: avoid;">
+            <strong>Intuitivo Forte / Físico Médio:</strong><br>
+            <small>O Visionário Concreto. Capta o futuro e tem a base física para transformar a ideia em realidade.</small>
+        </div>
+    </div>
+
+    <h3 style="color: #c0392b; border-left: 5px solid #c0392b; padding-left: 15px; margin-bottom: 25px;">2. O DESAFIO DOS EXTREMOS (FORTE vs FRACO)</h3>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px;">
+        <div style="background: #fff5f5; padding: 15px; border-radius: 10px; border: 1px solid #fed7d7; break-inside: avoid;">
+            <strong>Físico Forte / Mental Fraco:</strong><br>
+            <small>O Trator Desgovernado. Muita força de ação, mas pouca direção. Tende a agir antes de pensar.</small>
+        </div>
+        <div style="background: #fff5f5; padding: 15px; border-radius: 10px; border: 1px solid #fed7d7; break-inside: avoid;">
+            <strong>Mental Forte / Físico Fraco:</strong><br>
+            <small>O Arquiteto Sem Tijolos. Ideias brilhantes que morrem na mente por falta de energia vital para executar.</small>
+        </div>
+        <div style="background: #fff5f5; padding: 15px; border-radius: 10px; border: 1px solid #fed7d7; break-inside: avoid;">
+            <strong>Emocional Forte / Mental Fraco:</strong><br>
+            <small>O Vulcão de Impulsos. Sentimentos intensos que dominam a razão, gerando instabilidade nas decisões.</small>
+        </div>
+        <div style="background: #fff5f5; padding: 15px; border-radius: 10px; border: 1px solid #fed7d7; break-inside: avoid;">
+            <strong>Intuitivo Forte / Físico Fraco:</strong><br>
+            <small>O Místico Desconectado. Percebe planos sutis, mas sente dificuldade em lidar com as demandas do mundo real.</small>
+        </div>
+    </div>
+
+    <h3 style="color: #2980b9; border-left: 5px solid #2980b9; padding-left: 15px; margin-bottom: 25px;">3. ESTABILIDADE E SILÊNCIO (MÉDIO vs FRACO)</h3>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px;">
+        <div style="background: #f0f7ff; padding: 15px; border-radius: 10px; border-left: 3px solid #2980b9; break-inside: avoid;">
+            <strong>Mental Médio / Emocional Fraco:</strong><br>
+            <small>O Analista Frio. Consegue pensar bem, mas tem dificuldade em conectar-se com o sentimento alheio.</small>
+        </div>
+        <div style="background: #f0f7ff; padding: 15px; border-radius: 10px; border-left: 3px solid #2980b9; break-inside: avoid;">
+            <strong>Físico Médio / Intuitivo Fraco:</strong><br>
+            <small>O Operário Cético. Funciona bem na rotina, mas ignora sinais sutis ou pressentimentos.</small>
+        </div>
+        <div style="background: #f0f7ff; padding: 15px; border-radius: 10px; border-left: 3px solid #2980b9; break-inside: avoid;">
+            <strong>Emocional Médio / Físico Fraco:</strong><br>
+            <small>O Sonhador Frágil. Tem bons sentimentos, mas o corpo cansa rápido demais para sustentar grandes projetos.</small>
+        </div>
+        <div style="background: #f0f7ff; padding: 15px; border-radius: 10px; border-left: 3px solid #2980b9; break-inside: avoid;">
+            <strong>Intuitivo Médio / Mental Fraco:</strong><br>
+            <small>O Sensitivo Confuso. Sente as coisas, mas não consegue explicar logicamente o que percebe.</small>
+        </div>
+    </div>
+
+<h3 style="text-align: center; color: #e67e22; border-left: 4px solid #e67e22; padding-left: 15px; margin-bottom: 20px;">A Decodificação do Logo: O Mapa da Plenitude</h3>
+  <div style="text-align: center; margin-bottom: 25px; break-inside: avoid;">
+  <img src="https://hemricciinstintosuperior-rcci.github.io/Trabalho_venda_Numerologia/INSTINTOFOTOO.png" alt="Logo Instinto Superior" style="text-align: center; width: 100%; max-width: 250px; height: auto; border-radius: 20px; box-shadow: 0 15px 30px rgba(0,0,0,0.15); border: 1px solid #ddd; justify-content: center;">
+ </div>
+    <p style="margin-bottom: 25px;">Nossa identidade visual não é apenas estética; é um diagrama da evolução humana. Cada elemento representa uma engrenagem do sistema que, quando alinhado, desperta o <strong>Instinto Superior</strong>. É a jornada que sai do caos interior em direção ao propósito concreto.</p>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px; break-inside: avoid;">
+        <div style="background: #fdfdfd; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+            <strong style="color: #2c3e50;">A Justiça Cega: O Triunfo do Interior</strong>
+            <p style="font-size: 0.95em; color: #666;">A mulher com os olhos vendados simboliza o mergulho nos planos <strong>Mental, Intuitivo e Emocional</strong>. Ela não precisa da visão externa, pois opera no mundo interior. A balança que ela sustenta é o ponto de aferição: o equilíbrio exato entre o que você pensa, o que sente e o que sua intuição capta. Sem esse ajuste fino, não há justiça com o próprio potencial.</p>
+        </div>
+        <div style="background: #fdfdfd; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+            <strong style="color: #2c3e50;">A Espada em Repouso: O Poder da Defesa</strong>
+            <p style="font-size: 0.95em; color: #666;">A espada abaixada representa a força sob controle. Ela não serve para o ataque gratuito ou para ferir, mas para a superação de obstáculos. Quando o ser está equilibrado, a espada se torna uma ferramenta de corte preciso contra as barreiras que surgem no caminho. É a autoridade de quem sabe vencer sem precisar de conflitos desnecessários.</p>
+        </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px; break-inside: avoid;">
+        <div style="background: #fdfdfd; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+            <strong style="color: #2c3e50;">A Águia: O Físico e o Propósito</strong>
+            <p style="font-size: 0.95em; color: #666;">A águia é a personificação do <strong>Plano Físico</strong> em seu estado mais puro. Ela possui a visão macroscópica para enxergar o objetivo de longe e a explosão necessária para o bote certeiro. Enquanto o interior se equilibra, a águia age no mundo material, transformando o invisível em algo palpável e finalizando o propósito com precisão implacável.</p>
+        </div>
+        <div style="background: #fdfdfd; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+            <strong style="color: #2c3e50;">O Ser no Ápice: O Despertar do Instinto</strong>
+            <p style="font-size: 0.95em; color: #666;">Acima do pentagrama, o personagem central representa o indivíduo que alcançou a <strong>Plenitude</strong>. Ele é o resultado da integração perfeita entre os quatro planos. Este ser não é mais escravo das circunstâncias; ele comanda o seu sistema operacional e lida com a vida a partir de uma perspectiva de soberania e autonomia total.</p>
+        </div>
+    </div>
+
+    <p style="margin-bottom: 25px;">Este é o ciclo do despertar: <strong>O Equilíbrio</strong> (a Justiça), <strong>O Propósito</strong> (a Águia) e <strong>A Maestria</strong> (o Ser no Ápice). Quando você entende essa engenharia, a vida deixa de ser um peso e se torna um campo de atuação estratégica para o seu Instinto Superior.</p>
+    
+
+    <p style="margin-bottom: 25px;">Entender que somos uma engenharia magnífica nos dá a responsabilidade de realizar a manutenção correta. A numerologia quântica fornece os códigos e o diagnóstico, mas o <strong>Instinto Superior</strong> é a prática diária desse conhecimento.</p>
+
+
+</div>
+
+<div class="page" style="padding: 40px; background: #fdfdfd; min-height: 100vh;">
+    <div style="text-align: center; margin-bottom: 40px;">
+        <h2 style="color: #1a1a1a; font-size: 2rem; letter-spacing: 2px; text-transform: uppercase; border-bottom: 2px solid #d4af37; display: inline-block; padding-bottom: 10px;">
+            A Engenharia da Percepção
+        </h2>
+        <p style="color: #666; font-style: italic; margin-top: 10px;">A conexão entre seus Planos Internos e os Sentidos Externos</p>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 30px;">
+        
+        <div style="background: #101015; border-radius: 15px; padding: 30px; border-left: 8px solid #d4af37; box-shadow: 5px 5px 15px rgba(0,0,0,0.2);">
+            <h3 style="color: #d4af37; margin-top: 0; text-transform: uppercase; font-size: 1.2rem;">
+                <span style="font-size: 1.5rem; margin-right: 10px;">⚙️</span> O Sistema Operacional (Hardware Interno)
+            </h3>
+            <p style="color: #fff; line-height: 1.6; text-align: justify;">
+                Sua máquina orgânica opera através de quatro planos fundamentais que processam a realidade de dentro para fora:
+            </p>
+            <ul style="color: #eee; line-height: 1.8; list-style-type: none; padding-left: 0;">
+                <li><strong style="color: #d4af37;">● Plano Mental:</strong> O processador lógico (Córtex Frontal). Onde o software da sua vida é escrito e a estratégia é definida.</li>
+                <li><strong style="color: #d4af37;">● Plano Intuitivo:</strong> Sua conexão wireless. A antena sutil (Glândula Pineal) que capta frequências além da lógica.</li>
+                <li><strong style="color: #d4af37;">● Plano Emocional:</strong> A gestão de energia (Sistema Límbico). O combustível que decide a intensidade das suas reações.</li>
+                <li><strong style="color: #d4af37;">● Plano Físico Interno:</strong> A estrutura e química orgânica. O hardware que sustenta a operação de todos os outros sistemas.</li>
+            </ul>
+        </div>
+
+        <div style="background: #ffffff; border-radius: 15px; padding: 30px; border: 2px solid #101015; box-shadow: 5px 5px 15px rgba(0,0,0,0.05);">
+            <h3 style="color: #101015; margin-top: 0; text-transform: uppercase; font-size: 1.2rem;">
+                <span style="font-size: 1.5rem; margin-right: 10px;">📡</span> Interface de Campo (Os 5 Sentidos)
+            </h3>
+            <p style="color: #333; line-height: 1.6; text-align: justify;">
+                Enquanto os planos operam internamente, os <strong>Cinco Sentidos</strong> são os sensores de campo que conectam sua essência ao mundo material:
+            </p>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
+                <div style="background: #f9f9f9; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
+                    <strong style="color: #101015;">Visão e Audição:</strong> Alimentam seu plano <strong>Mental</strong> com dados de luz e som.
+                </div>
+                <div style="background: #f9f9f9; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
+                    <strong style="color: #101015;">Olfato e Paladar:</strong> Disparam reações químicas imediatas no seu <strong>Emocional</strong>.
+                </div>
+                <div style="background: #f9f9f9; padding: 15px; border-radius: 8px; border: 1px solid #ddd; grid-column: span 2;">
+                    <strong style="color: #101015;">Tato:</strong> A fronteira final do plano <strong>Físico</strong>, onde você interage e modifica a matéria.
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; padding: 25px; background: rgba(212, 175, 55, 0.1); border-radius: 10px; border: 1px dashed #d4af37;">
+            <p style="color: #1a1a1a; font-weight: bold; margin: 0; line-height: 1.6;">
+               O equilíbrio numerológico limpa as lentes dos seus sentidos. Ao alinhar seus quatro planos internos, seus sensores externos passam a operar com clareza cristalina, permitindo que você manifeste o seu <strong>Instinto Superior</strong> e domine sua própria engenharia.
+            </p>
+        </div>
+
+            <div style="text-align: center; border-top: 1px dotted #ccc; padding-top: 30px; break-inside: avoid;">
+             <img src="https://hemricciinstintosuperior-rcci.github.io/Trabalho_venda_Numerologia/plano.png" alt="Logo Instinto Superior" style="width: 100%; max-width: 500px; height: auto; border-radius: 20px; box-shadow: 0 15px 30px rgba(0,0,0,0.15); border: 1px solid #ddd;">
+        <p style="font-weight: bold; color: #e67e22; font-size: 1.2em;">Instinto Superior: Direção, Consistência e Autonomia.</p>
+        
+    </div>
+    </div>
+</div>
+`;
+
+
+
+
+        tituloBonito = " Direcionamento da sua Jornada";    
+html += `
+<div class="separador-luxo">
+    <div class="caixa-interna">
+        <h2>${tituloBonito}</h2>
+    </div>
+</div>`;    
+
+html += `
+<div class="page" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 50px 40px; min-height: 800px;">
+    
+    <div style="text-align: center; max-width: 800px;">
+        <h3 class="titulo-topico mostrar-titulo" style="border-bottom: 2px solid var(--gold); display: inline-block; padding: 0 30px; font-size: 1.8rem; letter-spacing: 3px; margin-bottom: 30px;">
+            
+        </h3>
+
+        <div class="texto-res" style="font-size: 1.1rem; line-height: 1.6; color: #333; text-align: justify; text-justify: inter-word;">
+            <p>
+                Este estudo é um mapa detalhado da sua engenharia existencial. Para que você aproveite ao máximo, estruturamos sua jornada em nove etapas fundamentais de decodificação:
+            </p>
+            
+            <p style="margin-top: 10px;">
+                Iniciamos pela <strong>Parte 1 (Performance Natural)</strong>, onde analisamos seus Planos de Expressão e Gráficos de Potenciais. Na <strong>Parte 2 (Essência e Identidade)</strong>, mergulhamos no seu Dia de Nascimento, Motivação, Personalidade e Desejos Ocultos, revelando quem você é na sua forma mais pura. Já na <strong>Parte 3 (Finalidade e Realização)</strong>, definimos seu Caminho de Vida, Propósito e o Direcionamento Profissional ideal.
+            </p>
+
+            <p style="margin-top: 10px;">
+                Na <strong>Parte 4 (Alinhamento e Desafios)</strong>, enfrentaremos as Fraquezas, Inibições e o seu Desafio Principal para transformar obstáculos em força. Para facilitar o seu dia a dia, a <strong>Parte 5 (Complementares)</strong> traz seus Números Harmônicos, Dias de Poder, Cores Favoráveis e Dinâmicas de Relacionamento.
+            </p>
+
+            <p style="margin-top: 10px;">
+                Ao chegarmos na <strong>Parte 6 (Ciclos)</strong> e <strong>Parte 7 (Tendências do Momento)</strong>, você entenderá suas Fases de Maturidade, Ano Pessoal e os Ciclos Transitórios que regem o seu agora. A jornada atinge seu ápice na <strong>Parte 8 (A Grande Matriz)</strong>, com a Pirâmide Invertida e as potências numéricas mapeadas até os seus 100 anos de idade.
+            </p>
+
+            <p style="margin-top: 10px;">
+                Por fim, a <strong>Parte 9 (Filosofia e Ciência)</strong> traz o Contexto Histórico e a Conclusão Evolutiva desta análise. Encare este conteúdo não como uma previsão, mas como um manual técnico de autogestão. Cada seção foi desenhada para que você entenda sua estrutura interna e utilize esse conhecimento para manifestar o seu legado no mundo.
+            </p>
+
+            <p style="margin-top: 15px; font-weight: 500; font-style: italic; color: #111; text-align: center;">
+                Absorva cada frequência, reconheça sua potência e desperte o mestre que existe em você.
+            </p>
+        </div>
+
+        <div style="margin-top: 20px; text-align: center;">
+            <div style="width: 60px; height: 1px; background: var(--gold); margin: 0 auto 20px;"></div>
+            <p style="font-weight: bold; color: #d97a1e; letter-spacing: 5px; font-size: 1rem; text-transform: uppercase;">
+                A Decodificação Começa Agora
+            </p>
+        </div>
+    </div>
+</div>
+`; 
+   
+
+const listaItensSintese = [
+    { label: "Dia Natalicio", valor: res.dia },
+    
+    { label: "Essência", valor: res.essencia },
+    
+    { label: "Motivação", valor: res.motivacao },
+    
+    { label: "Desejo Oculto", valor: vDesejoFinal }, // <--- CONECTADO!
+    
+    { label: "Influência", valor: res.influencia },
+    
+    { label: "Personalidade", valor: res.Personalidade },
+    
+    { label: "Comportamento", valor: res.comportamento },
+    
+    { label: "Relacionamento", valor: res.Relacionamento },
+    
+    { label: "Talento Oculto", valor: res.talento },
+    
+    {label: "Equilíbrio", valor: `${res.equilibrio.inicio} ⚖️ ${res.equilibrio.fim}`},
+    
+    { label: "Inclinações Ocultas", valor: res.inclinacoes },
+    
+    { label: "Subconsciente", valor: res.subconsciente },
+    
+    { label: "Déficit Comportamental", valor: vDeficitFinal }, // <--- CONECTADO!
+    
+    { label: "Habilidades / Deficiências", valor: vHabDefFinal }, // <--- CONECTADO!
+    
+    { label: "Fraquezas / Inibições", valor: (res.deficiencias && res.deficiencias.length > 0) ? res.deficiencias : "Livre" },
+    
+    { label: "Caminho de Vida", valor: res.CaminhodeVida },
+    
+    { label: "Propósito", valor: res.Propósito },
+    
+    { label: "Maturidade", valor: res.Maturidade },
+
+    { label: "Profissão", valor: formatarProfissoesSimples(res) },
+    
+    { label: "Ciclos da Vida", valor: res.ciclos },
+    
+    { label: "Desafios", valor: res.desafios },
+    
+    { label: "Momentos de Decisão", valor: res.momentos },
         
     { label: "Ano Pessoal", valor: res.anoPessoal },
     
     { label: "Trânsito", valor: vTrânsitoFinal },
     
-
+    { label: "Números Harmônicos", valor: obterNumerosHarmonicos(res.dia) },
+    { label: "Cores Favoráveis", valor: obterCoresFavoraveis(res.Personalidade) },
+    { label: "Dias de Poder", valor: obterDiasFavoraveisRessonancia(res.dia).join(', ') },
+    { label: "Vibração Semanal", valor: obterDiaSemanaVibracional(res.dia) }
     
 
 ];
+
 
 
 
@@ -3015,9 +4302,6 @@ html += `
 
 
 
-   
-
-
 
 
 html += `
@@ -3117,7 +4401,55 @@ html += `
     </div>
 `;
 
-     
+
+
+
+    
+
+// --- INCLUSÃO: DESEJO OCULTO E TALENTOS ESPECIAIS ---
+const dadosDesejo = calcularDesejoOculto(nomeRaw);
+const primeiroNome = nomeRaw.split(' ')[0];
+
+
+    
+
+// ==========================================
+
+
+// --- INÍCIO DO BLOCO DO EQUILÍBRIO ADAPTADO ---
+
+// --- NO BLOCO DO HTML DO RELATÓRIO ---
+const nInicio = res.numEquilibrioInicio;
+const nFim = res.numEquilibrioFim;
+
+// Pega os textos que salvamos no passo anterior
+const txtP1 = res.equilibrio.txtFinalInic || "";
+const txtP2 = res.equilibrio.txtFinalConc || "";
+
+
+    
+    
+
+// 1. PRIMEIRO: Calcule os dados científicos (use o nomeCompleto do seu formulário)
+const dadosHabilidade = calcularHabilidadeEspecialCientifica(nomeRaw);
+
+
+
+
+
+
+
+
+// BLOCO INDIVIDUAL: SUBCONSCIENTE (subconsciente)
+// ==========================================
+tituloBonito = "Subconsciente"; 
+const valSub = res.subconsciente; // Pegando a variável em minúsculo
+let conteudoSubconsciente = (textos.subconsciente && textos.subconsciente[valSub]) 
+
+
+
+
+    
 
 
 
@@ -3132,6 +4464,11 @@ html += `
 
 
 
+
+
+
+
+      
 
             
 
@@ -3311,6 +4648,52 @@ html += `
 
 
 
+    
+// --- 1. PRIMEIRO: DETECTA TUDO (Isso resolve o erro de 'before initialization') ---
+const arcanosTopo = topo(piramideVida[0]);
+const listaEspeciais = detectarEspeciaisIndependentes(piramideVida); // Função que criamos antes
+const listaFin = detectarFinanceirasIndependentes(piramideVida);    
+
+
+
+
+           
+html += `
+    <div class="capa-transicao" style="height: 297mm; width: 100%; max-width: 210mm; display: flex; flex-direction: column; align-items: center; text-align: center; background-color: #0f2a36; position: relative; overflow: hidden; page-break-after: always; box-sizing: border-box; margin: 0 auto;">
+        
+        <div style="margin-top: 60px; z-index: 10; width: 100%;">
+            <h2 style="font-family: 'Cinzel', serif; font-size: 28px; color: #fff; text-transform: uppercase; margin: 15px 20px;">
+               Parte 9 <br><br>FILOSOFIA, CIÊNCIA  & NUMEROLOGIA
+            </h2>
+        </div>
+
+        <div style="margin: 100px 0 30px 0; width: 100%; display: flex; justify-content: center;">
+            <img src="https://hemricciinstintosuperior-rcci.github.io/Trabalho_venda_Numerologia/INSTINTOFOTOO.png" 
+                 style="width: 80%; max-width: 380px; height: auto; display: block; border: none; outline: none;">
+        </div>
+
+       <div class="player-relatorio" style="margin-top: 50px; z-index: 30; display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%;">
+            <span style="font-size: 10px; color: #d97a1e; text-transform: uppercase; letter-spacing: 2px;">O som da Filosofia</span>
+            <audio controls style="height: 35px; filter: sepia(100%) saturate(200%) brightness(100%) hue-rotate(330deg);">
+                <source src="https://hemricciinstintosuperior-rcci.github.io/estudo_numerologico/filosofia.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+
+        <a href="https://hemricciinstintosuperior-rcci.github.io/estudo_numerologico/filosofia.mp3" target="_blank" class="botao-pdf-link" style="text-decoration: none; z-index: 20; margin-top: 20px;">
+            <div style="background: rgba(0, 0, 0, 0.7); border: 1px solid #d97a1e; padding: 12px 25px; border-radius: 50px; display: flex; align-items: center; gap: 12px;">
+                <div style="width: 30px; height: 30px; background: #d97a1e; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #000; font-size: 14px;">▶</div>
+                <div style="text-align: left;">
+                    <span style="display: block; font-size: 8px; color: #d97a1e; text-transform: uppercase; letter-spacing: 2px;">O som da Filosofia</span>
+                    <span style="display: block; font-size: 13px; color: #fff; font-family: 'Cinzel', serif;">CLIQUE PARA OUVIR NO CELULAR</span>
+                </div>
+            </div>
+        </a>
+
+        <p style="position: absolute; bottom: 50px; width: 100%; color: #fff; font-size: 14px; letter-spacing: 1px; opacity: 1.2; padding: 0 20px; box-sizing: border-box; margin: 0;">
+            Numerologia aplicada na filosofia Hermética e na ciência moderna
+        </p>
+    </div>
+`;
         
 
 // Crie esta linha logo ACIMA do código da ondinha:
