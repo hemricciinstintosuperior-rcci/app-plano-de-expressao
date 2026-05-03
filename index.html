@@ -2162,6 +2162,7 @@ function montarHtmlPlanosMomento(nomeCompleto, dataNascimento, res, faltantes, d
             return t;
         });
 
+        // RESET DE VARIÁVEIS A CADA CICLO (Evita que tudo vire 'Criativo')
         let somaMomento = { fisico: 0, mental: 0, emocional: 0, intuitivo: 0 };
         let contPerfilMomento = { criativo: 0, indeciso: 0, neutro: 0 };
 
@@ -2170,12 +2171,20 @@ function montarHtmlPlanosMomento(nomeCompleto, dataNascimento, res, faltantes, d
             if (letraAtiva) {
                 const plano = descobrirPlano(letraAtiva);
                 if (plano) somaMomento[plano] += calcularValorLetra(letraAtiva);
+                
+                // Normaliza para buscar no banco de perfis (Criativo/Indeciso/Neutro)
                 let letraBase = letraAtiva.normalize("NFD")[0].toUpperCase();
-                if (window.tabelaExpressao && tabelaExpressao[letraBase]) contPerfilMomento[tabelaExpressao[letraBase]]++;
+                if (window.tabelaExpressao && tabelaExpressao[letraBase]) {
+                    contPerfilMomento[tabelaExpressao[letraBase]]++;
+                }
             }
         });
         
-        let dominanteMomento = Object.keys(contPerfilMomento).reduce((a, b) => contPerfilMomento[a] >= contPerfilMomento[b] ? a : b);
+        // Define qual perfil venceu NESTE ANO específico
+        let perfilVencedor = Object.keys(contPerfilMomento).reduce((a, b) => 
+            contPerfilMomento[a] >= contPerfilMomento[b] ? a : b
+        );
+
         const nomesAmigaveis = { fisico: "Físico", mental: "Mental", emocional: "Emocional", intuitivo: "Intuitivo" };
         const degradês = {
             fisico: 'linear-gradient(to right, #e74c3c, #7b241c)',
@@ -2184,76 +2193,85 @@ function montarHtmlPlanosMomento(nomeCompleto, dataNascimento, res, faltantes, d
             intuitivo: 'linear-gradient(to right, #f1c40f, #b8860b)'
         };
 
-        const planosOrdenados = Object.entries(somaMomento)
-            .map(([chave, valor]) => ({ chave, valor }))
-            .sort((a, b) => b.valor - a.valor);
+        const planosOrdenados = Object.entries(somaMomento).sort((a, b) => b[1] - a[1]);
+        const ref = planosOrdenados[0][1] || 1;
 
-        const ref = planosOrdenados[0].valor || 1;
-        
-        // Estrutura HTML reforçada com clear:both
+        // --- INÍCIO DO BLOCO HTML ---
         let h = `
-        <div class="secao-card evitar-corte" style="clear:both; border-top: 1px solid #ddd; padding: 40px 0;"> 
-            <h2 style="display:block; text-align:center; color:#000; font-size:22px; margin-bottom:10px;">${tituloSecao}</h2>
+        <div class="secao-card evitar-corte" style="clear:both; border-top: 1px solid #ddd; padding: 40px 0; margin-bottom: 20px;"> 
+            <h2 style="display:block; text-align:center; color:#000; font-size:22px; margin-bottom:10px; text-transform:uppercase;">${tituloSecao}</h2>
             <h3 style="display:block; text-align:center; color:var(--gold); font-size:18px; margin-bottom:20px;">IDADE: ${indiceAno} ANOS | ${periodoVigente}</h3>
             
-            <div style="width: 100%; max-width: 600px; margin: 0 auto 20px auto; padding: 15px; border: 1px solid var(--gold); border-radius: 10px; text-align:center;">
-                <strong style="color:var(--gold);">PERFIL DE AÇÃO: ${dominanteMomento.toUpperCase()}</strong>
+            <div style="width: 100%; max-width: 650px; margin: 0 auto 20px auto; padding: 20px; border: 2px solid var(--gold); border-radius: 12px; background: #fffaf0; text-align:center;">
+                <strong style="color:var(--gold); font-size:20px; display:block; margin-bottom:10px;">PERFIL DE AÇÃO: ${perfilVencedor.toUpperCase()}</strong>
+                <div style="font-size: 15px; color: #444; font-style: italic;">
+                    ${window.vTextosPerfil ? (window.vTextosPerfil[perfilVencedor] || "") : ""}
+                </div>
             </div>
 
             <div style="width: 100%; max-width: 700px; margin: 0 auto;">`;
         
+        // Gráficos de Barras
         for(let p in somaMomento) {
-            let porcentagem = Math.max((somaMomento[p] / ref) * 100, 5); // Mínimo de 5% para a barra aparecer
+            let porcentagem = Math.max((somaMomento[p] / ref) * 100, 8);
             let valorReduzido = reduzirPuro(somaMomento[p]);
             h += `
                 <div style="margin-bottom: 12px;">
-                    <div style="width: 100%; height: 30px; background: #eee; border-radius: 15px; overflow: hidden; position: relative; display: flex; align-items: center;">
+                    <div style="width: 100%; height: 35px; background: #eee; border-radius: 18px; overflow: hidden; position: relative; display: flex; align-items: center;">
                         <div style="width:${porcentagem}%; height:100%; background: ${degradês[p]}; transition: width 0.5s;"></div>
-                        <span style="position: absolute; width: 100%; text-align: center; color: #fff; font-weight: bold; font-size: 12px; text-shadow: 1px 1px 2px #000; z-index: 2;">
-                            ${nomesAmigaveis[p].toUpperCase()} - VIBRAÇÃO ${valorReduzido}
+                        <span style="position: absolute; width: 100%; text-align: center; color: #fff; font-weight: bold; font-size: 13px; text-transform: uppercase; text-shadow: 1px 1px 2px #000; z-index: 2;">
+                            ${nomesAmigaveis[p]} - VIBRAÇÃO ${valorReduzido}
                         </span>
                     </div>
                 </div>`;
         }
         h += `</div>`;
 
-        // Textos de Interpretação (Corrigido para não quebrar layout)
-        h += `<div style="width: 100%; max-width: 750px; margin: 20px auto; text-align: justify; font-size: 15px; line-height: 1.5;">`;
-        for(let p in somaMomento) {
-            let r = somaMomento[p] / ref;
+        // --- TEXTOS DAS POTÊNCIAS DO MOMENTO ---
+        h += `<div style="width: 100%; max-width: 750px; margin: 30px auto; text-align: justify; font-size: 15px; line-height: 1.6; color: #333;">`;
+        
+        planosOrdenados.forEach(([p, valor]) => {
+            let r = valor / ref;
             let int = (r > 0.75) ? "forte" : (r >= 0.50) ? "medio" : "fraco";
-            let vFinal = reduzirPuro(somaMomento[p]);
+            let vFinal = reduzirPuro(valor);
             
+            // Busca o texto no seu banco de dados
             if(window.textosPlanosMomento && textosPlanosMomento[p] && textosPlanosMomento[p][int]) {
                 let txt = textosPlanosMomento[p][int][vFinal] || "";
                 if(txt) {
-                    h += `<div style="margin-bottom:10px;"><strong>${nomesAmigaveis[p]} (${int.toUpperCase()}):</strong> ${aplicarFiltroTexto(txt)}</div>`;
+                    h += `
+                    <div style="margin-bottom: 18px; border-left: 4px solid var(--gold); padding-left: 15px;">
+                        <h4 style="margin:0 0 5px 0; font-size:14px; color:var(--gold); text-transform: uppercase;">
+                            ${nomesAmigaveis[p]} ${int.toUpperCase()} (Frequência ${vFinal})
+                        </h4>
+                        <div>${aplicarFiltroTexto(txt)}</div>
+                    </div>`;
                 }
             }
-        }
+        });
         h += `</div>`;
 
-        // Trânsito
+        // --- TRÂNSITO (FINAL DO ANO) ---
         let letrasAno = timelines.map(t => t[indiceAno % t.length]);
-        let vTransitoCalculado = reduzirPuro(letrasAno.reduce((s, l) => s + calcularValorLetra(l), 0));
-        let txtTransito = (window.TextosTransito) ? (TextosTransito[vTransitoCalculado] || "") : "";
+        let vTransitoTotal = reduzirPuro(letrasAno.reduce((s, l) => s + calcularValorLetra(l), 0));
+        let txtTransito = (window.TextosTransito) ? (TextosTransito[vTransitoTotal] || "") : "";
 
         h += `
-            <div style="width: 100%; max-width: 750px; margin: 20px auto; background: #000; color: #fff; padding: 20px; border-radius: 8px; border-left: 5px solid var(--gold);">
-                <div style="color:var(--gold); font-weight:bold; margin-bottom:10px; font-size:18px;">TRÂNSITO VIBRACIONAL: ${vTransitoCalculado}</div>
-                <div style="font-size: 14px; line-height: 1.4;">${aplicarFiltroTexto(txtTransito)}</div>
+            <div style="width: 100%; max-width: 750px; margin: 25px auto; background: #000; color: #fff; padding: 25px; border-radius: 12px; border-top: 4px solid var(--gold);">
+                <div style="color:var(--gold); font-weight:bold; margin-bottom:12px; font-size:20px; text-transform: uppercase;">TRÂNSITO VIBRACIONAL: ${vTransitoTotal}</div>
+                <div style="font-size: 15px; line-height: 1.5; color: #eee;">${aplicarFiltroTexto(txtTransito)}</div>
             </div>
         </div>
-        <div style="clear:both;"></div>`; // Clear both final para garantir separação
+        <div style="clear:both;"></div>`;
 
         return h;
     };
 
     if (idadeForcada !== null) {
-        return { html: processarUmCiclo(dtNasci.getFullYear() + idadeForcada, `Ciclo de Vida - Ano ${idadeForcada}`), dados: {} };
+        return { html: processarUmCiclo(dtNasci.getFullYear() + idadeForcada, `Ano de Vida: ${idadeForcada}`), dados: {} };
     } else {
         let htmlFinal = processarUmCiclo(anoBase, "Plano de Expressão Atual");
-        htmlFinal += processarUmCiclo(anoBase + 1, "Próximo Ciclo de Expressão");
+        htmlFinal += processarUmCiclo(anoBase + 1, "Próximo Ciclo Anual");
         return { html: htmlFinal, dados: {} };
     }
 }
