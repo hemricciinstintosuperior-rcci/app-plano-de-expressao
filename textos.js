@@ -4435,8 +4435,10 @@ window.TextosTransito = {
 <p>É o momento de confrontar as situações que vinham se arrastando, de parar de fugir e tomar uma posição firme. Haverá nessa fase o poder para você promover todas as mudanças necessárias. Tudo o que se precisa agora é ter força de vontade e atitude para colocar os planos em prática. Este é um período de muita luta, mas também de grandes recompensas; sua independência será conquistada através da coragem de ser você mesmo, deixando para trás qualquer sombra de hesitação.</p>
 <p>Em alguns momentos, pode surgir um desânimo e haverá a necessidade de rever planos para recomeçar de outra maneira. Este é um período em que sua determinação será testada constantemente, mas seguir adiante trará muitas recompensas. As influências deste período levam você a um nível mais elevado de coragem e autoestima. Ao final, o autoconhecimento será maior, conferindo a você o domínio total sobre seu próprio destino e novas ferramentas de sucesso.</p>
 <p>A essência desta vibração favorece o desenvolvimento de novas ideias e sinaliza um período ideal para novos projetos que vinham sendo adiado. Este trânsito traz a oportunidade para você aumentar seu poder e influência pessoal, podendo obter reconhecimento notável pelas conquistas. Uma coisa levará a outra e as alterações que ocorrerão servirão como o combustível para sua ascensão profissional e pessoal definitiva.</p>
+<br><br>
 <p><strong>Orientação:</strong></p>
 <p>1. Se este trânsito predominar por 3 anos ou mais, isso pode indicar um período tumultuado onde será necessário lidar com muitas mudanças. Independentemente disso, qualquer que seja o evento ocorrido, será benéfico para sua evolução a longo prazo.</p>
+<br>
 <p>2. Os efeitos de um Trânsito 1 junto a um Ano Pessoal 1 são potencializados e exigem escolhas cuidadosas. Prepare-se para agir com visão de futuro e não resultados imediatos, garantindo que cada passo consolide sua nova liderança.</p>
 `,
 
@@ -4447,8 +4449,10 @@ window.TextosTransito = {
 <p>Instintivamente, você saberá como reagir à mudança e aconselhar gentilmente as pessoas a seguirem na direção certa. O seu papel de conselho ou confidência será a chave para o êxito agora. Ao final deste trânsito, a sensação será de maior independência através da percepção de que a passividade estratégica é, por vezes, mais poderosa que a ação direta. Sua vontade de trabalhar em harmonia será recompensada com alianças sólidas e duradouras.</p>
 <p>A maior sensibilidade poderá trazer a necessidade de buscar ambientes harmoniosos. Ansiedade e irritação podem surgir se houver resistência. Procure manter proximidade com pessoas de confiança e mantenha sua autoestima elevada. Inconscientemente, o seu carisma e atração estarão presentes; as pessoas sentirão sua boa intenção, o que facilitará negociações e acordos que beneficiarão seu progresso de forma suave e contínua.</p>
 <p>A essência mostra uma fase de consolidação e organização para você. É comum sentir a autoconfiança abalada em alguns momentos, tornando-se alguém mais dependente de opiniões; por isso, procure mentores de confiança. O trânsito 2 ensina que os atrasos aparentes são, na verdade, períodos de maturação necessários para que suas conquistas futuras tenham raízes profundas e estabilidade garantida.</p>
+<br><br>
 <p><strong>Orientação:</strong></p>
 <p>1. Se este trânsito predominar por 3 anos ou mais, é possível experimentar períodos de pressão psicológica. O segredo é transformar essa sensibilidade em diplomacia, evitando que as tensões externas afetem seu equilíbrio interior.</p>
+<br>
 <p>2. Quando ocorre junto a um Ano Pessoal 2, os conflitos emocionais podem aumentar. Desenvolver o autocontrole e a disciplina ajudará você a manter o equilíbrio, transformando a vulnerabilidade em uma ferramenta de conexão humana e poder pessoal.</p>
 `,
 
@@ -4459,8 +4463,10 @@ window.TextosTransito = {
 <p>O desafio será não dispersar as ideias e manter o foco em atividades que valham a pena. A disciplina será essencial para você fazer escolhas assertivas e empenhar energia em projetos duradouros. Não desperdice seu tempo com futilidades; use esse brilho para finalizar o que iniciou. Ao canalizar essa expansão criativa com foco, você transformará seu talento em resultados concretos e reconhecimento público.</p>
 <p>O 3 governa as palavras e exige cautela ao medir o que se diz, <strong>MASCULINO-FEMININO-NEUTRO</strong>. Evite comportamentos impulsivos ou falar mais do que o necessário para não reviver problemas do passado. Há uma tendência a se deixar levar por romantismos e ilusões; procure ver as situações como realmente são. Ao manter os pés no chão enquanto sua mente voa alto, você garante que sua expansão seja sólida e respeitada.</p>
 <p>Este é um momento em que você aprenderá o valor da sua própria singularidade. É um tempo de realização pessoal e avanços rápidos. A essência traz alegria que, se bem aproveitada, tornará o período gratificante, com chances de expandir horizontes em todos os aspectos. É o momento ideal para o seu empreendedorismo florescer, aproveitando o fluxo de sorte e comunicação que esta vibração oferece.</p>
+<br><br>
 <p><strong>Orientação:</strong></p>
 <p>1. Se este trânsito predominar por 3 anos ou mais, pode representar uma grande virada positiva na sua vida. Você poderá alcançar recompensas e até fama mediante um trabalho bem feito e uma comunicação impecável.</p>
+<br>
 <p>2. Junto a um Ano Pessoal 3, pode haver dificuldade em manter a autodisciplina. Evite a inquietação e o exibicionismo; mantenha o foco no futuro para que o sucesso de agora se transforme em prosperidade permanente nos próximos ciclos.</p>
 `,
 
@@ -4470,8 +4476,10 @@ window.TextosTransito = {
 <p>Aja com praticidade absoluta. Saiba gerenciar seus recursos e seu tempo para empenhar energias corretamente e obter os lucros desejados. Seja paciente para enxergar a realidade exatamente como ela é, facilitando o encontro do caminho correto para o êxito. Mantenha a economia e certifique-se de que o lado financeiro está equilibrado, transformando sua prudência em um escudo contra as incertezas externas.</p>
 <p>Durante este trânsito, as pessoas podem buscar seu apoio constante e acabar exigindo demais de você. Seja alguém útil e dedicado, mas sem se permitir ser usado; aprenda a dizer não quando sua produtividade estiver em risco. Este é um período mais sério e sóbrio, ideal para você organizar a vida e desenvolver a disciplina necessária que servirá de alicerce para todos os seus próximos grandes projetos profissionais.</p>
 <p>Se houver trabalho com empenho, você estabelecerá um alicerce firme para o futuro. As coisas podem se desenvolver lentamente e exigir esforço redobrado, mas os resultados virão de cada pequena vitória acumulada. Embora sinta limitações temporárias, entenda que elas servem para que você refine seus métodos e alcance a perfeição técnica, tornando sua estrutura de vida muito mais resistente e confiável.</p>
+<br><br>
 <p><strong>Orientação:</strong></p>
 <p>1. Se este trânsito estiver predominante por 3 anos ou mais, a vida pode parecer uma batalha constante. Mas se houver aprendizado em tirar proveito das restrições, ao final do ciclo ocorrerá um triunfo pessoal e uma conquista profissional de grande prestígio.</p>
+<br>
 <p>2. Junto com um Ano Pessoal 4, tudo pode parecer mais monótono e difícil. Aja com praticidade extrema e não se deixe abater pela rotina; a consistência que você aplicar agora será o diferencial que o levará ao topo no momento certo.</p>
 `,
 
@@ -4481,8 +4489,10 @@ window.TextosTransito = {
 <p>Este é um período movimentado de grande aprendizado. Poderão surgir oportunidades que você jamais imaginou, levando-o a conhecer novas pessoas e lugares. Muitos velhos hábitos e valores ultrapassados desaparecerão sem que você perceba, marcando sua transição para uma nova fase de desenvolvimento pessoal muito mais ágil, versátil e conectada com as tendências modernas de mercado.</p>
 <p>O desejo de satisfazer os sentidos também aumentará e você deve ter cuidado com excessos. Acontecimentos repentinos surgirão e sua atenção deve estar voltada para as oportunidades de "agora". Este não é um período para esperar, mas para agir com velocidade. O seu grande desafio é manter a disciplina e o foco em objetivos de longo prazo enquanto navega por este mar de mudanças e estímulos constantes.</p>
 <p>A essência desta vibração indica independência e aventuras, favorecendo viagens ou mudanças planejadas que exigirão sua flexibilidade constante. Cuidado com a tendência de dispersar interesses em várias direções sem resultados práticos. Ao manter o foco no que realmente importa, você transforma essa energia de mudança em um motor potente para sua evolução financeira e pessoal, conquistando uma liberdade real.</p>
+<br><br>
 <p><strong>Orientação:</strong></p>
 <p>1. Se este trânsito durar 3 ou mais anos, pode refletir instabilidade se não houver controle. O segredo é abraçar a mudança com estratégia, evitando fugir das responsabilidades e usando a versatilidade a seu favor.</p>
+<br>
 <p>2. Junto a um Ano Pessoal 5, pode surgir uma falsa sensação de falta de limites. Mantenha o equilíbrio e o senso ético, controlando a impulsividade. Use essa energia para inovar em seus projetos sem perder a base sólida que você já construiu.</p>
 `,
 
@@ -4492,8 +4502,10 @@ window.TextosTransito = {
 <p>Avanços na carreira e melhorias financeiras são muito prováveis agora. O seu progresso pessoal virá através de novas oportunidades que exigirão mais responsabilidade e compromisso. Será um período emotivo, onde seu instinto protetor estará forte; use essa energia para fortalecer laços e construir um ambiente de trabalho e convívio muito mais acolhedor, justo e produtivo para todos.</p>
 <p>Questões mal resolvidas com familiares ou parceiros podem vir à tona para serem curadas. É vital proteger seus relacionamentos e manter a harmonia em casa, agindo com cautela e evitando atitudes precipitadas. Ao lidar com esses desafios de forma ética e amorosa, você consolida uma imagem de autoridade respeitada e amada, garantindo que sua base emocional seja o sustento para suas ambições externas.</p>
 <p>Em geral, o trânsito 6 é acolhedor e traz melhorias significativas na vida familiar e profissional para você. Há uma propensão a se dedicar a boas causas e melhorar seu meio de convívio imediato. Este ciclo oferece a você a oportunidade de ensinar e cuidar, sendo reconhecido como alguém compreensivo. O sacrifício por uma causa maior trará recompensas espirituais e materiais, desde que você mantenha seus limites preservados.</p>
+<br><br>
 <p><strong>Orientação:</strong></p>
 <p>1. Se este trânsito durar 3 anos ou mais, pode indicar a necessidade de lidar com muitos problemas familiares. Encare isso como uma missão de pacificação; ao organizar a vida dos outros, você aprenderá a maestria de organizar sua própria felicidade.</p>
+<br>
 <p>2. Junto a um Ano Pessoal 6, as responsabilidades podem parecer pesadas. No entanto, se cumpridas com dedicação, as recompensas serão compensadoras. Evite se intrometer em questões alheias; foque em ser o exemplo de equilíbrio e justiça que todos esperam de você.</p>
 `,
 
@@ -4503,8 +4515,10 @@ window.TextosTransito = {
 <p>Para lidar com as pessoas ao redor, será necessário você refinar sua expressão e agir com diplomacia. Não force situações nem tente apressar o tempo; este não é o momento para agressividade, mas para o seu desenvolvimento pessoal através do estudo e do silêncio. Pense cuidadosamente antes de cada decisão e seja cauteloso com grandes mudanças, priorizando a qualidade do seu entendimento sobre a velocidade da ação.</p>
 <p>É o momento ideal para você se aprofundar em estudos técnicos ou filosóficos, aproveitando sua capacidade de pensar com clareza cristalina. Sua percepção ampliada permitirá um entendimento superior sobre si e sobre o mercado em que atua. Evite o ceticismo excessivo; busque a integração entre seus sentimentos e seus pensamentos, transformando sua sabedoria em um diferencial competitivo inalcançável pelos outros.</p>
 <p>Sua verdadeira motivação será descoberta neste período de introversão. Embora possa surgir uma sensação temporária de solidão, entenda que este é um processo de recomposição psicológica necessária. Aproveite para se livrar de mágoas e frustrações passadas; ao limpar sua mente e sua alma agora, você emergirá deste ciclo com uma lucidez e uma força interior que garantirão o sucesso nos próximos estágios da sua jornada.</p>
+<br><br>
 <p><strong>Orientação:</strong></p>
 <p>1. Se o Trânsito 7 durar 3 anos ou mais, evite o isolamento excessivo ou o apego a detalhes sem benefício prático. Use esse tempo para se tornar um especialista em sua área, transformando o conhecimento em poder real.</p>
+<br>
 <p>2. Junto com um Ano Pessoal 7, pode haver insatisfação ou retraimento. Não se feche para o mundo; use a meditação e o estudo para encontrar as respostas que procura, garantindo que essa fase de busca interior resulte em uma paz profunda e duradoura.</p>
 `,
 
@@ -4514,8 +4528,10 @@ window.TextosTransito = {
 <p>É época de ser alguém justo e cauteloso com o poder, usando sua sabedoria executiva em todas as ações. Manter o equilíbrio entre o trabalho e a vida pessoal será o seu maior desafio e a chave para o sucesso real. Este período refletirá exatamente como você conduziu sua vida até aqui; resolva questões antigas com pragmatismo para que elas não atrasem sua ascensão triunfal ao topo do seu mercado.</p>
 <p>Durante este período, sua percepção será de um vencedor resiliente e estrategista. Independentemente de dificuldades passadas, é o momento de você retomar o controle total da sua carreira e das suas ambições. Seu trabalho será valorizado e recompensado como nunca. Sua reputação profissional será aprimorada, atraindo aliados poderosos que ajudarão você a consolidar um império de segurança e prosperidade para o seu futuro.</p>
 <p>Aproveite a força deste trânsito para materializar seus projetos mais ambiciosos. Embora as coisas possam exigir um tempo de maturação, sua autoridade será reconhecida por todos. O cuidado principal deve ser com a saúde e a família devido ao excesso de ocupação; ao equilibrar sua ambição com o bem-estar, você garante que sua riqueza seja acompanhada de uma verdadeira qualidade de vida e respeito duradouro.</p>
+<br><br>
 <p><strong>Orientação:</strong></p>
 <p>1. Se o Trânsito 8 durar 3 anos ou mais, indica um desenvolvimento material extraordinário, favorecendo o reconhecimento, o poder e o status social em grau elevado. Prepare-se para assumir grandes responsabilidades e colher grandes lucros.</p>
+<br>
 <p>2. Junto com um Ano Pessoal 8, o período pode ser estressante pelo excesso de dedicação à profissão. Use sua inteligência para delegar tarefas e mantenha o equilíbrio; assim, você desfrutará do poder e do status sem comprometer sua paz e sua harmonia pessoal.</p>
 `,
 
@@ -4525,8 +4541,10 @@ window.TextosTransito = {
 <p>Manter o apego a sentimentos negativos trará apenas atrasos ao seu progresso. Existe agora em você a capacidade de entender profundamente as necessidades alheias, o que pode exigir serviço ao próximo e generosidade. Sua sensibilidade aumentará, gerando o desejo de melhorar o ambiente ao seu redor. Aproveite para ensinar, orientar e retribuir, pois o que você plantar em bondade agora voltará como bênçãos em seu próximo ciclo.</p>
 <p>Evite o egoísmo e foque em uma visão ampla da existência, percebendo as tendências maiores ao seu redor. Trabalhar por um bem coletivo trará recompensas surpreendentes e um senso de realização que o dinheiro não compra. Este é um período de finalizações importantes; aceite que certos interesses antigos agora pareçam tediosos, pois sua alma está se preparando para um salto evolutivo sem precedentes.</p>
 <p>Use esta vibração para fazer uma "limpeza geral" em sua vida, <strong>MASCULINO-FEMININO-NEUTRO</strong>. Encerre projetos pendentes com maestria e perdoe quem for necessário para liberar seu caminho. Ao finalizar este trânsito com o coração leve e a mente clara, você estará pronto para iniciar um novo ciclo de 9 anos com uma sabedoria e uma força que o levarão a patamares de sucesso e plenitude jamais imaginados.</p>
+<br><br>
 <p><strong>Orientação:</strong></p>
 <p>1. Se o Trânsito 9 durar 3 anos ou mais, evite se deixar iludir por crenças excessivas ou fanatismos. Mantenha sua visão humanitária, mas com os pés no chão, garantindo que seu idealismo resulte em benefícios práticos para você e para o mundo.</p>
+<br>
 <p>2. Junto com um Ano Pessoal 9, o período pode ser emocionalmente desgastante. Mantenha a clareza de pensamentos e não tome decisões impulsivas de encerramento; deixe que o que deve ir embora saia naturalmente, preparando o terreno para a sua renovação total.</p>
 `
 };
