@@ -2078,7 +2078,7 @@ function montarHtmlPlanosNatural(nome) {
     html += `
         <div class="evitar-corte" style="margin-top:40px; padding:25px; border-radius:12px; background:#fff;">
             <div style="text-align:center; margin-bottom:20px;">
-                <span style="background:var(--gold); color:white; padding:4px 12px; border-radius:20px; font-size:11px; font-weight:bold;">
+                <span style="background:var(--gold); color:white; padding:4px 12px; border-radius:20px; font-size:16px; font-weight:bold;">
                     ${titulosEstrutura[sigla] || "SÍNTESE"}
                 </span>
                 <h3 style="margin-top:10px; text-transform:uppercase;">Síntese de Expressão Natural</h3>
@@ -3777,6 +3777,67 @@ html += `
 `;
 
 
+// --- SEÇÃO: ORIGEM E CODIFICAÇÃO ---
+tituloBonito = "Origem e a Codificação da Numerologia Moderna"; 
+
+// Separador Luxo
+html += `
+<div class="separador-luxo" style="width: 100%; margin: 40px 0;">
+    <div class="caixa-interna" style="text-align: center;">
+        <h2 style="margin: 0;">${tituloBonito}</h2>
+    </div>
+</div>
+`;    
+
+html += `
+<div class="secao-card quebra-pagina" style="width: 100%; max-width: 1000px; margin: 0 auto; text-align: center; padding: 20px;">
+    <div style="margin-bottom: 30px;">
+        <h2 class="titulo-topico mostrar-titulo" style="letter-spacing: 5px; color: #827108; margin-bottom: 30px; font-weight: 800;">
+            ${tituloBonito}
+        </h2>
+        <div style="width: 50px; height: 3px; background: #827108; margin: 0 auto;"></div>
+    </div>
+
+    <div class="evitar-corte texto-res" style="font-size: 20px; line-height: 1.8; color: #333; text-align: justify;">
+        ${aplicarFiltroTexto(textos.introducoes.historiaModerna)}
+    </div>
+</div>
+`; // Fechamento correto da seção
+
+
+
+  tituloBonito = " A Engenharia da Vida";    
+html += `
+<div class="separador-luxo">
+    <div class="caixa-interna">
+        <h2>${tituloBonito}</h2>
+    </div>
+</div>`;
+    
+html += `
+<div class="estudo-numerologico-texto">
+    <h3 style="text-align: center; color: #2c3e50; margin-bottom: 45px;">O Equilíbrio entre a Máquina e a Essência</h3>
+
+    <p style="margin-bottom: 15px;">Para compreender a profundidade do meu trabalho com a numerologia, é preciso entender como enxergo o ser humano: a <strong>máquina orgânica</strong> mais sofisticada que existe. Se observarmos as máquinas modernas, notaremos que elas foram projetadas à nossa imagem. O que chamamos de tecnologia é, na verdade, um reflexo direto da nossa funcionalidade biológica e sistêmica.</p>
+
+    <p style="margin-bottom: 15px;">O grande regente dessa estrutura é o cérebro, o nosso <strong>processador central</strong>. Cada milímetro desse hardware possui uma função técnica e específica. No <strong>Córtex Frontal</strong>, temos o centro de comando, responsável pela lógica, planejamento e tomada de decisões. Logo ao lado, o <strong>Córtex Motor</strong> funciona como o driver de execução: é ali que o sinal elétrico nasce para que você consiga levantar o braço, fechar as mãos ou realizar movimentos precisos. Cada dedo que você mexe possui um ponto correspondente nessa área, provando que somos um projeto de engenharia milimétrico.</p>
+
+    <p style="margin-bottom: 15px;">Se você caminha, mantém a postura ou olha para os lados, é porque o seu <strong>Cerebelo</strong> e o <strong>Tronco Encefálico</strong> estão processando o equilíbrio e os sinais automáticos que mantêm seus pulmões inflando e seu coração batendo sem que você precise pensar nisso. Enquanto isso, o <strong>Sistema Límbico</strong> atua como o gestor de energia emocional, processando memórias e sentimentos que podem impulsionar ou travar o seu sistema operacional. Até mesmo a visão é processada no <strong>Lóbulo Occipital</strong>, na parte traseira, mostrando que a informação percorre todo o processador para se transformar em compreensão.</p>
+
+    <p style="margin-bottom: 15px;">Embora a ciência e a fé ofereçam narrativas distintas sobre nossa origem, o fato concreto é que somos um sistema complexo que exige manutenção constante. Sem um processador funcionando bem, o restante da estrutura entra em colapso. É aqui que a numerologia entra como o seu <strong>software de diagnóstico</strong>. Ela não é um conceito abstrato; ela é o manual que revela as "luzes e sombras" da sua configuração, indicando onde a intensidade deve ser ajustada para evitar o desgaste das peças e otimizar o desempenho.</p>
+
+    <p style="margin-bottom: 15px;">Meu objetivo é conduzir você ao que chamo de <strong>Instinto Superior</strong>. Para atingir esse estado de alta performance, trabalhamos a conexão absoluta entre os quatro planos: <strong>Mental, Intuitivo, Emocional e Físico</strong>. Quando o hardware (físico) e o software (emocional/mental) estão em sincronia, a vida flui de dentro para fora, com clareza e precisão cirúrgica.</p>
+
+    <p style="margin-bottom: 15px;">Ao entender que você é uma máquina magnífica, você para de agir por impulso e começa a operar com estratégia. A numerologia aponta os códigos e os melhores caminhos, mas é o conhecimento sobre sua própria anatomia — do sinal elétrico que move suas pernas à intuição que guia seus passos — que permite que você limpe as engrenagens, alimente o sistema e alcance o <strong>ápice da sua existência</strong>. É ciência, é lógica e é o seu projeto de vida funcionando em sua capacidade máxima.</p>
+</div>
+`;   
+
+
+
+
+
+
+
 tituloBonito = "O Instinto Superior: A Maestria do Equilíbrio";    
 html += `
 <div class="separador-luxo">
@@ -3917,67 +3978,6 @@ html += `
     </div>
 </div>
 `;
-
-
-  tituloBonito = " A Engenharia da Vida";    
-html += `
-<div class="separador-luxo">
-    <div class="caixa-interna">
-        <h2>${tituloBonito}</h2>
-    </div>
-</div>`;
-    
-html += `
-<div class="estudo-numerologico-texto">
-    <h3 style="text-align: center; color: #2c3e50; margin-bottom: 45px;">O Equilíbrio entre a Máquina e a Essência</h3>
-
-    <p style="margin-bottom: 15px;">Para compreender a profundidade do meu trabalho com a numerologia, é preciso entender como enxergo o ser humano: a <strong>máquina orgânica</strong> mais sofisticada que existe. Se observarmos as máquinas modernas, notaremos que elas foram projetadas à nossa imagem. O que chamamos de tecnologia é, na verdade, um reflexo direto da nossa funcionalidade biológica e sistêmica.</p>
-
-    <p style="margin-bottom: 15px;">O grande regente dessa estrutura é o cérebro, o nosso <strong>processador central</strong>. Cada milímetro desse hardware possui uma função técnica e específica. No <strong>Córtex Frontal</strong>, temos o centro de comando, responsável pela lógica, planejamento e tomada de decisões. Logo ao lado, o <strong>Córtex Motor</strong> funciona como o driver de execução: é ali que o sinal elétrico nasce para que você consiga levantar o braço, fechar as mãos ou realizar movimentos precisos. Cada dedo que você mexe possui um ponto correspondente nessa área, provando que somos um projeto de engenharia milimétrico.</p>
-
-    <p style="margin-bottom: 15px;">Se você caminha, mantém a postura ou olha para os lados, é porque o seu <strong>Cerebelo</strong> e o <strong>Tronco Encefálico</strong> estão processando o equilíbrio e os sinais automáticos que mantêm seus pulmões inflando e seu coração batendo sem que você precise pensar nisso. Enquanto isso, o <strong>Sistema Límbico</strong> atua como o gestor de energia emocional, processando memórias e sentimentos que podem impulsionar ou travar o seu sistema operacional. Até mesmo a visão é processada no <strong>Lóbulo Occipital</strong>, na parte traseira, mostrando que a informação percorre todo o processador para se transformar em compreensão.</p>
-
-    <p style="margin-bottom: 15px;">Embora a ciência e a fé ofereçam narrativas distintas sobre nossa origem, o fato concreto é que somos um sistema complexo que exige manutenção constante. Sem um processador funcionando bem, o restante da estrutura entra em colapso. É aqui que a numerologia entra como o seu <strong>software de diagnóstico</strong>. Ela não é um conceito abstrato; ela é o manual que revela as "luzes e sombras" da sua configuração, indicando onde a intensidade deve ser ajustada para evitar o desgaste das peças e otimizar o desempenho.</p>
-
-    <p style="margin-bottom: 15px;">Meu objetivo é conduzir você ao que chamo de <strong>Instinto Superior</strong>. Para atingir esse estado de alta performance, trabalhamos a conexão absoluta entre os quatro planos: <strong>Mental, Intuitivo, Emocional e Físico</strong>. Quando o hardware (físico) e o software (emocional/mental) estão em sincronia, a vida flui de dentro para fora, com clareza e precisão cirúrgica.</p>
-
-    <p style="margin-bottom: 15px;">Ao entender que você é uma máquina magnífica, você para de agir por impulso e começa a operar com estratégia. A numerologia aponta os códigos e os melhores caminhos, mas é o conhecimento sobre sua própria anatomia — do sinal elétrico que move suas pernas à intuição que guia seus passos — que permite que você limpe as engrenagens, alimente o sistema e alcance o <strong>ápice da sua existência</strong>. É ciência, é lógica e é o seu projeto de vida funcionando em sua capacidade máxima.</p>
-</div>
-`;   
-
-
-
-// --- SEÇÃO: ORIGEM E CODIFICAÇÃO ---
-tituloBonito = "Origem e a Codificação da Numerologia Moderna"; 
-
-// Separador Luxo
-html += `
-<div class="separador-luxo" style="width: 100%; margin: 40px 0;">
-    <div class="caixa-interna" style="text-align: center;">
-        <h2 style="margin: 0;">${tituloBonito}</h2>
-    </div>
-</div>
-`;    
-
-html += `
-<div class="secao-card quebra-pagina" style="width: 100%; max-width: 1000px; margin: 0 auto; text-align: center; padding: 20px;">
-    <div style="margin-bottom: 30px;">
-        <h2 class="titulo-topico mostrar-titulo" style="letter-spacing: 5px; color: #827108; margin-bottom: 30px; font-weight: 800;">
-            ${tituloBonito}
-        </h2>
-        <div style="width: 50px; height: 3px; background: #827108; margin: 0 auto;"></div>
-    </div>
-
-    <div class="evitar-corte texto-res" style="font-size: 20px; line-height: 1.8; color: #333; text-align: justify;">
-        ${aplicarFiltroTexto(textos.introducoes.historiaModerna)}
-    </div>
-</div>
-`; // Fechamento correto da seção
-
-
-
-
-
 
 
 
