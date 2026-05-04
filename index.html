@@ -2094,13 +2094,13 @@ html += `
     html += `
         <div class="evitar-corte" style="margin-top:40px; padding:25px; border-radius:12px; background:#fff;">
             <div style="text-align:center; margin-bottom:20px;">
-                <span style="background:var(--gold); color:white; padding:4px 12px; border-radius:20px; font-size:16px; font-weight:bold;">
+                <span style="background:var(--gold); color:white; padding:4px 12px; border-radius:20px; font-size:18px; font-weight:bold;">
                     ${titulosEstrutura[sigla] || "SÍNTESE"}
                 </span>
                 <h3 style="margin-top:10px; text-transform:uppercase;">Síntese de Expressão Natural</h3>
             </div>
             
-            <div class="texto-res">
+            <div style="font-size:18px; line-height:1.6;">
                 ${aplicarFiltroTexto(textosSinteseExpressao[sigla] || textosSinteseExpressao["padrao"])}
             </div>
             
