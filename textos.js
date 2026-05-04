@@ -320,11 +320,25 @@ Se o número do Momento Decisivo coincide com o número de uma de suas Fraquezas
     // Nova chave para a Vibração de Trânsito
  
 
-       Conclusao: `    <p style="font-size: 16px; color: var(--dark); line-height: 1.6;"> <strong>MASCULINO-FEMININO-NEUTRO</strong>, agradeço profundamente pela confiança depositada em meu trabalho ao permitir que a Numerologia guie seus próximos passos. 
-       É uma honra fazer parte da sua jornada de autodescoberta. 
-       Que o Universo ilumine seus caminhos, abençoe suas escolhas e que cada vibração numérica aqui revelada se transforme em força, prosperidade e luz em sua vida. Siga com coragem e sabedoria!
-    </p>`,
+Conclusao: `
+    
+        <p style="font-size: 18px; color: var(--dark); line-height: 1.8; text-align: justify;">
+            <strong>MASCULINO-FEMININO-NEUTRO</strong>, agradeço profundamente pela confiança depositada em meu trabalho ao permitir que o estudo dos seus <strong>Planos de Expressão</strong> guie seus próximos passos. É uma honra fazer parte desta etapa da sua jornada de autodescoberta.
+        </p>
+        
+        <p style="font-size: 18px; color: var(--dark); line-height: 1.8; text-align: justify; margin-top: 15px;">
+            Desejo que este mapeamento seja a ferramenta necessária para que você encontre o seu ponto de equilíbrio. Lembre-se que o maior desafio do ser humano, e também a sua maior vitória, é <strong>vencer a si mesmo</strong> — superando as próprias limitações, tendências e resistências internas. 
+        </p>
 
+        <p style="font-size: 18px; color: var(--dark); line-height: 1.8; text-align: justify; margin-top: 15px;">
+            Que cada vibração aqui revelada se transforme em consciência para que você se torne, a cada dia, uma versão melhor e mais equilibrada de si. Que o Universo ilumine seus caminhos e abençoe suas escolhas com muita prosperidade e luz.
+        </p>
+
+        <p style="font-size: 18px; font-weight: bold; color: #827108; text-align: center; margin-top: 25px; text-transform: uppercase; letter-spacing: 1px;">
+            Siga com coragem, sabedoria e boa sorte!
+        </p>   `,
+
+ 
  Transito: "A Vibração de Trânsito é o 'clima numérico' que rege o seu ano pessoal. Ela define a tônica das oportunidades e os aprendizados específicos que cruzarão o seu caminho nos próximos 12 meses, permitindo um planejamento mais assertivo."
    ,
 
