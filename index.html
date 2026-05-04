@@ -2263,17 +2263,11 @@ h += `
         let txtTransito = (typeof TextosTransito !== 'undefined') ? (TextosTransito[vTransito] || "") : "";
 
 h += `
-    <div class="evitar-corte" style="margin-top:60px; background:#fff; color:#000; padding:30px; border: 1px solid #eee; border-radius: 8px;">
-        <h3 style="color:#827108; margin:0 0 20px 0; text-transform:uppercase; font-size:24px;">TRÂNSITO VIBRACIONAL: ${vTransito}</h3>
-        
-        <div class="container-transito" style="font-size:18px; line-height:1.7; color:#111; text-align: justify;">
-            <style>
-                .container-transito p { margin-bottom: 20px !important; display: block; }
-            </style>
-            ${aplicarFiltroTexto(txtTransito)}
-        </div>
-    </div>
-</div>`;
+            <div class= style="margin-top:60px; background:#fff; color:#000; padding:30px;">
+                <h3 style="color:var(--gold); margin:0 0 15px 0; text-transform:uppercase;">TRÂNSITO VIBRACIONAL: ${vTransito}</h3>
+                <div style="font-size:18px; line-height:1.6; color:#111;">${aplicarFiltroTexto(txtTransito)}</div>
+            </div>
+        </div>`;
 
         return h;
     };
