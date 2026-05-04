@@ -2204,11 +2204,11 @@ function montarHtmlPlanosMomento(nomeCompleto, dataNascimento, res, faltantes, d
         let h = `
         <div class="secao-card evitar-corte" style="clear:both; border-top: 2px solid var(--gold); padding: 40px 0; margin-top: 20px;"> 
             <h2 class="titulo-topico" style="display:block !important; text-align:center;">${tituloSecao}</h2>
-            <h3 style="text-align:center; color:var(--gold); font-size:18px;">IDADE: ${indiceAno} ANOS | PERÍODO: ${periodoVigente}</h3>
+            <h3 style="text-align:center; color:var(--gold); font-size:25px;">IDADE: ${indiceAno} ANOS | PERÍODO: ${periodoVigente}</h3>
             
             <div style="margin: 25px 0; padding: 20px; border: 2px solid #827108; border-radius: 12px; background: #fff;">
                 <h4 style="margin: 0; color: #827108; text-transform: uppercase; font-size:18px;">Perfil de Ação: ${dominanteMomento}</h4>
-                <div style="font-size: 22px; color: #444; line-height:1.6;">${aplicarFiltroTexto(descricoesPerfilMomento[dominanteMomento])}</div>
+                <div style="font-size: 24px; color: #444; line-height:1.6;">${aplicarFiltroTexto(descricoesPerfilMomento[dominanteMomento])}</div>
             </div>
 
             <div style="margin: 30px 0;">`;
@@ -2252,7 +2252,7 @@ function montarHtmlPlanosMomento(nomeCompleto, dataNascimento, res, faltantes, d
                 h += `
                     <div class="evitar-corte" style="margin-bottom: 30px; border-left: 5px solid var(--gold); padding-left: 20px; background: #fdfdfd; padding-top: 10px; padding-bottom: 10px;">
                         <h4 style="margin:0 0 10px 0; color:#333; text-transform:uppercase; font-size:16px;">${nomesAmigaveis[p]} (${intensidade})</h4>
-                        <div class="texto-res" style="font-size:22px; line-height:1.6;">${aplicarFiltroTexto(textoEncontrado)}</div>
+                        <div class="texto-res" style="font-size:24px; line-height:1.6;">${aplicarFiltroTexto(textoEncontrado)}</div>
                     </div>`;
             }
         }
