@@ -2067,13 +2067,27 @@ function montarHtmlPlanosNatural(nome) {
         let vFinalNatural = reduzirPuro(dados.soma[p]);
         const textoIndiv = (textosPlanos[p] && textosPlanos[p][int]) ? textosPlanos[p][int][vFinalNatural] : "";
         if(textoIndiv) {
-            html += `
-                <div class="evitar-corte" style="margin-bottom: 20px; padding-left: 15px;">
-                    <h4 style="margin:0; color:${coresPlanos[p]}; text-transform:uppercase; font-size:18px;">${nomesAmigaveis[p]} <small>(${int})</small></h4>
-                    <div style="margin-bottom: 15px; font-size:18px; line-height:1.6; text-indent: 1.5em; ">${aplicarFiltroTexto(textoIndiv)}</div>
-                </div>`;
-        }
-    }
+html += `
+    <div class="evitar-corte" style="margin-bottom: 35px; padding-left: 15px;">
+        <h4 style="margin: 0 0 15px 0; color:${coresPlanos[p]}; text-transform:uppercase; font-size:18px;">
+            ${nomesAmigaveis[p]} <small>(${int})</small>
+        </h4>
+        
+        <div class="container-texto-individual" style="
+            margin-bottom: 20px; 
+            font-size: 18px; 
+            line-height: 1.7; 
+            text-align: justify;
+        ">
+            <style>
+                .container-texto-individual p { 
+                    margin-bottom: 20px !important; 
+                    display: block; 
+                }
+            </style>
+            ${aplicarFiltroTexto(textoIndiv)}
+        </div>
+    </div>`;
 
     // 2. BLOCO DE SÍNTESE E DIRETRIZ (Corrigido para não repetir declaração de _p1)
     html += `
