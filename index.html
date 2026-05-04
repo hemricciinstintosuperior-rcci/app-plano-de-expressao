@@ -1992,8 +1992,12 @@ function montarHtmlPlanosNatural(nome) {
         .map(([chave, valor]) => ({ chave, valor, vib: reduzir(valor) }))
         .sort((a, b) => b.valor - a.valor);
 
+      // 1. DECLARAÇÃO ÚNICA DOS PLANOS (USANDO ÍNDICES 0 A 3)
     const _p1 = planosOrdenados[0];
+    const _p2 = planosOrdenados[1];
+    const _p3 = planosOrdenados[2];
     const _p4 = planosOrdenados[3];
+    
     const ref = _p1.valor || 1;
     const sigla = "F" + 
         ((planosOrdenados[1].valor / ref > 0.75) ? "F" : (planosOrdenados[1].valor / ref >= 0.50) ? "M" : "f") +
@@ -2116,13 +2120,7 @@ const textoIndiv = (textosPlanos[p] && textosPlanos[p][int]) ? textosPlanos[p][i
     }
    
 
-// --- DENTRO DA SUA FUNÇÃO, ONDE É GERADA A SÍNTESE ---
 
-// 1. Mapeamos os quatro planos em ordem de força
-const _p1 = planosOrdenados[0];
-const _p2 = planosOrdenados[1];
-const _p3 = planosOrdenados[2];
-const _p4 = planosOrdenados[3];
 
 // 2. Montagem do HTML atualizada
 html += `
