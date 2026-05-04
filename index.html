@@ -2207,8 +2207,8 @@ function montarHtmlPlanosMomento(nomeCompleto, dataNascimento, res, faltantes, d
             <h3 style="text-align:center; color:var(--gold); font-size:25px;">IDADE: ${indiceAno} ANOS | PERÍODO: ${periodoVigente}</h3>
             
             <div style="margin: 25px 0; padding: 20px; border: 2px solid #827108; border-radius: 12px; background: #fff;">
-                <h4 style="margin: 0; color: #827108; text-transform: uppercase; font-size:24px;">Perfil de Ação: ${dominanteMomento}</h4>
-                <div style="font-size: 24px; color: #444; line-height:1.6;">${aplicarFiltroTexto(descricoesPerfilMomento[dominanteMomento])}</div>
+                <h4 style="margin: 0; color: #827108; text-transform: uppercase; font-size:20px;">Perfil de Ação: ${dominanteMomento}</h4>
+                <div style="font-size: 18px; color: #444; line-height:1.6;">${aplicarFiltroTexto(descricoesPerfilMomento[dominanteMomento])}</div>
             </div>
 
             <div style="margin: 30px 0;">`;
@@ -2252,7 +2252,7 @@ function montarHtmlPlanosMomento(nomeCompleto, dataNascimento, res, faltantes, d
                 h += `
                     <div class="evitar-corte" style="margin-bottom: 30px; border-left: 5px solid var(--gold); padding-left: 20px; background: #fdfdfd; padding-top: 10px; padding-bottom: 10px;">
                         <h4 style="margin:0 0 10px 0; color:${coresPlanos[p]}; text-transform:uppercase; font-size:24px;">${nomesAmigaveis[p]} (${intensidade})</h4>
-                        <div style="font-size:22px; line-height:1.6;">${aplicarFiltroTexto(textoEncontrado)}</div>
+                        <div style="font-size:18px; line-height:1.6;">${aplicarFiltroTexto(textoEncontrado)}</div>
                     </div>`;
             }
         }
@@ -2266,7 +2266,7 @@ function montarHtmlPlanosMomento(nomeCompleto, dataNascimento, res, faltantes, d
         h += `
             <div class= style="margin-top:40px; background:#fff; color:#000; padding:30px;">
                 <h3 style="color:var(--gold); margin:0 0 15px 0; text-transform:uppercase;">TRÂNSITO VIBRACIONAL: ${vTransito}</h3>
-                <div style="font-size:22px; line-height:1.6; color:#000;">${aplicarFiltroTexto(txtTransito)}</div>
+                <div style="font-size:18px; line-height:1.6; color:#000;">${aplicarFiltroTexto(txtTransito)}</div>
             </div>
         </div>`;
 
