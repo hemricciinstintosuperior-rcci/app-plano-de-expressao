@@ -3582,11 +3582,7 @@ const dadosNegativas = detectarNegativas(piramideVida);
     <div id="conteudo-relatorio" style="background: #ffffff; width: 210mm; min-height: 297mm; box-sizing: border-box;">
 `;
 
-  // 1. Definição das cores e textos (Certifique-se de que essas variáveis existam no seu escopo)
-const vCorDoPerfilAtivo = vCorDoPerfilAtivo || "#d97a1e"; 
-const valorPerfilNativoTexto = valorPerfilNativoTexto || "Não Definido";
-const vPlanoDominanteNome = vPlanoDominanteNome || "Não Definido";
-const vCorPlanoDominante = vCorPlanoDominante || "#4a3728";
+// --- MONTAGEM DA FOLHA RESUMO PREMIUM (OCUPANDO PÁGINA INTEIRA) ---
 
 html += `
 <div id="folha-resumo-premium" style="
@@ -3595,91 +3591,97 @@ html += `
     page-break-after: always; 
     page-break-before: always; 
     background: #ffffff; 
-    padding: 25mm; 
+    padding: 20mm; 
     box-sizing: border-box; 
     margin: 0 auto; 
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Distribui os blocos pela folha toda */
+    justify-content: space-between; 
     align-items: center;
     overflow: hidden;
-    border: 10px double #f2f2f2;
+    border: 12px double #f2f2f2;
+    position: relative;
 ">
     
-    <div style="text-align: center; width: 100%;">
-        <div style="background: #4a3728; padding: 20px; border-radius: 8px; margin-bottom: 15px;">
-            <h1 style="color: #d97a1e; margin: 0; text-transform: uppercase; letter-spacing: 3px; font-size: 28px;">
+    <div style="text-align: center; width: 100%; margin-top: 20px;">
+        <div style="background: #4a3728; padding: 25px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            <h1 style="color: #d97a1e; margin: 0; text-transform: uppercase; letter-spacing: 4px; font-size: 32px; font-family: 'Georgia', serif;">
              ${nomeRaw}
             </h1>
         </div>
-        <h2 style="text-transform: uppercase; letter-spacing: 4px; color: #666; margin: 0; font-size: 18px;">
+        <h2 style="text-transform: uppercase; letter-spacing: 5px; color: #888; margin: 20px 0 0 0; font-size: 16px; font-weight: 300;">
             Configuração Natural de Expressão
         </h2>
-        <div style="width: 100px; height: 3px; background: #d97a1e; margin: 15px auto;"></div>
+        <div style="width: 150px; height: 2px; background: #d97a1e; margin: 20px auto;"></div>
     </div>
 
-    <div style="width: 100%; display: flex; flex-direction: column; gap: 40px; flex-grow: 1; justify-content: center;">
+    <div style="width: 100%; display: flex; flex-direction: column; gap: 50px; flex-grow: 1; justify-content: center;">
         
         <div style="
             background: #fff; 
-            border: 2px solid #eee; 
-            border-top: 8px solid ${vCorDoPerfilAtivo}; 
-            padding: 50px 30px; 
-            border-radius: 15px; 
+            border: 1px solid #f0f0f0; 
+            border-top: 10px solid ${vCorDoPerfilAtivo}; 
+            padding: 60px 40px; 
+            border-radius: 20px; 
             text-align: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.03);
         ">
             <div style="
                 background: ${vCorDoPerfilAtivo}; 
                 color: #fff; 
-                width: 100px; 
-                height: 100px; 
+                width: 110px; 
+                height: 110px; 
                 border-radius: 50%; 
                 display: flex; 
                 align-items: center; 
                 justify-content: center; 
-                font-size: 50px; 
+                font-size: 55px; 
                 font-weight: bold; 
-                margin: 0 auto 20px auto;
-                box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                margin: 0 auto 25px auto;
+                box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+                text-transform: uppercase;
             ">
                 ${valorPerfilNativoTexto.charAt(0)}
             </div>
-            <span style="font-size: 20px; text-transform: uppercase; color: #888; font-weight: bold; display: block; letter-spacing: 2px;">
+            <span style="font-size: 18px; text-transform: uppercase; color: #999; font-weight: bold; display: block; letter-spacing: 3px; margin-bottom: 10px;">
                 Seu Perfil Dominante
             </span>
-            <div style="font-size: 42px; font-weight: bold; color: ${vCorDoPerfilAtivo}; text-transform: uppercase; margin-top: 10px;">
+            <div style="font-size: 38px; font-weight: bold; color: ${vCorDoPerfilAtivo}; text-transform: uppercase; letter-spacing: 1px;">
                 ${valorPerfilNativoTexto}
+            </div>
+            <div style="margin-top: 20px; font-size: 16px; color: #666; font-style: italic; max-width: 80%; margin-left: auto; margin-right: auto;">
+                ${vTextoDescritivoAtivo}
             </div>
         </div>
 
         <div style="
-            background: #fdfdfd; 
-            border: 2px solid #eee; 
-            border-top: 8px solid ${vCorPlanoDominante}; 
-            padding: 50px 30px; 
-            border-radius: 15px; 
+            background: #fff; 
+            border: 1px solid #f0f0f0; 
+            border-top: 10px solid ${vCorPlanoDominante}; 
+            padding: 60px 40px; 
+            border-radius: 20px; 
             text-align: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.03);
         ">
-            <span style="font-size: 20px; text-transform: uppercase; color: #888; font-weight: bold; display: block; letter-spacing: 2px;">
+            <span style="font-size: 18px; text-transform: uppercase; color: #999; font-weight: bold; display: block; letter-spacing: 3px; margin-bottom: 15px;">
                Sua Expressão Dominante
             </span>
-            <div style="font-size: 42px; font-weight: bold; color: ${vCorPlanoDominante}; text-transform: uppercase; margin-top: 15px; letter-spacing: 1px;">
+            <div style="font-size: 38px; font-weight: bold; color: ${vCorPlanoDominante}; text-transform: uppercase; letter-spacing: 1px;">
                 ${vPlanoDominanteNome}
             </div>
-            <div style="margin-top: 20px; font-size: 14px; color: #999; text-transform: uppercase; letter-spacing: 3px;">
-                Plano Vibracional de Origem
+            <div style="margin-top: 25px; border-top: 1px solid #eee; padding-top: 20px; display: inline-block;">
+                 <span style="font-size: 13px; color: #bbb; text-transform: uppercase; letter-spacing: 4px;">Plano de Manifestação Principal</span>
             </div>
         </div>
 
     </div>
 
-    <div style="width: 100%; border-top: 1px solid #eee; padding-top: 20px; text-align: center;">
-         <div style="display: inline-block; padding: 10px 30px; border: 1px solid #d97a1e; border-radius: 50px;">
-            <span style="color: #666; font-weight: bold; text-transform: uppercase; font-size: 14px;">Trânsito Vibracional: </span>
-            <span style="color: #d97a1e; font-weight: bold; font-size: 22px; margin-left: 10px;">${vTrânsitoFinal || '--'}</span>
+    <div style="width: 100%; text-align: center; margin-bottom: 20px;">
+         <div style="display: inline-block; padding: 15px 40px; border: 2px solid #d97a1e; border-radius: 50px; background: #fffaf5;">
+            <span style="color: #4a3728; font-weight: bold; text-transform: uppercase; font-size: 14px; letter-spacing: 1px;">Trânsito Vibracional Atual: </span>
+            <span style="color: #d97a1e; font-weight: bold; font-size: 26px; margin-left: 15px; font-family: 'serif';">${vTrânsitoFinal}</span>
          </div>
+         <p style="font-size: 11px; color: #aaa; margin-top: 15px; text-transform: uppercase; letter-spacing: 2px;">© Portal Numerológico Premium</p>
     </div>
 
 </div>`;
