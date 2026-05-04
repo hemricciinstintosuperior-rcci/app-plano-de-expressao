@@ -1992,13 +1992,14 @@ function montarHtmlPlanosNatural(nome) {
         .map(([chave, valor]) => ({ chave, valor, vib: reduzir(valor) }))
         .sort((a, b) => b.valor - a.valor);
 
-      // 1. DECLARAÇÃO ÚNICA DOS PLANOS (USANDO ÍNDICES 0 A 3)
+    // 1. DECLARAÇÃO ÚNICA DOS PLANOS (USANDO ÍNDICES 0 A 3)
     const _p1 = planosOrdenados[0];
     const _p2 = planosOrdenados[1];
     const _p3 = planosOrdenados[2];
     const _p4 = planosOrdenados[3];
     
     const ref = _p1.valor || 1;
+    
     const sigla = "F" + 
         ((planosOrdenados[1].valor / ref > 0.75) ? "F" : (planosOrdenados[1].valor / ref >= 0.50) ? "M" : "f") +
         ((planosOrdenados[2].valor / ref > 0.75) ? "F" : (planosOrdenados[2].valor / ref >= 0.50) ? "M" : "f") +
@@ -2006,47 +2007,25 @@ function montarHtmlPlanosNatural(nome) {
 
     const descricoesPerfil = {
         criativo: ` <p>"Sua mente possui mais Criatividade"</p>
-    
-<p>Naturalmente você apresenta ideias originais, enxerga a realidade de forma diferenciada e encara imprevistos com otimismo e espontaneidade. 
-Ao analisar problemas complexos, você divide-os em partes menores, focando em soluções eficazes e na adaptação rápida a novas situações.</p>
-
-<p>Movido por estímulos internos, você demonstra grande motivação pessoal, ignorando rotinas estabelecidas para explorar diversas alternativas. 
-Pelo lado desafiador, você pode manifestar certa arrogância ou rebeldia contra regras, sofrendo com flutuações de humor e desconfiança. 
-Nessa busca constante pelo novo, você corre o risco de perder a noção de tempo ou se deixar envolver por ilusões temporárias.</p>`,
-        
-        indeciso:  ` <p>"A indecisão toma conta da sua expressão"</p>
-    
-<p>Com grande sensibilidade, você demonstra necessidade de atenção, podendo agir de forma dramática ou precipitada sob pressão emocional. 
-Sendo influenciável pelo ambiente, você muda de opinião com frequência e encontra certa dificuldade em agir de forma solitária.</p>
-
-<p>Revelando um lado sedutor, você pode ser interpretado com inconveniência devido ao excesso de dramatização em suas falas. 
-Ao fortalecer seu caráter, você descobre sua verdadeira identidade, trocando a busca por aprovação externa por seus desejos internos. 
-Em momentos de desequilíbrio, você torna-se inconstante ou impulsiva, especialmente quando é dominada por receios e emoções intensas.</p>`,
-        
+<p>Naturalmente você apresenta ideias originais, enxerga a realidade de forma diferenciada e encara imprevistos com otimismo e espontaneidade. Ao analisar problemas complexos, você divide-os em partes menores, focando em soluções eficazes e na adaptação rápida a novas situações.</p>
+<p>Movido por estímulos internos, você demonstra grande motivação pessoal, ignorando rotinas estabelecidas para explorar diversas alternativas. Pelo lado desafiador, você pode manifestar certa arrogância ou rebeldia contra regras, sofrendo com flutuações de humor e desconfiança. Nessa busca constante pelo novo, você corre o risco de perder a noção de tempo ou se deixar envolver por ilusões temporárias.</p>`,
+        indeciso: ` <p>"A indecisão toma conta da sua expressão"</p>
+<p>Com grande sensibilidade, você demonstra necessidade de atenção, podendo agir de forma dramática ou precipitada sob pressão emocional. Sendo influenciável pelo ambiente, você muda de opinião com frequência e encontra certa dificuldade em agir de forma solitária.</p>
+<p>Revelando um lado sedutor, você pode ser interpretado com inconveniência devido ao excesso de dramatização em suas falas. Ao fortalecer seu caráter, você descobre sua verdadeira identidade, trocando a busca por aprovação externa por seus desejos internos. Em momentos de desequilíbrio, você torna-se inconstante ou impulsiva, especialmente quando é dominada por receios e emoções intensas.</p>`,
         neutro: ` <p>"Sua essência possui equilíbrio nas decisões"</p> 
-    
-<p>Sendo alguém observador, você prefere analisar todos os pontos de vista antes de tomar partido em qualquer tipo de conflito. 
-Agindo por interesses próprios, você raramente sai da zona de conforto, mantendo-se excessivamente cauteloso para evitar riscos inúteis.</p>
-
-<p>Relacionando-se bem com todos, você constrói barreiras emocionais intencionais para evitar sofrimento, raramente expondo o que realmente sente. 
-Com facilidade de adaptação, **você** mantém o autocontrole em situações difíceis, preferindo rotinas pacíficas. 
-No aspecto negativo, você pode demonstrar certa omissão ou medo de decidir, mantendo-se neutro e com baixa inclinação criativa.</p>`
+<p>Sendo alguém observador, você prefere analisar todos os pontos de vista antes de tomar partido em qualquer tipo de conflito. Agindo por interesses próprios, você raramente sai da zona de conforto, mantendo-se excessivamente cauteloso para evitar riscos inúteis.</p>
+<p>Relacionando-se bem com todos, você constrói barreiras emocionais intencionais para evitar sofrimento, raramente expondo o que realmente sente. Com facilidade de adaptação, **você** mantém o autocontrole em situações difíceis, preferindo rotinas pacíficas. No aspecto negativo, você pode demonstrar certa omissão ou medo de decidir, mantendo-se neutro e com baixa inclinação criativa.</p>`
     };
-    
 
-let html = `
+    let html = `
         <div class="secao-card quebra-pagina">
-            <h2 class="titulo-topico"style="border-bottom: 2px solid var(--gold);">Plano de Expressão Natural</h2>
-            
+            <h2 class="titulo-topico" style="border-bottom: 2px solid var(--gold);">Plano de Expressão Natural</h2>
             <div class="intro-texto" style="margin-bottom: 25px; line-height: 1.6; color: #333;">
-                ${aplicarFiltroTexto(textos.introducoes.natural || `<p>O **Plano de Expressão Natural** revela como sua energia se distribui entre as quatro instâncias fundamentais da vida — Físico, Mental, Emocional e Intuitivo — definindo seu temperamento e sua forma instintiva de reagir ao mundo. Esta análise identifica onde reside sua maior força de realização e quais áreas exigem mais atenção para o seu equilíbrio pessoal.</p>
-<p>Complementando essa estrutura, identificamos o seu **Perfil Nativo**, que atua como o motor das suas decisões, classificando sua expressão em Criativa, Indecisa ou Neutra. Compreender a interação entre seus planos dominantes e seu perfil de ação é a chave para alinhar sua essência com seus resultados, permitindo que você navegue pela vida com muito mais consciência, autenticidade e poder de escolha.</p>`)}
-</div>
-            
-            <div style="text-align: center; margin: 30px 0;">
-                <img src="https://hemricciinstintosuperior-rcci.github.io/Trabalho_venda_Numerologia/planoestudo.png" alt="Logo Plano de Expressão" style="max-width: 300px; height: auto; display: inline-block;">
+                ${aplicarFiltroTexto(textos.introducoes.natural || `<p>O **Plano de Expressão Natural** revela como sua energia se distribui entre as quatro instâncias fundamentais da vida...</p>`)}
             </div>
-            
+            <div style="text-align: center; margin: 30px 0;">
+                <img src="https://hemricciinstintosuperior-rcci.github.io/Trabalho_venda_Numerologia/planoestudo.png" alt="Logo Plano" style="max-width: 300px; height: auto; display: inline-block;">
+            </div>
             <div class="evitar-corte" style="margin-bottom: 25px; padding: 20px; border: 2px solid #827108; border-radius: 12px; background: #fff; display: flex; align-items: center; gap: 20px;">
                 <div style="background: #827108; color: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; text-transform: uppercase; flex-shrink: 0;">
                     ${dados.dominantePerfil[0]}
@@ -2055,112 +2034,79 @@ let html = `
                     <h4 style="margin: 0; color: #827108; text-transform: uppercase;">Perfil Nativo: ${dados.dominantePerfil}</h4>
                     <p style="margin: 5px 0 0 0; font-size: 18px; color: #333;">${aplicarFiltroTexto(descricoesPerfil[dados.dominantePerfil])}</p>
                 </div>
-            </div>
+            </div>`;
 
-            <div style="margin: 25px 0; background: #fff; padding: 20px; border-radius: 8px;">
-`;
+    html += `<div style="margin: 25px 0; background: #fff; padding: 20px; border-radius: 8px;"><div class="evitar-corte">`; 
     
-html += `<div class="evitar-corte">`; 
     // Gráficos
-// Gráficos (TEXTO FIXO NO CENTRO - NATURAL)
     for(let p in dados.soma) {
         let porcentagem = (dados.soma[p] / ref) * 100;
-let valorReduzido = reduzirPuro(dados.soma[p]);
-
+        let valorReduzido = reduzirPuro(dados.soma[p]);
         const degradês = {
             fisico: 'linear-gradient(to right, #e74c3c, #7b241c)',
             mental: 'linear-gradient(to right, #3498db, #1a5276)',
             emocional: 'linear-gradient(to right, #2ecc71, #0a3d1d)',
             intuitivo: 'linear-gradient(to right, #f1c40f, #b8860b)'
         };
-
-        const fundoBarra = degradês[p] || 'linear-gradient(to right, #ffffff, #ffffff)';
-           // Localize o início da montagem do HTML na função e adicione esta linha:
-
         html += `
-           
-            <div style="margin: 0 auto 20px auto; width: 85%;  height: 42px; position: relative;  display: flex; align-items: center; justify-content: center;break-inside: avoid; 
-page-break-inside: avoid; margin-top: 10px;">
-                
-               
-                <div style="width:${porcentagem}%; height:100%; background: ${fundoBarra}; position: absolute; left: 0; top: 0; transition: width 1s ease; z-index: 1; border-radius: 8px"></div>
-                
-               
-                <span style="color: #fff; font-weight: bold; font-size: 16px; text-transform: uppercase; text-shadow: 1px 1px 4px rgba(0,0,0,0.8); letter-spacing: 1.5px; position: relative; z-index: 2; pointer-events: none;">
+            <div style="margin: 0 auto 20px auto; width: 85%; height: 42px; position: relative; display: flex; align-items: center; justify-content: center; break-inside: avoid; margin-top: 10px;">
+                <div style="width:${porcentagem}%; height:100%; background: ${degradês[p]}; position: absolute; left: 0; top: 0; border-radius: 8px; z-index: 1;"></div>
+                <span style="color: #fff; font-weight: bold; font-size: 16px; text-transform: uppercase; text-shadow: 1px 1px 4px rgba(0,0,0,0.8); letter-spacing: 1.5px; position: relative; z-index: 2;">
                     ${nomesAmigaveis[p]} EXP ${valorReduzido}
                 </span>
-
-            </div>
-        `;
+            </div>`;
     }
+    html += `</div></div>`;
 
-    html += `</div>`;
-
-    
- html += `</div>`; 
-    
     // Textos Interpretativos
     for(let p in dados.soma) {
         let r = dados.soma[p] / ref;
         let int = (r > 0.75) ? "forte" : (r >= 0.50) ? "medio" : "fraco";
-       let vNatural = reduzir(dados.soma[p]);
-let vFinalNatural = reduzirPuro(dados.soma[p]);
-const textoIndiv = (textosPlanos[p] && textosPlanos[p][int]) ? textosPlanos[p][int][vFinalNatural] : "";
+        let vFinalNatural = reduzirPuro(dados.soma[p]);
+        const textoIndiv = (textosPlanos[p] && textosPlanos[p][int]) ? textosPlanos[p][int][vFinalNatural] : "";
         if(textoIndiv) {
-
-
-
             html += `
-                <div class="evitar-corte" style="margin-bottom: 20px; border-left: none; padding-left: 15px;">
+                <div class="evitar-corte" style="margin-bottom: 20px; padding-left: 15px;">
                     <h4 style="margin:0; color:${coresPlanos[p]}; text-transform:uppercase; font-size:18px;">${nomesAmigaveis[p]} <small>(${int})</small></h4>
-                    <div ${aplicarFiltroTexto(textoIndiv)}</div>
-                </div>
-            `;
+                    <div class="texto-res">${aplicarFiltroTexto(textoIndiv)}</div>
+                </div>`;
         }
     }
-   
 
-
-
-// 2. Montagem do HTML atualizada
-html += `
-    <div class="evitar-corte" style="margin-top:40px; border:0px #ffffff; padding:25px; border-radius:12px; background:#fff;">
-        <div style="text-align:center; margin-bottom:20px;">
-            <span style="background:var(--gold); color:white; padding:4px 12px; border-radius:20px; font-size:11px; font-weight:bold;">
-                ${titulosEstrutura[sigla] || "SÍNTESE"}
-            </span>
-            <h3 style="margin-top:10px; text-transform:uppercase;">Síntese de Expressão Natural</h3>
-        </div>
-        
-        <div class="texto-res">
-            ${aplicarFiltroTexto(textosSinteseExpressao[sigla] || textosSinteseExpressao["padrao"])}
-        </div>
-        
-        <div style="margin-top:25px; background:var(--dark); color:var(--gold); padding:25px; border-radius:8px; text-align:left; border: 1px solid var(--gold);">
-            <strong style="text-transform: uppercase; letter-spacing: 1px; display: block; text-align: center; margin-bottom: 15px;"> 
-                Diretriz de Equilíbrio Integral 
-            </strong>
+    // 2. BLOCO DE SÍNTESE E DIRETRIZ (Corrigido para não repetir declaração de _p1)
+    html += `
+        <div class="evitar-corte" style="margin-top:40px; padding:25px; border-radius:12px; background:#fff;">
+            <div style="text-align:center; margin-bottom:20px;">
+                <span style="background:var(--gold); color:white; padding:4px 12px; border-radius:20px; font-size:11px; font-weight:bold;">
+                    ${titulosEstrutura[sigla] || "SÍNTESE"}
+                </span>
+                <h3 style="margin-top:10px; text-transform:uppercase;">Síntese de Expressão Natural</h3>
+            </div>
             
-            <div style="font-size: 14px; color: #fff; line-height: 1.8;">
-                <p>Para uma harmonia plena em sua jornada, siga esta hierarquia de sustentação:</p>
+            <div class="texto-res">
+                ${aplicarFiltroTexto(textosSinteseExpressao[sigla] || textosSinteseExpressao["padrao"])}
+            </div>
+            
+            <div style="margin-top:25px; background:var(--dark); color:var(--gold); padding:25px; border-radius:8px; text-align:left; border: 1px solid var(--gold);">
+                <strong style="text-transform: uppercase; letter-spacing: 1px; display: block; text-align: center; margin-bottom: 15px;"> 
+                    Diretriz de Equilíbrio Integral 
+                </strong>
                 
-                <ul style="list-style: none; padding: 0; margin: 0;">
-                    <li style="margin-bottom: 8px;">
-                        <span style="color: var(--gold);">●</span> Sua força principal reside no plano <strong>${nomesAmigaveis[_p1.chave]}</strong>, que deve ser o motor das suas ações.
-                    </li>
-                    <li style="margin-bottom: 8px;">
-                        <span style="color: var(--gold);">●</span> Use essa força para impulsionar o seu lado <strong>${nomesAmigaveis[_p2.chave]}</strong>, garantindo que ele não perca o ritmo.
-                    </li>
-                    <li style="margin-bottom: 8px;">
-                        <span style="color: var(--gold);">●</span> O plano <strong>${nomesAmigaveis[_p3.chave]}</strong> precisa de suporte consciente para se manter estável e produtivo.
-                    </li>
-                    <li style="margin-bottom: 0;">
-                        <span style="color: var(--gold);">●</span> Por fim, utilize o aprendizado de todos os anteriores para elevar as fragilidades do plano <strong>${nomesAmigaveis[_p4.chave]}</strong>, evitando bloqueios na sua realização.
-                    </li>
-                </ul>
+                <div style="font-size: 14px; color: #fff; line-height: 1.8;">
+                    <p>Para uma harmonia plena em sua jornada, siga esta hierarquia de sustentação:</p>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 8px;"><span style="color: var(--gold);">●</span> Sua força principal reside no plano <strong>${nomesAmigaveis[_p1.chave]}</strong>, que deve ser o motor das suas ações.</li>
+                        <li style="margin-bottom: 8px;"><span style="color: var(--gold);">●</span> Use essa força para impulsionar o seu lado <strong>${nomesAmigaveis[_p2.chave]}</strong>, garantindo que ele não perca o ritmo.</li>
+                        <li style="margin-bottom: 8px;"><span style="color: var(--gold);">●</span> O plano <strong>${nomesAmigaveis[_p3.chave]}</strong> precisa de suporte consciente para se manter estável e produtivo.</li>
+                        <li style="margin-bottom: 0;"><span style="color: var(--gold);">●</span> Por fim, utilize o aprendizado de todos os anteriores para elevar as fragilidades do plano <strong>${nomesAmigaveis[_p4.chave]}</strong>.</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>`;
+
+    return html;
+}
         
 
 function montarHtmlPlanosMomento(nomeCompleto, dataNascimento, res, faltantes, d3, regenteMatriz, negativasMatriz, idadeForcada = null) {
