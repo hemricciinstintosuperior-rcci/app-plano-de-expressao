@@ -9,9 +9,6 @@
 
     
 <style>
-
-
-    
 * {
     box-sizing: border-box !important;
     margin: 0;
@@ -19,8 +16,6 @@
 }
 
 
-
-    
 @media print {
     /* Força o "fundo da mesa" a ser branco. 
        Se houver fresta entre as páginas, ela fica invisível. */
@@ -32,13 +27,9 @@
     }
 
 
-
-} 
-
-
- :root { --gold: #d97a1e; --dark: #000000; --card-bg: #ffffff; --text: #1a1a1a; }
     
-       
+    
+        :root { --gold: #d97a1e; --dark: #000000; --card-bg: #ffffff; --text: #1a1a1a; }
 @media print {
     .apenas-no-pdf {
         display: block !important;
@@ -779,6 +770,13 @@ input:focus {
         }
     }
 
+    /* 2. ESTRUTURA PARA O PDF (MANTÉM OS 210MM) */
+    .container-master {
+        width: 210mm;
+        margin: 0 auto;
+        background-color: #000;
+        box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
 
 
 /* Na tela (Relatório), mostramos o Player e escondemos o Botão de Link */
@@ -927,44 +925,12 @@ a, img, audio { border: none !important; outline: none !important; text-decorati
     break-inside: avoid !important;
 }
 
-
-
-
-
-    /* REGRAS EXCLUSIVAS PARA CELULAR (Telas menores que 800px) */
-@media screen and (max-width: 800px) {
-    
-
-
-    .page {
-        width: 100% !important;
-        max-width: 100% !important;
-        padding: 15px !important;    /* Mantém o conteúdo dentro da visão */
-        margin: 0 !important;
-        box-sizing: border-box !important;
-    }
-
-    /* Ajusta títulos que são muito grandes e "empurram" a tela para o lado */
-    h1, .titulo-topico, .capa-cliente h1 {
-        font-size: 24px !important;  /* Diminui o texto para caber na largura */
-        white-space: normal !important; /* Permite que o título quebre em 2 linhas */
-        word-wrap: break-word !important;
-    }
-
-    /* Impede que os cards brancos (secao-card) fiquem largos demais */
-    .secao-card {
-        width: 100% !important;
-        margin: 10px 0 !important;
-        padding: 15px !important;
-        border: none !important;
-    }
-
-    /* Garante que imagens (como o logo) não fiquem maiores que a tela */
-    img, .logo-capa {
-        max-width: 90% !important;
-        height: auto !important;
-    }
-}
+/* 3. Evita que o container master limite o tamanho */
+.container-master {
+    height: auto !important;
+    min-height: 100% !important;
+    display: block !important;
+}    
 
     
     </style>
