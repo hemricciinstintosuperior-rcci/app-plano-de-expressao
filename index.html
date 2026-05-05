@@ -939,6 +939,51 @@ a, img, audio { border: none !important; outline: none !important; text-decorati
     display: block !important;
 }    
 
+
+
+
+    /* REGRAS EXCLUSIVAS PARA CELULAR (Telas menores que 800px) */
+@media screen and (max-width: 800px) {
+    
+    .container-master, 
+    .relatorio-premium {
+        width: 100% !important;    /* Força a ocupar a largura real do celular */
+        max-width: 100vw !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow-x: hidden !important; /* Mata o corte lateral */
+    }
+
+    .page {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 15px !important;    /* Mantém o conteúdo dentro da visão */
+        margin: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Ajusta títulos que são muito grandes e "empurram" a tela para o lado */
+    h1, .titulo-topico, .capa-cliente h1 {
+        font-size: 24px !important;  /* Diminui o texto para caber na largura */
+        white-space: normal !important; /* Permite que o título quebre em 2 linhas */
+        word-wrap: break-word !important;
+    }
+
+    /* Impede que os cards brancos (secao-card) fiquem largos demais */
+    .secao-card {
+        width: 100% !important;
+        margin: 10px 0 !important;
+        padding: 15px !important;
+        border: none !important;
+    }
+
+    /* Garante que imagens (como o logo) não fiquem maiores que a tela */
+    img, .logo-capa {
+        max-width: 90% !important;
+        height: auto !important;
+    }
+}
+
     
     </style>
 
