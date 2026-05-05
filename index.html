@@ -102,13 +102,23 @@
         display: none !important;
     }
 
-.relatorio-premium {
-    width: 210mm !important;
-    max-width: 210mm !important;
+.relatorio-premium { 
+    width: 100% !important; /* Na tela, sempre 100% */
+    max-width: 800px;       /* Limite para não ficar largo demais em PCs */
     margin: 0 auto !important;
-    overflow: visible !important; /* Fundamental para não criar barras de rolagem internas */
+    display: block !important; 
+    height: auto !important;   
+    overflow: visible !important; 
+    position: relative !important;
     background: #fff;
 }
+
+ @media print {
+    .relatorio-premium {
+        width: 210mm !important; /* Só vira 210mm na hora de gerar o PDF */
+        max-width: 210mm !important;
+    }
+}   
 
     /* 🔥 CORREÇÃO PRINCIPAL */
     .page {
@@ -937,6 +947,21 @@ a, img, audio { border: none !important; outline: none !important; text-decorati
     min-height: 100% !important;
     display: block !important;
 }    
+
+
+.container-master {
+    width: 100%;
+    max-width: 100%; /* Impede que o container force o scroll lateral */
+    margin: 0 auto;
+    background-color: #000;
+}
+
+@media print {
+    .container-master {
+        width: 210mm; /* Apenas no PDF ele assume o tamanho fixo */
+    }
+}
+    
 
     
     </style>
