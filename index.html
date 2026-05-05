@@ -25,6 +25,15 @@
     }
 
 
+        .page, .relatorio-premium, .container-master {
+        box-shadow: none !important;
+        border: none !important;
+        width: 210mm !important;
+    }
+}
+    
+
+
 /* RESOLUÇÃO DEFINITIVA: MANTÉM O DESIGN E LIBERA O MOVIMENTO */
 @media screen and (max-width: 210mm) {
     /* 1. O "TRILHO" - Garante que o celular aceite o deslize lateral */
@@ -54,15 +63,7 @@
     }
 }
 
-/* 4. LIMPEZA APENAS NO PDF - Aqui sim a gente limpa para a impressão */
-@media print {
-    .page, .relatorio-premium, .container-master {
-        box-shadow: none !important;
-        border: none !important;
-        width: 210mm !important;
-    }
-}
-    
+
     
         :root { --gold: #d97a1e; --dark: #000000; --card-bg: #ffffff; --text: #1a1a1a; }
 @media print {
