@@ -2091,7 +2091,24 @@ html += `
       }
     }
     // 2. BLOCO DE SÍNTESE E DIRETRIZ (Corrigido para não repetir declaração de _p1)
-
+const conselhosDinamicos = {
+    fisico: {
+        p1: "Sua força principal reside na *Realização Prática*. O mundo físico responde ao seu comando; utilize essa energia para materializar seus projetos com firmeza.",
+        p4: "O plano *Físico* atua como seu ponto de aprendizado. Busque mais aterramento e cuide da base estrutural da sua vida para que seus planos não fiquem apenas no papel."
+    },
+    mental: {
+        p1: "Seu diferencial reside no *Raciocínio Estratégico*. Sua mente é clara e rápida; use essa potência para organizar e planejar cada etapa do seu sucesso.",
+        p4: "O plano *Mental* pede um olhar mais atento. Organize seus pensamentos e evite a dispersão para que sua energia mental seja canalizada com foco absoluto."
+    },
+    emocional: {
+        p1: "Sua força motriz é a *Inteligência Afetiva*. Você move montanhas através da conexão; deixe que sua sensibilidade guie suas decisões mais importantes.",
+        p4: "O plano *Emocional* exige acolhimento consciente. Aprenda a equilibrar suas águas internas para que as emoções sejam aliadas, e não obstáculos na sua jornada."
+    },
+    intuitivo: {
+        p1: "Sua bússola é a *Percepção Espiritual*. Você enxerga além do óbvio; confie na sua voz interior, pois ela é o seu guia mais seguro.",
+        p4: "O plano *Intuitivo* convida à reconexão. Reserve momentos de silêncio para ouvir sua alma; é no invisível que você encontrará as respostas que tanto busca."
+    }
+};
 // 2. Montagem do HTML Sem Caixas (Fluidez Total)
 html += `
         <div class="evitar-corte" style="margin-top:40px; padding:25px; border-radius:12px; background:#fff;">
