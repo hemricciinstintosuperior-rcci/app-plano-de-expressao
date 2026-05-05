@@ -25,7 +25,12 @@
     }
 
 
-.container-master {
+
+
+
+    /* Remove qualquer sombra ou borda externa que possa estar 
+       sendo interpretada como um risco escuro no PDF */
+    .page, .relatorio-premium, .container-master {
     width: 100%;             /* No celular, ele se ajusta à tela */
     max-width: 210mm;        /* No PC, ele mantém o tamanho do A4 */
     margin: 0 auto;          /* Centraliza no PC */
@@ -44,7 +49,22 @@
 }
 
 
+/* PROTEÇÃO DAS CORES E TÍTULOS (O segredo está aqui) */
+.page, .secao-card, .titulo-topico, h1, h2, h3 {
+    /* REMOVEMOS o border:none !important daqui para NÃO apagar suas cores e desenhos */
+    box-shadow: none; /* Tira só a sombra da folha para não sujar o PDF */
+    max-width: none !important;
+}
 
+/* SOMENTE NA HORA DE IMPRIMIR O PDF A GENTE LIMPA TUDO */
+@media print {
+    .page, .relatorio-premium, .container-master {
+        border: none !important;
+        box-shadow: none !important;
+        background: white !important;
+    }
+    /* Aqui o navegador cuida de manter suas cores se o usuário marcar "Gráficos de Segundo Plano" */
+}
 
 
     
