@@ -2091,56 +2091,37 @@ html += `
       }
     }
     // 2. BLOCO DE SÍNTESE E DIRETRIZ (Corrigido para não repetir declaração de _p1)
+// O segredo aqui foi encurtar as frases para ocuparem o mesmo espaço das antigas
 const conselhosDinamicos = {
-    fisico: {
-        p1: "Sua força principal reside na *Realização Prática*. O mundo físico responde ao seu comando; utilize essa energia para materializar seus projetos com firmeza.",
-        p4: "O plano *Físico* atua como seu ponto de aprendizado. Busque mais aterramento e cuide da base estrutural da sua vida para que seus planos não fiquem apenas no papel."
-    },
-    mental: {
-        p1: "Seu diferencial reside no *Raciocínio Estratégico*. Sua mente é clara e rápida; use essa potência para organizar e planejar cada etapa do seu sucesso.",
-        p4: "O plano *Mental* pede um olhar mais atento. Organize seus pensamentos e evite a dispersão para que sua energia mental seja canalizada com foco absoluto."
-    },
-    emocional: {
-        p1: "Sua força motriz é a *Inteligência Afetiva*. Você move montanhas através da conexão; deixe que sua sensibilidade guie suas decisões mais importantes.",
-        p4: "O plano *Emocional* exige acolhimento consciente. Aprenda a equilibrar suas águas internas para que as emoções sejam aliadas, e não obstáculos na sua jornada."
-    },
-    intuitivo: {
-        p1: "Sua bússola é a *Percepção Espiritual*. Você enxerga além do óbvio; confie na sua voz interior, pois ela é o seu guia mais seguro.",
-        p4: "O plano *Intuitivo* convida à reconexão. Reserve momentos de silêncio para ouvir sua alma; é no invisível que você encontrará as respostas que tanto busca."
-    }
+    fisico: { p1: "Sua força é a Realização Prática.", p4: "O plano Físico pede aterramento." },
+    mental: { p1: "Seu diferencial é o Raciocínio Estratégico.", p4: "O plano Mental pede foco." },
+    emocional: { p1: "Sua força é a Inteligência Afetiva.", p4: "O plano Emocional pede equilíbrio." },
+    intuitivo: { p1: "Sua bússola é a Percepção Espiritual.", p4: "O plano Intuitivo pede conexão." }
 };
-// 2. Montagem do HTML Sem Caixas (Fluidez Total)
-// 2. O HTML montado EXATAMENTE sobre a estrutura do seu código antigo
+
 html += `
-    <div class="evitar-corte" style="margin-top:25px; padding:20px; border-radius:12px; background:#fff;">
-        <div style="text-align:center; margin-bottom:15px;">
-            <span style="background:var(--gold); color:white; padding:4px 12px; border-radius:20px; font-size:18px; font-weight:bold;">
+    <div class="evitar-corte" style="margin-top:15px; padding:15px; border-radius:12px; background:#fff;">
+        <div style="text-align:center; margin-bottom:10px;">
+            <span style="background:var(--gold); color:white; padding:2px 10px; border-radius:20px; font-size:16px; font-weight:bold;">
                 ${titulosEstrutura[sigla] || "SÍNTESE"}
             </span>
-            <h3 style="margin-top:10px; text-transform:uppercase;">Síntese de Expressão Natural</h3>
+            <h3 style="margin: 5px 0; text-transform:uppercase; font-size:18px;">Síntese de Expressão Natural</h3>
         </div>
         
-        <div style="font-size:18px; line-height:1.6; text-align: justify; margin-bottom: 20px;">
+        <div style="font-size:16px; line-height:1.4; text-align: justify; margin-bottom: 10px;">
             ${aplicarFiltroTexto(textosSinteseExpressao[sigla] || textosSinteseExpressao["padrao"])}
         </div>
         
-        <div style="background:var(--dark); color:var(--gold); padding:20px; border-radius:8px; text-align:left; border: 1px solid var(--gold);">
-            <strong style="text-transform: uppercase; letter-spacing: 1px; display: block; text-align: center; margin-bottom: 12px;"> 
+        <div style="background:var(--dark); color:var(--gold); padding:15px; border-radius:8px; border: 1px solid var(--gold);">
+            <strong style="text-transform: uppercase; font-size: 15px; display: block; text-align: center; margin-bottom: 8px;"> 
                 Diretriz de Equilíbrio Integral 
             </strong>
             
-            <div style="font-size: 18px; color: #fff; line-height: 1.6;">
-                <p style="margin-bottom: 10px;">Para uma harmonia plena em sua jornada, siga esta hierarquia:</p>
+            <div style="font-size: 16px; color: #fff; line-height: 1.4;">
                 <ul style="list-style: none; padding: 0; margin: 0;">
-                    <li style="margin-bottom: 8px;">
-                        <span style="color: var(--gold);">●</span> <strong>${nomesAmigaveis[_p1.chave]}:</strong> ${conselhosDinamicos[_p1.chave].p1}
-                    </li>
-                    <li style="margin-bottom: 8px;">
-                        <span style="color: var(--gold);">●</span> Use o apoio dos planos <strong>${nomesAmigaveis[_p2.chave]}</strong> e <strong>${nomesAmigaveis[_p3.chave]}</strong> para manter sua estabilidade.
-                    </li>
-                    <li style="margin-bottom: 0;">
-                        <span style="color: var(--gold);">●</span> <strong>${nomesAmigaveis[_p4.chave]}:</strong> ${conselhosDinamicos[_p4.chave].p4} Use os outros planos para vencer esse desafio.
-                    </li>
+                    <li style="margin-bottom: 4px;">● <strong>${nomesAmigaveis[_p1.chave]}:</strong> ${conselhosDinamicos[_p1.chave].p1}</li>
+                    <li style="margin-bottom: 4px;">● Use o apoio de ${nomesAmigaveis[_p2.chave]} e ${nomesAmigaveis[_p3.chave]}.</li>
+                    <li style="margin-bottom: 0;">● <strong>${nomesAmigaveis[_p4.chave]}:</strong> ${conselhosDinamicos[_p4.chave].p4}</li>
                 </ul>
             </div>
         </div>
