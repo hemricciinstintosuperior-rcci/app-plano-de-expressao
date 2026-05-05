@@ -13,21 +13,6 @@
     padding: 0;
 }
 
-
-@media print {
-    /* Força o "fundo da mesa" a ser branco. 
-       Se houver fresta entre as páginas, ela fica invisível. */
-    html, body {
-        background: #ffffff !important;
-        background-color: #ffffff !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-
-
-
-
-
     /* Remove qualquer sombra ou borda externa que possa estar 
        sendo interpretada como um risco escuro no PDF */
     .page, .relatorio-premium, .container-master {
@@ -39,6 +24,30 @@
     display: block;
     position: relative;
 }
+
+    
+@media print {
+    /* Força o "fundo da mesa" a ser branco. 
+       Se houver fresta entre as páginas, ela fica invisível. */
+    html, body {
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+/* SOMENTE NA HORA DE IMPRIMIR O PDF A GENTE LIMPA TUDO */
+
+    .page, .relatorio-premium, .container-master {
+        border: none !important;
+        box-shadow: none !important;
+        background: white !important;
+    }
+  }
+
+
+
+
 
 /* Garante que o relatório interno acompanhe essa flexibilidade */
 .relatorio-premium {
@@ -56,15 +65,7 @@
     max-width: none !important;
 }
 
-/* SOMENTE NA HORA DE IMPRIMIR O PDF A GENTE LIMPA TUDO */
-@media print {
-    .page, .relatorio-premium, .container-master {
-        border: none !important;
-        box-shadow: none !important;
-        background: white !important;
-    }
-    /* Aqui o navegador cuida de manter suas cores se o usuário marcar "Gráficos de Segundo Plano" */
-}
+
 
 
     
