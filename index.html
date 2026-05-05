@@ -25,15 +25,24 @@
     }
 
 
-        .page, .relatorio-premium, .container-master {
-        box-shadow: none !important;
-       
+.container-master {
+    width: 100%;             /* No celular, ele se ajusta à tela */
+    max-width: 210mm;        /* No PC, ele mantém o tamanho do A4 */
+    margin: 0 auto;          /* Centraliza no PC */
+    overflow-x: auto;        /* ISSO AQUI DESTRAVA! Se algo for maior que a tela, você consegue arrastar para o lado */
+    -webkit-overflow-scrolling: touch; /* Deixa o deslizar do dedo suave no iPhone/Android */
+    display: block;
+    position: relative;
+}
+
+/* Garante que o relatório interno acompanhe essa flexibilidade */
+.relatorio-premium {
     width: 100% !important;
     min-width: 320px;        /* Largura mínima de um celular pequeno */
     max-width: 210mm; 
-    }
+    margin: 0 auto;
 }
-    
+
 
 
 
@@ -780,23 +789,6 @@ input:focus {
         }
     }
 
-.container-master {
-    width: 100%;             /* No celular, ele se ajusta à tela */
-    max-width: 210mm;        /* No PC, ele mantém o tamanho do A4 */
-    margin: 0 auto;          /* Centraliza no PC */
-    overflow-x: auto;        /* ISSO AQUI DESTRAVA! Se algo for maior que a tela, você consegue arrastar para o lado */
-    -webkit-overflow-scrolling: touch; /* Deixa o deslizar do dedo suave no iPhone/Android */
-    display: block;
-    position: relative;
-}
-
-/* Garante que o relatório interno acompanhe essa flexibilidade */
-.relatorio-premium {
-    width: 100% !important;
-    min-width: 320px;        /* Largura mínima de um celular pequeno */
-    max-width: 210mm; 
-    margin: 0 auto;
-}
 
 
 /* Na tela (Relatório), mostramos o Player e escondemos o Botão de Link */
@@ -945,12 +937,6 @@ a, img, audio { border: none !important; outline: none !important; text-decorati
     break-inside: avoid !important;
 }
 
-/* 3. Evita que o container master limite o tamanho */
-.container-master {
-    height: auto !important;
-    min-height: 100% !important;
-    
-}    
 
 
 
