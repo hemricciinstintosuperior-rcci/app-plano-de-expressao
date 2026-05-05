@@ -2091,36 +2091,70 @@ html += `
       }
     }
     // 2. BLOCO DE SÍNTESE E DIRETRIZ (Corrigido para não repetir declaração de _p1)
-    html += `
-        <div class="evitar-corte" style="margin-top:40px; padding:25px; border-radius:12px; background:#fff;">
-            <div style="text-align:center; margin-bottom:20px;">
-                <span style="background:var(--gold); color:white; padding:4px 12px; border-radius:20px; font-size:18px; font-weight:bold;">
-                    ${titulosEstrutura[sigla] || "SÍNTESE"}
-                </span>
-                <h3 style="margin-top:10px; text-transform:uppercase;">Síntese de Expressão Natural</h3>
-            </div>
+// 1. Dicionário de Frases Dinâmicas (Coloque isso antes do html +=)
+const conselhosDinamicos = {
+    fisico: {
+        p1: "Sua maior potência está na **Realização Prática**. O mundo físico responde ao seu comando; use essa força para materializar seus sonhos.",
+        p4: "O plano **Físico** pede mais aterramento. Não deixe que a falta de estrutura trave seus passos; cuide da sua base e do seu templo (corpo)."
+    },
+    mental: {
+        p1: "Seu diferencial é o **Raciocínio Estratégico**. Sua mente é clara e rápida; use essa clareza para planejar cada etapa do seu sucesso.",
+        p4: "O plano **Mental** precisa de foco. Organize seus pensamentos para que a confusão não disperse a energia que você dedica aos seus projetos."
+    },
+    emocional: {
+        p1: "Sua força motriz é a **Inteligência Afetiva**. Você move montanhas através da conexão; deixe que seu coração guie suas decisões mais importantes.",
+        p4: "O plano **Emocional** exige acolhimento. Não reprima seus sentimentos; aprenda a equilibrar suas águas internas para não transbordar em insegurança."
+    },
+    intuitivo: {
+        p1: "Sua bússola é a **Percepção Espiritual**. Você enxerga além do óbvio; confie na sua voz interior, pois ela raramente se engana.",
+        p4: "O plano **Intuitivo** convida à conexão. Reserve momentos de silêncio para ouvir sua alma; é no invisível que você encontrará as respostas que faltam."
+    }
+};
+
+// 2. Montagem do HTML
+html += `
+    <div class="evitar-corte" style="margin-top:40px; padding:25px; border-radius:12px; background:#fff;">
+        <div style="text-align:center; margin-bottom:20px;">
+            <span style="background:var(--gold); color:white; padding:4px 12px; border-radius:20px; font-size:18px; font-weight:bold;">
+                ${titulosEstrutura[sigla] || "SÍNTESE"}
+            </span>
+            <h3 style="margin-top:10px; text-transform:uppercase;">Síntese de Expressão Natural</h3>
+        </div>
+        
+        <div class="texto-res" style="font-size:18px; line-height:1.6; text-align: justify;">
+            ${aplicarFiltroTexto(textosSinteseExpressao[sigla] || textosSinteseExpressao["padrao"])}
+        </div>
+        
+        <div style="margin-top:25px; background:var(--dark); color:var(--gold); padding:30px; border-radius:12px; text-align:left; border: 1px solid var(--gold); box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+            <strong style="text-transform: uppercase; letter-spacing: 2px; display: block; text-align: center; margin-bottom: 20px; font-size: 18px;"> 
+                Diretriz de Equilíbrio Integral 
+            </strong>
             
-            <div style="font-size:18px; line-height:1.6;">
-                ${aplicarFiltroTexto(textosSinteseExpressao[sigla] || textosSinteseExpressao["padrao"])}
-            </div>
-            
-            <div style="margin-top:25px; background:var(--dark); color:var(--gold); padding:25px; border-radius:8px; text-align:left; border: 1px solid var(--gold);">
-                <strong style="text-transform: uppercase; letter-spacing: 1px; display: block; text-align: center; margin-bottom: 15px;"> 
-                    Diretriz de Equilíbrio Integral 
-                </strong>
+            <div style="font-size: 17px; color: #fff; line-height: 1.8;">
+                <p style="margin-bottom: 20px; border-bottom: 1px solid #444; padding-bottom: 10px; color: #ddd; font-style: italic;">
+                    Para uma harmonia plena em sua jornada, compreenda a hierarquia das suas energias:
+                </p>
                 
-                <div style="font-size: 20px; color: #fff; line-height: 1.8;">
-                    <p>Para uma harmonia plena em sua jornada, siga esta hierarquia de sustentação:</p>
-                    <ul style="list-style: none; padding: 0; margin: 0;">
-                        <li style="margin-bottom: 8px;"><span style="color: var(--gold);">●</span> Sua força principal reside no plano <strong>${nomesAmigaveis[_p1.chave]}</strong>, que deve ser o motor das suas ações.</li>
-                        <li style="margin-bottom: 8px;"><span style="color: var(--gold);">●</span> Use essa força para impulsionar o seu lado <strong>${nomesAmigaveis[_p2.chave]}</strong>, garantindo que ele não perca o ritmo.</li>
-                        <li style="margin-bottom: 8px;"><span style="color: var(--gold);">●</span> O plano <strong>${nomesAmigaveis[_p3.chave]}</strong> precisa de suporte consciente para se manter estável e produtivo.</li>
-                        <li style="margin-bottom: 0;"><span style="color: var(--gold);">●</span> Por fim, utilize o aprendizado de todos os anteriores para elevar as fragilidades do plano <strong>${nomesAmigaveis[_p4.chave]}</strong>.</li>
-                    </ul>
-                </div>
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    <li style="margin-bottom: 15px; border-left: 3px solid var(--gold); padding-left: 15px;">
+                        <span style="display:block; font-size: 12px; text-transform: uppercase; color: var(--gold); font-weight: bold;">O Motor Central:</span>
+                        ${conselhosDinamicos[_p1.chave].p1}
+                    </li>
+                    
+                    <li style="margin-bottom: 15px; border-left: 3px solid #666; padding-left: 15px;">
+                        <span style="display:block; font-size: 12px; text-transform: uppercase; color: #aaa; font-weight: bold;">Sustentação Intermediária:</span>
+                        Utilize sua força no plano <strong>${nomesAmigaveis[_p2.chave]}</strong> e no plano <strong>${nomesAmigaveis[_p3.chave]}</strong> como pontes de equilíbrio para que sua energia não oscile.
+                    </li>
+                    
+                    <li style="margin-bottom: 0; border-left: 3px solid #e74c3c; padding-left: 15px;">
+                        <span style="display:block; font-size: 12px; text-transform: uppercase; color: #e74c3c; font-weight: bold;">O Grande Desafio de Superação:</span>
+                        ${conselhosDinamicos[_p4.chave].p4} Use a sabedoria acumulada nos outros planos para vencer esta resistência interna.
+                    </li>
+                </ul>
             </div>
         </div>
-    </div>`;
+    </div>
+`;
 
     return html;
 }
