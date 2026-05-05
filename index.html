@@ -25,31 +25,41 @@
     }
 
 
-/* AJUSTE FINO: Destrava o celular sem apagar seus títulos */
-@media screen and (max-width: 800px) {
+/* RESOLUÇÃO DEFINITIVA: MANTÉM O DESIGN E LIBERA O MOVIMENTO */
+@media screen and (max-width: 210mm) {
+    /* 1. O "TRILHO" - Garante que o celular aceite o deslize lateral */
     .container-master {
-        /* DESTRAVA O TOQUE: permite andar para os lados se o relatório for largo */
-        overflow-x: auto !important;
-        -webkit-overflow-scrolling: touch !important;
+        width: 100vw !important;
+        overflow-x: auto !important; 
+        overflow-y: visible !important;
         display: block !important;
-        width: 100% !important;
+        -webkit-overflow-scrolling: touch !important;
+        background-color: #000; /* Mantém o seu fundo preto */
     }
 
+    /* 2. O "CONTEÚDO" - Mantém a largura fixa para o título NÃO QUEBRAR */
     .relatorio-premium, .page {
-        /* NÃO USE border:none aqui, ou você mata o desenho dos títulos */
-        /* Usamos apenas o necessário para o layout fluir */
-        max-width: none !important; 
-        min-width: 210mm; /* Mantém o tamanho real para você poder "caminhar" por ele */
-        box-shadow: none !important; /* Tira só a sombra externa da folha */
+        width: 210mm !important;
+        min-width: 210mm !important;
+        /* IMPORTANTE: Removi o border:none e shadow:none daqui */
+        /* Assim seus títulos e desenhos continuam intactos */
+        display: block !important;
+        margin: 0 auto !important;
+    }
+
+    /* 3. PROTEÇÃO DE TÍTULOS - Impede que o navegador force quebras de linha */
+    h1, h2, h3, .titulo-topico, .capa h1 {
+        white-space: nowrap !important; /* Faz o título ficar em uma linha só, sem quebrar */
+        width: max-content !important;
     }
 }
 
-/* NO PDF: Mantém a limpeza absoluta que você queria */
+/* 4. LIMPEZA APENAS NO PDF - Aqui sim a gente limpa para a impressão */
 @media print {
     .page, .relatorio-premium, .container-master {
         box-shadow: none !important;
-        border: none !important; /* Aqui pode limpar, porque no papel não tem scroll */
-        margin-bottom: 0 !important;
+        border: none !important;
+        width: 210mm !important;
     }
 }
     
