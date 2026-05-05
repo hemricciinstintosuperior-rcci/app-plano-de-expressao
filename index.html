@@ -25,8 +25,20 @@
     }
 
 
+/* RESOLUÇÃO DO TRAVAMENTO LATERAL */
+.page, .relatorio-premium, .container-master {
+    /* Mantém o seu desejo de não ter sombras/bordas para não sujar o PDF */
+    box-shadow: none !important;
+    border: none !important;
+    margin-bottom: 0 !important;
 
-
+    /* A SOLUÇÃO PARA LIBERAR O RELATÓRIO NO CELULAR: */
+    max-width: 100% !important;     /* Impede que o container force uma largura maior que a tela */
+    overflow-x: auto !important;     /* LIBERA A ROLAGEM: Agora você consegue "andar" para o lado se algo for grande */
+    display: block !important;       /* Garante que o container se comporte como um bloco livre */
+    touch-action: pan-x pan-y !important; /* Comando direto para o celular aceitar o movimento do seu dedo */
+    -webkit-overflow-scrolling: touch !important; /* Deixa o deslize do dedo suave (estilo iPhone) */
+}
     
     
         :root { --gold: #d97a1e; --dark: #000000; --card-bg: #ffffff; --text: #1a1a1a; }
