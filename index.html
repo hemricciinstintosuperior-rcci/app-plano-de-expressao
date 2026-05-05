@@ -2110,33 +2110,38 @@ const conselhosDinamicos = {
     }
 };
 // 2. Montagem do HTML Sem Caixas (Fluidez Total)
+// 2. O HTML montado EXATAMENTE sobre a estrutura do seu código antigo
 html += `
-        <div class="evitar-corte" style="margin-top:40px; padding:25px; border-radius:12px; background:#fff;">
-            <div style="text-align:center; margin-bottom:20px;">
-                <span style="background:var(--gold); color:white; padding:4px 12px; border-radius:20px; font-size:18px; font-weight:bold;">
-                    ${titulosEstrutura[sigla] || "SÍNTESE"}
-                </span>
-                <h3 style="margin-top:10px; text-transform:uppercase;">Síntese de Expressão Natural</h3>
-            </div>
+    <div class="evitar-corte" style="margin-top:25px; padding:20px; border-radius:12px; background:#fff;">
+        <div style="text-align:center; margin-bottom:15px;">
+            <span style="background:var(--gold); color:white; padding:4px 12px; border-radius:20px; font-size:18px; font-weight:bold;">
+                ${titulosEstrutura[sigla] || "SÍNTESE"}
+            </span>
+            <h3 style="margin-top:10px; text-transform:uppercase;">Síntese de Expressão Natural</h3>
+        </div>
+        
+        <div style="font-size:18px; line-height:1.6; text-align: justify; margin-bottom: 20px;">
+            ${aplicarFiltroTexto(textosSinteseExpressao[sigla] || textosSinteseExpressao["padrao"])}
+        </div>
+        
+        <div style="background:var(--dark); color:var(--gold); padding:20px; border-radius:8px; text-align:left; border: 1px solid var(--gold);">
+            <strong style="text-transform: uppercase; letter-spacing: 1px; display: block; text-align: center; margin-bottom: 12px;"> 
+                Diretriz de Equilíbrio Integral 
+            </strong>
             
-            <div style="font-size:18px; line-height:1.6;">
-                ${aplicarFiltroTexto(textosSinteseExpressao[sigla] || textosSinteseExpressao["padrao"])}
-            </div>
-            
-            <div style="margin-top:25px; background:var(--dark); color:var(--gold); padding:25px; border-radius:8px; text-align:left; border: 1px solid var(--gold);">
-                <strong style="text-transform: uppercase; letter-spacing: 1px; display: block; text-align: center; margin-bottom: 15px;"> 
-                    Diretriz de Equilíbrio Integral 
-                </strong>
-                
-                <div style="font-size: 20px; color: #fff; line-height: 1.8;">
-                    <p>Para uma harmonia plena em sua jornada, siga esta hierarquia de sustentação:</p>
-                    <ul style="list-style: none; padding: 0; margin: 0;">
-                        <li style="margin-bottom: 8px;"><span style="color: var(--gold);">●</span> Sua força principal reside no plano <strong>${nomesAmigaveis[_p1.chave]}</strong>, que deve ser o motor das suas ações.</li>
-                        <li style="margin-bottom: 8px;"><span style="color: var(--gold);">●</span> Use essa força para impulsionar o seu lado <strong>${nomesAmigaveis[_p2.chave]}</strong>, garantindo que ele não perca o ritmo.</li>
-                        <li style="margin-bottom: 8px;"><span style="color: var(--gold);">●</span> O plano <strong>${nomesAmigaveis[_p3.chave]}</strong> precisa de suporte consciente para se manter estável e produtivo.</li>
-                        <li style="margin-bottom: 0;"><span style="color: var(--gold);">●</span> Por fim, utilize o aprendizado de todos os anteriores para elevar as fragilidades do plano <strong>${nomesAmigaveis[_p4.chave]}</strong>.</li>
-                    </ul>
-                </div>
+            <div style="font-size: 18px; color: #fff; line-height: 1.6;">
+                <p style="margin-bottom: 10px;">Para uma harmonia plena em sua jornada, siga esta hierarquia:</p>
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    <li style="margin-bottom: 8px;">
+                        <span style="color: var(--gold);">●</span> <strong>${nomesAmigaveis[_p1.chave]}:</strong> ${conselhosDinamicos[_p1.chave].p1}
+                    </li>
+                    <li style="margin-bottom: 8px;">
+                        <span style="color: var(--gold);">●</span> Use o apoio dos planos <strong>${nomesAmigaveis[_p2.chave]}</strong> e <strong>${nomesAmigaveis[_p3.chave]}</strong> para manter sua estabilidade.
+                    </li>
+                    <li style="margin-bottom: 0;">
+                        <span style="color: var(--gold);">●</span> <strong>${nomesAmigaveis[_p4.chave]}:</strong> ${conselhosDinamicos[_p4.chave].p4} Use os outros planos para vencer esse desafio.
+                    </li>
+                </ul>
             </div>
         </div>
     </div>`;
