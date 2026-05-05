@@ -341,154 +341,12 @@
         .card-necessidades { background: #fdf5e6; padding: 20px; border-radius: 4px; border-left: 12px solid #ffffff; margin-top: 10px; }
        /* ESSENCIAL: Faz as cores das barras aparecerem no PDF/PWA */
         * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-    .piramide { display: flex; flex-direction: column; align-items: center; margin: 20px auto; }
-.linha { display: flex; justify-content: center; gap: 2px; margin: 1px 0; }
-.num { width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; background: #fff; color: #000; font-size: 18px; font-weight: bold; border-radius: 2px; }
-.num.negativo { background-color: #fff !important; color: #FF0000 !important; }
-    /* Sequências Especiais (Dourado/Laranja Luxo) */
-.num.especial { 
-    color: #d97a1e !important; 
-    font-weight: 900 !important;
-    background-color: #ffffff !important; /* Garante fundo branco */
-}
-
-/* Sequências Financeiras / Triângulo de 9 (Verde) */
-.num.financeiro { 
-    color: #28a745 !important; 
-    font-weight: 900 !important;
-    background-color: #ffffff !important; /* Garante fundo branco */
-}
-
-.bloco-piramide { background: #f9f9f9; padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid #ffffff; }
-/* Fundo sempre branco para todos os números da pirâmide */
-
-.container-piramide, .piramide {
-    max-width: 100vw !important; /* Impede que ela tente ser maior que a folha */
-    overflow-x: hidden !important; /* Corta qualquer tentativa de vazar para os lados */
-}
 
 
 
 
 
 
-/* O Regente mantém o seu estilo especial de triângulo que já definimos */
-    .container-piramide {
-        page-break-inside: avoid !important; /* Impede que quebre no meio */
-        break-inside: avoid !important;      /* Reforço para navegadores modernos */
-        display: block;
-        width: 100%;
-        margin: 20px auto;
-        text-align: center;
-    }
-
-       .piramide {
-        /* Margem superior de 60px para descolar do texto de introdução */
-        margin-top: 60px !important; 
-        
-        /* Margem inferior de 40px para não colar no que vem depois */
-        margin-bottom: 40px !important; 
-        
-        /* Garante que ela fique centralizada e isolada */
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        clear: both;
-    } 
-
-.linha-letras {
-    display: flex;
-    justify-content: center;
-    gap: 2px;
-}
-
-.num-letra {
-    /* Mesma largura e gap da classe .num para alinhar verticalmente */
-    width: 22px; 
-    text-align: center;
-    font-family: 'Segoe UI', sans-serif;
-    opacity: 0.8;
-}
-    
-  /* Estilo Premium para a Seção de Potências */
-.secao-potencias {
-    background: #ffffff;
-    color: #1a1a1a; /* Texto quase preto para leitura fácil */
-    padding: 20px;
-    border-radius: 8px;
-    margin-top: 20px;
-}
-
-.bloco-potencia {
-    border-bottom: 1px solid #f0f0f0;
-    padding-bottom: 15px;
-    margin-bottom: 15px;
-    border: 1px solid #ffffff!important;
-}
-
-.bloco-potencia b {
-    display: block;
-    font-size: 18px;
-    margin-bottom: 5px;
-    border: 1px solid #ffffff!important;
-}
-
-.item-potencia-tag {
-    background: #827108;
-    color: #ffffff !important; /* Força o número a ser branco dentro da tag dourada */
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-weight: bold;
-    display: inline-block;
-}  
-
-/* Cor Especial para o Regente da Vida - FORMATO TRIÂNGULO */
-.num.regente-destaque {
-    background: none !important;
-    color: #827108 !important;
-    font-weight: 900 !important;
-    border: none !important;
-    box-shadow: none !important;
-    position: relative;
-    z-index: 1;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;  /* Ajuste a largura se precisar */
-    height: 40px; /* Ajuste a altura se precisar */
-}
-
-.num.regente-destaque::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    /* Aqui acontece a mágica do triângulo invertido */
-    border-left: 22px solid transparent;  /* Lado esquerdo */
-    border-right: 22px solid transparent; /* Lado direito */
-    border-top: 38px solid #ffffff;       /* Fundo Branco do triângulo */
-    filter: drop-shadow(0 0 5px rgba(184, 134, 11, 0.6)); /* Brilho dourado */
-    z-index: -1;
-}
-
-/* Opcional: Se quiser uma bordinha fina no triângulo */
-.num.regente-destaque::after {
-    content: "";
-    position: absolute;
-    top: -2px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 24px solid transparent;
-    border-right: 24px solid transparent;
-    border-top: 41px solid #827108; /* Cor da "borda" dourada */
-    z-index: -2;
-}
 
 /* Estilo das Abas de Planos */
 .tabs-planos { display: flex; justify-content: center; gap: 5px; margin-bottom: 20px; flex-wrap: wrap; }
@@ -777,13 +635,19 @@ input:focus {
     }
 
     /* 2. ESTRUTURA PARA O PDF (MANTÉM OS 210MM) */
-    .container-master {
-        width: 210mm;
-        margin: 0 auto;
-        background-color: #000;
-        box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    }
+.container-master {
+    width: 100% !important;
+    max-width: 100vw !important;
+    margin: 0 auto;
+    background-color: #000;
+    overflow-x: hidden !important; /* Isso mata a rolagem lateral no celular */
+}
 
+@media print {
+    .container-master {
+        width: 210mm !important;
+    }
+}
 
 /* Na tela (Relatório), mostramos o Player e escondemos o Botão de Link */
 .botao-pdf-link { display: none !important; }
