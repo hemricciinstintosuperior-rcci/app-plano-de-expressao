@@ -32,25 +32,6 @@
     }
 
 
-    /* Remove qualquer sombra ou borda externa que possa estar 
-       sendo interpretada como um risco escuro no PDF */
-    .page, .relatorio-premium, .container-master {
-    width: 100%;             /* No celular, ele se ajusta à tela */
-    max-width: 210mm;        /* No PC, ele mantém o tamanho do A4 */
-    margin: 0 auto;          /* Centraliza no PC */
-    overflow-x: auto;        /* ISSO AQUI DESTRAVA! Se algo for maior que a tela, você consegue arrastar para o lado */
-    -webkit-overflow-scrolling: touch; /* Deixa o deslizar do dedo suave no iPhone/Android */
-    display: block;
-    position: relative;
-}
-  
-
-
-}  
-
-
-
-
 /* Garante que o relatório interno acompanhe essa flexibilidade */
 .relatorio-premium {
     width: 100% !important;
@@ -66,7 +47,7 @@
     box-shadow: none; /* Tira só a sombra da folha para não sujar o PDF */
     max-width: none !important;
 }
-
+} 
 
 
 
