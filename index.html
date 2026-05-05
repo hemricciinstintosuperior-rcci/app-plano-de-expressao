@@ -13,17 +13,7 @@
     padding: 0;
 }
 
-    /* Remove qualquer sombra ou borda externa que possa estar 
-       sendo interpretada como um risco escuro no PDF */
-    .page, .relatorio-premium, .container-master {
-    width: 100%;             /* No celular, ele se ajusta à tela */
-    max-width: 210mm;        /* No PC, ele mantém o tamanho do A4 */
-    margin: 0 auto;          /* Centraliza no PC */
-    overflow-x: auto;        /* ISSO AQUI DESTRAVA! Se algo for maior que a tela, você consegue arrastar para o lado */
-    -webkit-overflow-scrolling: touch; /* Deixa o deslizar do dedo suave no iPhone/Android */
-    display: block;
-    position: relative;
-}
+
 
     
 @media print {
@@ -36,6 +26,20 @@
         print-color-adjust: exact !important;
     }
 
+
+    /* Remove qualquer sombra ou borda externa que possa estar 
+       sendo interpretada como um risco escuro no PDF */
+    .page, .relatorio-premium, .container-master {
+    width: 100%;             /* No celular, ele se ajusta à tela */
+    max-width: 210mm;        /* No PC, ele mantém o tamanho do A4 */
+    margin: 0 auto;          /* Centraliza no PC */
+    overflow-x: auto;        /* ISSO AQUI DESTRAVA! Se algo for maior que a tela, você consegue arrastar para o lado */
+    -webkit-overflow-scrolling: touch; /* Deixa o deslizar do dedo suave no iPhone/Android */
+    display: block;
+    position: relative;
+}
+  }  
+
 /* SOMENTE NA HORA DE IMPRIMIR O PDF A GENTE LIMPA TUDO */
 
     .page, .relatorio-premium, .container-master {
@@ -43,7 +47,7 @@
         box-shadow: none !important;
         background: white !important;
     }
-  }
+  
 
 
 
