@@ -13,7 +13,7 @@
     padding: 0;
 }
 
-
+ :root { --gold: #d97a1e; --dark: #000000; --card-bg: #ffffff; --text: #1a1a1a; }
 
     
 @media print {
@@ -38,16 +38,9 @@
     display: block;
     position: relative;
 }
-  }  
-
-/* SOMENTE NA HORA DE IMPRIMIR O PDF A GENTE LIMPA TUDO */
-
-    .page, .relatorio-premium, .container-master {
-        border: none !important;
-        box-shadow: none !important;
-        background: white !important;
-    }
   
+
+
 
 
 
@@ -69,11 +62,11 @@
     max-width: none !important;
 }
 
-
+}  
 
 
     
-        :root { --gold: #d97a1e; --dark: #000000; --card-bg: #ffffff; --text: #1a1a1a; }
+       
 @media print {
     .apenas-no-pdf {
         display: block !important;
