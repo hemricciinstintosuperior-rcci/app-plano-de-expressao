@@ -777,13 +777,23 @@ input:focus {
         }
     }
 
-    /* 2. ESTRUTURA PARA O PDF (MANTÉM OS 210MM) */
-    .container-master {
-        width: 210mm;
-        margin: 0 auto;
-        background-color: #000;
-        box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    }
+.container-master {
+    width: 100%;             /* No celular, ele se ajusta à tela */
+    max-width: 210mm;        /* No PC, ele mantém o tamanho do A4 */
+    margin: 0 auto;          /* Centraliza no PC */
+    overflow-x: auto;        /* ISSO AQUI DESTRAVA! Se algo for maior que a tela, você consegue arrastar para o lado */
+    -webkit-overflow-scrolling: touch; /* Deixa o deslizar do dedo suave no iPhone/Android */
+    display: block;
+    position: relative;
+}
+
+/* Garante que o relatório interno acompanhe essa flexibilidade */
+.relatorio-premium {
+    width: 100% !important;
+    min-width: 320px;        /* Largura mínima de um celular pequeno */
+    max-width: 210mm; 
+    margin: 0 auto;
+}
 
 
 /* Na tela (Relatório), mostramos o Player e escondemos o Botão de Link */
@@ -936,7 +946,7 @@ a, img, audio { border: none !important; outline: none !important; text-decorati
 .container-master {
     height: auto !important;
     min-height: 100% !important;
-    display: block !important;
+    
 }    
 
 
