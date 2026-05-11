@@ -829,23 +829,24 @@ function calcularValorLetra(letra) {
     for (let i = 1; i < norm.length; i++) {
         const c = norm[i];
         
-        if (c === "\u0301") soma += 2;          // Agudo (´)
-        else if (c === "\u0302") soma += 7;     // Circunflexo (^)
-        else if (c === "\u0303") soma += 3;     // Til (~)
-        else if (c === "\u0327") soma += 3;     // Cedilha (¸)
-        else if (c === "\u030a") soma += 7;     // Círculo/Grau superior (°)
-        else if (c === "\u0300" || c === "\u0308") mult *= 2; // Grave/Trema
+        if (c === "\u0301") soma += 2;          
+        else if (c === "\u0302") soma += 7;     
+        else if (c === "\u0303") soma += 3;     
+        else if (c === "\u0327") soma += 3;     
+        else if (c === "\u030a") soma += 7;     
+        else if (c === "\u0300" || c === "\u0308") mult *= 2; 
     }
 
-    // Verificação do Apóstrofo (')
-    // Como o apóstrofo não é um diacrítico combinante na normalização NFD padrão,
-    // verificamos se ele existe na string original.
     if (letra.includes("'")) {
         soma += 2;
     }
 
-    return (valorBase + soma) * mult;
-}  
+    // AQUI ESTAVA O PROBLEMA:
+    // Você precisa envolver o cálculo final na função reduzir()
+    let resultadoFinal = (valorBase + soma) * mult;
+    
+    return reduzir(resultadoFinal); 
+} 
  
 function valorLetraMatriz(l){
     let n = l.normalize("NFD");
