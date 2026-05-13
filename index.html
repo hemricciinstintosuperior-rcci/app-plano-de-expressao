@@ -2123,6 +2123,17 @@ const processarUmCiclo = (anoReferencia, tituloSecao) => {
 
     return h;
 };
+
+
+    if (idadeForcada !== null) {
+        return { html: processarUmCiclo(dtNasci.getFullYear() + idadeForcada, `Ano de Vida: ${idadeForcada}`), dados: {} };
+    } else {
+        let htmlFinal = processarUmCiclo(anoBase, "Plano de Expressão Atual");
+        htmlFinal += processarUmCiclo(anoBase + 1, "Próximo Ciclo de Expressão");
+        return { html: htmlFinal, dados: {} };
+    }
+}
+    
 const bancoProfissoes = {
     1: [
         "Diretor Geral", "Gerente de Projetos", "Engenheiro de Automação", "Arquiteto Urbanista", "Administrador de Empresas", "Delegado de Polícia", "Cirurgião Geral", "Oficial das Forças Armadas", "Gestor de Startups", "Engenheiro de Software", "Diretor Comercial", "Coordenador Industrial", "Analista de Estratégia", "Piloto Comercial", "Advogado Sênior", "Líder de Produção", "Gestor de Inovação", "Empreendedor Digital", "Consultor de Gestão", "Arquiteto de Soluções", "Diretor de Marketing", "Gerente de Operações", "Comandante de Navio", "Engenheiro Aeroespacial", "Líder de Vendas B2B", "Supervisor de Logística", "Coordenador de Equipes", "Chefe de Departamento", "Gestor Público", "Juiz de Direito", "Engenheiro Civil", "Diretor de Arte", "Gerente de TI", "Estrategista de Negócios", "Líder de Unidade de Saúde", "Desenvolvedor Fullstack", "Gerente de Filial", "Supervisor de Obras", "Corretor de Imóveis de Luxo", "Produtor Executivo", "Técnico em Gestão Pública", "Engenheiro Mecatrônico", "Diretor Financeiro", "Analista de Fusões e Aquisições", "Especialista em Branding", "Mestre de Obras Especializado", "Gerente de Unidade Industrial", "Consultor Jurídico", "Coordenador de Vendas", "Diretor Tecnológico"
