@@ -2044,7 +2044,7 @@ function montarHtmlPlanosMomento(nomeCompleto, dataNascimento, res, faltantes, d
         let porcentagem = Math.max((somaMomento[p] / ref) * 100, 15);
         let valorReduzido = reduzirPuro(somaMomento[p]);
         h += `
-            <div style="margin: 8px auto; width: 90%; height: 35px; position: relative; background: #eee; border-radius: 4px; overflow: hidden; display: block;">
+            <div style="margin: 8px auto; width: 90%; height: 35px; position: relative; background: #fff; border-radius: 4px; overflow: hidden; display: block;">
                 <div style="width:${porcentagem}%; height:100%; background: ${degradês[p]}; position: absolute; left: 0; top: 0; z-index: 1;"></div>
                 <span style="position: relative; color: #fff; font-weight: bold; padding-left: 15px; line-height: 35px; z-index: 2; font-size: 14px; text-shadow: 1px 1px 2px #000;">
                     ${nomesAmigaveis[p].toUpperCase()} - EXP ${valorReduzido}
