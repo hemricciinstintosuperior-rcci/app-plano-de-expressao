@@ -1984,6 +1984,13 @@ const processarUmCiclo = (anoReferencia, tituloSecao) => {
         return t;
     });
 
+    // 1. DEFINIÇÃO DOS TEXTOS DE PERFIL (Para evitar o erro "is not defined")
+    const descricoesPerfilMomento = {
+        criativo: `<p>"Sua energia de ação este ano está em fase de expansão e Criatividade"</p><p>Neste ciclo, sua forma de agir está mais arrojada.</p>`,
+        indeciso: `<p>"Sua forma de agir este ano está sob o filtro da sensibilidade e da Indecisão"</p><p>Este ciclo pede cautela antes de tomar grandes decisões.</p>`,
+        neutro: `<p>"Este ano sua ação prioriza o equilíbrio, a observação e a Neutralidade"</p><p>Sua postura atual é de 'esperar para ver'.</p>`
+    };
+
     let somaMomento = { fisico: 0, mental: 0, emocional: 0, intuitivo: 0 };
     let contPerfilMomento = { criativo: 0, indeciso: 0, neutro: 0 };
     let vibMomento = {};
@@ -2012,7 +2019,6 @@ const processarUmCiclo = (anoReferencia, tituloSecao) => {
     const ref = planosOrdenados[0].valor || 1;
     const statusMomentoAnual = {};
     
-    // Mapeia vibrações e status para o cálculo dos potenciais abaixo
     planosOrdenados.forEach(pObj => {
         let r = pObj.valor / ref;
         let label = nomesAmigaveis[pObj.chave];
@@ -2020,7 +2026,7 @@ const processarUmCiclo = (anoReferencia, tituloSecao) => {
         vibMomento[label] = pObj.vib;
     });
 
-    // --- CÁLCULO DOS POTENCIAIS DE MOMENTO (ESTRATÉGIA, LIDERANÇA, ETC) ---
+    // --- CÁLCULO DOS POTENCIAIS ---
     let rankingPotenciais = [];
     for (let nomeAtributo in megaBancoAtributos) {
         let config = megaBancoAtributos[nomeAtributo];
@@ -2045,18 +2051,18 @@ const processarUmCiclo = (anoReferencia, tituloSecao) => {
     };
     const coresPlanos = { fisico: "#e74c3c", mental: "#3498db", emocional: "#2ecc71", intuitivo: "#f1c40f" };
 
-    // INÍCIO DA MONTAGEM DO HTML
+    // MONTAGEM DO HTML
     let h = `
     <div class="ciclo-anual" style="page-break-after: always; clear:both; border-top: 4px solid var(--gold); padding: 20px 0;"> 
-        <h2 class="titulo-topico" style="text-align:center; font-size: 24px; margin-bottom: 5px;">${tituloSecao}</h2>
-        <h3 style="text-align:center; color:var(--gold); font-size:19px; margin-bottom: 20px;">IDADE: ${indiceAno} ANOS | ${periodoVigente}</h3>
+        <h2 class="titulo-topico" style="text-align:center; font-size: 24px;">${tituloSecao}</h2>
+        <h3 style="text-align:center; color:var(--gold); font-size:18px; margin-bottom: 20px;">IDADE: ${indiceAno} ANOS | ${periodoVigente}</h3>
         
         <div style="margin: 15px 0; padding: 15px; border: 1px solid #827108; border-radius: 8px; background: #fff; break-inside: avoid;">
             <h4 style="margin: 0; color: #827108; text-transform: uppercase; font-size:16px;">Perfil de Ação: ${dominanteMomento}</h4>
             <div style="font-size: 15px; color: #444; line-height:1.4;">${aplicarFiltroTexto(descricoesPerfilMomento[dominanteMomento])}</div>
         </div>
 
-        <div class="graficos-barras-planos" style="margin: 20px 0; break-inside: avoid;">`;
+        <div style="margin: 20px 0; break-inside: avoid;">`;
 
     for(let p in somaMomento) {
         let porcentagem = Math.max((somaMomento[p] / ref) * 100, 15);
@@ -2070,25 +2076,25 @@ const processarUmCiclo = (anoReferencia, tituloSecao) => {
     }
     h += `</div>`;
 
-    // --- BLOCO DOS POTENCIAIS (ESTILO INDICADOR) ---
-    h += `<div class="indicador-potenciais-momento" style="margin: 30px 0; padding: 15px; background: #fdfdfd; border: 1px solid #eee; border-radius: 10px; break-inside: avoid;">
-            <h4 style="text-align:center; text-transform:uppercase; font-size:16px; color:#333; margin-bottom:20px; border-bottom: 1px solid #ddd; padding-bottom:10px;">Potenciais em Evidência no Ano</h4>`;
+    // POTENCIAIS
+    h += `<div style="margin: 30px 0; padding: 15px; background: #fdfdfd; border: 1px solid #eee; border-radius: 10px; break-inside: avoid;">
+            <h4 style="text-align:center; text-transform:uppercase; font-size:15px; color:#333; margin-bottom:15px; border-bottom: 1px solid #ddd; padding-bottom:5px;">Potenciais do Momento</h4>`;
     
     ["Físico", "Mental", "Emocional", "Intuitivo"].forEach(planoNome => {
-        const itens = rankingPotenciais.filter(it => it.plano === planoNome).sort((a,b) => b.nota - a.nota).slice(0, 3); // Top 3 de cada plano p/ não ficar gigante
+        const itens = rankingPotenciais.filter(it => it.plano === planoNome).sort((a,b) => b.nota - a.nota).slice(0, 2); 
         if(itens.length > 0) {
-            h += `<div style="margin-bottom:15px;">
-                    <span style="font-size:12px; font-weight:bold; color:${coresPlanos[planoNome.toLowerCase()]}; text-transform:uppercase;">${planoNome}</span>`;
+            h += `<div style="margin-bottom:10px;">
+                    <span style="font-size:11px; font-weight:bold; color:${coresPlanos[planoNome.toLowerCase()]}; text-transform:uppercase;">${planoNome}</span>`;
             itens.forEach(item => {
-                h += montarBarraGrafico(item); // Reutiliza a função de barra que você já tem
+                h += montarBarraGrafico(item); 
             });
             h += `</div>`;
         }
     });
     h += `</div>`;
 
-    // TEXTOS INTERPRETATIVOS
-    h += `<div class="textos-detalhados" style="margin-top: 20px;">`;
+    // TEXTOS
+    h += `<div style="margin-top: 20px;">`;
     for(let p in somaMomento) {
         let r = somaMomento[p] / ref;
         let intensidade = (r > 0.75) ? "forte" : (r >= 0.50) ? "medio" : "fraco";
@@ -2098,24 +2104,24 @@ const processarUmCiclo = (anoReferencia, tituloSecao) => {
         if (textoEncontrado) {
             h += `
                 <div style="margin-bottom: 15px; border-left: 4px solid ${coresPlanos[p]}; padding-left: 15px; break-inside: avoid;">
-                    <h4 style="margin:0 0 5px 0; color:${coresPlanos[p]}; text-transform:uppercase; font-size:17px;">${nomesAmigaveis[p]}</h4>
-                    <div style="font-size:14px; line-height:1.5;">${aplicarFiltroTexto(textoEncontrado)}</div>
+                    <h4 style="margin:0 0 5px 0; color:${coresPlanos[p]}; text-transform:uppercase; font-size:16px;">${nomesAmigaveis[p]}</h4>
+                    <div style="font-size:14px; line-height:1.4;">${aplicarFiltroTexto(textoEncontrado)}</div>
                 </div>`;
         }
     }
     h += `</div>`;
 
-    // TRÂNSITO VIBRACIONAL
+    // TRANSITO
     let letrasAno = timelines.map(t => t[indiceAno % t.length]);
     let vTransito = reduzirPuro(letrasAno.reduce((s, l) => s + calcularValorLetra(l), 0));
     let txtTransito = (typeof TextosTransito !== 'undefined') ? (TextosTransito[vTransito] || "") : "";
 
     h += `
-        <div class="secao-vibracional" style="page-break-inside: avoid; break-inside: avoid; margin-top: 30px; padding: 20px; background: #fff; border: 2px double var(--gold);">
-            <h3 style="color:var(--gold); margin:0 0 10px 0; text-transform:uppercase; font-size: 19px; text-align:center; border-bottom: 1px solid var(--gold);">
+        <div style="page-break-inside: avoid; break-inside: avoid; margin-top: 30px; padding: 20px; background: #fff; border: 2px double var(--gold);">
+            <h3 style="color:var(--gold); margin:0 0 10px 0; text-transform:uppercase; font-size: 18px; text-align:center; border-bottom: 1px solid var(--gold);">
                 TRÂNSITO VIBRACIONAL: ${vTransito}
             </h3>
-            <div style="font-size:15px; line-height:1.5; color:#111;">
+            <div style="font-size:14px; line-height:1.5; color:#111;">
                 ${aplicarFiltroTexto(txtTransito)}
             </div>
         </div>
